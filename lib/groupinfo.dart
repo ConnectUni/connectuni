@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 
+
 /**
  * Landing/Home page that the User is introduced to when logging into their account.
  */
@@ -60,31 +61,46 @@ class _GroupInfoState extends State<GroupInfo> {
               children: [
                 Card(
                   child: ListTile(
-                    leading: Icon(Icons.person),
+                    leading: CircleAvatar(
+                      radius: 18,
+                      backgroundImage: AssetImage('assets/images/You.jpg'),
+                    ),
                     title: Text('You'),
                   ),
                 ),
                 Card(
                   child: ListTile(
-                    leading: Icon(Icons.person),
+                    leading: CircleAvatar(
+                      radius: 18,
+                      backgroundImage: AssetImage('assets/images/Person 1.jpg'),
+                    ),
                     title: Text('Person 1'),
                   ),
                 ),
                 Card(
                   child: ListTile(
-                    leading: Icon(Icons.person),
+                    leading: CircleAvatar(
+                      radius: 18,
+                      backgroundImage: AssetImage('assets/images/Person 2.jpg'),
+                    ),
                     title: Text('Person 2'),
                   ),
                 ),
                 Card(
                   child: ListTile(
-                    leading: Icon(Icons.person),
+                    leading: CircleAvatar(
+                      radius: 18,
+                      backgroundImage: AssetImage('assets/images/Person 3.jpg'),
+                    ),
                     title: Text('Person 3'),
                   ),
                 ),
                 Card(
                   child: ListTile(
-                    leading: Icon(Icons.person),
+                    leading: CircleAvatar(
+                      radius: 18,
+                      backgroundImage: AssetImage('assets/images/Person4.jpg'),
+                    ),
                     title: Text('Person 4'),
                   ),
                 ),
