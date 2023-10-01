@@ -15,7 +15,7 @@ class ConnectUniApp extends StatelessWidget {
       initialRoute: '/',
       routes: {
         // TODO: Insert routes
-        //'/login' : (BuildContext context) => const LoginPage(),
+        //'/login' : (BuildContext context) => const LoginPage(), (REIMPLEMENT ONCE LOGIN PAGE IS MADE SO APP DOESNT BREAK)
         '/': (BuildContext context) => const HomePage(),
       },
     );
