@@ -43,9 +43,9 @@ class _GroupInfoState extends State<GroupInfo> {
         ],
       ),
       body: ListView(
-        children: const [
+        children: [
           //TODO: Implement functionality and make cards interactive rather than simply visual.
-          Padding(
+          const Padding(
             padding: EdgeInsets.only(top: 20, left: 20),
             child: Text(
               'Members:',
@@ -55,7 +55,7 @@ class _GroupInfoState extends State<GroupInfo> {
               ),
             ),
           ),
-          Padding(
+          const Padding(
             padding: EdgeInsets.all(10),
             child: Column(
               children: [
@@ -107,14 +107,14 @@ class _GroupInfoState extends State<GroupInfo> {
               ],
             ),
           ),
-          Divider(
+          const Divider(
             height: 7,
             thickness: 2,
             indent: 20,
             endIndent: 20,
             color: Colors.black,
           ),
-          Padding(
+          const Padding(
             padding: EdgeInsets.only(top: 20, left: 20),
             child: Text(
               'Information:',
@@ -124,6 +124,17 @@ class _GroupInfoState extends State<GroupInfo> {
               ),
             ),
           ),
+          Container(
+            padding: EdgeInsets.only(top: 10, left: 20, right: 20, bottom: 20),
+            child: const Text(
+              'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nulla mattis euismod feugiat. '
+                  'Nullam sodales ante eu cursus bibendum. Pellentesque rhoncus enim id fringilla tempu'
+                  's. Fusce a augue vehicula, tincidunt augue hendrerit, ultricies leo. Nunc mollis sem ac'
+                  ' velit efficitur euismod. Sed vitae interdum justo. Integer dui nibh, porttitor elementum'
+                  ' rhoncus in, euismod id risus. Ut eleifend nunc et tellus mattis fermentum.',
+              softWrap: true,
+            ),
+          )
         ],
       ),
       //TODO ADD BOTTOM NAV BAR
