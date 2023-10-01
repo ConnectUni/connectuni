@@ -2,7 +2,8 @@ import 'package:flutter/material.dart';
 
 
 /**
- * Landing/Home page that the User is introduced to when logging into their account.
+ * Information page for a specific group that displays the group members as well as a description of the selected group.
+ * There is an icon at the upper righthand corner for more statistic-related properties of the group.
  */
 
 class GroupInfo extends StatefulWidget {
