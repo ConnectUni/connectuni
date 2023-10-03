@@ -1,6 +1,9 @@
 import 'package:flutter/material.dart';
 
-import 'chatlist.dart';
+import 'groupinfo.dart';
+import 'login.dart';
+import 'home.dart';
+import 'settings.dart';
 
 // TODO: Import route files
 
@@ -11,10 +14,13 @@ class ConnectUniApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       title: 'ConnectUni',
-      initialRoute: '/conversations',
+      initialRoute: '/settings',
       routes: {
         // TODO: Insert routes
-        '/conversations': (BuildContext context) => const ChatList(),
+        //'/login' : (BuildContext context) => const LoginPage(), (REIMPLEMENT ONCE LOGIN PAGE IS MADE SO APP DOESNT BREAK)
+        '/': (BuildContext context) => const HomePage(),
+        '/settings': (BuildContext context) => const Settings(),
+        '/groupinfo': (BuildContext context) => const GroupInfo(),
       },
     );
   }
