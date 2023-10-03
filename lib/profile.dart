@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:connectuni/model/group.dart';
-import 'package:connectuni/model/group_card_view.dart';
+//import 'package:connectuni/model/group_card_view.dart';
 
 /**
  * Landing/Home page that the User is introduced to when logging into their account.
@@ -102,7 +101,52 @@ class _ProfilePageState extends State<ProfilePage> {
             endIndent: 20,
             color: Colors.black,
           ),
-          Container(), //Gallery
+          Container(
+            padding: EdgeInsets.all(10.0),
+            child:
+              const Column(
+                crossAxisAlignment: CrossAxisAlignment.stretch,
+                children: [
+                  Text("Your Gallery:",
+                    style: TextStyle(fontSize: 20,
+                      fontWeight: FontWeight.bold,),
+                    textAlign: TextAlign.left,
+                  ),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                    children: [
+                      Expanded(child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.stretch,
+                        children: [
+                          Image(
+                            image: AssetImage('assets/images/Feed1.jpg'),
+                          ),
+                        ],
+                      ),
+                      ),
+                      Expanded(
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.stretch,
+                          children:[
+                          Image(
+                            image: AssetImage('assets/images/Feed2.jpg'),
+                          ),
+                        ],
+                      ),
+                      ),
+                    ],
+                  ),
+                  Center(
+                    //TODO: Implement functionality and change from ICON to Button
+                    child: Icon(
+                      Icons.add_circle_outline,
+                      color: Colors.grey,
+                      size: 40.0,
+                    ),
+                  ),
+                ]
+              )
+          ), //Gallery
           const Divider(
             height: 7,
             thickness: 2,
@@ -110,7 +154,102 @@ class _ProfilePageState extends State<ProfilePage> {
             endIndent: 20,
             color: Colors.black,
           ),
-          ListTile(), //Courses
+          Container(
+            padding: const EdgeInsets.only(top: 10, left: 5, right: 5),
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              crossAxisAlignment: CrossAxisAlignment.stretch,
+              children:[
+                //GroupCardView(name: "ICS 466"),
+                //GroupCardView(name: "ICS 312"),
+                const Text("Your Courses:",
+                  style: TextStyle(fontSize: 20,
+                  fontWeight: FontWeight.bold,),
+                  textAlign: TextAlign.left,
+                ),
+                Card(
+                    elevation: 8,
+                  color: Colors.grey,
+                    child: Column(
+                      children: [
+                        ListTile(
+                            title: Text("ICS 311",
+                                style: Theme.of(context).textTheme.titleLarge)),
+                        const Padding(
+                            padding: EdgeInsets.only(left: 15.0, top: 5.0),
+                            child: Align(
+                              alignment: Alignment.centerLeft,
+                              child: Text("Fall 2021 | Peter Sadowski"),
+                            )
+                        ),
+                        const Padding(
+                            padding: EdgeInsets.only(left: 15.0, top: 2.0),
+                            child: Align(
+                              alignment: Alignment.centerLeft,
+                              child: Text("32 people"),
+                            )
+                        ),
+                        Padding(
+                            padding: const EdgeInsets.only(right: 15.0),
+                            child: Align(
+                                alignment: Alignment.bottomRight,
+                                child: TextButton(
+                                  onPressed: null,
+                                  style: ButtonStyle(
+                                    backgroundColor: MaterialStateProperty.all<Color>(Colors.redAccent),
+                                    foregroundColor: MaterialStateProperty.all<Color>(Colors.white),
+                                  ),
+                                  child: const Text('LEAVE'),
+                                ),
+                            )
+                        ),
+                        const SizedBox(height: 10)
+                      ],
+                    ),
+                ),
+                Card(
+                  elevation: 8,
+                  color: Colors.grey,
+                  child: Column(
+                    children: [
+                      ListTile(
+                          title: Text("JPN 202",
+                              style: Theme.of(context).textTheme.titleLarge),),
+                      const Padding(
+                          padding: EdgeInsets.only(left: 15.0, top: 2.0),
+                          child: Align(
+                            alignment: Alignment.centerLeft,
+                            child: Text("Spring 2023 | Tomoko Iwai"),
+                          )
+                      ),
+                      const Padding(
+                          padding: EdgeInsets.only(left: 15.0, top: 2.0),
+                          child: Align(
+                            alignment: Alignment.centerLeft,
+                            child: Text("28 people"),
+                          )
+                      ),
+                      Padding(
+                          padding: const EdgeInsets.only(right: 15.0),
+                          child: Align(
+                            alignment: Alignment.bottomRight,
+                            child: TextButton(
+                              onPressed: null,
+                              style: ButtonStyle(
+                                backgroundColor: MaterialStateProperty.all<Color>(Colors.redAccent),
+                                foregroundColor: MaterialStateProperty.all<Color>(Colors.white),
+                              ),
+                              child: const Text('LEAVE'),
+                            ),
+                          )
+                      ),
+                      const SizedBox(height: 10)
+                    ],
+                  ),
+                ),
+              ],
+            ),
+          ), //Courses
         ],
       ),
       //TODO ADD BOTTOM NAV BAR
