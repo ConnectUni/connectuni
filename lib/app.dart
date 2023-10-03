@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 
+import 'chatlist.dart';
 import 'groupinfo.dart';
 import 'login.dart';
 import 'home.dart';
@@ -14,13 +15,14 @@ class ConnectUniApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       title: 'ConnectUni',
-      initialRoute: '/settings',
+      initialRoute: '/conversations',
       routes: {
         // TODO: Insert routes
         //'/login' : (BuildContext context) => const LoginPage(), (REIMPLEMENT ONCE LOGIN PAGE IS MADE SO APP DOESNT BREAK)
         '/': (BuildContext context) => const HomePage(),
         '/settings': (BuildContext context) => const Settings(),
         '/groupinfo': (BuildContext context) => const GroupInfo(),
+        '/conversations': (BuildContext context) => const ChatList(),
       },
     );
   }

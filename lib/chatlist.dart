@@ -16,13 +16,14 @@ class ChatList extends StatelessWidget {
         unselectedLabelStyle: const TextStyle(fontWeight: FontWeight.w600),
         type: BottomNavigationBarType.fixed,
         items: const [
+          //TODO ADD BOTTOM NAVBAR
           BottomNavigationBarItem(
             icon: Icon(Icons.message),
-            label: "Chat",
+            label: "Groups",
           ),
           BottomNavigationBarItem(
-            icon: Icon(Icons.group_work),
-            label:"Groups",
+            icon: Icon(Icons.search),
+            label:"Search",
           ),
           BottomNavigationBarItem(
             icon: Icon(Icons.account_box),
