@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:multi_select_flutter/multi_select_flutter.dart';
 import 'package:connectuni/model/group.dart';
 
+import '../model/group_card_view.dart';
+
 
 class SearchScreen extends StatefulWidget {
   const SearchScreen({Key? key}) : super(key: key);
@@ -33,66 +35,57 @@ class _SearchScreenState extends State<SearchScreen> {
           )
         ],
       ),
-      body: Column(
-        children: [
-          Container(
-            decoration: BoxDecoration(
-              color: Theme.of(context).primaryColor.withOpacity(.4),
-              border: Border.all(
-                color: Theme.of(context).primaryColor,
-                width: 2,
-              ),
-            ),
-            child: Column(
-              children: <Widget>[
-                MultiSelectBottomSheetField(
-                  initialChildSize: 0.4,
-                  listType: MultiSelectListType.CHIP,
-                  searchable: true,
-                  buttonText: const Text("Filter by..."),
-                  title: const Text("Groups"),
-                  items: _items,
-                  onConfirm: (values) {
-                  },
-                  chipDisplay: MultiSelectChipDisplay(
-                    onTap: (value) {
-                      setState(() {
-                        _selectedFilter.remove(value);
-                      });
-                    },
+      body: SingleChildScrollView(
+        child: Column(
+          children: [
+            Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: MultiSelectDialogField(
+                items: _items,
+                title: const Text("Groups"),
+                selectedColor: Colors.blue,
+                decoration: BoxDecoration(
+                  color: Colors.blue.withOpacity(0.1),
+                  borderRadius: const BorderRadius.all(Radius.circular(40)),
+                  border: Border.all(
+                    color: Colors.blue,
+                    width: 2,
                   ),
                 ),
-                _selectedFilter == null || _selectedFilter.isEmpty
-                    ? Container(
-                    padding: const EdgeInsets.all(10),
-                    alignment: Alignment.centerLeft,
-                    child: const Text(
-                      "None selected",
-                      style: TextStyle(color: Colors.black54),
-                    ))
-                    : Container(),
-              ],
+                buttonIcon: const Icon(
+                  Icons.filter,
+                  color: Colors.blue,
+                ),
+                buttonText: Text(
+                  "Filter by:",
+                  style: TextStyle(
+                    color: Colors.blue[800],
+                    fontSize: 16,
+                  ),
+                ),
+                onConfirm: (results) {
+                  //_selectedAnimals = results;
+                },
+              ),
             ),
-          ),
-          const SizedBox(height: 40),
-          Padding(
-            padding: const EdgeInsets.all(8.0),
-            child: SearchAnchor(
-              builder: (BuildContext context, SearchController controller) {
-                return SearchBar(
-                  controller: controller,
-                  onTap: () {
-                    controller.openView();
+            Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: SearchAnchor(
+                  builder: (BuildContext context, SearchController controller) {
+                    return SearchBar(
+                      controller: controller,
+                      onTap: () {
+                        controller.openView();
+                      },
+                      onChanged: (_) {
+                        controller.openView();
+                      },
+                      hintText: 'Search...',
+                      leading: const Icon(Icons.search),
+                    );
                   },
-                  onChanged: (_) {
-                    controller.openView();
-                  },
-                  hintText: 'Search...',
-                  leading: const Icon(Icons.search),
-                );
-              },
-              suggestionsBuilder:
-                  (BuildContext context, SearchController controller) {
+                  suggestionsBuilder:
+                      (BuildContext context, SearchController controller) {
                     return List<ListTile>.generate(5, (int index) {
                       final String item = 'item $index';
                       return ListTile(
@@ -105,19 +98,26 @@ class _SearchScreenState extends State<SearchScreen> {
                       );
                     });
                   }),
-          ),
-          const Text(
-            'RelatedCourses/Groups',
-            textAlign: TextAlign.left,
-          ),
-          const Text(
-            'Other Groups',
-            textAlign: TextAlign.left,
-          ),
-          const Text(
-            'Events'
-          ),
-        ],
+            ),
+            const Text(
+              'RelatedCourses/Groups',
+              textAlign: TextAlign.left,
+            ),
+            ...groupsDB
+                .getGroups()
+                .map((gName) => GroupCardView(name: gName.groupName)),
+            const Text(
+              'Other Groups',
+              textAlign: TextAlign.left,
+            ),
+            ...groupsDB
+                .getGroups()
+                .map((gName) => GroupCardView(name: gName.groupName)),
+            const Text(
+                'Events'
+            ),
+          ],
+        ),
       ),
     );
   }
