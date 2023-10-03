@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
-import 'login.dart';
-import 'home.dart';
+import 'screens/login.dart';
+import 'home/home.dart';
 import 'settings.dart';
 
 // TODO: Import route files
