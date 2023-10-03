@@ -1,5 +1,3 @@
-import 'dart:ffi';
-
 import 'package:flutter/material.dart';
 
 class LoginPage extends StatefulWidget {
@@ -10,56 +8,45 @@ class LoginPage extends StatefulWidget {
 }
 
 class _LoginPageState extends State<LoginPage> {
-  final _usernameController = TextEditingController();
+  final _emailController = TextEditingController();
   final _passwordController = TextEditingController();
-  final _correctUserName = "correct";
+  final _correctEmail = "correct";
   final _correctPassword = "pass";
-  late bool _validLogin = true;
+  // late bool _validLogin = true;
+  //
+  // @override
+  // void initState() {
+  //   _validLogin = false;
+  // }
 
-  @override
-  void initState() {
-    _validLogin = true;
-  }
-
-  void _toggleDisabled() {
-    setState(() {
-      _validLogin = !_validLogin;
-    });
-  }
-
-  void _toggleEnabled() {
-    if (_usernameController.value == _correctUserName) {
-      setState(() {
-        _validLogin = !_validLogin;
-      });
+  bool checkValidLogin() {
+    if (_emailController.text == _correctEmail &&
+        _passwordController.text == _correctPassword) {
+      return true;
     }
+    return false;
   }
 
-  Widget _buildCounterButton() {
-    return ElevatedButton(
-      // onPressed: _validLogin ? null :,
-      onPressed: () {
-        _validLogin ? _toggleDisabled : null;
-        _validLogin ? _toggleEnabled : _usernameController.text = "what";
-      },
-      // },
-      // onPressed: () {
-      //
-      //   if (_validLogin) {
-      //     //would switch to user's home screen
-      //     _usernameController.text = "huh";
-      //   } else {}
-      // },
-      child: Text(_validLogin ? "LOGIN" : "INCORRECT"),
-    );
-  }
+  //could also implement a disabled Login button - only enabled when credentials are valid (db will have to check all the time though)
+  // void _toggleDisabled() {
+  //   setState(() {
+  //     _validLogin = !_validLogin;
+  //   });
+  // }
+  //
+  // void _toggleEnabled() {
+  //   setState(() {
+  //     _validLogin = !_validLogin;
+  //   });
+  // }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       body: SafeArea(
         child: ListView(
-          padding: const EdgeInsets.symmetric(horizontal: 24.0),
+          padding: const EdgeInsets.symmetric(
+              horizontal: 50.0), //controls width of textfields
           children: <Widget>[
             const SizedBox(height: 80.0),
             Column(
@@ -68,12 +55,15 @@ class _LoginPageState extends State<LoginPage> {
                   'ConnectUni',
                   style: Theme.of(context).textTheme.headlineSmall,
                 ),
+                //change image: update pubspec too
                 Image.asset('assets/people.png'),
               ],
             ),
-            const SizedBox(height: 120.0),
+            const SizedBox(
+              height: 75.0,
+            ),
             TextField(
-                controller: _usernameController,
+                controller: _emailController,
                 decoration: InputDecoration(
                   filled: true,
                   labelText: "Email",
@@ -87,10 +77,24 @@ class _LoginPageState extends State<LoginPage> {
               obscureText: true,
             ),
             Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
               mainAxisSize: MainAxisSize.min,
               children: [
-                _buildCounterButton(),
-                const SizedBox(height: 100),
+                const SizedBox(
+                  height: 100.0,
+                  width: 50.0,
+                ),
+                ElevatedButton(
+                  onPressed: () {
+                    if (checkValidLogin()) {
+                      //would switch to user's home screen
+                      _emailController.text = "yuh";
+                    } else {
+                      _emailController.text = "nuh";
+                    }
+                  },
+                  child: const Text("LOGIN"),
+                ),
                 ElevatedButton(
                   onPressed: () {
                     //create new account stuff - pick username, icons, etc.
@@ -101,7 +105,7 @@ class _LoginPageState extends State<LoginPage> {
                 //clear button
                 TextButton(
                   onPressed: () {
-                    _usernameController.clear();
+                    _emailController.clear();
                     _passwordController.clear();
                   },
                   child: const Text("CLEAR"),
