@@ -1,6 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/cupertino.dart';
-
 import 'model/convowidget.dart';
 
 class ChatPage extends StatefulWidget {
@@ -10,6 +8,13 @@ class ChatPage extends StatefulWidget {
   State<ChatPage> createState() => _ChatPageState();
 }
 
+/* MODELS */
+class ChatMessage{
+  String messageContent;
+  String messageType;
+  ChatMessage({required this.messageContent, required this.messageType});
+}
+
 class ChatUsers{
   String name;
   String messageText;
@@ -17,11 +22,14 @@ class ChatUsers{
   String time;
   ChatUsers({required this.name, required this.messageText, required this.imageURL, required this.time});
 }
+/* END MODELS */
+
 
 class _ChatPageState extends State<ChatPage> {
+  //Hard-coding information for users to call on
   List<ChatUsers> chatUsers = [
-    ChatUsers(name:"PersonA", messageText: "This app is the best", imageURL: "assets/images/Person 1.jpg", time: "Now"),
-    ChatUsers(name: "PersonB", messageText: "I'm really hungry", imageURL: "images/Person 2.jpg", time: "Yesterday"),
+    ChatUsers(name: "PersonA", messageText: "This app is the best", imageURL: "assets/images/Person 1.jpg", time: "Now"),
+    ChatUsers(name: "PersonB", messageText: "I'm really hungry", imageURL: "/images/Person 2.jpg", time: "Yesterday"),
     ChatUsers(name: "PersonC", messageText: "I'm in class", imageURL: "images/Person 3.jpg", time: "31 Mar"),
     ChatUsers(name: "PersonD", messageText: "Why is everything expensive", imageURL: "images/Person4.jpg", time: "28 Mar"),
   ];

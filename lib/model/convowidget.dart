@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 
+import '../chatdetailpage.dart';
+
 class ConversationList extends StatefulWidget{
   String name;
   String messageText;
@@ -16,6 +18,9 @@ class _ConversationListState extends State<ConversationList> {
   Widget build(BuildContext context) {
     return GestureDetector(
       onTap: (){
+        Navigator.push(context, MaterialPageRoute(builder: (context){
+          return ChatDetailPage();
+        }));
       },
       child: Container(
         padding: EdgeInsets.only(left: 16,right: 16,top: 10,bottom: 10),
