@@ -4,6 +4,7 @@ import 'groupinfo.dart';
 import 'screens/login.dart';
 import 'home/home.dart';
 import 'settings.dart';
+import 'profile.dart';
 
 // TODO: Import route files
 
@@ -21,6 +22,7 @@ class ConnectUniApp extends StatelessWidget {
         '/': (BuildContext context) => const HomePage(),
         '/settings': (BuildContext context) => const Settings(),
         '/groupinfo': (BuildContext context) => const GroupInfo(),
+        '/profile': (BuildContext context) => const ProfilePage(),
       },
     );
   }
