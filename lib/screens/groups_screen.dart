@@ -2,12 +2,13 @@ import 'package:flutter/material.dart';
 
 import 'package:connectuni/model/group.dart';
 import 'package:connectuni/model/group_card_view.dart';
+import 'package:connectuni/chatpage.dart';
 
 class GroupsScreen extends StatefulWidget{
   const GroupsScreen({Key? key}) : super(key: key);
 
   @override
-  _GroupsScreenState createState() => _GroupsScreenState();
+  State createState() => _GroupsScreenState();
 }
 
 class _GroupsScreenState extends State<GroupsScreen>{
@@ -23,7 +24,9 @@ class _GroupsScreenState extends State<GroupsScreen>{
               semanticLabel: 'messages',
             ),
             onPressed: () {
-              print('Go to inbox');
+              Navigator.push(context, MaterialPageRoute(builder: (context) {
+                return const ChatPage();
+              }));
             },
           ),
           IconButton(
