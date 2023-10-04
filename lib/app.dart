@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 
 import 'screens/login.dart';
 import 'home/home.dart';
+import 'screens/chatpage.dart';
 import 'screens/groupinfo.dart';
 import 'screens/settings.dart';
 import 'screens/profile.dart';
@@ -18,7 +19,7 @@ class ConnectUniApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       title: 'ConnectUni',
-      initialRoute: '/login',
+      initialRoute: '/',
       routes: {
         // TODO: Insert routes
         '/login': (BuildContext context) => const LoginPage(),
@@ -27,6 +28,7 @@ class ConnectUniApp extends StatelessWidget {
         '/searchgroups': (BuildContext context) => SearchGroupsScreen(pageController: _pageController,),
         '/searchpeople': (BuildContext context) => SearchPeopleScreen(pageController: _pageController,),
         '/groupinfo': (BuildContext context) => const GroupInfo(),
+        '/conversations': (BuildContext context) => const ChatPage(),
         '/profile': (BuildContext context) => const ProfilePage(),
       },
     );
