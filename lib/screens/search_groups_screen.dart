@@ -5,18 +5,18 @@ import 'package:connectuni/model/group.dart';
 import '../model/group_card_view.dart';
 
 
-class SearchScreen extends StatefulWidget {
-  const SearchScreen({Key? key}) : super(key: key);
+class SearchGroupsScreen extends StatefulWidget {
+  const SearchGroupsScreen({Key? key, required this.pageController}) : super(key: key);
 
-  static const String routeName = '/search';
+  static const String routeName = '/search_groups';
+  final PageController pageController;
 
   @override
-  State<SearchScreen> createState() => _SearchScreenState();
+  State<SearchGroupsScreen> createState() => _SearchGroupsScreenState();
 }
 
-class _SearchScreenState extends State<SearchScreen> {
+class _SearchGroupsScreenState extends State<SearchGroupsScreen> {
   final _items = groupsDB.getGroups().map((gName) => MultiSelectItem(gName, gName.groupName)).toList();
-  List<Group> _selectedFilter = [];
 
   @override
   Widget build(BuildContext context) {
@@ -30,7 +30,7 @@ class _SearchScreenState extends State<SearchScreen> {
               semanticLabel: 'Search for people',
             ),
             onPressed: () {
-              print('Go to People Search page');
+              widget.pageController.animateToPage(1, duration: const Duration(milliseconds: 300), curve: Curves.easeInOut);
             },
           )
         ],

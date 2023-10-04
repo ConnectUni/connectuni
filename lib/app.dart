@@ -1,3 +1,5 @@
+import 'package:connectuni/screens/search_people_screen.dart';
+import 'package:connectuni/screens/search_groups_screen.dart';
 import 'package:flutter/material.dart';
 
 import 'screens/login.dart';
@@ -7,7 +9,8 @@ import 'settings.dart';
 // TODO: Import route files
 
 class ConnectUniApp extends StatelessWidget {
-  const ConnectUniApp({Key? key}) : super(key: key);
+  ConnectUniApp({Key? key}) : super(key: key);
+  final PageController _pageController = PageController(); // this does nothing for now, I need it here to initialize the routes
 
   @override
   Widget build(BuildContext context) {
@@ -19,6 +22,8 @@ class ConnectUniApp extends StatelessWidget {
         //'/login' : (BuildContext context) => const LoginPage(), (REIMPLEMENT ONCE LOGIN PAGE IS MADE SO APP DOESNT BREAK)
         '/': (BuildContext context) => const HomePage(),
         '/settings': (BuildContext context) => const Settings(),
+        '/searchgroups': (BuildContext context) => SearchGroupsScreen(pageController: _pageController,),
+        '/searchpeople': (BuildContext context) => SearchPeopleScreen(pageController: _pageController,),
       },
     );
   }
