@@ -1,30 +1,17 @@
 import 'package:flutter/material.dart';
+
 import 'package:connectuni/model/group.dart';
 import 'package:connectuni/model/group_card_view.dart';
+import 'package:connectuni/screens/chatpage.dart';
 
-/**
- * Landing/Home page that the User is introduced to when logging into their account.
- */
+class GroupsScreen extends StatefulWidget {
+  const GroupsScreen({Key? key}) : super(key: key);
 
-class HomePage extends StatefulWidget {
-  const HomePage({
-    super.key,
-  });
-
-  State<HomePage> createState() => _HomePageState();
+  @override
+  State createState() => _GroupsScreenState();
 }
 
-class _HomePageState extends State<HomePage> {
-  int _selectedIndex = 0;
-
-  void _onItemTapped(int index) {
-    if (index != _selectedIndex) {
-      setState(() {
-        _selectedIndex = index;
-      });
-    }
-  }
-
+class _GroupsScreenState extends State<GroupsScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -37,7 +24,9 @@ class _HomePageState extends State<HomePage> {
               semanticLabel: 'messages',
             ),
             onPressed: () {
-              print('Go to inbox');
+              Navigator.push(context, MaterialPageRoute(builder: (context) {
+                return const ChatPage();
+              }));
             },
           ),
           IconButton(
@@ -67,26 +56,6 @@ class _HomePageState extends State<HomePage> {
           ),
         ],
       ),
-      //TODO ADD BOTTOM NAV BAR
-      bottomNavigationBar: BottomNavigationBar(
-        items: const <BottomNavigationBarItem>[
-          BottomNavigationBarItem(
-            label: 'Groups',
-            icon: Icon(Icons.chat_bubble_outline),
-          ),
-          BottomNavigationBarItem(
-            label: 'Search',
-            icon: Icon(Icons.search),
-          ),
-          BottomNavigationBarItem(
-            //TODO Replace with image of users profile picture
-            label: 'Profile',
-            icon: Icon(Icons.person_2_outlined),
-          ),
-        ],
-        currentIndex: _selectedIndex,
-        onTap: _onItemTapped,
-      ),
-    ); //Scaffold
-  } //build
-} //HomePage
+    );
+  }
+}

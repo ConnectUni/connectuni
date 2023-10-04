@@ -1,4 +1,4 @@
-import 'package:connectuni/home.dart';
+import 'package:connectuni/home/home.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
