@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-import 'chatlist.dart';
+import 'chatpage.dart';
 import 'groupinfo.dart';
 import 'login.dart';
 import 'home.dart';
@@ -22,7 +22,7 @@ class ConnectUniApp extends StatelessWidget {
         '/': (BuildContext context) => const HomePage(),
         '/settings': (BuildContext context) => const Settings(),
         '/groupinfo': (BuildContext context) => const GroupInfo(),
-        '/conversations': (BuildContext context) => const ChatList(),
+        '/conversations': (BuildContext context) => const ChatPage(),
       },
     );
   }

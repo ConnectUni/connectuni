@@ -1,15 +1,19 @@
 import 'package:flutter/material.dart';
-
 import 'chatpage.dart';
 
+///ChatDetailPage goes into personal direct message
+
 class ChatDetailPage extends StatefulWidget{
-  const ChatDetailPage({super.key});
+  final ChatUsers chatUser;
+  const ChatDetailPage({required this.chatUser, Key? key}) : super(key: key);
 
   @override
   State<ChatDetailPage> createState() => _ChatDetailPageState();
 }
 
 class _ChatDetailPageState extends State<ChatDetailPage> {
+
+  //hardcoded conversation
   List<ChatMessage> messages = [
     ChatMessage(messageContent: "Hey are you at CC?", messageType: "receiver"),
     ChatMessage(messageContent: "I'm gonna get food.", messageType: "receiver"),
@@ -24,31 +28,30 @@ class _ChatDetailPageState extends State<ChatDetailPage> {
         appBar: AppBar(
           elevation: 0,
           automaticallyImplyLeading: false,
-          backgroundColor: Colors.green,
           flexibleSpace: SafeArea(
             child: Container(
-              padding: EdgeInsets.only(right: 16),
+              padding: const EdgeInsets.only(right: 16),
               child: Row(
                 children: <Widget>[
                   IconButton(
                     onPressed: (){
                       Navigator.pop(context);
                     },
-                    icon: Icon(Icons.arrow_back,color: Colors.white,),
+                    icon: const Icon(Icons.arrow_back,color: Colors.white,),
                   ),
-                  SizedBox(width: 2,),
+                  const SizedBox(width: 2,),
                   CircleAvatar(
-                    backgroundImage: NetworkImage("images/Person1.jpg"),
+                    backgroundImage: AssetImage(widget.chatUser.icon),
                     maxRadius: 20,
                   ),
-                  SizedBox(width: 12,),
+                  const SizedBox(width: 12,),
                   Expanded(
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: <Widget>[
-                        Text("PersonA",style: TextStyle(color: Colors.white, fontSize: 16 ,fontWeight: FontWeight.w600),),
-                        SizedBox(height: 6,),
+                        Text(widget.chatUser.name, style: TextStyle(color: Colors.white, fontSize: 16 ,fontWeight: FontWeight.w600)),
+                        const SizedBox(height: 6,),
                         Text("Online",style: TextStyle(color: Colors.grey.shade50, fontSize: 13),),
                       ],
                     ),
@@ -63,11 +66,11 @@ class _ChatDetailPageState extends State<ChatDetailPage> {
               ListView.builder(
                 itemCount: messages.length,
                 shrinkWrap: true,
-                padding: EdgeInsets.only(top: 10,bottom: 10),
-                physics: NeverScrollableScrollPhysics(),
+                padding: const EdgeInsets.only(top: 10,bottom: 10),
+                physics: const NeverScrollableScrollPhysics(),
                 itemBuilder: (context, index){
                   return Container(
-                    padding: EdgeInsets.only(left: 14,right: 14,top: 10,bottom: 10),
+                    padding: const EdgeInsets.only(left: 14,right: 14,top: 10,bottom: 10),
                     child: Align(
                       alignment: (messages[index].messageType == "receiver"?Alignment.topLeft:Alignment.topRight),
                       child: Container(
@@ -75,7 +78,7 @@ class _ChatDetailPageState extends State<ChatDetailPage> {
                           borderRadius: BorderRadius.circular(20),
                           color: (messages[index].messageType  == "receiver"?Colors.grey.shade200:Colors.blue[200]),
                         ),
-                        padding: EdgeInsets.all(16),
+                        padding: const EdgeInsets.all(16),
                         child: Text(messages[index].messageContent, style: TextStyle(fontSize: 15),),
                       ),
                     ),
@@ -85,31 +88,33 @@ class _ChatDetailPageState extends State<ChatDetailPage> {
           Align(
             alignment: Alignment.bottomLeft,
             child: Container(
-              padding: EdgeInsets.only(left: 10,bottom: 10,top: 10),
+              padding: const EdgeInsets.only(bottom: 10,top: 10),
               height: 60,
               width: double.infinity,
-              color: Colors.white,
+              color: Colors.grey,
               child: Row(
                 children: <Widget>[
-                  SizedBox(width: 15,),
+                  const SizedBox(width: 10,),
                   Expanded(
                     child: TextField(
                       decoration: InputDecoration(
+                          filled: true,
+                          fillColor: Colors.white,
                           hintText: "Write message...",
-                          hintStyle: TextStyle(color: Colors.black54),
-                          border: InputBorder.none
+                          hintStyle: const TextStyle(color: Colors.black54),
+                          border: InputBorder.none,
+                          focusedBorder: OutlineInputBorder( borderRadius: BorderRadius.circular(25), ),
+                          enabledBorder: UnderlineInputBorder( borderRadius: BorderRadius.circular(25),),
                       ),
                     ),
                   ),
-                  SizedBox(width: 15,),
+                  const SizedBox(width: 5,),
                   FloatingActionButton(
                     onPressed: (){},
-                    child: Icon(Icons.send,color: Colors.white,size: 18,),
-                    backgroundColor: Colors.green,
                     elevation: 0,
+                    child: const Icon(Icons.send,color: Colors.white,size: 18,),
                   ),
                 ],
-
               ),
             ),
           ),
