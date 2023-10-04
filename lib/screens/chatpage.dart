@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'model/convowidget.dart';
+import '/model/convowidget.dart';
 
 /// ChatPage for Direct Messages,
 /// Holds models ChatMessage (for messaging screen) and ChatUsers (for chat list screen)
