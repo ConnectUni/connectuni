@@ -126,26 +126,6 @@ class _SettingsState extends State<Settings> {
           ),
         ],
       ),
-      //TODO ADD BOTTOM NAV BAR
-      bottomNavigationBar: BottomNavigationBar(
-        items: const <BottomNavigationBarItem>[
-          BottomNavigationBarItem(
-            label: 'Groups',
-            icon: Icon(Icons.chat_bubble_outline),
-          ),
-          BottomNavigationBarItem(
-            label: 'Search',
-            icon: Icon(Icons.search),
-          ),
-          BottomNavigationBarItem(
-            //TODO Replace with image of users profile picture
-            label: 'Profile',
-            icon: Icon(Icons.person_2_outlined),
-          ),
-        ],
-        currentIndex: _selectedIndex,
-        onTap: _onItemTapped,
-      ),
     ); //Scaffold
   } //build
 } //HomePage

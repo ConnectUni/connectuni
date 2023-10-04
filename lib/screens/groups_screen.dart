@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 
 import 'package:connectuni/model/group.dart';
 import 'package:connectuni/model/group_card_view.dart';
-import 'package:connectuni/chatpage.dart';
+import 'package:connectuni/screens/chatpage.dart';
 
 class GroupsScreen extends StatefulWidget{
   const GroupsScreen({Key? key}) : super(key: key);

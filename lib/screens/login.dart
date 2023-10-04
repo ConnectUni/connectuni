@@ -56,7 +56,7 @@ class _LoginPageState extends State<LoginPage> {
                   style: Theme.of(context).textTheme.headlineSmall,
                 ),
                 //change image: update pubspec too
-                Image.asset('assets/people.png'),
+                Image.asset('assets/images/people.png'),
               ],
             ),
             const SizedBox(
