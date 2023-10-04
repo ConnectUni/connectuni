@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import '../screens/chatdetailpage.dart';
-import '../screens/chatpage.dart';
+import '/screens/chatdetailpage.dart';
+import '/screens/chatpage.dart';
 
 /// Convowidget holds ConversationList widget
 /// used/returns template in chatpage to build user data
