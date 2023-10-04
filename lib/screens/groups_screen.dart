@@ -1,32 +1,18 @@
 import 'package:flutter/material.dart';
+
 import 'package:connectuni/model/group.dart';
 import 'package:connectuni/model/group_card_view.dart';
 
-/**
- * Landing/Home page that the User is introduced to when logging into their account.
- */
-
-class HomePage extends StatefulWidget {
-  const HomePage({
-    super.key,
-  });
-
-  State<HomePage> createState() => _HomePageState();
-}
-
-class _HomePageState extends State<HomePage> {
-  int _selectedIndex = 0;
-
-  void _onItemTapped(int index) {
-    if (index != _selectedIndex) {
-      setState(() {
-        _selectedIndex = index;
-      });
-    }
-  }
+class GroupsScreen extends StatefulWidget{
+  const GroupsScreen({Key? key}) : super(key: key);
 
   @override
-  Widget build(BuildContext context) {
+  _GroupsScreenState createState() => _GroupsScreenState();
+}
+
+class _GroupsScreenState extends State<GroupsScreen>{
+  @override
+  Widget build(BuildContext context){
     return Scaffold(
       appBar: AppBar(
         title: const Text('My Groups'),
@@ -67,26 +53,6 @@ class _HomePageState extends State<HomePage> {
           ),
         ],
       ),
-      //TODO ADD BOTTOM NAV BAR
-      bottomNavigationBar: BottomNavigationBar(
-        items: const <BottomNavigationBarItem>[
-          BottomNavigationBarItem(
-            label: 'Groups',
-            icon: Icon(Icons.chat_bubble_outline),
-          ),
-          BottomNavigationBarItem(
-            label: 'Search',
-            icon: Icon(Icons.search),
-          ),
-          BottomNavigationBarItem(
-            //TODO Replace with image of users profile picture
-            label: 'Profile',
-            icon: Icon(Icons.person_2_outlined),
-          ),
-        ],
-        currentIndex: _selectedIndex,
-        onTap: _onItemTapped,
-      ),
-    ); //Scaffold
-  } //build
-} //HomePage
+    );
+  }
+}
