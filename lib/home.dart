@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:connectuni/model/group.dart';
 import 'package:connectuni/model/group_card_view.dart';
 
+import 'chatlist.dart';
+
 /**
  * Landing/Home page that the User is introduced to when logging into their account.
  */
@@ -37,7 +39,9 @@ class _HomePageState extends State<HomePage> {
               semanticLabel: 'messages',
             ),
             onPressed: () {
-              print('Go to inbox');
+              Navigator.push(context, MaterialPageRoute(builder: (context) {
+                return ChatList();
+              }));
             },
           ),
           IconButton(
