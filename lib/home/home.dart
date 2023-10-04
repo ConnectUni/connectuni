@@ -15,7 +15,7 @@ class HomePage extends StatefulWidget {
 
 class _HomePageState extends State<HomePage> {
   int _selectedIndex = 0;
-  late PageController pageController;
+  late PageController pageController; // navigation bar page controller
 
   @override
   void initState() {
@@ -36,15 +36,16 @@ class _HomePageState extends State<HomePage> {
   }
 
   void navigationTapped(int index) {
-    pageController.jumpToPage(index);
+    pageController.animateToPage(index, duration: const Duration(milliseconds: 300), curve: Curves.easeInOut);
     }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       body: PageView(
+        physics: const NeverScrollableScrollPhysics(),
         controller: pageController,
-        onPageChanged: _onPageChanged,
+        onPageChanged: _onPageChanged, // when the page changes, calls the onPageChanged function
         children: screenItems,
       ),
       bottomNavigationBar: BottomNavigationBar(
@@ -64,7 +65,7 @@ class _HomePageState extends State<HomePage> {
           ),
         ],
         currentIndex: _selectedIndex,
-        onTap: navigationTapped,
+        onTap: navigationTapped, // when a tab is tapped, the page controller jumps to the corresponding page
       ),
     ); //Scaffold
   } //build

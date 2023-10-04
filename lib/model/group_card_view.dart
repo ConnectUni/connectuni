@@ -23,7 +23,7 @@ class GroupCardView extends StatelessWidget {
                 padding: const EdgeInsets.only(left: 15.0, top: 2.0),
                 child: Align(
                     alignment: Alignment.centerLeft,
-                    child: Text(thisGrouping.semYear + " | " + thisGrouping.professor),
+                    child: Text("${thisGrouping.semYear} | ${thisGrouping.professor}"),
                 )
               ),
               Padding(

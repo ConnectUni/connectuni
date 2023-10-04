@@ -1,16 +1,19 @@
 import 'package:flutter/material.dart';
 
-import 'chatpage.dart';
-import 'groupinfo.dart';
 import 'screens/login.dart';
 import 'home/home.dart';
-import 'settings.dart';
-import 'profile.dart';
+import 'screens/chatpage.dart';
+import 'screens/groupinfo.dart';
+import 'screens/settings.dart';
+import 'screens/profile.dart';
+import 'screens/search_people_screen.dart';
+import 'screens/search_groups_screen.dart';
 
 // TODO: Import route files
 
 class ConnectUniApp extends StatelessWidget {
-  const ConnectUniApp({Key? key}) : super(key: key);
+  ConnectUniApp({Key? key}) : super(key: key);
+  final PageController _pageController = PageController(); // this does nothing for now, I need it here to initialize the routes
 
   @override
   Widget build(BuildContext context) {
@@ -19,9 +22,11 @@ class ConnectUniApp extends StatelessWidget {
       initialRoute: '/',
       routes: {
         // TODO: Insert routes
-        // '/login': (BuildContext context) => const LoginPage(),
+        '/login': (BuildContext context) => const LoginPage(),
         '/': (BuildContext context) => const HomePage(),
         '/settings': (BuildContext context) => const Settings(),
+        '/searchgroups': (BuildContext context) => SearchGroupsScreen(pageController: _pageController,),
+        '/searchpeople': (BuildContext context) => SearchPeopleScreen(pageController: _pageController,),
         '/groupinfo': (BuildContext context) => const GroupInfo(),
         '/conversations': (BuildContext context) => const ChatPage(),
         '/profile': (BuildContext context) => const ProfilePage(),
