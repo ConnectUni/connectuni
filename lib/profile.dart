@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 //import 'package:connectuni/model/group_card_view.dart';
 
 /**
- * Landing/Home page that the User is introduced to when logging into their account.
+ *  Profile Page that the User sees when they click the Navbar Profile icon.
  */
 
 class ProfilePage extends StatefulWidget {
@@ -36,8 +36,8 @@ class _ProfilePageState extends State<ProfilePage> {
               semanticLabel: 'settings',
             ),
             onPressed: () {
-              //TODO: Route this page to the Application Settings Page.
-              print('GO TO APP SETTINGS PAGE');
+              //Routes to the Settings Page.
+              Navigator.restorablePushNamed(context, '/settings', arguments: '/');
             },
           ),
         ],
