@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 
+import 'groupinfo.dart';
 import 'screens/login.dart';
 import 'home/home.dart';
 import 'settings.dart';
@@ -19,6 +20,7 @@ class ConnectUniApp extends StatelessWidget {
         //'/login' : (BuildContext context) => const LoginPage(), (REIMPLEMENT ONCE LOGIN PAGE IS MADE SO APP DOESNT BREAK)
         '/': (BuildContext context) => const HomePage(),
         '/settings': (BuildContext context) => const Settings(),
+        '/groupinfo': (BuildContext context) => const GroupInfo(),
       },
     );
   }
