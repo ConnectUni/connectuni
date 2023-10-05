@@ -32,6 +32,16 @@ class _ProfilePageState extends State<ProfilePage> {
         actions: <Widget>[
           IconButton(
             icon: const Icon(
+              Icons.people,
+              semanticLabel: 'friends list',
+            ),
+            onPressed: () {
+              //Routes to the Friends List Page.
+              Navigator.restorablePushNamed(context, '/friendslist', arguments: '/');
+            },
+          ),
+          IconButton(
+            icon: const Icon(
               Icons.settings,
               semanticLabel: 'settings',
             ),
@@ -251,26 +261,6 @@ class _ProfilePageState extends State<ProfilePage> {
             ),
           ), //Courses
         ],
-      ),
-      //TODO ADD BOTTOM NAV BAR
-      bottomNavigationBar: BottomNavigationBar(
-        items: const <BottomNavigationBarItem>[
-          BottomNavigationBarItem(
-            label: 'Groups',
-            icon: Icon(Icons.chat_bubble_outline),
-          ),
-          BottomNavigationBarItem(
-            label: 'Search',
-            icon: Icon(Icons.search),
-          ),
-          BottomNavigationBarItem(
-            //TODO Replace with image of users profile picture
-            label: 'Profile',
-            icon: Icon(Icons.person_2_outlined),
-          ),
-        ],
-        currentIndex: _selectedIndex,
-        onTap: _onItemTapped,
       ),
     ); //Scaffold
   } //build

@@ -1,3 +1,4 @@
+import 'package:connectuni/screens/friendslist.dart';
 import 'package:flutter/material.dart';
 
 import 'screens/login.dart';
@@ -35,6 +36,8 @@ class ConnectUniApp extends StatelessWidget {
         '/groupinfo': (BuildContext context) => const GroupInfo(),
         '/conversations': (BuildContext context) => const ChatPage(),
         '/profile': (BuildContext context) => const ProfilePage(),
+        '/settings': (BuildContext context) => const Settings(),
+        '/friendslist': (BuildContext context) => const FriendsList(),
       },
     );
   }
