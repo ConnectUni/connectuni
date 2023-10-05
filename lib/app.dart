@@ -22,6 +22,7 @@ class ConnectUniApp extends StatelessWidget {
     return MaterialApp(
       title: 'ConnectUni',
       initialRoute: '/signup',
+
       routes: {
         // TODO: Insert routes
         '/login': (BuildContext context) => const LoginPage(),
