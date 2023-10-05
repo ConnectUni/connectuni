@@ -1,4 +1,5 @@
 import 'package:connectuni/home/home.dart';
+import 'package:connectuni/screens/signup.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
@@ -105,11 +106,11 @@ class _LoginPageState extends State<LoginPage> {
                   onPressed: () {
                     //create new account stuff - pick username, icons, etc.
                     //uncomment out after creating SignUpPage
-                    // Navigator.push(
-                    //   context,
-                    //   CupertinoPageRoute(
-                    //       builder: (context) => const SignupPage()),
-                    // );
+                    Navigator.push(
+                      context,
+                      CupertinoPageRoute(
+                          builder: (context) => const SignUpPage()),
+                    );
                   },
                   child: const Text('SIGN UP'),
                 ),

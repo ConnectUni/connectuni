@@ -25,6 +25,12 @@ class _SignUpPageState extends State<SignUpPage> {
   }
 
   bool _filledFields() {
+    if (_usernameController.value != null &&
+        _passwordController.value != null &&
+        _passwordCheckController.value != null &&
+        _emailController.value != null) {
+      return true;
+    }
     return false;
   }
 
@@ -147,6 +153,13 @@ class _SignUpPageState extends State<SignUpPage> {
                   child: const Text("CLEAR"),
                 ),
                 ElevatedButton(
+                  // onPressed: () {
+                  //   Navigator.push(
+                  //     context,
+                  //     CupertinoPageRoute(
+                  //         builder: (context) => const ProfilePage()),
+                  //   );
+
                   onPressed: () {
                     if (_filledFields()) {
                       //check if all fields are filled
@@ -158,7 +171,7 @@ class _SignUpPageState extends State<SignUpPage> {
                               builder: (context) => const ProfilePage()),
                         );
                       } else {
-                        _emailController.text = "not smae passowrd";
+                        _emailController.text = "not same passowrd";
                       }
                     } else {
                       _emailController.text = "whaaauhhhh";
