@@ -4,16 +4,16 @@ import 'package:connectuni/model/group.dart';
 import 'package:connectuni/model/group_card_view.dart';
 import '/screens/chatpage.dart';
 
-class GroupsScreen extends StatefulWidget{
+class GroupsScreen extends StatefulWidget {
   const GroupsScreen({Key? key}) : super(key: key);
 
   @override
   State createState() => _GroupsScreenState();
 }
 
-class _GroupsScreenState extends State<GroupsScreen>{
+class _GroupsScreenState extends State<GroupsScreen> {
   @override
-  Widget build(BuildContext context){
+  Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
         title: const Text('My Groups'),

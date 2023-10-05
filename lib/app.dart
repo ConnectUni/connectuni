@@ -14,19 +14,25 @@ import 'screens/search_groups_screen.dart';
 
 class ConnectUniApp extends StatelessWidget {
   ConnectUniApp({Key? key}) : super(key: key);
-  final PageController _pageController = PageController(); // this does nothing for now, I need it here to initialize the routes
+  final PageController _pageController =
+      PageController(); // this does nothing for now, I need it here to initialize the routes
 
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
       title: 'ConnectUni',
-      initialRoute: '/',
+      initialRoute: '/login',
       routes: {
         // TODO: Insert routes
         '/login': (BuildContext context) => const LoginPage(),
         '/': (BuildContext context) => const HomePage(),
-        '/searchgroups': (BuildContext context) => SearchGroupsScreen(pageController: _pageController,),
-        '/searchpeople': (BuildContext context) => SearchPeopleScreen(pageController: _pageController,),
+        '/settings': (BuildContext context) => const Settings(),
+        '/searchgroups': (BuildContext context) => SearchGroupsScreen(
+              pageController: _pageController,
+            ),
+        '/searchpeople': (BuildContext context) => SearchPeopleScreen(
+              pageController: _pageController,
+            ),
         '/groupinfo': (BuildContext context) => const GroupInfo(),
         '/conversations': (BuildContext context) => const ChatPage(),
         '/profile': (BuildContext context) => const ProfilePage(),
