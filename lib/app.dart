@@ -1,4 +1,6 @@
+import 'package:connectuni/screens/signup.dart';
 import 'package:connectuni/screens/friendslist.dart';
+
 import 'package:flutter/material.dart';
 
 import 'screens/login.dart';
@@ -25,7 +27,8 @@ class ConnectUniApp extends StatelessWidget {
       routes: {
         // TODO: Insert routes
         '/login': (BuildContext context) => const LoginPage(),
-        '/': (BuildContext context) => const HomePage(),
+        '/signup': (BuildContext context) => const SignUpPage(),
+        '/home': (BuildContext context) => const HomePage(),
         '/settings': (BuildContext context) => const Settings(),
         '/searchgroups': (BuildContext context) => SearchGroupsScreen(
               pageController: _pageController,
