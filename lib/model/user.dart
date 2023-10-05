@@ -26,7 +26,7 @@ class User {
 class UsersDB {
   final List<User> allUsers =[
     User(
-      uid: '1',
+      uid: 'user-001',
       email: 'braddahal@foo.edu',
       displayName: 'Albert Flores',
       photoURL: 'assets/images/albert.png',
@@ -35,7 +35,7 @@ class UsersDB {
       status: 'Almost Friday!',
     ),
     User(
-      uid: '2',
+      uid: 'user-002',
       email: 'bmiller@foo.edu',
       displayName: 'Bella Miller',
       photoURL: 'assets/images/bella.png',
@@ -44,7 +44,7 @@ class UsersDB {
       status: 'I need a nap.',
     ),
     User(
-      uid: '3',
+      uid: 'user-003',
       email: 'coolcaleb@foo.edu',
       displayName: 'Caleb Smith',
       photoURL: 'assets/images/caleb.png',
@@ -53,7 +53,7 @@ class UsersDB {
       status: 'I love math!',
     ),
     User(
-      uid: '4',
+      uid: 'user-004',
       email: 'dbonejones@foo.edu',
       displayName: 'Diana Jones',
       photoURL: 'assets/images/diana.png',
@@ -62,7 +62,7 @@ class UsersDB {
       status: 'I love art!',
     ),
     User(
-      uid: '5',
+      uid: 'user-005',
       email: 'brown@foo.edu',
       displayName: 'Ethan Brown',
       photoURL: 'assets/images/ethan.png',
@@ -74,6 +74,10 @@ class UsersDB {
 
   User getUser(String uid) {
     return allUsers.firstWhere((user) => user.uid == uid);
+  }
+
+  Iterable<User> getGroupMembers(List<String> memberIds) {
+    return allUsers.where((user) => memberIds.contains(user.uid));
   }
 
   List<User> getUsers() {
