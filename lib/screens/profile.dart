@@ -32,6 +32,16 @@ class _ProfilePageState extends State<ProfilePage> {
         actions: <Widget>[
           IconButton(
             icon: const Icon(
+              Icons.people,
+              semanticLabel: 'friends list',
+            ),
+            onPressed: () {
+              //Routes to the Friends List Page.
+              Navigator.restorablePushNamed(context, '/friendslist', arguments: '/');
+            },
+          ),
+          IconButton(
+            icon: const Icon(
               Icons.settings,
               semanticLabel: 'settings',
             ),
