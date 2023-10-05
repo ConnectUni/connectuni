@@ -1,3 +1,5 @@
+import 'package:connectuni/home/home.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 class LoginPage extends StatefulWidget {
@@ -56,7 +58,7 @@ class _LoginPageState extends State<LoginPage> {
                   style: Theme.of(context).textTheme.headlineSmall,
                 ),
                 //change image: update pubspec too
-                Image.asset('assets/people.png'),
+                Image.asset('assets/images/TEST_LOGO.png'),
               ],
             ),
             const SizedBox(
@@ -88,7 +90,11 @@ class _LoginPageState extends State<LoginPage> {
                   onPressed: () {
                     if (checkValidLogin()) {
                       //would switch to user's home screen
-                      _emailController.text = "yuh";
+                      Navigator.push(
+                        context,
+                        CupertinoPageRoute(
+                            builder: (context) => const HomePage()),
+                      );
                     } else {
                       _emailController.text = "nuh";
                     }
@@ -98,6 +104,12 @@ class _LoginPageState extends State<LoginPage> {
                 ElevatedButton(
                   onPressed: () {
                     //create new account stuff - pick username, icons, etc.
+                    //uncomment out after creating SignUpPage
+                    // Navigator.push(
+                    //   context,
+                    //   CupertinoPageRoute(
+                    //       builder: (context) => const SignupPage()),
+                    // );
                   },
                   child: const Text('SIGN UP'),
                 ),
