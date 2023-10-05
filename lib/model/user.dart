@@ -27,12 +27,12 @@ class UsersDB {
   final List<User> allUsers =[
     User(
       uid: 'user-001',
-      email: 'braddahal@foo.edu',
-      displayName: 'Albert Flores',
-      photoURL: 'assets/images/albert.png',
+      email: 'aritter@foo.edu',
+      displayName: 'Alberta Ritter',
+      photoURL: 'assets/images/You.jpg',
       major: 'Computer Science',
-      projectedGraduation: 'Spring 2024',
-      status: 'Almost Friday!',
+      projectedGraduation: 'Fall 2024',
+      status: 'I love computer science!',
     ),
     User(
       uid: 'user-002',
@@ -69,6 +69,15 @@ class UsersDB {
       major: 'Business',
       projectedGraduation: 'Fall 2025',
       status: 'I love business!',
+    ),
+    User(
+      uid: 'user-006',
+      email: 'braddahal@foo.edu',
+      displayName: 'Albert Flores',
+      photoURL: 'assets/images/albert.png',
+      major: 'Computer Science',
+      projectedGraduation: 'Spring 2024',
+      status: 'Almost Friday!',
     ),
   ];
 

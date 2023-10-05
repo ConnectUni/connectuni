@@ -16,7 +16,9 @@ class GroupChatScreen extends StatefulWidget {
 
   @override
   State<GroupChatScreen> createState() => _GroupChatScreenState();
+
 }
+
 
 class _GroupChatScreenState extends State<GroupChatScreen> {
   @override
@@ -67,14 +69,17 @@ class _GroupChatScreenState extends State<GroupChatScreen> {
                         ),
                       ),
                       padding: const EdgeInsets.all(16),
-                      child: Text(messageData.elementAt(index).messageContent, style: const TextStyle(fontSize: 15))
+                      child: Text(
+                          messageData.elementAt(index).messageContent,
+                          style: const TextStyle(fontSize: 15),
+                      )
                     ),
                     Text(
-                      groupMembers.elementAt(index).displayName,
+                      groupMembers.firstWhere((user) => user.uid == messageData.elementAt(index).senderId).displayName,
                       style: const TextStyle(fontSize: 12),
                     ),
                     CircleAvatar(
-                      backgroundImage: AssetImage(groupMembers.elementAt(index).photoURL),
+                      backgroundImage: AssetImage(groupMembers.firstWhere((user) => user.uid == messageData.elementAt(index).senderId).photoURL),
                       maxRadius: 20,
                     )
                   ],
