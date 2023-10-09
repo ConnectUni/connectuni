@@ -20,7 +20,7 @@ class UserCardSearch extends StatelessWidget {
               ListTile(
                 leading: CircleAvatar(
                   radius: 25,
-                  backgroundImage: AssetImage(thisUser.pfp),
+                  backgroundImage: AssetImage(thisUser.photoURL),
                 ),
                 title: Text(thisUser.displayName,
                     style: Theme.of(context).textTheme.titleLarge),
