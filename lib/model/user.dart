@@ -11,6 +11,9 @@ class User {
     required this.major,
     required this.projectedGraduation,
     required this.status,
+    required this.images,
+    required this.groupIDs,
+    required this.eventIDs,
   });
 
   final String uid;
@@ -20,11 +23,13 @@ class User {
   final String major;
   final String projectedGraduation;
   final String status;
-
+  final List<String> images;
+  final List<int> groupIDs;
+  final List<int> eventIDs;
 }
 
 class UsersDB {
-  final List<User> allUsers =[
+  final List<User> allUsers = [
     User(
       uid: '1',
       email: 'braddahal@foo.edu',
@@ -33,6 +38,17 @@ class UsersDB {
       major: 'Computer Science',
       projectedGraduation: 'Spring 2024',
       status: 'Almost Friday!',
+      images: [
+        'assets/images/Feed1.png',
+      ],
+      groupIDs: [
+        123,
+        456,
+      ],
+      eventIDs: [
+        111,
+        222,
+      ],
     ),
     User(
       uid: '2',
@@ -42,6 +58,17 @@ class UsersDB {
       major: 'Liberal Arts',
       projectedGraduation: 'Fall 2025',
       status: 'I need a nap.',
+      images: [
+        'assets/images/Feed1.png',
+      ],
+      groupIDs: [
+        123,
+        456,
+      ],
+      eventIDs: [
+        111,
+        222,
+      ],
     ),
     User(
       uid: '3',
@@ -51,6 +78,17 @@ class UsersDB {
       major: 'Mathematics',
       projectedGraduation: 'Fall 2023',
       status: 'I love math!',
+      images: [
+        'assets/images/Feed1.png',
+      ],
+      groupIDs: [
+        123,
+        456,
+      ],
+      eventIDs: [
+        111,
+        222,
+      ],
     ),
     User(
       uid: '4',
@@ -60,6 +98,17 @@ class UsersDB {
       major: 'Graphic Design',
       projectedGraduation: 'Spring 2024',
       status: 'I love art!',
+      images: [
+        'assets/images/Feed1.png',
+      ],
+      groupIDs: [
+        123,
+        456,
+      ],
+      eventIDs: [
+        111,
+        222,
+      ],
     ),
     User(
       uid: '5',
@@ -69,6 +118,17 @@ class UsersDB {
       major: 'Business',
       projectedGraduation: 'Fall 2025',
       status: 'I love business!',
+      images: [
+        'assets/images/Feed1.png',
+      ],
+      groupIDs: [
+        123,
+        456,
+      ],
+      eventIDs: [
+        111,
+        222,
+      ],
     ),
   ];
 
