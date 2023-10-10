@@ -1,3 +1,4 @@
+import 'package:connectuni/model/group_chat_widget.dart';
 import 'package:flutter/material.dart';
 
 import 'package:connectuni/model/group.dart';
@@ -45,7 +46,7 @@ class _GroupsScreenState extends State<GroupsScreen> {
           //TODO: Implement functionality and make cards interactive rather than simply visual.
           ...groupsDB
               .getGroups()
-              .map((gName) => GroupCardView(name: gName.groupName)),
+              .map((gName) => GroupChatWidget(id: gName.groupId)),
           const Center(
             //TODO: Implement functionality and change from ICON to Button
             child: Icon(
