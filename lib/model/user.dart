@@ -10,6 +10,7 @@ class User {
   String major;
   String projectedGraduation;
   String status;
+  List<User> friends;
   List<String> images;
   List<int> groupIDs;
   List<int> eventIDs;
@@ -23,6 +24,7 @@ class User {
       this.major,
       this.projectedGraduation,
       this.status,
+      this.friends,
       this.images,
       this.groupIDs,
       this.eventIDs);
@@ -50,6 +52,16 @@ class User {
   /// Change status.
   void setStatus(String newStatus) {
     status = newStatus;
+  }
+
+  /// Add User to friends list.
+  void addFriend(User newFriend) {
+    friends.add(newFriend);
+  }
+
+  /// Delete User from friends list.
+  void deleteFriend(User deleteFriend) {
+    friends.remove(deleteFriend);
   }
 
   /// Add image to profile gallery.
@@ -110,6 +122,10 @@ class User {
     return status;
   }
 
+  List<User> getFriends() {
+    return friends;
+  }
+
   List<String> getImages() {
     return images;
   }
@@ -150,101 +166,114 @@ class User {
 class UsersDB {
   final List<User> allUsers = [
     User(
-      uid: '1',
-      email: 'braddahal@foo.edu',
-      displayName: 'Albert Flores',
-      pfp: 'assets/images/albert.png',
-      major: 'Computer Science',
-      projectedGraduation: 'Spring 2024',
-      status: 'Almost Friday!',
-      images: [
+      '1',
+      'braddahal@foo.edu',
+      'Albert Flores',
+      'assets/images/albert.png',
+      'Computer Science',
+      'Spring 2024',
+      'Almost Friday!',
+      [
+        //he has no friends
+      ],
+      [
         'assets/images/Feed1.png',
       ],
-      groupIDs: [
+      [
         123,
         456,
       ],
-      eventIDs: [
+      [
         111,
         222,
       ],
     ),
     User(
-      uid: '2',
-      email: 'bmiller@foo.edu',
-      displayName: 'Bella Miller',
-      pfp: 'assets/images/bella.png',
-      major: 'Liberal Arts',
-      projectedGraduation: 'Fall 2025',
-      status: 'I need a nap.',
-      images: [
+      '2',
+      'bmiller@foo.edu',
+      'Bella Miller',
+      'assets/images/bella.png',
+      'Liberal Arts',
+      'Fall 2025',
+      'I need a nap.',
+      [],
+      [
         'assets/images/Feed1.png',
       ],
-      groupIDs: [
+      [
         123,
         456,
       ],
-      eventIDs: [
+      [
         111,
         222,
       ],
     ),
     User(
-      uid: '3',
-      email: 'coolcaleb@foo.edu',
-      displayName: 'Caleb Smith',
-      pfp: 'assets/images/caleb.png',
-      major: 'Mathematics',
-      projectedGraduation: 'Fall 2023',
-      status: 'I love math!',
-      images: [
+      '3',
+      'coolcaleb@foo.edu',
+      'Caleb Smith',
+      'assets/images/caleb.png',
+      'Mathematics',
+      'Fall 2023',
+      'I love math!',
+      [
+        //no friends
+      ],
+      [
         'assets/images/Feed1.png',
       ],
-      groupIDs: [
+      [
         123,
         456,
       ],
-      eventIDs: [
+      [
         111,
         222,
       ],
     ),
     User(
-      uid: '4',
-      email: 'dbonejones@foo.edu',
-      displayName: 'Diana Jones',
-      pfp: 'assets/images/diana.png',
-      major: 'Graphic Design',
-      projectedGraduation: 'Spring 2024',
-      status: 'I love art!',
-      images: [
+      '4',
+      'dbonejones@foo.edu',
+      'Diana Jones',
+      'assets/images/diana.png',
+      'Graphic Design',
+      'Spring 2024',
+      'I love art!',
+      [
+        //no friends
+      ],
+      [
         'assets/images/Feed1.png',
       ],
-      groupIDs: [
+      [
         123,
         456,
       ],
-      eventIDs: [
+      [
         111,
         222,
       ],
     ),
     User(
-      uid: '5',
-      email: 'brown@foo.edu',
-      displayName: 'Ethan Brown',
-      pfp: 'assets/images/ethan.png',
-      major: 'Business',
-      projectedGraduation: 'Fall 2025',
-      status: 'I love business!',
-      images: [
+      '5',
+      'brown@foo.edu',
+      'Ethan Brown',
+      'assets/images/ethan.png',
+      'Business',
+      'Fall 2025',
+      'I love business!',
+      [
+        //no friends
+      ],
+      [
         'assets/images/Feed1.png',
       ],
-      groupIDs: [
+      [
         123,
         456,
       ],
-      eventIDs: [
+      [
         111,
         222,
       ],
