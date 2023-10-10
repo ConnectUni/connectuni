@@ -18,6 +18,7 @@ class Group {
     required this.eventIds, // Ex. [event-001, event-002 ... event-042]
     required this.userIds, //Ex. [user-001, user-002 ... user-042]
   });
+  
   final String groupID;
   final String groupName;
   final String semYear;
