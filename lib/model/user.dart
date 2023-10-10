@@ -255,15 +255,6 @@ class UsersDB {
         '222',
       ],
     ),
-    User(
-      uid: 'user-006',
-      email: 'braddahal@foo.edu',
-      displayName: 'Albert Flores',
-      photoURL: 'assets/images/albert.png',
-      major: 'Computer Science',
-      projectedGraduation: 'Spring 2024',
-      status: 'Almost Friday!',
-    ),
   ];
 
   /**SHOULD BE IN A GROUP CLASS*/
@@ -284,13 +275,12 @@ class UsersDB {
     return allUsers.firstWhere((user) => user.email == email);
   }
 
-
   /// Return list of User objects.
   /// should be in a Group object class
   Iterable<User> getGroupMembers(List<String> memberIds) {
     return allUsers.where((user) => memberIds.contains(user.uid));
   }
-  
+
   List<User> getUsers() {
     return allUsers;
   }
