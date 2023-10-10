@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import '../model/group.dart';
 import '../model/message_model.dart';
 import '../model/user.dart';
+import '../model/users.dart';
 import 'groupinfo.dart';
 
 class GroupChatScreen extends StatefulWidget {

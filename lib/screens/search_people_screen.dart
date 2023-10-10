@@ -1,4 +1,4 @@
-import 'package:connectuni/model/user.dart';
+import 'package:connectuni/model/users.dart';
 import 'package:connectuni/model/user_card_search.dart';
 import 'package:flutter/material.dart';
 import 'package:multi_select_flutter/multi_select_flutter.dart';
@@ -30,8 +30,8 @@ class _SearchPeopleScreenState extends State<SearchPeopleScreen> {
         actions: <Widget>[
           IconButton(
             icon: const Icon(
-                Icons.arrow_back_ios,
-                semanticLabel: 'Search for groups',
+              Icons.arrow_back_ios,
+              semanticLabel: 'Search for groups',
             ),
             onPressed: () {
               widget.pageController.animateToPage(0,
@@ -45,7 +45,9 @@ class _SearchPeopleScreenState extends State<SearchPeopleScreen> {
               semanticLabel: 'Search for events',
             ),
             onPressed: () {
-              widget.pageController.animateToPage(2, duration: const Duration(milliseconds: 300), curve: Curves.easeInOut);
+              widget.pageController.animateToPage(2,
+                  duration: const Duration(milliseconds: 300),
+                  curve: Curves.easeInOut);
             },
           ),
         ],

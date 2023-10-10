@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 
 import 'package:connectuni/model/user.dart';
+import 'users.dart';
 
 class UserCardSearch extends StatelessWidget {
   const UserCardSearch({Key? key, required this.name}) : super(key: key);
