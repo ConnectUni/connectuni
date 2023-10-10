@@ -2,19 +2,18 @@ import 'package:flutter/material.dart';
 
 
 /**
- * Information page for a specific group that displays the group members as well as a description of the selected group.
- * There is an icon at the upper righthand corner for more statistic-related properties of the group.
+ * Implements a Calendar that is able to display events and their details.
  */
 
-class GroupInfo extends StatefulWidget {
-  const GroupInfo({
+class EventCalendar extends StatefulWidget {
+  const EventCalendar({
     super.key,
   });
 
-  State<GroupInfo> createState() => _GroupInfoState();
+  State<EventCalendar> createState() => _EventCalendarState();
 }
 
-class _GroupInfoState extends State<GroupInfo> {
+class _EventCalendarState extends State<EventCalendar> {
   int _selectedIndex = 0;
 
   void _onItemTapped(int index) {
