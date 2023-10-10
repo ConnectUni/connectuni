@@ -9,7 +9,7 @@ class GroupCardView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    Group thisGrouping = groupsDB.getGroup(id);
+    Group thisGrouping = groupsDB.getGroupById(id);
     return Padding(
       padding: const EdgeInsets.all(3.5),
       child: Card(
@@ -30,7 +30,7 @@ class GroupCardView extends StatelessWidget {
                   padding: const EdgeInsets.only(left: 15.0, top: 2.0),
                   child: Align(
                     alignment: Alignment.centerLeft,
-                    child: Text("${thisGrouping.groupMembers} people"),
+                    child: Text("${thisGrouping.userIds.length} people"),
                   )
               ),
               Padding(

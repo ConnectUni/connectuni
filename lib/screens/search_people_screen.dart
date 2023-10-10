@@ -16,7 +16,7 @@ class SearchPeopleScreen extends StatefulWidget {
 }
 
 class _SearchPeopleScreenState extends State<SearchPeopleScreen> {
-  final _items = groupsDB.getGroups().map((gName) => MultiSelectItem(gName, gName.groupName)).toList();
+  final _items = groupsDB.getAllGroups().map((gName) => MultiSelectItem(gName, gName.groupName)).toList();
 
   @override
   Widget build(BuildContext context) {

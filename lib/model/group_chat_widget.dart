@@ -22,20 +22,20 @@ class GroupChatWidget extends StatefulWidget {
 class _GroupChatWidgetState extends State<GroupChatWidget> {
   @override
   Widget build(BuildContext context) {
-    Group groupData = groupsDB.getGroup(widget.id);
+    Group groupData = groupsDB.getGroupById(widget.id);
 
     return GestureDetector(
       onTap: () {
         Navigator.push(
           context,
           CupertinoPageRoute(
-              builder: (context) => GroupChatScreen(id: groupData.groupId)
+              builder: (context) => GroupChatScreen(id: groupData.groupID)
           ),
         );
       },
       child: Container(
         padding: const EdgeInsets.all(8.0),
-        child: GroupCardView(id: groupData.groupId),
+        child: GroupCardView(id: groupData.groupID),
       ),
     );
   }
