@@ -26,7 +26,7 @@ class _SearchPeopleScreenState extends State<SearchPeopleScreen> {
         actions: <Widget>[
           IconButton(
             icon: const Icon(
-                Icons.arrow_back_ios,
+                Icons.group,
                 semanticLabel: 'Search for groups',
             ),
             onPressed: () {
@@ -35,7 +35,7 @@ class _SearchPeopleScreenState extends State<SearchPeopleScreen> {
           ),
           IconButton(
             icon: const Icon(
-              Icons.arrow_forward_ios,
+              Icons.celebration,
               semanticLabel: 'Search for events',
             ),
             onPressed: () {
