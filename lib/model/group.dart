@@ -76,7 +76,7 @@ class GroupsDB {
         newMessages: 3,
         chatIds: [],
         eventIds: ['event-001'],
-        userIds: ['user-001', 'user-002', 'user-003', 'user-004'],
+        userIds: ['user-001', 'user-002', 'user-003', 'user-004', 'user-005'],
       ),
       Group(
         groupID: 'group-002',
@@ -87,7 +87,7 @@ class GroupsDB {
         newMessages: 17,
         chatIds: [],
         eventIds: [],
-        userIds: ['user-003', 'user-004'],
+        userIds: ['user-001', 'user-002', 'user-003', 'user-004', 'user-005'],
       ),
       Group(
         groupID: 'group-003',
@@ -98,7 +98,7 @@ class GroupsDB {
         newMessages: 0,
         chatIds: [],
         eventIds: [],
-        userIds: ['user-001', 'user-002'],
+        userIds: ['user-001', 'user-002', 'user-003', 'user-004', 'user-005'],
       ),
       Group(
         groupID: 'group-004',
@@ -109,7 +109,7 @@ class GroupsDB {
         newMessages: 10,
         chatIds: [],
         eventIds: ['event-003', 'event-004'],
-        userIds: ['user-002', 'user-003', 'user-004'],
+        userIds: ['user-001', 'user-002', 'user-003', 'user-004', 'user-005'],
       ),
       Group(
         groupID: 'group-005',
@@ -120,7 +120,7 @@ class GroupsDB {
         newMessages: 2,
         chatIds: [],
         eventIds: ['event-005'],
-        userIds: ['user-004'],
+        userIds: ['user-001', 'user-002', 'user-003', 'user-004', 'user-005'],
       ),
     ];
   ///SETTER METHODS:

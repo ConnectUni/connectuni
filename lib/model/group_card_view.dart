@@ -3,13 +3,13 @@ import 'package:flutter/material.dart';
 import'package:connectuni/model/group.dart';
 
 class GroupCardView extends StatelessWidget {
-  const GroupCardView({Key? key, required this.name}) : super(key: key);
+  const GroupCardView({Key? key, required this.id}) : super(key: key);
 
-  final String name;
+  final String id;
 
   @override
   Widget build(BuildContext context) {
-    Group thisGrouping = groupsDB.getGroupByName(name);
+    Group thisGrouping = groupsDB.getGroupById(id);
     return Padding(
       padding: const EdgeInsets.all(3.5),
       child: Card(

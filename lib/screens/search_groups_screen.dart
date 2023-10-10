@@ -105,14 +105,14 @@ class _SearchGroupsScreenState extends State<SearchGroupsScreen> {
             ),
             ...groupsDB
                 .getAllGroups()
-                .map((gName) => GroupCardView(name: gName.groupName)),
+                .map((gName) => GroupCardView(id: gName.groupID)),
             const Text(
               'Other Groups',
               textAlign: TextAlign.left,
             ),
             ...groupsDB
                 .getAllGroups()
-                .map((gName) => GroupCardView(name: gName.groupName)),
+                .map((gName) => GroupCardView(id: gName.groupID)),
             const Text(
                 'Events'
             ),
