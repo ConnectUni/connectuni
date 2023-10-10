@@ -22,6 +22,7 @@ class _SearchPeopleScreenState extends State<SearchPeopleScreen> {
       .map((gName) => MultiSelectItem(gName, gName.groupName))
       .toList();
 
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
