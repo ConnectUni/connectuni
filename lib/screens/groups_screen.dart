@@ -45,7 +45,6 @@ class _GroupsScreenState extends State<GroupsScreen> {
         children: [
           //TODO: Implement functionality and make cards interactive rather than simply visual.
           ...groupsDB
-
               .getAllGroups()
               .map((gName) => GroupChatWidget(id: gName.groupID)),
           const Center(
