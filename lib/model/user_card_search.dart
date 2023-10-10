@@ -9,7 +9,8 @@ class UserCardSearch extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    User thisUser = usersDB.getUser(name);
+    User thisUser = usersDB.getUserByName(name);
+    print("name is: $name");
 
     return Padding(
       padding: const EdgeInsets.all(3.5),

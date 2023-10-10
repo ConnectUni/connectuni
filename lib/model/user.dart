@@ -132,8 +132,12 @@ class UsersDB {
     ),
   ];
 
-  User getUser(String uid) {
-    return allUsers.firstWhere((user) => user.uid == uid);
+  User getUserByName(String name) {
+    for (int i = 0; i < allUsers.length; i++) {
+      print(allUsers[i].uid);
+    }
+
+    return allUsers.firstWhere((user) => user.uid == name);
   }
 
   List<User> getUsers() {
