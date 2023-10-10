@@ -16,7 +16,7 @@ class SearchGroupsScreen extends StatefulWidget {
 }
 
 class _SearchGroupsScreenState extends State<SearchGroupsScreen> {
-  final _items = groupsDB.getGroups().map((gName) => MultiSelectItem(gName, gName.groupName)).toList();
+  final _items = groupsDB.getAllGroups().map((gName) => MultiSelectItem(gName, gName.groupName)).toList();
 
   @override
   Widget build(BuildContext context) {
@@ -104,14 +104,14 @@ class _SearchGroupsScreenState extends State<SearchGroupsScreen> {
               textAlign: TextAlign.left,
             ),
             ...groupsDB
-                .getGroups()
+                .getAllGroups()
                 .map((gName) => GroupCardView(name: gName.groupName)),
             const Text(
               'Other Groups',
               textAlign: TextAlign.left,
             ),
             ...groupsDB
-                .getGroups()
+                .getAllGroups()
                 .map((gName) => GroupCardView(name: gName.groupName)),
             const Text(
                 'Events'

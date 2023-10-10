@@ -44,7 +44,7 @@ class _GroupsScreenState extends State<GroupsScreen> {
         children: [
           //TODO: Implement functionality and make cards interactive rather than simply visual.
           ...groupsDB
-              .getGroups()
+              .getAllGroups()
               .map((gName) => GroupCardView(name: gName.groupName)),
           const Center(
             //TODO: Implement functionality and change from ICON to Button
