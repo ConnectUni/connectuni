@@ -137,32 +137,9 @@ class User {
   List<int> getEventIDs() {
     return eventIDs;
   }
-
-  /**SHOULD BE IN A GROUP CLASS*/
-
-  /// Return single User object, search with their name.
-  User getUserByName(String name) {
-    return allUsers.firstWhere((user) => user.uid == name);
-  }
-
-  /// Return single User object, search with their UH ID number.
-  /// related: cannot change uid to be int type - throw errors
-  User getUserByID(int id) {
-    return allUsers.firstWhere((user) => user.uid == id);
-  }
-
-  /// Return single User object, search with their email.
-  User getUserByEmail(String email) {
-    return allUsers.firstWhere((user) => user.email == email);
-  }
-
-  /// Return list of User objects.
-  /// should be in a Group object class
-  List<User> getUsers() {
-    return allUsers;
-  }
 }
 
+//firebase -> automatically has the getter/setter methods?
 class UsersDB {
   final List<User> allUsers = [
     User(
@@ -279,6 +256,30 @@ class UsersDB {
       ],
     ),
   ];
+
+  /**SHOULD BE IN A GROUP CLASS*/
+
+  /// Return single User object, search with their name.
+  User getUserByName(String name) {
+    return allUsers.firstWhere((user) => user.displayName == name);
+  }
+
+  /// Return single User object, search with their UH ID number.
+  /// related: cannot change uid to be int type - throw errors
+  User getUserByID(int id) {
+    return allUsers.firstWhere((user) => user.uid == id);
+  }
+
+  /// Return single User object, search with their email.
+  User getUserByEmail(String email) {
+    return allUsers.firstWhere((user) => user.email == email);
+  }
+
+  /// Return list of User objects.
+  /// should be in a Group object class
+  List<User> getUsers() {
+    return allUsers;
+  }
 }
 
 UsersDB usersDB = UsersDB();
