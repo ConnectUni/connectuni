@@ -23,9 +23,9 @@ class GroupChatScreen extends StatefulWidget {
 class _GroupChatScreenState extends State<GroupChatScreen> {
   @override
   Widget build(BuildContext context) {
-    Group groupData = groupsDB.getGroup(widget.id);
-    Iterable<User> groupMembers = usersDB.getGroupMembers(groupData.memberIds);
-    Iterable<Message> messageData = messagesDB.getGroupMessages(groupData.groupId);
+    Group groupData = groupsDB.getGroupById(widget.id);
+    Iterable<User> groupMembers = usersDB.getGroupMembers(groupData.userIds);
+    Iterable<Message> messageData = messagesDB.getGroupMessages(groupData.groupID);
     String currentUID = 'user-001';
 
     return Scaffold(
