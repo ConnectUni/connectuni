@@ -33,10 +33,7 @@ class _GroupChatWidgetState extends State<GroupChatWidget> {
           ),
         );
       },
-      child: Container(
-        padding: const EdgeInsets.all(8.0),
-        child: GroupCardView(id: groupData.groupId),
-      ),
+      child: GroupCardView(id: groupData.groupId)
     );
   }
 }

@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:multi_select_flutter/multi_select_flutter.dart';
-import 'package:connectuni/model/group.dart';
 
+import '../model/group.dart';
 import '../model/group_card_view.dart';
 
 
@@ -26,13 +26,13 @@ class _SearchGroupsScreenState extends State<SearchGroupsScreen> {
         actions: <Widget>[
           IconButton(
             icon: const Icon(
-              Icons.person_search,
-              semanticLabel: 'Search for people',
+              Icons.arrow_forward_ios,
+              semanticLabel: 'Search for events',
             ),
             onPressed: () {
               widget.pageController.animateToPage(1, duration: const Duration(milliseconds: 300), curve: Curves.easeInOut);
             },
-          )
+          ),
         ],
       ),
       body: SingleChildScrollView(
@@ -64,7 +64,7 @@ class _SearchGroupsScreenState extends State<SearchGroupsScreen> {
                   ),
                 ),
                 onConfirm: (results) {
-                  //_selectedAnimals = results;
+                  // TODO: Filter groups by results
                 },
               ),
             ),
