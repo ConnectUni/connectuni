@@ -106,7 +106,7 @@ class _SearchPeopleScreenState extends State<SearchPeopleScreen> {
             ),
             ...usersDB
                 .getUsers()
-                .map((uName) => UserCardSearch(name: uName.uid)),
+                .map((uName) => UserCardSearch(name: uName.displayName)),
           ],
         ),
       ),
