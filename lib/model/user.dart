@@ -12,8 +12,8 @@ class User {
   String status;
   List<User> friends;
   List<String> images;
-  List<int> groupIDs;
-  List<int> eventIDs;
+  List<String> groupIDs;
+  List<String> eventIDs;
 
   /// constructor
   User(
@@ -75,22 +75,22 @@ class User {
   }
 
   /// Add a new group ID.
-  void addGroupID(int newGroupID) {
+  void addGroupID(String newGroupID) {
     groupIDs.add(newGroupID);
   }
 
   /// Delete a group ID.
-  void deleteGroupID(int deleteGroupID) {
+  void deleteGroupID(String deleteGroupID) {
     groupIDs.remove(deleteGroupID);
   }
 
   /// Add a new event ID.
-  void addEventID(int newEventID) {
+  void addEventID(String newEventID) {
     eventIDs.add(newEventID);
   }
 
   /// Delete a event ID.
-  void deleteEventID(int deleteEventID) {
+  void deleteEventID(String deleteEventID) {
     eventIDs.remove(deleteEventID);
   }
 
@@ -130,11 +130,11 @@ class User {
     return images;
   }
 
-  List<int> getGroupIDs() {
+  List<String> getGroupIDs() {
     return groupIDs;
   }
 
-  List<int> getEventIDs() {
+  List<String> getEventIDs() {
     return eventIDs;
   }
 }
@@ -157,12 +157,12 @@ class UsersDB {
         'assets/images/Feed1.png',
       ],
       [
-        123,
-        456,
+        '123',
+        '456',
       ],
       [
-        111,
-        222,
+        '111',
+        '222',
       ],
     ),
     User(
@@ -178,12 +178,12 @@ class UsersDB {
         'assets/images/Feed1.png',
       ],
       [
-        123,
-        456,
+        '123',
+        '456',
       ],
       [
-        111,
-        222,
+        '111',
+        '222',
       ],
     ),
     User(
@@ -201,12 +201,12 @@ class UsersDB {
         'assets/images/Feed1.png',
       ],
       [
-        123,
-        456,
+        '123',
+        '456',
       ],
       [
-        111,
-        222,
+        '111',
+        '222',
       ],
     ),
     User(
@@ -224,12 +224,12 @@ class UsersDB {
         'assets/images/Feed1.png',
       ],
       [
-        123,
-        456,
+        '123',
+        '456',
       ],
       [
-        111,
-        222,
+        '111',
+        '222',
       ],
     ),
     User(
@@ -247,12 +247,12 @@ class UsersDB {
         'assets/images/Feed1.png',
       ],
       [
-        123,
-        456,
+        '123',
+        '456',
       ],
       [
-        111,
-        222,
+        '111',
+        '222',
       ],
     ),
   ];
@@ -266,7 +266,7 @@ class UsersDB {
 
   /// Return single User object, search with their UH ID number.
   /// related: cannot change uid to be int type - throw errors
-  User getUserByID(int id) {
+  User getUserByID(String id) {
     return allUsers.firstWhere((user) => user.uid == id);
   }
 
