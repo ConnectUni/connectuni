@@ -1,3 +1,4 @@
+import 'user.dart';
 /**
  * Generic outline of the different groups that will be described by each page.
  *
@@ -66,9 +67,13 @@ class Group {
   }
   //Setter methtod to update the group description.
   void updateGroupDescription(String newDesc) {
-    this.groupDescription = newDesc;
+    groupDescription = newDesc;
   }
-  ///Getter methods potentially not needed as it can be returned by nameOfVariable.field?
+  ///Getter methods for list fields.
+  //Getter method for grabbing all users in a group.
+  List<User> getAllUsersInGroup() {
+    return userIds.map((userId) => usersDB.getUser(userId)).toList();
+  }
 }
 
 ///Provides access to and operations on all defined groups.
@@ -160,7 +165,6 @@ class GroupsDB {
   Group getGroupByProfessor(String professor) {
     return allGroups.firstWhere((group) => group.professor == professor);
   }
-
   //Getter method for grabbing all groups.
   List<Group> getAllGroups() {
     return allGroups;
