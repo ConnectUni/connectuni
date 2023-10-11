@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 
+import 'package:connectuni/model/group.dart';
+import 'package:connectuni/model/user.dart';
 
 /**
  * Information page for a specific group that displays the group members as well as a description of the selected group.
@@ -7,9 +9,12 @@ import 'package:flutter/material.dart';
  */
 
 class GroupInfo extends StatefulWidget {
+  final String id;
+
   const GroupInfo({
-    super.key,
-  });
+    Key? key,
+    required this.id,
+  }) : super(key: key);
 
   State<GroupInfo> createState() => _GroupInfoState();
 }
@@ -27,10 +32,11 @@ class _GroupInfoState extends State<GroupInfo> {
 
   @override
   Widget build(BuildContext context) {
+    Group groupData = groupsDB.getGroupById(widget.id);
     return Scaffold(
       appBar: AppBar(
         leading: const BackButton(),
-        title: const Text('ICS 466 | Philip Johnson'),
+        title: Text('${groupData.groupName} | ${groupData.professor}'),
         actions: <Widget>[
           IconButton(
             icon: const Icon(
