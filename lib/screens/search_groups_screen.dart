@@ -26,11 +26,20 @@ class _SearchGroupsScreenState extends State<SearchGroupsScreen> {
         actions: <Widget>[
           IconButton(
             icon: const Icon(
-              Icons.arrow_forward_ios,
-              semanticLabel: 'Search for events',
+              Icons.person_search,
+              semanticLabel: 'Search for people',
             ),
             onPressed: () {
               widget.pageController.animateToPage(1, duration: const Duration(milliseconds: 300), curve: Curves.easeInOut);
+            },
+          ),
+          IconButton(
+            icon: const Icon(
+              Icons.celebration,
+              semanticLabel: 'Search for events',
+            ),
+            onPressed: () {
+              widget.pageController.animateToPage(2, duration: const Duration(milliseconds: 300), curve: Curves.easeInOut);
             },
           ),
         ],
