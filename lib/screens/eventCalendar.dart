@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:multi_select_flutter/multi_select_flutter.dart';
 
+import '../model/group.dart';
 
 /**
  * Implements a Calendar that is able to display events and their details.
@@ -14,15 +16,7 @@ class EventCalendar extends StatefulWidget {
 }
 
 class _EventCalendarState extends State<EventCalendar> {
-  int _selectedIndex = 0;
-
-  void _onItemTapped(int index) {
-    if (index != _selectedIndex) {
-      setState(() {
-        _selectedIndex = index;
-      });
-    }
-  }
+  final _items = groupsDB.getAllGroups().map((gName) => MultiSelectItem(gName, gName.groupName)).toList();
 
   @override
   Widget build(BuildContext context) {
@@ -33,97 +27,36 @@ class _EventCalendarState extends State<EventCalendar> {
       ),
       body: ListView(
         children: [
-          //TODO: Implement functionality and make cards interactive rather than simply visual.
-          const Padding(
-            padding: EdgeInsets.only(top: 20, left: 20),
-            child: Text(
-              'Members:',
-              style: TextStyle(
-                fontSize: 20,
-                fontWeight: FontWeight.bold,
+          Padding(
+            padding: const EdgeInsets.all(8.0),
+            child: MultiSelectDialogField(
+              items: _items,
+              title: const Text("Viewing events for group:"),
+              selectedColor: Colors.blue,
+              decoration: BoxDecoration(
+                color: Colors.blue.withOpacity(0.1),
+                borderRadius: const BorderRadius.all(Radius.circular(40)),
+                border: Border.all(
+                  color: Colors.blue,
+                  width: 2,
+                ),
               ),
-            ),
-          ),
-          const Padding(
-            padding: EdgeInsets.all(10),
-            child: Column(
-              children: [
-                Card(
-                  child: ListTile(
-                    leading: CircleAvatar(
-                      radius: 18,
-                      backgroundImage: AssetImage('assets/images/You.jpg'),
-                    ),
-                    title: Text('You'),
-                  ),
-                ),
-                Card(
-                  child: ListTile(
-                    leading: CircleAvatar(
-                      radius: 18,
-                      backgroundImage: AssetImage('assets/images/Person 1.jpg'),
-                    ),
-                    title: Text('Person 1'),
-                  ),
-                ),
-                Card(
-                  child: ListTile(
-                    leading: CircleAvatar(
-                      radius: 18,
-                      backgroundImage: AssetImage('assets/images/Person 2.jpg'),
-                    ),
-                    title: Text('Person 2'),
-                  ),
-                ),
-                Card(
-                  child: ListTile(
-                    leading: CircleAvatar(
-                      radius: 18,
-                      backgroundImage: AssetImage('assets/images/Person 3.jpg'),
-                    ),
-                    title: Text('Person 3'),
-                  ),
-                ),
-                Card(
-                  child: ListTile(
-                    leading: CircleAvatar(
-                      radius: 18,
-                      backgroundImage: AssetImage('assets/images/Person4.jpg'),
-                    ),
-                    title: Text('Person 4'),
-                  ),
-                ),
-              ],
-            ),
-          ),
-          const Divider(
-            height: 7,
-            thickness: 2,
-            indent: 20,
-            endIndent: 20,
-            color: Colors.black,
-          ),
-          const Padding(
-            padding: EdgeInsets.only(top: 20, left: 20),
-            child: Text(
-              'Information:',
-              style: TextStyle(
-                fontSize: 20,
-                fontWeight: FontWeight.bold,
+              buttonIcon: const Icon(
+                Icons.filter,
+                color: Colors.blue,
               ),
+              buttonText: Text(
+                "Filter by:",
+                style: TextStyle(
+                  color: Colors.blue[800],
+                  fontSize: 16,
+                ),
+              ),
+              onConfirm: (results) {
+                // TODO: Filter groups by results
+              },
             ),
           ),
-          Container(
-            padding: EdgeInsets.only(top: 10, left: 20, right: 20, bottom: 20),
-            child: const Text(
-              'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nulla mattis euismod feugiat. '
-                  'Nullam sodales ante eu cursus bibendum. Pellentesque rhoncus enim id fringilla tempu'
-                  's. Fusce a augue vehicula, tincidunt augue hendrerit, ultricies leo. Nunc mollis sem ac'
-                  ' velit efficitur euismod. Sed vitae interdum justo. Integer dui nibh, porttitor elementum'
-                  ' rhoncus in, euismod id risus. Ut eleifend nunc et tellus mattis fermentum.',
-              softWrap: true,
-            ),
-          )
         ],
       ),
     ); //Scaffold
