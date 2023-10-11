@@ -104,7 +104,30 @@ class _GroupInfoState extends State<GroupInfo> {
               groupData.groupDescription,
               softWrap: true,
             ),
-          )
+          ),
+          const Divider(
+            height: 7,
+            thickness: 2,
+            indent: 20,
+            endIndent: 20,
+            color: Colors.black,
+          ),
+          Padding(
+            padding: const EdgeInsets.all(10.0),
+            //TODO: Make this button conditional on whether or not the user is in the group.
+            child: TextButton(
+              onPressed: (){
+                //groupData.removeUserId(PLACE CURRENT USER ID HERE)
+                //Placeholder currently only removes the first user:
+                groupData.removeUserId('user-001');
+              },
+              style: ButtonStyle(
+                backgroundColor: MaterialStateProperty.all<Color>(Colors.red),
+                foregroundColor: MaterialStateProperty.all<Color>(Colors.white),
+              ),
+              child: const Text('LEAVE THIS GROUP'),
+            ),
+          ),
         ],
       ),
       //TODO ADD BOTTOM NAV BAR

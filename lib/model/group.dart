@@ -55,7 +55,9 @@ class Group {
   }
   //Setter method for removing a user ID from the group.
   void removeUserId(String userId) {
-    userIds.remove(userId);
+    if(userIds.contains(userId)) {
+      userIds.remove(userId);
+    }
   }
   //Setter method to update the number of new messages.
   void updateNewMessages(int newMessages) {
