@@ -19,9 +19,21 @@ class EventCalendar extends StatefulWidget {
 
 class _EventCalendarState extends State<EventCalendar> {
   final _items = groupsDB.getAllGroups().map((gName) => MultiSelectItem(gName, gName.groupName)).toList();
+  late final ValueNotifier<List<Event>> _selectedEvents;
   CalendarFormat _calendarFormat = CalendarFormat.month;
   DateTime _focusedDay = DateTime.now();
   DateTime? _selectedDay;
+
+  @override
+  void initState() {
+    super.initState();
+    _selectedEvents = ValueNotifier(_getEventsForDay(_focusedDay));
+  }
+
+  List<Event> _getEventsForDay(DateTime day) {
+    // Implementation example
+    return eventsDB.getAllEvents().where((event) => isSameDay(event.eventDate, day)).toList() ?? [];
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -86,8 +98,7 @@ class _EventCalendarState extends State<EventCalendar> {
                 },
                 eventLoader: (day) {
                   //Create a list of days associated with the specified day in the method.
-                  //return groupsDB.getAllGroups().map((gName) => MultiSelectItem(gName, gName.groupName)).toList()
-                  return eventsDB.getAllEvents().where((event) => isSameDay(event.eventDate, day)).toList();
+                  return _getEventsForDay(day);
                 },
           ),
         ],
