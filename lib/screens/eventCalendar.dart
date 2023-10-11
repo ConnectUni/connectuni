@@ -29,18 +29,7 @@ class _EventCalendarState extends State<EventCalendar> {
     return Scaffold(
       appBar: AppBar(
         leading: const BackButton(),
-        title: const Text('ICS 466 | Philip Johnson'),
-        actions: <Widget>[
-          IconButton(
-            icon: const Icon(
-              Icons.badge_outlined,
-              semanticLabel: 'Information',
-            ),
-            onPressed: () {
-              print('Go to Information page');
-            },
-          ),
-        ],
+        title: const Text('Events Calendar'),
       ),
       body: ListView(
         children: [
