@@ -1,97 +1,138 @@
-/**
- * This file contains the User class and the UsersDB class.
- * Generic outline of the different users that will be described by each page.
- */
-class User {
-  User({
-    required this.uid,
-    required this.email,
-    required this.displayName,
-    required this.photoURL,
-    required this.major,
-    required this.projectedGraduation,
-    required this.status,
-  });
+/// The User object.
 
+class User {
   final String uid;
   final String email;
-  final String displayName;
-  final String photoURL;
-  final String major;
-  final String projectedGraduation;
-  final String status;
+  String displayName;
+  String pfp;
+  String major;
+  String projectedGraduation;
+  String status;
+  List<User> friends;
+  List<String> images;
+  List<String> groupIDs;
+  List<String> eventIDs;
 
+  /// Constructor
+  User(
+      this.uid,
+      this.email,
+      this.displayName,
+      this.pfp,
+      this.major,
+      this.projectedGraduation,
+      this.status,
+      this.friends,
+      this.images,
+      this.groupIDs,
+      this.eventIDs);
+
+  /// Change name.
+  void setUserName(String newName) {
+    displayName = newName;
+  }
+
+  /// Change profile picture.
+  void setPhotoURL(String newPfp) {
+    pfp = newPfp;
+  }
+
+  /// Change major.
+  void setMajor(String newMajor) {
+    major = newMajor;
+  }
+
+  /// Change projected graduation.
+  void setGradDate(String newGradDate) {
+    projectedGraduation = newGradDate;
+  }
+
+  /// Change status.
+  void setStatus(String newStatus) {
+    status = newStatus;
+  }
+
+  /// Add User to friends list.
+  void addFriend(User newFriend) {
+    friends.add(newFriend);
+  }
+
+  /// Delete User from friends list.
+  void deleteFriend(User deleteFriend) {
+    friends.remove(deleteFriend);
+  }
+
+  /// Add image to profile gallery.
+  void addImage(String newImage) {
+    images.add(newImage);
+  }
+
+  /// Delete image from profile gallery.
+  void deleteImage(String deleteImage) {
+    images.remove(deleteImage);
+  }
+
+  /// Add a new group ID.
+  void addGroupID(String newGroupID) {
+    groupIDs.add(newGroupID);
+  }
+
+  /// Delete a group ID.
+  void deleteGroupID(String deleteGroupID) {
+    groupIDs.remove(deleteGroupID);
+  }
+
+  /// Add a new event ID.
+  void addEventID(String newEventID) {
+    eventIDs.add(newEventID);
+  }
+
+  /// Delete a event ID.
+  void deleteEventID(String deleteEventID) {
+    eventIDs.remove(deleteEventID);
+  }
+
+  String getUid() {
+    return uid;
+  }
+
+  String getEmail() {
+    return email;
+  }
+
+  String getName() {
+    return displayName;
+  }
+
+  String getPfp() {
+    return pfp;
+  }
+
+  String getMajor() {
+    return major;
+  }
+
+  String getGradDate() {
+    return projectedGraduation;
+  }
+
+  String getStatus() {
+    return status;
+  }
+
+  List<User> getFriends() {
+    return friends;
+  }
+
+  List<String> getImages() {
+    return images;
+  }
+
+  List<String> getGroupIDs() {
+    return groupIDs;
+  }
+
+  List<String> getEventIDs() {
+    return eventIDs;
+  }
 }
-
-class UsersDB {
-  final List<User> allUsers =[
-    User(
-      uid: 'user-001',
-      email: 'aritter@foo.edu',
-      displayName: 'Alberta Ritter',
-      photoURL: 'assets/images/You.jpg',
-      major: 'Computer Science',
-      projectedGraduation: 'Fall 2024',
-      status: 'I love computer science!',
-    ),
-    User(
-      uid: 'user-002',
-      email: 'bmiller@foo.edu',
-      displayName: 'Bella Miller',
-      photoURL: 'assets/images/bella.png',
-      major: 'Liberal Arts',
-      projectedGraduation: 'Fall 2025',
-      status: 'I need a nap.',
-    ),
-    User(
-      uid: 'user-003',
-      email: 'coolcaleb@foo.edu',
-      displayName: 'Caleb Smith',
-      photoURL: 'assets/images/caleb.png',
-      major: 'Mathematics',
-      projectedGraduation: 'Fall 2023',
-      status: 'I love math!',
-    ),
-    User(
-      uid: 'user-004',
-      email: 'dbonejones@foo.edu',
-      displayName: 'Diana Jones',
-      photoURL: 'assets/images/diana.png',
-      major: 'Graphic Design',
-      projectedGraduation: 'Spring 2024',
-      status: 'I love art!',
-    ),
-    User(
-      uid: 'user-005',
-      email: 'brown@foo.edu',
-      displayName: 'Ethan Brown',
-      photoURL: 'assets/images/ethan.png',
-      major: 'Business',
-      projectedGraduation: 'Fall 2025',
-      status: 'I love business!',
-    ),
-    User(
-      uid: 'user-006',
-      email: 'braddahal@foo.edu',
-      displayName: 'Albert Flores',
-      photoURL: 'assets/images/albert.png',
-      major: 'Computer Science',
-      projectedGraduation: 'Spring 2024',
-      status: 'Almost Friday!',
-    ),
-  ];
-
-  User getUser(String uid) {
-    return allUsers.firstWhere((user) => user.uid == uid);
-  }
-
-  Iterable<User> getGroupMembers(List<String> memberIds) {
-    return allUsers.where((user) => memberIds.contains(user.uid));
-  }
-
-  List<User> getUsers() {
-    return allUsers;
-  }
-}
-
-UsersDB usersDB = UsersDB();
