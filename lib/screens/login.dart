@@ -54,14 +54,14 @@ class _LoginPageState extends State<LoginPage> {
             const SizedBox(height: 80.0),
             Column(
               children: <Widget>[
-                 const Text(
+                const Text(
                   "Welcome to",
                   style: TextStyle(
                     fontSize: 30.0,
                     fontWeight: FontWeight.bold,
                     color: Colors.blue,
                   ),
-                 ),
+                ),
                 //change image: update pubspec too
                 Image.asset('assets/images/Logo.png'),
               ],
@@ -89,7 +89,7 @@ class _LoginPageState extends State<LoginPage> {
               children: [
                 const SizedBox(
                   height: 100.0,
-                  width: 50.0,
+                  width: 40.0,
                 ),
                 ElevatedButton(
                   onPressed: () {
@@ -120,14 +120,15 @@ class _LoginPageState extends State<LoginPage> {
                 ),
 
                 //clear button
-                TextButton(
-                  onPressed: () {
-                    _emailController.clear();
-                    _passwordController.clear();
-                  },
-                  child: const Text("CLEAR"),
-                ),
-                //next button
+                Flexible( child:
+                    TextButton(
+                      onPressed: () {
+                        _emailController.clear();
+                        _passwordController.clear();
+                      },
+                      child: const Text("CLEAR"),
+                    ),
+                  ), //next button
               ],
             ),
           ],
