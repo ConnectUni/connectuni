@@ -36,7 +36,7 @@ class UserList {
 /// DELETE THIS BOTTOM SECTION AFTER GETTING REAL DB
 final List<User> mockUsers = [
   User(
-    'uid-001',
+    'user-001',
     'braddahal@foo.edu',
     'Albert Flores',
     'assets/images/albert.png',
@@ -59,7 +59,7 @@ final List<User> mockUsers = [
     ],
   ),
   User(
-    'uid-002',
+    'user-002',
     'bmiller@foo.edu',
     'Bella Miller',
     'assets/images/bella.png',
@@ -79,7 +79,7 @@ final List<User> mockUsers = [
     ],
   ),
   User(
-    'uid-003',
+    'user-003',
     'coolcaleb@foo.edu',
     'Caleb Smith',
     'assets/images/caleb.png',
@@ -101,7 +101,7 @@ final List<User> mockUsers = [
     ],
   ),
   User(
-    'uid-004',
+    'user-004',
     'dbonejones@foo.edu',
     'Diana Jones',
     'assets/images/diana.png',
@@ -124,7 +124,7 @@ final List<User> mockUsers = [
     ],
   ),
   User(
-    'uid-005',
+    'user-005',
     'brown@foo.edu',
     'Ethan Brown',
     'assets/images/ethan.png',
