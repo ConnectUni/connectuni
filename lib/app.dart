@@ -37,7 +37,7 @@ class ConnectUniApp extends StatelessWidget {
               pageController: _pageController,
             ),
         '/conversations': (BuildContext context) => const ChatPage(),
-        '/profile': (BuildContext context) => const ProfilePage(),
+        '/profile': (BuildContext context) => ProfilePage(),
         '/settings': (BuildContext context) => const Settings(),
         '/friendslist': (BuildContext context) => const FriendsList(),
       },

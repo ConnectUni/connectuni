@@ -186,6 +186,10 @@ class GroupsDB {
   Group getGroupByProfessor(String professor) {
     return allGroups.firstWhere((group) => group.professor == professor);
   }
+  //Getter method for grabbing all groups that have a certain user.
+  List<Group> getGroupsByUser(String userId) {
+    return allGroups.where((group) => group.userIds.contains(userId)).toList();
+  }
   //Getter method for grabbing all groups.
   List<Group> getAllGroups() {
     return allGroups;
