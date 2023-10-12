@@ -1,12 +1,13 @@
-import 'package:connectuni/model/user.dart';
-import 'package:connectuni/model/user_card_serach.dart';
+import 'package:connectuni/model/userList.dart';
+import 'package:connectuni/model/user_card_search.dart';
 import 'package:flutter/material.dart';
 import 'package:multi_select_flutter/multi_select_flutter.dart';
 
 import '../model/group.dart';
 
 class SearchPeopleScreen extends StatefulWidget {
-  const SearchPeopleScreen({Key? key, required this.pageController}) : super(key: key);
+  const SearchPeopleScreen({Key? key, required this.pageController})
+      : super(key: key);
 
   static const String routeName = '/search_people';
   final PageController pageController;
@@ -16,7 +17,10 @@ class SearchPeopleScreen extends StatefulWidget {
 }
 
 class _SearchPeopleScreenState extends State<SearchPeopleScreen> {
-  final _items = groupsDB.getAllGroups().map((gName) => MultiSelectItem(gName, gName.groupName)).toList();
+  final _items = groupsDB
+      .getAllGroups()
+      .map((gName) => MultiSelectItem(gName, gName.groupName))
+      .toList();
 
   @override
   Widget build(BuildContext context) {
@@ -26,11 +30,13 @@ class _SearchPeopleScreenState extends State<SearchPeopleScreen> {
         actions: <Widget>[
           IconButton(
             icon: const Icon(
-                Icons.group,
-                semanticLabel: 'Search for groups',
+              Icons.group,
+              semanticLabel: 'Search for groups',
             ),
             onPressed: () {
-              widget.pageController.animateToPage(0, duration: const Duration(milliseconds: 300), curve: Curves.easeInOut);
+              widget.pageController.animateToPage(0,
+                  duration: const Duration(milliseconds: 300),
+                  curve: Curves.easeInOut);
             },
           ),
           IconButton(
@@ -39,7 +45,9 @@ class _SearchPeopleScreenState extends State<SearchPeopleScreen> {
               semanticLabel: 'Search for events',
             ),
             onPressed: () {
-              widget.pageController.animateToPage(2, duration: const Duration(milliseconds: 300), curve: Curves.easeInOut);
+              widget.pageController.animateToPage(2,
+                  duration: const Duration(milliseconds: 300),
+                  curve: Curves.easeInOut);
             },
           ),
         ],
@@ -81,35 +89,35 @@ class _SearchPeopleScreenState extends State<SearchPeopleScreen> {
               padding: const EdgeInsets.all(8.0),
               child: SearchAnchor(
                   builder: (BuildContext context, SearchController controller) {
-                    return SearchBar(
-                      controller: controller,
-                      onTap: () {
-                        controller.openView();
-                      },
-                      onChanged: (_) {
-                        controller.openView();
-                      },
-                      hintText: 'Search...',
-                      leading: const Icon(Icons.search),
-                    );
+                return SearchBar(
+                  controller: controller,
+                  onTap: () {
+                    controller.openView();
                   },
-                  suggestionsBuilder:
+                  onChanged: (_) {
+                    controller.openView();
+                  },
+                  hintText: 'Search...',
+                  leading: const Icon(Icons.search),
+                );
+              }, suggestionsBuilder:
                       (BuildContext context, SearchController controller) {
-                    return List<ListTile>.generate(5, (int index) {
-                      final String item = 'item $index';
-                      return ListTile(
-                        title: Text(item),
-                        onTap: () {
-                          setState(() {
-                            controller.closeView(item);
-                          });
-                        },
-                      );
-                    });
-                  }),
+                return List<ListTile>.generate(5, (int index) {
+                  final String item = 'item $index';
+                  return ListTile(
+                    title: Text(item),
+                    onTap: () {
+                      setState(() {
+                        controller.closeView(item);
+                      });
+                    },
+                  );
+                });
+              }),
             ),
             ...usersDB
-                .getUsers().map((uName) => UserCardSearch(name: uName.uid)),
+                .getUsers()
+                .map((uName) => UserCardSearch(name: uName.displayName)),
           ],
         ),
       ),

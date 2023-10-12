@@ -2,7 +2,7 @@ import 'user.dart';
 /**
  * Generic outline of the different groups that will be described by each page.
  *
- * Last updated: 10/9 Added getter and setter methods as well as discussed group fields.
+ * Last updated: 10/10 added interests field and setter method.
  *
  */
 
@@ -19,8 +19,9 @@ class Group {
     required this.chatIds,   // Ex. [chat-001, chat-002 ... chat-042]
     required this.eventIds, // Ex. [event-001, event-002 ... event-042]
     required this.userIds, //Ex. [user-001, user-002 ... user-042]
+    required this.interests, //Ex. [Computer Science, Mathematics, Business]
   });
-  
+
   final String groupID;
   final String groupName;
   final String semYear;
@@ -30,6 +31,7 @@ class Group {
   List<String> chatIds;
   List<String> eventIds;
   List<String> userIds;
+  List<String> interests;
   String groupImage;
 
   ///SETTER METHODS:
@@ -73,6 +75,15 @@ class Group {
   void updateGroupDescription(String newDesc) {
     groupDescription = newDesc;
   }
+  //Setter method for adding interests.
+  void addInterest(String interest) {
+    interests.add(interest);
+  }
+  //Setter method for removing interests.
+  void removeInterest(String interest) {
+    interests.remove(interest);
+  }
+
   ///Getter methods for list fields.
   //Getter method for grabbing all users in a group.
   List<User> getAllUsersInGroup() {
@@ -94,6 +105,7 @@ class GroupsDB {
         chatIds: [],
         eventIds: ['event-001'],
         userIds: ['user-001', 'user-002', 'user-003', 'user-004', 'user-005'],
+        interests: ['Computer Science'],
       ),
       Group(
         groupID: 'group-002',
@@ -106,6 +118,7 @@ class GroupsDB {
         chatIds: [],
         eventIds: [],
         userIds: ['user-001', 'user-002', 'user-003', 'user-004', 'user-005'],
+        interests: ['Computer Science'],
       ),
       Group(
         groupID: 'group-003',
@@ -118,6 +131,7 @@ class GroupsDB {
         chatIds: [],
         eventIds: [],
         userIds: ['user-001', 'user-002', 'user-003', 'user-004', 'user-005'],
+        interests: ['Computer Science'],
       ),
       Group(
         groupID: 'group-004',
@@ -130,6 +144,7 @@ class GroupsDB {
         chatIds: [],
         eventIds: ['event-003', 'event-004'],
         userIds: ['user-001', 'user-002', 'user-003', 'user-004', 'user-005'],
+        interests: ['Mathematics'],
       ),
       Group(
         groupID: 'group-005',
@@ -142,6 +157,7 @@ class GroupsDB {
         chatIds: [],
         eventIds: ['event-005'],
         userIds: ['user-001', 'user-002', 'user-003', 'user-004', 'user-005'],
+        interests: ['Computer Science'],
       ),
     ];
   ///SETTER METHODS:
