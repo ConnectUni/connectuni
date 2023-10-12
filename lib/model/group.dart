@@ -49,9 +49,11 @@ class Group {
   void removeEventId(String eventId) {
     eventIds.remove(eventId);
   }
-  //Setter method for adding a user ID to the group.
+  //Setter method for adding a user ID to the gsroup.
   void addUserId(String userId) {
+    if(!userIds.contains(userId)){
     userIds.add(userId);
+    }
   }
   //Setter method for removing a user ID from the group.
   void removeUserId(String userId) {

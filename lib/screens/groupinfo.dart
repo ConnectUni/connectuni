@@ -20,16 +20,6 @@ class GroupInfo extends StatefulWidget {
 }
 
 class _GroupInfoState extends State<GroupInfo> {
-  int _selectedIndex = 0;
-
-  void _onItemTapped(int index) {
-    if (index != _selectedIndex) {
-      setState(() {
-        _selectedIndex = index;
-      });
-    }
-  }
-
   @override
   Widget build(BuildContext context) {
     Group groupData = groupsDB.getGroupById(widget.id);
@@ -112,43 +102,41 @@ class _GroupInfoState extends State<GroupInfo> {
             endIndent: 20,
             color: Colors.black,
           ),
-          Padding(
-            padding: const EdgeInsets.all(10.0),
-            //TODO: Make this button conditional on whether or not the user is in the group.
-            child: TextButton(
-              onPressed: (){
-                //groupData.removeUserId(PLACE CURRENT USER ID HERE)
-                //Placeholder currently only removes the first user:
-                groupData.removeUserId('user-001');
-              },
-              style: ButtonStyle(
-                backgroundColor: MaterialStateProperty.all<Color>(Colors.red),
-                foregroundColor: MaterialStateProperty.all<Color>(Colors.white),
+          //Display a button to leave the group if the user is in the group.
+          if(groupData.userIds.contains('user-001'))
+            Padding(
+              padding: const EdgeInsets.all(10.0),
+              //TODO: Make this button conditional on whether or not the user is in the group.
+              child: TextButton(
+                onPressed: (){
+                  //Placeholder currently only removes the first user:
+                  groupData.removeUserId('user-001');
+                },
+                style: ButtonStyle(
+                  backgroundColor: MaterialStateProperty.all<Color>(Colors.red),
+                  foregroundColor: MaterialStateProperty.all<Color>(Colors.white),
+                ),
+                child: const Text('LEAVE THIS GROUP'),
               ),
-              child: const Text('LEAVE THIS GROUP'),
             ),
-          ),
+          //Display a button to join the group if the user is not in the group.
+          if(!groupData.userIds.contains('user-001'))
+            Padding(
+              padding: const EdgeInsets.all(10.0),
+              //TODO: Make this button conditional on whether or not the user is in the group.
+              child: TextButton(
+                onPressed: (){
+                  //Placeholder currently only removes the first user:
+                  groupData.addUserId('user-001');
+                },
+                style: ButtonStyle(
+                  backgroundColor: MaterialStateProperty.all<Color>(Colors.green),
+                  foregroundColor: MaterialStateProperty.all<Color>(Colors.white),
+                ),
+                child: const Text('JOIN THIS GROUP'),
+              ),
+            ),
         ],
-      ),
-      //TODO ADD BOTTOM NAV BAR
-      bottomNavigationBar: BottomNavigationBar(
-        items: const <BottomNavigationBarItem>[
-          BottomNavigationBarItem(
-            label: 'Groups',
-            icon: Icon(Icons.chat_bubble_outline),
-          ),
-          BottomNavigationBarItem(
-            label: 'Search',
-            icon: Icon(Icons.search),
-          ),
-          BottomNavigationBarItem(
-            //TODO Replace with image of users profile picture
-            label: 'Profile',
-            icon: Icon(Icons.person_2_outlined),
-          ),
-        ],
-        currentIndex: _selectedIndex,
-        onTap: _onItemTapped,
       ),
     ); //Scaffold
   } //build
