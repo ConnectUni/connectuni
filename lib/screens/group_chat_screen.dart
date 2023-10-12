@@ -38,7 +38,9 @@ class _GroupChatScreenState extends State<GroupChatScreen> {
             onPressed: () {
               Navigator.push(
                 context,
-                CupertinoPageRoute(builder: (context) => const GroupInfo()),
+                CupertinoPageRoute(
+                    builder: (context) => GroupInfo(id: widget.id)
+                ),
               );
             },
           ),
