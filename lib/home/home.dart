@@ -49,19 +49,28 @@ class _HomePageState extends State<HomePage> {
         children: screenItems,
       ),
       bottomNavigationBar: BottomNavigationBar(
+        type: BottomNavigationBarType.shifting,
         items: const <BottomNavigationBarItem>[
           BottomNavigationBarItem(
             label: 'Groups',
             icon: Icon(Icons.chat_bubble_outline),
+            backgroundColor: Colors.blue,
           ),
           BottomNavigationBarItem(
             label: 'Search',
             icon: Icon(Icons.search),
+            backgroundColor: Colors.blue,
+          ),
+          BottomNavigationBarItem(
+            label: 'Calendar',
+            icon: Icon(Icons.calendar_month_outlined),
+            backgroundColor: Colors.blue,
           ),
           BottomNavigationBarItem(
             //TODO Replace with image of users profile picture
             label: 'Profile',
             icon: Icon(Icons.person_2_outlined),
+            backgroundColor: Colors.blue,
           ),
         ],
         currentIndex: _selectedIndex,
