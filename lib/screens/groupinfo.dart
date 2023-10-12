@@ -62,7 +62,7 @@ class _GroupInfoState extends State<GroupInfo> {
                       child: ListTile(
                         leading: CircleAvatar(
                           radius: 18,
-                          backgroundImage: AssetImage(uName.photoURL),
+                          backgroundImage: AssetImage(uName.pfp),
                         ),
                         title: Text(uName.displayName),
                       ),

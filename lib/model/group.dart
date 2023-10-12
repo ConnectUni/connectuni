@@ -1,4 +1,5 @@
 import 'user.dart';
+import 'userList.dart';
 /**
  * Generic outline of the different groups that will be described by each page.
  *
@@ -87,7 +88,7 @@ class Group {
   ///Getter methods for list fields.
   //Getter method for grabbing all users in a group.
   List<User> getAllUsersInGroup() {
-    return userIds.map((userId) => usersDB.getUser(userId)).toList();
+    return userIds.map((userId) => usersDB.getUserByID(userId)).toList();
   }
 }
 
