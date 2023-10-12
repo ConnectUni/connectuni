@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 
 import '../screens/search_groups_screen.dart';
 import '../screens/search_people_screen.dart';
+import '../screens/search_events_screen.dart';
 
 class SearchPageController extends StatefulWidget {
   const SearchPageController({Key? key}) : super(key: key);
@@ -31,7 +32,8 @@ class _SearchPageControllerState extends State<SearchPageController> {
       controller: _pageController,
       children: [
         SearchGroupsScreen(pageController: _pageController),
-        SearchPeopleScreen(pageController: _pageController,),
+        SearchPeopleScreen(pageController: _pageController),
+        SearchEventsScreen(pageController: _pageController),
       ],
     );
   }
