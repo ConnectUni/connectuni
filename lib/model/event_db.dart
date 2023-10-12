@@ -95,6 +95,16 @@ class EventsDB {
       groupId: 'group-001',
       userIds: ['user-001', 'user-002'],
     ),
+    Event(
+      eventId: 'event-006',
+      eventName: 'Test event on same day',
+      eventIcon: 'assets/images/aieabowl.jpg',
+      eventLocation: 'Aiea Bowl',
+      eventDescription: 'Placeholder for event',
+      eventDate: DateTime(2023, 10, 25, 18, 30),
+      groupId: 'group-002',
+      userIds: ['user-002', 'user-003'],
+    ),
   ];
   ///SETTER METHODS:
 
