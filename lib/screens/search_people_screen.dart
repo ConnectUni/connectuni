@@ -18,7 +18,7 @@ class SearchPeopleScreen extends StatefulWidget {
 
 class _SearchPeopleScreenState extends State<SearchPeopleScreen> {
   final _items = groupsDB
-      .getGroups()
+      .getAllGroups()
       .map((gName) => MultiSelectItem(gName, gName.groupName))
       .toList();
 
@@ -30,11 +30,22 @@ class _SearchPeopleScreenState extends State<SearchPeopleScreen> {
         actions: <Widget>[
           IconButton(
             icon: const Icon(
-              Icons.search,
+              Icons.group,
               semanticLabel: 'Search for groups',
             ),
             onPressed: () {
               widget.pageController.animateToPage(0,
+                  duration: const Duration(milliseconds: 300),
+                  curve: Curves.easeInOut);
+            },
+          ),
+          IconButton(
+            icon: const Icon(
+              Icons.celebration,
+              semanticLabel: 'Search for events',
+            ),
+            onPressed: () {
+              widget.pageController.animateToPage(2,
                   duration: const Duration(milliseconds: 300),
                   curve: Curves.easeInOut);
             },

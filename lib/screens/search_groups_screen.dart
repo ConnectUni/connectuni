@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:multi_select_flutter/multi_select_flutter.dart';
-import 'package:connectuni/model/group.dart';
 
+import '../model/group.dart';
 import '../model/group_card_view.dart';
 
 
@@ -16,7 +16,7 @@ class SearchGroupsScreen extends StatefulWidget {
 }
 
 class _SearchGroupsScreenState extends State<SearchGroupsScreen> {
-  final _items = groupsDB.getGroups().map((gName) => MultiSelectItem(gName, gName.groupName)).toList();
+  final _items = groupsDB.getAllGroups().map((gName) => MultiSelectItem(gName, gName.groupName)).toList();
 
   @override
   Widget build(BuildContext context) {
@@ -32,7 +32,16 @@ class _SearchGroupsScreenState extends State<SearchGroupsScreen> {
             onPressed: () {
               widget.pageController.animateToPage(1, duration: const Duration(milliseconds: 300), curve: Curves.easeInOut);
             },
-          )
+          ),
+          IconButton(
+            icon: const Icon(
+              Icons.celebration,
+              semanticLabel: 'Search for events',
+            ),
+            onPressed: () {
+              widget.pageController.animateToPage(2, duration: const Duration(milliseconds: 300), curve: Curves.easeInOut);
+            },
+          ),
         ],
       ),
       body: SingleChildScrollView(
@@ -64,7 +73,7 @@ class _SearchGroupsScreenState extends State<SearchGroupsScreen> {
                   ),
                 ),
                 onConfirm: (results) {
-                  //_selectedAnimals = results;
+                  // TODO: Filter groups by results
                 },
               ),
             ),
@@ -104,15 +113,15 @@ class _SearchGroupsScreenState extends State<SearchGroupsScreen> {
               textAlign: TextAlign.left,
             ),
             ...groupsDB
-                .getGroups()
-                .map((gName) => GroupCardView(name: gName.groupName)),
+                .getAllGroups()
+                .map((gName) => GroupCardView(id: gName.groupID)),
             const Text(
               'Other Groups',
               textAlign: TextAlign.left,
             ),
             ...groupsDB
-                .getGroups()
-                .map((gName) => GroupCardView(name: gName.groupName)),
+                .getAllGroups()
+                .map((gName) => GroupCardView(id: gName.groupID)),
             const Text(
                 'Events'
             ),
