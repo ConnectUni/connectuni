@@ -28,10 +28,10 @@ class _SignUpPageState extends State<SignUpPage> {
   }
 
   bool _filledFields() {
-    if (_usernameController.value != null &&
-        _passwordController.value != null &&
-        _passwordCheckController.value != null &&
-        _emailController.value != null) {
+    if (_usernameController.value.text.isNotEmpty &&
+        _passwordController.value.text.isNotEmpty &&
+        _passwordCheckController.value.text.isNotEmpty &&
+        _emailController.value.text.isNotEmpty) {
       return true;
     }
     return false;
