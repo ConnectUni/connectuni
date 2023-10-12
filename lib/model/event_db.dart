@@ -58,7 +58,7 @@ class EventsDB {
     Event(
       eventId: 'event-001',
       eventName: 'ICS 466 Pizza Party',
-      eventIcon: '',
+      eventIcon: 'assets/images/pizzaparty.jpg',
       eventLocation: 'Keller 102',
       eventDescription: 'Come join us for a pizza party!',
       eventDate: DateTime(2023, 10, 13, 12, 30),
@@ -68,7 +68,7 @@ class EventsDB {
     Event(
       eventId: 'event-002',
       eventName: 'ICS 332 Study Session',
-      eventIcon: '',
+      eventIcon: 'assets/images/studysesh.jpg',
       eventLocation: 'ICSpace',
       eventDescription: 'Study session for the upcoming ICS 332 Quiz. Come join us!',
       eventDate: DateTime(2023, 10, 9, 9, 00),
@@ -78,7 +78,7 @@ class EventsDB {
     Event(
       eventId: 'event-003',
       eventName: 'MATH 307 Bowling Outing',
-      eventIcon: '',
+      eventIcon: 'assets/images/aieabowl.jpg',
       eventLocation: 'Aiea Bowl',
       eventDescription: 'Annual Math 307 Bowling competition. Any experience is welcome! Five dollar entrance fee though.',
       eventDate: DateTime(2023, 10, 25, 18, 30),
@@ -88,7 +88,7 @@ class EventsDB {
     Event(
       eventId: 'event-004',
       eventName: 'Final Exam Date',
-      eventIcon: '',
+      eventIcon: 'assets/images/finalexam.jpg',
       eventLocation: 'TBD',
       eventDescription: 'Final Exam for ICS 466.',
       eventDate: DateTime(2023, 11, 3, 7, 30),
