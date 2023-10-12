@@ -40,12 +40,11 @@ class ConnectUniApp extends StatelessWidget {
             ),
         '/searchevents': (BuildContext context) => SearchEventsScreen(
               pageController: _pageController,
-        ),
+            ),
         '/groupinfo': (BuildContext context) => const GroupInfo(),
         '/eventinfo': (BuildContext context) => const EventInfoScreen(id: '',),
         '/conversations': (BuildContext context) => const ChatPage(),
-        '/profile': (BuildContext context) => const ProfilePage(),
-        '/settings': (BuildContext context) => const Settings(),
+        '/profile': (BuildContext context) => ProfilePage(),
         '/friendslist': (BuildContext context) => const FriendsList(),
       },
     );

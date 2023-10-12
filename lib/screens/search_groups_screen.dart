@@ -16,7 +16,7 @@ class SearchGroupsScreen extends StatefulWidget {
 }
 
 class _SearchGroupsScreenState extends State<SearchGroupsScreen> {
-  final _items = groupsDB.getGroups().map((gName) => MultiSelectItem(gName, gName.groupName)).toList();
+  final _items = groupsDB.getAllGroups().map((gName) => MultiSelectItem(gName, gName.groupName)).toList();
 
   @override
   Widget build(BuildContext context) {
@@ -26,11 +26,20 @@ class _SearchGroupsScreenState extends State<SearchGroupsScreen> {
         actions: <Widget>[
           IconButton(
             icon: const Icon(
-              Icons.arrow_forward_ios,
-              semanticLabel: 'Search for events',
+              Icons.person_search,
+              semanticLabel: 'Search for people',
             ),
             onPressed: () {
               widget.pageController.animateToPage(1, duration: const Duration(milliseconds: 300), curve: Curves.easeInOut);
+            },
+          ),
+          IconButton(
+            icon: const Icon(
+              Icons.celebration,
+              semanticLabel: 'Search for events',
+            ),
+            onPressed: () {
+              widget.pageController.animateToPage(2, duration: const Duration(milliseconds: 300), curve: Curves.easeInOut);
             },
           ),
         ],
@@ -104,15 +113,15 @@ class _SearchGroupsScreenState extends State<SearchGroupsScreen> {
               textAlign: TextAlign.left,
             ),
             ...groupsDB
-                .getGroups()
-                .map((gName) => GroupCardView(id: gName.groupId)),
+                .getAllGroups()
+                .map((gName) => GroupCardView(id: gName.groupID)),
             const Text(
               'Other Groups',
               textAlign: TextAlign.left,
             ),
             ...groupsDB
-                .getGroups()
-                .map((gName) => GroupCardView(id: gName.groupId)),
+                .getAllGroups()
+                .map((gName) => GroupCardView(id: gName.groupID)),
             const Text(
                 'Events'
             ),

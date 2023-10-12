@@ -1,7 +1,7 @@
-import 'package:connectuni/model/user.dart';
+import 'package:connectuni/model/userList.dart';
 import 'package:flutter/material.dart';
 
-import '../model/user_card_serach.dart';
+import '../model/user_card_search.dart';
 
 class FriendsList extends StatefulWidget {
   const FriendsList({Key? key}) : super(key: key);
@@ -14,48 +14,46 @@ class _FriendsListState extends State<FriendsList> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: const Text('Friends List'),
-        actions: <Widget>[
-          IconButton(
-              onPressed: () {},
-              icon: const Icon(
-                Icons.add,
-                semanticLabel: 'Add more friends',
-              )),
-        ]
-      ),
+      appBar: AppBar(title: const Text('Friends List'), actions: <Widget>[
+        IconButton(
+            onPressed: () {},
+            icon: const Icon(
+              Icons.add,
+              semanticLabel: 'Add more friends',
+            )),
+      ]),
       body: SingleChildScrollView(
         child: Column(
           children: [
             Padding(
               padding: const EdgeInsets.all(8.0),
               child: SearchAnchor(
-                builder: (BuildContext context, SearchController controller) {
-                  return SearchBar(
-                    controller: controller,
-                    hintText: 'Search for friends',
-                    onTap: () {},
-                    onChanged: (_) {},
-                    leading: const Icon(Icons.search),
+                  builder: (BuildContext context, SearchController controller) {
+                return SearchBar(
+                  controller: controller,
+                  hintText: 'Search for friends',
+                  onTap: () {},
+                  onChanged: (_) {},
+                  leading: const Icon(Icons.search),
+                );
+              }, suggestionsBuilder:
+                      (BuildContext context, SearchController controller) {
+                return List<ListTile>.generate(5, (int index) {
+                  final String friend = 'friend $index';
+                  return ListTile(
+                    title: Text(friend),
+                    onTap: () {
+                      setState(() {
+                        controller.closeView(friend);
+                      });
+                    },
                   );
-                },
-                suggestionsBuilder: (BuildContext context, SearchController controller) {
-                  return List<ListTile>.generate(5, (int index) {
-                    final String friend = 'friend $index';
-                    return ListTile(
-                      title: Text(friend),
-                      onTap: () {
-                        setState(() {
-                          controller.closeView(friend);
-                        });
-                      },
-                    );
-                  });
-                }),
+                });
+              }),
             ),
             ...usersDB
-                .getUsers().map((uName) => UserCardSearch(name: uName.uid)),
+                .getUsers()
+                .map((uName) => UserCardSearch(name: uName.displayName)),
           ],
         ),
       ),
