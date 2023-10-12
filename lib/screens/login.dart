@@ -95,7 +95,7 @@ class _LoginPageState extends State<LoginPage> {
                   onPressed: () {
                     if (checkValidLogin()) {
                       //would switch to user's home screen
-                      Navigator.push(
+                      Navigator.pushReplacement(
                         context,
                         CupertinoPageRoute(
                             builder: (context) => const HomePage()),

@@ -1,6 +1,9 @@
+import 'package:connectuni/home/home.dart';
 import 'package:connectuni/screens/profile.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+
+import 'login.dart';
 
 class SignUpPage extends StatefulWidget {
   const SignUpPage({Key? key}) : super(key: key);
@@ -25,10 +28,10 @@ class _SignUpPageState extends State<SignUpPage> {
   }
 
   bool _filledFields() {
-    if (_usernameController.value != null &&
-        _passwordController.value != null &&
-        _passwordCheckController.value != null &&
-        _emailController.value != null) {
+    if (_usernameController.value.text.isNotEmpty &&
+        _passwordController.value.text.isNotEmpty &&
+        _passwordCheckController.value.text.isNotEmpty &&
+        _emailController.value.text.isNotEmpty) {
       return true;
     }
     return false;
@@ -152,6 +155,16 @@ class _SignUpPageState extends State<SignUpPage> {
                   },
                   child: const Text("CLEAR"),
                 ),
+                TextButton(
+                  onPressed: () {
+                    Navigator.push(
+                      context,
+                      CupertinoPageRoute(
+                          builder: (context) => const LoginPage()),
+                    );
+                  },
+                  child: const Text("BACK"),
+                ),
                 ElevatedButton(
                   // onPressed: () {
                   //   Navigator.push(
@@ -168,7 +181,7 @@ class _SignUpPageState extends State<SignUpPage> {
                         Navigator.push(
                           context,
                           CupertinoPageRoute(
-                              builder: (context) => ProfilePage()),
+                              builder: (context) => const HomePage()),
                         );
                       } else {
                         _emailController.text = "not same passowrd";
