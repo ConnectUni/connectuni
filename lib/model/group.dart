@@ -1,7 +1,9 @@
+import 'user.dart';
+import 'userList.dart';
 /**
  * Generic outline of the different groups that will be described by each page.
  *
- * Last updated: 10/9 Added getter and setter methods as well as discussed group fields.
+ * Last updated: 10/10 added interests field and setter method.
  *
  */
 
@@ -13,20 +15,24 @@ class Group {
     required this.semYear, //Ex. Fall 2023
     required this.professor, //Ex. Philip Johnson
     required this.groupImage, //Ex. 'group-001.png'
+    required this.groupDescription, //Ex. 'This is a group for ICS 466'
     required this.newMessages, //Ex. 3 (messages)
     required this.chatIds,   // Ex. [chat-001, chat-002 ... chat-042]
     required this.eventIds, // Ex. [event-001, event-002 ... event-042]
     required this.userIds, //Ex. [user-001, user-002 ... user-042]
+    required this.interests, //Ex. [Computer Science, Mathematics, Business]
   });
-  
+
   final String groupID;
   final String groupName;
   final String semYear;
   final String professor;
+  String groupDescription;
   int newMessages;
   List<String> chatIds;
   List<String> eventIds;
   List<String> userIds;
+  List<String> interests;
   String groupImage;
 
   ///SETTER METHODS:
@@ -46,13 +52,17 @@ class Group {
   void removeEventId(String eventId) {
     eventIds.remove(eventId);
   }
-  //Setter method for adding a user ID to the group.
+  //Setter method for adding a user ID to the gsroup.
   void addUserId(String userId) {
+    if(!userIds.contains(userId)){
     userIds.add(userId);
+    }
   }
   //Setter method for removing a user ID from the group.
   void removeUserId(String userId) {
-    userIds.remove(userId);
+    if(userIds.contains(userId)) {
+      userIds.remove(userId);
+    }
   }
   //Setter method to update the number of new messages.
   void updateNewMessages(int newMessages) {
@@ -62,7 +72,24 @@ class Group {
   void updateGroupImage(String groupImage) {
     this.groupImage = groupImage;
   }
-  ///Getter methods potentially not needed as it can be returned by nameOfVariable.field?
+  //Setter methtod to update the group description.
+  void updateGroupDescription(String newDesc) {
+    groupDescription = newDesc;
+  }
+  //Setter method for adding interests.
+  void addInterest(String interest) {
+    interests.add(interest);
+  }
+  //Setter method for removing interests.
+  void removeInterest(String interest) {
+    interests.remove(interest);
+  }
+
+  ///Getter methods for list fields.
+  //Getter method for grabbing all users in a group.
+  List<User> getAllUsersInGroup() {
+    return userIds.map((userId) => usersDB.getUserByID(userId)).toList();
+  }
 }
 
 ///Provides access to and operations on all defined groups.
@@ -74,10 +101,12 @@ class GroupsDB {
         semYear: 'Fall 2023',
         professor: 'Philip Johnson',
         groupImage: 'group-001.png',
+        groupDescription: "This is a group for ICS 466.",
         newMessages: 3,
         chatIds: [],
         eventIds: ['event-001'],
         userIds: ['user-001', 'user-002', 'user-003', 'user-004', 'user-005'],
+        interests: ['Computer Science'],
       ),
       Group(
         groupID: 'group-002',
@@ -85,10 +114,12 @@ class GroupsDB {
         semYear: 'Fall 2023',
         groupImage: 'group-002.png',
         professor: 'Henri Casanova',
+        groupDescription: "This is a group for ICS 332.",
         newMessages: 17,
         chatIds: [],
         eventIds: [],
         userIds: ['user-001', 'user-002', 'user-003', 'user-004', 'user-005'],
+        interests: ['Computer Science'],
       ),
       Group(
         groupID: 'group-003',
@@ -96,10 +127,12 @@ class GroupsDB {
         semYear: 'Fall 2023',
         groupImage: 'group-003.png',
         professor: 'Kim Binsted',
+        groupDescription: "This is a group for ICS 312.",
         newMessages: 0,
         chatIds: [],
         eventIds: [],
         userIds: ['user-001', 'user-002', 'user-003', 'user-004', 'user-005'],
+        interests: ['Computer Science'],
       ),
       Group(
         groupID: 'group-004',
@@ -107,10 +140,12 @@ class GroupsDB {
         semYear: 'Fall 2023',
         groupImage: 'group-004.png',
         professor: 'Julian Hachmeister',
+        groupDescription: "This is a group for Math 307.",
         newMessages: 10,
         chatIds: [],
         eventIds: ['event-003', 'event-004'],
         userIds: ['user-001', 'user-002', 'user-003', 'user-004', 'user-005'],
+        interests: ['Mathematics'],
       ),
       Group(
         groupID: 'group-005',
@@ -118,10 +153,12 @@ class GroupsDB {
         semYear: 'Fall 2023',
         groupImage: 'group-005.png',
         professor: 'Anthony Peruma',
+        groupDescription: "This is a group for ICS 496.",
         newMessages: 2,
         chatIds: [],
         eventIds: ['event-005'],
         userIds: ['user-001', 'user-002', 'user-003', 'user-004', 'user-005'],
+        interests: ['Computer Science'],
       ),
     ];
   ///SETTER METHODS:
@@ -149,7 +186,10 @@ class GroupsDB {
   Group getGroupByProfessor(String professor) {
     return allGroups.firstWhere((group) => group.professor == professor);
   }
-
+  //Getter method for grabbing all groups that have a certain user.
+  List<Group> getGroupsByUser(String userId) {
+    return allGroups.where((group) => group.userIds.contains(userId)).toList();
+  }
   //Getter method for grabbing all groups.
   List<Group> getAllGroups() {
     return allGroups;

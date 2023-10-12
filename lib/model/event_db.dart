@@ -85,6 +85,16 @@ class EventsDB {
       groupId: 'group-003',
       userIds: ['user-002', 'user-003'],
     ),
+    Event(
+      eventId: 'event-004',
+      eventName: 'Final Exam Date',
+      eventIcon: '',
+      eventLocation: 'TBD',
+      eventDescription: 'Final Exam for ICS 466.',
+      eventDate: DateTime(2023, 11, 3, 7, 30),
+      groupId: 'group-001',
+      userIds: ['user-001', 'user-002'],
+    ),
   ];
   ///SETTER METHODS:
 

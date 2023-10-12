@@ -1,4 +1,4 @@
-import 'package:connectuni/model/user.dart';
+import 'package:connectuni/model/userList.dart';
 import 'package:flutter/material.dart';
 
 import '../model/user_card_search.dart';
@@ -53,7 +53,7 @@ class _FriendsListState extends State<FriendsList> {
             ),
             ...usersDB
                 .getUsers()
-                .map((uName) => UserCardSearch(name: uName.uid)),
+                .map((uName) => UserCardSearch(name: uName.displayName)),
           ],
         ),
       ),

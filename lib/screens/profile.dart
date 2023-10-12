@@ -1,12 +1,14 @@
+import 'package:connectuni/model/user.dart';
 import 'package:flutter/material.dart';
-//import 'package:connectuni/model/group_card_view.dart';
+import 'package:connectuni/model/userList.dart';
+import 'package:connectuni/model/group.dart';
 
 /**
  *  Profile Page that the User sees when they click the Navbar Profile icon.
  */
 
 class ProfilePage extends StatefulWidget {
-  const ProfilePage({
+  ProfilePage({
     super.key,
   });
 
@@ -26,6 +28,8 @@ class _ProfilePageState extends State<ProfilePage> {
 
   @override
   Widget build(BuildContext context) {
+    //Temporary local variable to be replaced later.
+    User currentUser = usersDB.getUserByID('user-004');
     return Scaffold(
       appBar: AppBar(
         title: const Text('My Profile'),
@@ -59,31 +63,31 @@ class _ProfilePageState extends State<ProfilePage> {
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
               children: [
-                const Column(
+                Column(
                   children: [CircleAvatar(
                     radius: 50,
-                    backgroundImage: AssetImage('assets/images/You.jpg'),
+                    backgroundImage: AssetImage(currentUser.pfp),
                   ),
             ]
                 ),
                 Expanded(child: Column(
                   children: [
-                    const Text(
-                      'Alberta Ritter',
-                      style: TextStyle(
+                    Text(
+                      currentUser.displayName,
+                      style: const TextStyle(
                         fontSize: 23,
                         fontWeight: FontWeight.bold,
                       ),
                     ),
-                    const Text(
-                      'Major: Computer Science',
-                      style: TextStyle(
+                    Text(
+                      'Major: ${currentUser.major}',
+                      style: const TextStyle(
                         fontSize: 15,
                       ),
                     ),
-                    const Text(
-                      'Projected Grad: May 2024',
-                      style: TextStyle(
+                    Text(
+                      'Projected Grad: ${currentUser.projectedGraduation}',
+                      style: const TextStyle(
                         fontSize: 15,
                       ),
                     ),
@@ -114,44 +118,36 @@ class _ProfilePageState extends State<ProfilePage> {
           Container(
             padding: EdgeInsets.all(10.0),
             child:
-              const Column(
+              Column(
                 crossAxisAlignment: CrossAxisAlignment.stretch,
                 children: [
-                  Text("Your Gallery:",
+                  const Text("Your Interests:",
                     style: TextStyle(fontSize: 20,
                       fontWeight: FontWeight.bold,),
                     textAlign: TextAlign.left,
                   ),
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                  //TODO: Implement interests section here.
+                  Column(
                     children: [
-                      Expanded(child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.stretch,
-                        children: [
-                          Image(
-                            image: AssetImage('assets/images/Feed1.jpg'),
-                          ),
-                        ],
-                      ),
-                      ),
-                      Expanded(
-                        child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.stretch,
-                          children:[
-                          Image(
-                            image: AssetImage('assets/images/Feed2.jpg'),
-                          ),
-                        ],
+                      //TODO: Implement functionality and make cards interactive rather than simply visual.
+                      ...currentUser.interests.map((interest) =>
+                      Padding(
+                        padding: const EdgeInsets.all(10.0),
+                        child: ListTile(
+                          title: Center(child: Text(interest, style: const TextStyle(fontWeight: FontWeight.bold)),),
+                          textColor: Colors.white,
+                          tileColor: Colors.lightBlue,
+                        ),
                       ),
                       ),
                     ],
                   ),
-                  Center(
-                    //TODO: Implement functionality and change from ICON to Button
-                    child: Icon(
-                      Icons.add_circle_outline,
-                      color: Colors.grey,
-                      size: 40.0,
+                  const Padding(
+                    padding: EdgeInsets.all(10.0),
+                    child: ListTile(
+                      title: Center(child: Text("Add an interest.", style: TextStyle(fontWeight: FontWeight.bold))),
+                      textColor: Colors.white,
+                      tileColor: Colors.black54,
                     ),
                   ),
                 ]
@@ -177,86 +173,63 @@ class _ProfilePageState extends State<ProfilePage> {
                   fontWeight: FontWeight.bold,),
                   textAlign: TextAlign.left,
                 ),
-                Card(
-                    elevation: 8,
-                  color: Colors.grey,
-                    child: Column(
-                      children: [
-                        ListTile(
-                            title: Text("ICS 311",
-                                style: Theme.of(context).textTheme.titleLarge)),
-                        const Padding(
-                            padding: EdgeInsets.only(left: 15.0, top: 5.0),
-                            child: Align(
-                              alignment: Alignment.centerLeft,
-                              child: Text("Fall 2021 | Peter Sadowski"),
-                            )
-                        ),
-                        const Padding(
-                            padding: EdgeInsets.only(left: 15.0, top: 2.0),
-                            child: Align(
-                              alignment: Alignment.centerLeft,
-                              child: Text("32 people"),
-                            )
-                        ),
-                        Padding(
-                            padding: const EdgeInsets.only(right: 15.0),
-                            child: Align(
-                                alignment: Alignment.bottomRight,
-                                child: TextButton(
-                                  onPressed: null,
-                                  style: ButtonStyle(
-                                    backgroundColor: MaterialStateProperty.all<Color>(Colors.redAccent),
-                                    foregroundColor: MaterialStateProperty.all<Color>(Colors.white),
-                                  ),
-                                  child: const Text('LEAVE'),
-                                ),
-                            )
-                        ),
-                        const SizedBox(height: 10)
-                      ],
-                    ),
-                ),
-                Card(
-                  elevation: 8,
-                  color: Colors.grey,
-                  child: Column(
-                    children: [
-                      ListTile(
-                          title: Text("JPN 202",
-                              style: Theme.of(context).textTheme.titleLarge),),
-                      const Padding(
-                          padding: EdgeInsets.only(left: 15.0, top: 2.0),
-                          child: Align(
-                            alignment: Alignment.centerLeft,
-                            child: Text("Spring 2023 | Tomoko Iwai"),
-                          )
-                      ),
-                      const Padding(
-                          padding: EdgeInsets.only(left: 15.0, top: 2.0),
-                          child: Align(
-                            alignment: Alignment.centerLeft,
-                            child: Text("28 people"),
-                          )
-                      ),
-                      Padding(
-                          padding: const EdgeInsets.only(right: 15.0),
-                          child: Align(
-                            alignment: Alignment.bottomRight,
-                            child: TextButton(
-                              onPressed: null,
-                              style: ButtonStyle(
-                                backgroundColor: MaterialStateProperty.all<Color>(Colors.redAccent),
-                                foregroundColor: MaterialStateProperty.all<Color>(Colors.white),
-                              ),
-                              child: const Text('LEAVE'),
+                Column(
+                  children:[
+                    ...groupsDB
+                        .getGroupsByUser(currentUser.uid)
+                        .map((group) =>
+                        Card(
+                          elevation: 8,
+                          color: Colors.white,
+                          shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(15),
+                            side: BorderSide(
+                              color: Colors.grey.withOpacity(0.2),
+                              width: 1,
                             ),
-                          )
-                      ),
-                      const SizedBox(height: 10)
-                    ],
-                  ),
+                          ),
+                          child: Column(
+                            children: [
+                              ListTile(
+                                  title: Text(group.groupName,
+                                      style: const TextStyle(fontWeight: FontWeight.bold)),
+                              ),
+                              Padding(
+                                  padding: const EdgeInsets.only(left: 15.0, top: 5.0),
+                                  child: Align(
+                                    alignment: Alignment.centerLeft,
+                                    child: Text("${group.semYear} | ${group.professor}"),
+                                  )
+                              ),
+                              Padding(
+                                  padding: EdgeInsets.only(left: 15.0, top: 2.0),
+                                  child: Align(
+                                    alignment: Alignment.centerLeft,
+                                    child: Text("${group.userIds.length} people"),
+                                  )
+                              ),
+                              Padding(
+                                  padding: const EdgeInsets.only(right: 15.0),
+                                  child: Align(
+                                    alignment: Alignment.bottomRight,
+                                    child: TextButton(
+                                      onPressed: () {group.removeUserId(currentUser.uid);},
+                                      style: ButtonStyle(
+                                        backgroundColor: MaterialStateProperty.all<Color>(Colors.redAccent),
+                                        foregroundColor: MaterialStateProperty.all<Color>(Colors.white),
+                                      ),
+                                      child: const Text('LEAVE'),
+                                    ),
+                                  )
+                              ),
+                              const SizedBox(height: 10)
+                            ],
+                          ),
+                        ),
+                    ),
+                  ]
                 ),
+
               ],
             ),
           ), //Courses
