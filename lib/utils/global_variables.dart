@@ -18,4 +18,5 @@ List<String> interests = [
   'Art',
   'Music',
   'Graphic Design',
+  'Finance',
 ];
