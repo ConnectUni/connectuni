@@ -1,4 +1,4 @@
-import 'package:connectuni/model/users.dart';
+import 'package:connectuni/model/userList.dart';
 import 'package:flutter/material.dart';
 
 import '../model/user_card_search.dart';
