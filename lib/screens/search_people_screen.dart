@@ -30,8 +30,8 @@ class _SearchPeopleScreenState extends State<SearchPeopleScreen> {
         actions: <Widget>[
           IconButton(
             icon: const Icon(
-                Icons.group,
-                semanticLabel: 'Search for groups',
+              Icons.group,
+              semanticLabel: 'Search for groups',
             ),
             onPressed: () {
               widget.pageController.animateToPage(0,
