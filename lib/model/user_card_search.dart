@@ -18,19 +18,16 @@ class UserCardSearch extends StatelessWidget {
           child: Column(
             children: [
               ListTile(
-                  leading: CircleAvatar(
-                    radius: 25,
-                    backgroundImage: AssetImage( thisUser.photoURL ),
-                  ),
-                title: Text(
-                      thisUser.displayName,
-                      style: Theme.of(context).textTheme.titleLarge
-                  ),
-                subtitle: Text(
-                    "${thisUser.major}\n${thisUser.projectedGraduation}"
+                leading: CircleAvatar(
+                  radius: 25,
+                  backgroundImage: AssetImage(thisUser.photoURL),
                 ),
+                title: Text(thisUser.displayName,
+                    style: Theme.of(context).textTheme.titleLarge),
+                subtitle:
+                    Text("${thisUser.major}\n${thisUser.projectedGraduation}"),
                 trailing: IconButton(
-                  icon: const Icon( Icons.message ),
+                  icon: const Icon(Icons.message),
                   onPressed: () {
                     // TODO Add functionality to message user
                   },
@@ -41,4 +38,3 @@ class UserCardSearch extends StatelessWidget {
     );
   }
 }
-
