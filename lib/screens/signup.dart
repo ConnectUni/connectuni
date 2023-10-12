@@ -1,6 +1,9 @@
+import 'package:connectuni/home/home.dart';
 import 'package:connectuni/screens/profile.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+
+import 'login.dart';
 
 class SignUpPage extends StatefulWidget {
   const SignUpPage({Key? key}) : super(key: key);
@@ -152,6 +155,16 @@ class _SignUpPageState extends State<SignUpPage> {
                   },
                   child: const Text("CLEAR"),
                 ),
+                TextButton(
+                  onPressed: () {
+                    Navigator.push(
+                      context,
+                      CupertinoPageRoute(
+                          builder: (context) => const LoginPage()),
+                    );
+                  },
+                  child: const Text("BACK"),
+                ),
                 ElevatedButton(
                   // onPressed: () {
                   //   Navigator.push(
@@ -168,7 +181,7 @@ class _SignUpPageState extends State<SignUpPage> {
                         Navigator.push(
                           context,
                           CupertinoPageRoute(
-                              builder: (context) => const ProfilePage()),
+                              builder: (context) => const HomePage()),
                         );
                       } else {
                         _emailController.text = "not same passowrd";
