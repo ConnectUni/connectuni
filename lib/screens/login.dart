@@ -54,12 +54,16 @@ class _LoginPageState extends State<LoginPage> {
             const SizedBox(height: 80.0),
             Column(
               children: <Widget>[
-                Text(
-                  'ConnectUni',
-                  style: Theme.of(context).textTheme.headlineSmall,
+                const Text(
+                  "Welcome to",
+                  style: TextStyle(
+                    fontSize: 30.0,
+                    fontWeight: FontWeight.bold,
+                    color: Colors.blue,
+                  ),
                 ),
                 //change image: update pubspec too
-                Image.asset('assets/images/TEST_LOGO.png'),
+                Image.asset('assets/images/Logo.png'),
               ],
             ),
             const SizedBox(
@@ -67,13 +71,13 @@ class _LoginPageState extends State<LoginPage> {
             ),
             TextField(
                 controller: _emailController,
-                decoration: InputDecoration(
+                decoration: const InputDecoration(
                   filled: true,
                   labelText: "Email",
                 )),
             TextField(
               controller: _passwordController,
-              decoration: InputDecoration(
+              decoration: const InputDecoration(
                 filled: true,
                 labelText: "Password",
               ),
@@ -85,7 +89,7 @@ class _LoginPageState extends State<LoginPage> {
               children: [
                 const SizedBox(
                   height: 100.0,
-                  width: 50.0,
+                  width: 40.0,
                 ),
                 ElevatedButton(
                   onPressed: () {
@@ -116,14 +120,15 @@ class _LoginPageState extends State<LoginPage> {
                 ),
 
                 //clear button
-                TextButton(
-                  onPressed: () {
-                    _emailController.clear();
-                    _passwordController.clear();
-                  },
-                  child: const Text("CLEAR"),
-                ),
-                //next button
+                Flexible( child:
+                    TextButton(
+                      onPressed: () {
+                        _emailController.clear();
+                        _passwordController.clear();
+                      },
+                      child: const Text("CLEAR"),
+                    ),
+                  ), //next button
               ],
             ),
           ],
