@@ -1,3 +1,4 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:table_calendar/table_calendar.dart';
 
@@ -5,7 +6,8 @@ import '../model/event_db.dart';
 import '../model/group.dart';
 import 'package:multi_select_flutter/multi_select_flutter.dart';
 
-class EventCalendar extends StatefulWidget {
+
+import 'event_info_screen.dart';class EventCalendar extends StatefulWidget {
   @override
   _EventCalendarState createState() => _EventCalendarState();
 }
@@ -155,7 +157,14 @@ class _EventCalendarState extends State<EventCalendar> {
                       ),
                       child: ListTile(
                         //TODO: Implement onTap to send user to event page
-                        onTap: () => print('SEND USER TO ${value[index].eventName} PAGE'),
+                        onTap: () => {
+                          Navigator.push(
+                          context,
+                          CupertinoPageRoute(
+                          builder: (context) => EventInfoScreen(id: value[index].eventId)
+                          )
+                        )
+                      },
                         title: Text('${value[index].eventName} | ${value[index].eventLocation}'),
                       ),
                     );
