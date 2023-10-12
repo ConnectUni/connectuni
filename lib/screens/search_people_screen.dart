@@ -1,4 +1,4 @@
-import 'package:connectuni/model/user.dart';
+import 'package:connectuni/model/userList.dart';
 import 'package:connectuni/model/user_card_search.dart';
 import 'package:flutter/material.dart';
 import 'package:multi_select_flutter/multi_select_flutter.dart';
@@ -117,7 +117,7 @@ class _SearchPeopleScreenState extends State<SearchPeopleScreen> {
             ),
             ...usersDB
                 .getUsers()
-                .map((uName) => UserCardSearch(name: uName.uid)),
+                .map((uName) => UserCardSearch(name: uName.displayName)),
           ],
         ),
       ),

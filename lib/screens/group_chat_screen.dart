@@ -5,6 +5,7 @@ import '../model/group.dart';
 import '../model/message.dart';
 import '../model/message_list.dart';
 import '../model/user.dart';
+import '../model/userList.dart';
 import 'groupinfo.dart';
 
 class GroupChatScreen extends StatefulWidget {
@@ -82,7 +83,7 @@ class _GroupChatScreenState extends State<GroupChatScreen> {
                     backgroundImage: AssetImage(groupMembers
                         .firstWhere((user) =>
                             user.uid == messageData.elementAt(index).senderId)
-                        .photoURL),
+                        .pfp),
                     maxRadius: 20,
                   )
                 ],
