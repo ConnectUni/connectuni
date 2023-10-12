@@ -29,7 +29,7 @@ class _ProfilePageState extends State<ProfilePage> {
   @override
   Widget build(BuildContext context) {
     //Temporary local variable to be replaced later.
-    User currentUser = usersDB.getUserByID('user-002');
+    User currentUser = usersDB.getUserByID('user-004');
     return Scaffold(
       appBar: AppBar(
         title: const Text('My Profile'),
@@ -118,21 +118,36 @@ class _ProfilePageState extends State<ProfilePage> {
           Container(
             padding: EdgeInsets.all(10.0),
             child:
-              const Column(
+              Column(
                 crossAxisAlignment: CrossAxisAlignment.stretch,
                 children: [
-                  Text("Your Interests:",
+                  const Text("Your Interests:",
                     style: TextStyle(fontSize: 20,
                       fontWeight: FontWeight.bold,),
                     textAlign: TextAlign.left,
                   ),
                   //TODO: Implement interests section here.
-                  Center(
-                    //TODO: Implement functionality and change from ICON to Button
-                    child: Icon(
-                      Icons.add_circle_outline,
-                      color: Colors.grey,
-                      size: 40.0,
+                  Column(
+                    children: [
+                      //TODO: Implement functionality and make cards interactive rather than simply visual.
+                      ...currentUser.interests.map((interest) =>
+                      Padding(
+                        padding: const EdgeInsets.all(10.0),
+                        child: ListTile(
+                          title: Center(child: Text(interest, style: const TextStyle(fontWeight: FontWeight.bold)),),
+                          textColor: Colors.white,
+                          tileColor: Colors.lightBlue,
+                        ),
+                      ),
+                      ),
+                    ],
+                  ),
+                  const Padding(
+                    padding: EdgeInsets.all(10.0),
+                    child: ListTile(
+                      title: Center(child: Text("Add an interest.", style: TextStyle(fontWeight: FontWeight.bold))),
+                      textColor: Colors.white,
+                      tileColor: Colors.black54,
                     ),
                   ),
                 ]
@@ -165,12 +180,20 @@ class _ProfilePageState extends State<ProfilePage> {
                         .map((group) =>
                         Card(
                           elevation: 8,
-                          color: Colors.grey,
+                          color: Colors.white,
+                          shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(15),
+                            side: BorderSide(
+                              color: Colors.grey.withOpacity(0.2),
+                              width: 1,
+                            ),
+                          ),
                           child: Column(
                             children: [
                               ListTile(
                                   title: Text(group.groupName,
-                                      style: Theme.of(context).textTheme.titleLarge)),
+                                      style: const TextStyle(fontWeight: FontWeight.bold)),
+                              ),
                               Padding(
                                   padding: const EdgeInsets.only(left: 15.0, top: 5.0),
                                   child: Align(
