@@ -1,6 +1,6 @@
-/// A message model that holds the message content and the message id, sender id, group id, and message content.
-
+/// Message object.
 class Message {
+  /// No set methods as these are all final values
   final String messageId;
   final String senderId;
   final String groupId;
