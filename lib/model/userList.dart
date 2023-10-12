@@ -1,5 +1,6 @@
 import 'user.dart';
 
+/// The UserList object.
 class UserList {
   List<User> allUsers;
 
@@ -12,7 +13,6 @@ class UserList {
   }
 
   /// Return single User object, search with their UH ID number.
-  /// related: cannot change uid to be int type - throw errors
   User getUserByID(String id) {
     return allUsers.firstWhere((user) => user.uid == id);
   }
@@ -22,19 +22,18 @@ class UserList {
     return allUsers.firstWhere((user) => user.email == email);
   }
 
-  /// Return list of User objects.
-  /// should be in a Group object class
+  /// Return iterable list of User objects.
   Iterable<User> getGroupMembers(List<String> memberIds) {
     return allUsers.where((user) => memberIds.contains(user.uid));
   }
 
+  /// Return list of User objects.
   List<User> getUsers() {
     return allUsers;
   }
 }
 
 /// DELETE THIS BOTTOM SECTION AFTER GETTING REAL DB
-//firebase -> automatically has the getter/setter methods?
 final List<User> mockUsers = [
   User(
     'uid-001',

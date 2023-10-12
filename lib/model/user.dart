@@ -1,7 +1,5 @@
-/**
- * This file contains the User class and the UsersDB class.
- * Generic outline of the different users that will be described by each page.
- */
+/// The User object.
+
 class User {
   final String uid;
   final String email;
@@ -15,7 +13,7 @@ class User {
   List<String> groupIDs;
   List<String> eventIDs;
 
-  /// constructor
+  /// Constructor
   User(
       this.uid,
       this.email,
