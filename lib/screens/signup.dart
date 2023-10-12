@@ -168,7 +168,7 @@ class _SignUpPageState extends State<SignUpPage> {
                         Navigator.push(
                           context,
                           CupertinoPageRoute(
-                              builder: (context) => const ProfilePage()),
+                              builder: (context) => ProfilePage()),
                         );
                       } else {
                         _emailController.text = "not same passowrd";

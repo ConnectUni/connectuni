@@ -9,7 +9,7 @@ List<Widget> screenItems = [
   const GroupsScreen(),
   const SearchPageController(),
   EventCalendar(),
-  const ProfilePage()
+  ProfilePage()
 ];
 
 // This is a list of interests that can be called from anywhere in the app.
