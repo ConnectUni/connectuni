@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-import 'event_db.dart';
+import '../model/event_db.dart';
 
 class EventCardView extends StatelessWidget {
   const EventCardView({Key? key, required this.id}) : super(key: key);

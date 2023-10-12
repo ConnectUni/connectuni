@@ -1,7 +1,7 @@
 import 'package:connectuni/model/userList.dart';
 import 'package:flutter/material.dart';
 
-import '../model/user_card_search.dart';
+import '../components/user_card_search.dart';
 
 class FriendsList extends StatefulWidget {
   const FriendsList({Key? key}) : super(key: key);

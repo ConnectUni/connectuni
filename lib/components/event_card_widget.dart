@@ -1,4 +1,4 @@
-import 'package:connectuni/model/event_card_view.dart';
+import 'package:connectuni/components/event_card_view.dart';
 import 'package:connectuni/screens/event_info_screen.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';

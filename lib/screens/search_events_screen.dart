@@ -1,9 +1,9 @@
-import 'package:connectuni/model/event_card_widget.dart';
+import 'package:connectuni/components/event_card_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:multi_select_flutter/multi_select_flutter.dart';
 
 import '../model/event_db.dart';
-import '../model/event_card_view.dart';
+import '../components/event_card_view.dart';
 
 class SearchEventsScreen extends StatefulWidget {
   const SearchEventsScreen({Key? key, required this.pageController}) : super(key: key);
