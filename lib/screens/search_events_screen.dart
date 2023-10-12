@@ -1,3 +1,4 @@
+import 'package:connectuni/model/event_card_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:multi_select_flutter/multi_select_flutter.dart';
 
@@ -110,7 +111,7 @@ class _SearchEventsScreenState extends State<SearchEventsScreen> {
             ),
             ...eventsDB
             .getAllEvents()
-            .map((eid) => EventCardView(id: eid.eventId))
+            .map((eid) => EventCardWidget(eventId: eid.eventId,))
           ],
         ),
       ),
