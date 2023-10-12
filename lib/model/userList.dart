@@ -34,6 +34,34 @@ class UserList {
 }
 
 /// DELETE THIS BOTTOM SECTION AFTER GETTING REAL DB
+
+final User friend1 = User(
+    'user-111',
+    'email@one.edu',
+    'Friend1',
+    '',
+    'Finance',
+    'December 2025',
+    'School makes me wanna wake up every morning!',
+    [],
+    ['assets/images/friend.png'],
+    ['group-456'],
+    ['event-111']);
+
+final User friend2 = User(
+    'user-222',
+    'email@two.edu',
+    'Friend2',
+    '',
+    'Finance',
+    'May 2025',
+    'I never wanna leave school!',
+    [friend1],
+    ['assets/images/friend.png'],
+    ['group-123'],
+    ['event-222']);
+
+/// The mock users DB
 final List<User> mockUsers = [
   User(
     'user-001',
@@ -44,7 +72,7 @@ final List<User> mockUsers = [
     'Spring 2024',
     'Almost Friday!',
     [
-      //he has no friends
+      friend1,
     ],
     [
       'assets/images/Feed1.png',
@@ -66,7 +94,10 @@ final List<User> mockUsers = [
     'Liberal Arts',
     'Fall 2025',
     'I need a nap.',
-    [],
+    [
+      friend1,
+      friend2,
+    ],
     [
       'assets/images/Feed1.png',
     ],
@@ -87,7 +118,7 @@ final List<User> mockUsers = [
     'Fall 2023',
     'I love math!',
     [
-      //no friends
+      friend2,
     ],
     [
       'assets/images/Feed1.png',
@@ -109,7 +140,7 @@ final List<User> mockUsers = [
     'Spring 2024',
     'I love art!',
     [
-      //no friends
+      friend1,
     ],
     [
       'assets/images/Feed1.png',
@@ -132,7 +163,8 @@ final List<User> mockUsers = [
     'Fall 2025',
     'I love business!',
     [
-      //no friends
+      friend1,
+      friend2,
     ],
     [
       'assets/images/Feed1.png',
