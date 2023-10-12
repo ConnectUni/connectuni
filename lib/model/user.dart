@@ -1,3 +1,4 @@
+
 /// The User object.
 
 class User {
@@ -12,6 +13,7 @@ class User {
   List<String> images;
   List<String> groupIDs;
   List<String> eventIDs;
+  List<String> interests;
 
   /// Constructor
   User(
@@ -25,7 +27,8 @@ class User {
       this.friends,
       this.images,
       this.groupIDs,
-      this.eventIDs);
+      this.eventIDs,
+      this.interests);
 
   /// Change name.
   void setUserName(String newName) {
@@ -90,6 +93,16 @@ class User {
   /// Delete a event ID.
   void deleteEventID(String deleteEventID) {
     eventIDs.remove(deleteEventID);
+  }
+
+  /// Add a new interest.
+  void addInterest(String newInterest) {
+    interests.add(newInterest);
+  }
+
+  ///Delete a interest.
+  void deleteInterest(String deleteInterest) {
+    interests.remove(deleteInterest);
   }
 
   String getUid() {

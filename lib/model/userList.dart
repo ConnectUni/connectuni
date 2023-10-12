@@ -46,7 +46,9 @@ final User friend1 = User(
     [],
     ['assets/images/friend.png'],
     ['group-456'],
-    ['event-111']);
+    ['event-111'],
+    ['Finance', 'Business']
+);
 
 final User friend2 = User(
     'user-222',
@@ -59,7 +61,9 @@ final User friend2 = User(
     [friend1],
     ['assets/images/friend.png'],
     ['group-123'],
-    ['event-222']);
+    ['event-222'],
+    []
+);
 
 /// The mock users DB
 final List<User> mockUsers = [
@@ -85,6 +89,7 @@ final List<User> mockUsers = [
       'event-111',
       'event-222',
     ],
+    ['Mathematics', 'Computer Science'],
   ),
   User(
     'user-002',
@@ -108,6 +113,7 @@ final List<User> mockUsers = [
       'event-111',
       'event-333',
     ],
+    ['Art', 'Graphic Design'],
   ),
   User(
     'user-003',
@@ -130,6 +136,7 @@ final List<User> mockUsers = [
       'event-222',
       'event-333',
     ],
+    ['Business', 'Computer Science'],
   ),
   User(
     'user-004',
@@ -153,6 +160,7 @@ final List<User> mockUsers = [
       'event-111',
       'event-222',
     ],
+    []
   ),
   User(
     'user-005',
@@ -179,6 +187,7 @@ final List<User> mockUsers = [
       'event-222',
       'event-333',
     ],
+    ['Computer Science', 'Mathematics'],
   ),
 ];
 
