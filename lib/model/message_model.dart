@@ -1,19 +1,4 @@
-/// A message model that holds the message content and the message id, sender id, group id, and message content.
-
-class Message {
-  Message({
-    required this.messageId,
-    required this.senderId,
-    required this.groupId,
-    required this.messageContent,
-  });
-
-  final String messageId;
-  final String senderId;
-  final String groupId;
-  final String messageContent;
-
-}
+import './message.dart';
 
 /// Provides access to and operations on all defined messages.
 class MessageDB {
@@ -22,13 +7,15 @@ class MessageDB {
       messageId: 'message-001',
       senderId: 'user-001',
       groupId: 'group-001',
-      messageContent: 'guys i think we should have everyone review and approve our prs before merging to main',
+      messageContent:
+          'guys i think we should have everyone review and approve our prs before merging to main',
     ),
     Message(
       messageId: 'message-002',
       senderId: 'user-002',
       groupId: 'group-001',
-      messageContent: 'i agree, that way we all know whats going on in the code',
+      messageContent:
+          'i agree, that way we all know whats going on in the code',
     ),
     Message(
       messageId: 'message-003',
@@ -58,7 +45,8 @@ class MessageDB {
       messageId: 'message-007',
       senderId: 'user-002',
       groupId: 'group-003',
-      messageContent: 'im having trouble understanding assembly can anyone help?',
+      messageContent:
+          'im having trouble understanding assembly can anyone help?',
     ),
     Message(
       messageId: 'message-008',
