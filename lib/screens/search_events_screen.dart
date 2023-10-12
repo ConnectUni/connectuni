@@ -25,8 +25,17 @@ class _SearchEventsScreenState extends State<SearchEventsScreen> {
         actions: <Widget>[
           IconButton(
             icon: const Icon(
-              Icons.arrow_back_ios,
+              Icons.group,
               semanticLabel: 'Search for groups',
+            ),
+            onPressed: () {
+              widget.pageController.animateToPage(0, duration: const Duration(milliseconds: 300), curve: Curves.easeInOut);
+            },
+          ),
+          IconButton(
+            icon: const Icon(
+              Icons.person_search,
+              semanticLabel: 'Search for people',
             ),
             onPressed: () {
               widget.pageController.animateToPage(1, duration: const Duration(milliseconds: 300), curve: Curves.easeInOut);

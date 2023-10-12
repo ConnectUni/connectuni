@@ -30,8 +30,8 @@ class _SearchPeopleScreenState extends State<SearchPeopleScreen> {
         actions: <Widget>[
           IconButton(
             icon: const Icon(
-              Icons.arrow_back_ios,
-              semanticLabel: 'Search for groups',
+                Icons.group,
+                semanticLabel: 'Search for groups',
             ),
             onPressed: () {
               widget.pageController.animateToPage(0,
@@ -41,7 +41,7 @@ class _SearchPeopleScreenState extends State<SearchPeopleScreen> {
           ),
           IconButton(
             icon: const Icon(
-              Icons.arrow_forward_ios,
+              Icons.celebration,
               semanticLabel: 'Search for events',
             ),
             onPressed: () {
