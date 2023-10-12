@@ -26,7 +26,7 @@ class _GroupInfoState extends State<GroupInfo> {
     return Scaffold(
       appBar: AppBar(
         leading: const BackButton(),
-        title: Text('${groupData.groupName} | ${groupData.professor}'),
+        title: Text('${groupData.groupName} | ${groupData.owner}'),
         actions: <Widget>[
           IconButton(
             icon: const Icon(
@@ -56,18 +56,17 @@ class _GroupInfoState extends State<GroupInfo> {
             padding: EdgeInsets.all(10),
             child: Column(
               children: [
-                ...groupData.getAllUsersInGroup()
-                    .map((uName) =>
-                    Card(
-                      child: ListTile(
-                        leading: CircleAvatar(
-                          radius: 18,
-                          backgroundImage: AssetImage(uName.pfp),
+                ...groupData.getAllUsersInGroup().map(
+                      (uName) => Card(
+                        child: ListTile(
+                          leading: CircleAvatar(
+                            radius: 18,
+                            backgroundImage: AssetImage(uName.pfp),
+                          ),
+                          title: Text(uName.displayName),
                         ),
-                        title: Text(uName.displayName),
                       ),
                     ),
-                ),
               ],
             ),
           ),
@@ -103,35 +102,38 @@ class _GroupInfoState extends State<GroupInfo> {
             color: Colors.black,
           ),
           //Display a button to leave the group if the user is in the group.
-          if(groupData.userIds.contains('user-001'))
+          if (groupData.userIDs.contains('user-001'))
             Padding(
               padding: const EdgeInsets.all(10.0),
               //TODO: Make this button conditional on whether or not the user is in the group.
               child: TextButton(
-                onPressed: (){
+                onPressed: () {
                   //Placeholder currently only removes the first user:
                   groupData.removeUserId('user-001');
                 },
                 style: ButtonStyle(
                   backgroundColor: MaterialStateProperty.all<Color>(Colors.red),
-                  foregroundColor: MaterialStateProperty.all<Color>(Colors.white),
+                  foregroundColor:
+                      MaterialStateProperty.all<Color>(Colors.white),
                 ),
                 child: const Text('LEAVE THIS GROUP'),
               ),
             ),
           //Display a button to join the group if the user is not in the group.
-          if(!groupData.userIds.contains('user-001'))
+          if (!groupData.userIDs.contains('user-001'))
             Padding(
               padding: const EdgeInsets.all(10.0),
               //TODO: Make this button conditional on whether or not the user is in the group.
               child: TextButton(
-                onPressed: (){
+                onPressed: () {
                   //Placeholder currently only removes the first user:
                   groupData.addUserId('user-001');
                 },
                 style: ButtonStyle(
-                  backgroundColor: MaterialStateProperty.all<Color>(Colors.green),
-                  foregroundColor: MaterialStateProperty.all<Color>(Colors.white),
+                  backgroundColor:
+                      MaterialStateProperty.all<Color>(Colors.green),
+                  foregroundColor:
+                      MaterialStateProperty.all<Color>(Colors.white),
                 ),
                 child: const Text('JOIN THIS GROUP'),
               ),

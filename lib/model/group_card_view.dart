@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-import'package:connectuni/model/group.dart';
+import 'package:connectuni/model/group.dart';
 
 class GroupCardView extends StatelessWidget {
   const GroupCardView({Key? key, required this.id}) : super(key: key);
@@ -10,7 +10,7 @@ class GroupCardView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     Group thisGrouping = groupsDB.getGroupById(id);
-    
+
     return Padding(
       padding: const EdgeInsets.all(3.5),
       child: Card(
@@ -21,27 +21,23 @@ class GroupCardView extends StatelessWidget {
                   title: Text(thisGrouping.groupName,
                       style: Theme.of(context).textTheme.titleLarge)),
               Padding(
-                padding: const EdgeInsets.only(left: 15.0, top: 2.0),
-                child: Align(
+                  padding: const EdgeInsets.only(left: 15.0, top: 2.0),
+                  child: Align(
                     alignment: Alignment.centerLeft,
-                    child: Text("${thisGrouping.semYear} | ${thisGrouping.professor}"),
-                )
-              ),
+                    child:
+                        Text("${thisGrouping.semYear} | ${thisGrouping.owner}"),
+                  )),
               Padding(
                   padding: const EdgeInsets.only(left: 15.0, top: 2.0),
                   child: Align(
                     alignment: Alignment.centerLeft,
-                    child: Text("${thisGrouping.userIds.length} people"),
-                  )
-              ),
+                    child: Text("${thisGrouping.userIDs.length} people"),
+                  )),
               Padding(
                   padding: const EdgeInsets.only(left: 15.0, top: 2.0),
                   child: Align(
-                    alignment: Alignment.centerLeft,
-                    child: Text("${thisGrouping.newMessages} new messages"
-                  )
-                  )
-              ),
+                      alignment: Alignment.centerLeft,
+                      child: Text("${thisGrouping.newMessages} new messages"))),
               const SizedBox(height: 10)
             ],
           )),

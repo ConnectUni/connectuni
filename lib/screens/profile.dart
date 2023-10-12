@@ -1,6 +1,6 @@
 import 'package:connectuni/model/user.dart';
 import 'package:flutter/material.dart';
-import 'package:connectuni/model/userList.dart';
+import 'package:connectuni/model/user_list.dart';
 import 'package:connectuni/model/group.dart';
 
 /**
@@ -41,7 +41,8 @@ class _ProfilePageState extends State<ProfilePage> {
             ),
             onPressed: () {
               //Routes to the Friends List Page.
-              Navigator.restorablePushNamed(context, '/friendslist', arguments: '/');
+              Navigator.restorablePushNamed(context, '/friendslist',
+                  arguments: '/');
             },
           ),
           IconButton(
@@ -51,7 +52,8 @@ class _ProfilePageState extends State<ProfilePage> {
             ),
             onPressed: () {
               //Routes to the Settings Page.
-              Navigator.restorablePushNamed(context, '/settings', arguments: '/');
+              Navigator.restorablePushNamed(context, '/settings',
+                  arguments: '/');
             },
           ),
         ],
@@ -61,52 +63,53 @@ class _ProfilePageState extends State<ProfilePage> {
         children: [
           Container(
             child: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-              children: [
-                Column(
-                  children: [CircleAvatar(
-                    radius: 50,
-                    backgroundImage: AssetImage(currentUser.pfp),
-                  ),
-            ]
-                ),
-                Expanded(child: Column(
-                  children: [
-                    Text(
-                      currentUser.displayName,
-                      style: const TextStyle(
-                        fontSize: 23,
-                        fontWeight: FontWeight.bold,
-                      ),
+                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                children: [
+                  Column(children: [
+                    CircleAvatar(
+                      radius: 50,
+                      backgroundImage: AssetImage(currentUser.pfp),
                     ),
-                    Text(
-                      'Major: ${currentUser.major}',
-                      style: const TextStyle(
-                        fontSize: 15,
-                      ),
-                    ),
-                    Text(
-                      'Projected Grad: ${currentUser.projectedGraduation}',
-                      style: const TextStyle(
-                        fontSize: 15,
-                      ),
-                    ),
-                    Padding(
-                      padding: const EdgeInsets.all(10.0),
-                      child: TextButton(
-                        onPressed: null,
-                        style: ButtonStyle(
-                          backgroundColor: MaterialStateProperty.all<Color>(Colors.green),
-                          foregroundColor: MaterialStateProperty.all<Color>(Colors.white),
+                  ]),
+                  Expanded(
+                    child: Column(
+                      children: [
+                        Text(
+                          currentUser.displayName,
+                          style: const TextStyle(
+                            fontSize: 23,
+                            fontWeight: FontWeight.bold,
+                          ),
                         ),
-                        child: const Text('Edit Profile'),
-                      ),
+                        Text(
+                          'Major: ${currentUser.major}',
+                          style: const TextStyle(
+                            fontSize: 15,
+                          ),
+                        ),
+                        Text(
+                          'Projected Grad: ${currentUser.projectedGraduation}',
+                          style: const TextStyle(
+                            fontSize: 15,
+                          ),
+                        ),
+                        Padding(
+                          padding: const EdgeInsets.all(10.0),
+                          child: TextButton(
+                            onPressed: null,
+                            style: ButtonStyle(
+                              backgroundColor: MaterialStateProperty.all<Color>(
+                                  Colors.green),
+                              foregroundColor: MaterialStateProperty.all<Color>(
+                                  Colors.white),
+                            ),
+                            child: const Text('Edit Profile'),
+                          ),
+                        ),
+                      ],
                     ),
-                  ],
-                ),
-                ),
-              ]
-            ),
+                  ),
+                ]),
           ),
           const Divider(
             height: 7,
@@ -116,43 +119,49 @@ class _ProfilePageState extends State<ProfilePage> {
             color: Colors.black,
           ),
           Container(
-            padding: EdgeInsets.all(10.0),
-            child:
-              Column(
-                crossAxisAlignment: CrossAxisAlignment.stretch,
-                children: [
-                  const Text("Your Interests:",
-                    style: TextStyle(fontSize: 20,
-                      fontWeight: FontWeight.bold,),
-                    textAlign: TextAlign.left,
-                  ),
-                  //TODO: Implement interests section here.
-                  Column(
-                    children: [
-                      //TODO: Implement functionality and make cards interactive rather than simply visual.
-                      ...currentUser.interests.map((interest) =>
-                      Padding(
-                        padding: const EdgeInsets.all(10.0),
-                        child: ListTile(
-                          title: Center(child: Text(interest, style: const TextStyle(fontWeight: FontWeight.bold)),),
-                          textColor: Colors.white,
-                          tileColor: Colors.lightBlue,
-                        ),
+              padding: EdgeInsets.all(10.0),
+              child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.stretch,
+                  children: [
+                    const Text(
+                      "Your Interests:",
+                      style: TextStyle(
+                        fontSize: 20,
+                        fontWeight: FontWeight.bold,
                       ),
-                      ),
-                    ],
-                  ),
-                  const Padding(
-                    padding: EdgeInsets.all(10.0),
-                    child: ListTile(
-                      title: Center(child: Text("Add an interest.", style: TextStyle(fontWeight: FontWeight.bold))),
-                      textColor: Colors.white,
-                      tileColor: Colors.black54,
+                      textAlign: TextAlign.left,
                     ),
-                  ),
-                ]
-              )
-          ), //Gallery
+                    //TODO: Implement interests section here.
+                    Column(
+                      children: [
+                        //TODO: Implement functionality and make cards interactive rather than simply visual.
+                        ...currentUser.interests.map(
+                          (interest) => Padding(
+                            padding: const EdgeInsets.all(10.0),
+                            child: ListTile(
+                              title: Center(
+                                child: Text(interest,
+                                    style: const TextStyle(
+                                        fontWeight: FontWeight.bold)),
+                              ),
+                              textColor: Colors.white,
+                              tileColor: Colors.lightBlue,
+                            ),
+                          ),
+                        ),
+                      ],
+                    ),
+                    const Padding(
+                      padding: EdgeInsets.all(10.0),
+                      child: ListTile(
+                        title: Center(
+                            child: Text("Add an interest.",
+                                style: TextStyle(fontWeight: FontWeight.bold))),
+                        textColor: Colors.white,
+                        tileColor: Colors.black54,
+                      ),
+                    ),
+                  ])), //Gallery
           const Divider(
             height: 7,
             thickness: 2,
@@ -165,20 +174,20 @@ class _ProfilePageState extends State<ProfilePage> {
             child: Column(
               mainAxisAlignment: MainAxisAlignment.center,
               crossAxisAlignment: CrossAxisAlignment.stretch,
-              children:[
+              children: [
                 //GroupCardView(name: "ICS 466"),
                 //GroupCardView(name: "ICS 312"),
-                const Text("Your Courses:",
-                  style: TextStyle(fontSize: 20,
-                  fontWeight: FontWeight.bold,),
+                const Text(
+                  "Your Courses:",
+                  style: TextStyle(
+                    fontSize: 20,
+                    fontWeight: FontWeight.bold,
+                  ),
                   textAlign: TextAlign.left,
                 ),
-                Column(
-                  children:[
-                    ...groupsDB
-                        .getGroupsByUser(currentUser.uid)
-                        .map((group) =>
-                        Card(
+                Column(children: [
+                  ...groupsDB.getGroupsByUser(currentUser.uid).map(
+                        (group) => Card(
                           elevation: 8,
                           color: Colors.white,
                           shape: RoundedRectangleBorder(
@@ -191,45 +200,51 @@ class _ProfilePageState extends State<ProfilePage> {
                           child: Column(
                             children: [
                               ListTile(
-                                  title: Text(group.groupName,
-                                      style: const TextStyle(fontWeight: FontWeight.bold)),
+                                title: Text(group.groupName,
+                                    style: const TextStyle(
+                                        fontWeight: FontWeight.bold)),
                               ),
                               Padding(
-                                  padding: const EdgeInsets.only(left: 15.0, top: 5.0),
+                                  padding: const EdgeInsets.only(
+                                      left: 15.0, top: 5.0),
                                   child: Align(
                                     alignment: Alignment.centerLeft,
-                                    child: Text("${group.semYear} | ${group.professor}"),
-                                  )
-                              ),
+                                    child: Text(
+                                        "${group.semYear} | ${group.owner}"),
+                                  )),
                               Padding(
-                                  padding: EdgeInsets.only(left: 15.0, top: 2.0),
+                                  padding:
+                                      EdgeInsets.only(left: 15.0, top: 2.0),
                                   child: Align(
                                     alignment: Alignment.centerLeft,
-                                    child: Text("${group.userIds.length} people"),
-                                  )
-                              ),
+                                    child:
+                                        Text("${group.userIDs.length} people"),
+                                  )),
                               Padding(
                                   padding: const EdgeInsets.only(right: 15.0),
                                   child: Align(
                                     alignment: Alignment.bottomRight,
                                     child: TextButton(
-                                      onPressed: () {group.removeUserId(currentUser.uid);},
+                                      onPressed: () {
+                                        group.removeUserId(currentUser.uid);
+                                      },
                                       style: ButtonStyle(
-                                        backgroundColor: MaterialStateProperty.all<Color>(Colors.redAccent),
-                                        foregroundColor: MaterialStateProperty.all<Color>(Colors.white),
+                                        backgroundColor:
+                                            MaterialStateProperty.all<Color>(
+                                                Colors.redAccent),
+                                        foregroundColor:
+                                            MaterialStateProperty.all<Color>(
+                                                Colors.white),
                                       ),
                                       child: const Text('LEAVE'),
                                     ),
-                                  )
-                              ),
+                                  )),
                               const SizedBox(height: 10)
                             ],
                           ),
                         ),
-                    ),
-                  ]
-                ),
-
+                      ),
+                ]),
               ],
             ),
           ), //Courses
