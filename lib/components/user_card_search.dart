@@ -1,3 +1,4 @@
+import 'package:connectuni/screens/other_user_profile.dart';
 import 'package:flutter/material.dart';
 
 import 'package:connectuni/model/user.dart';
@@ -31,6 +32,12 @@ class UserCardSearch extends StatelessWidget {
                   icon: const Icon(Icons.message),
                   onPressed: () {
                     // TODO Add functionality to message user
+                    Navigator.push(
+                        context,
+                        MaterialPageRoute(builder: (context) {
+                          return OtherUserProfile(uid: thisUser.uid);
+                        })
+                    );
                   },
                 ),
               ),

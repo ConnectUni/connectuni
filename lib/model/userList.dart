@@ -189,6 +189,10 @@ final List<User> mockUsers = [
     ],
     ['Computer Science', 'Mathematics'],
   ),
+  friend1,
+  friend2,
 ];
 
 UserList usersDB = UserList(mockUsers);
+
+User currentUser = usersDB.getUserByID('user-001');
