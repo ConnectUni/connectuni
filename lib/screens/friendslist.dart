@@ -52,7 +52,7 @@ class _FriendsListState extends State<FriendsList> {
             ),
             ...currentUser
                 .friends
-                .map((uName) => UserCardWidget(user: uName)),
+                .map((user) => UserCardWidget(user: user)),
           ],
         ),
       ),
