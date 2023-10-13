@@ -3,6 +3,7 @@ import 'package:connectuni/components/user_card_search.dart';
 import 'package:flutter/material.dart';
 import 'package:multi_select_flutter/multi_select_flutter.dart';
 
+import '../components/user_card_widget.dart';
 import '../model/group.dart';
 
 class SearchPeopleScreen extends StatefulWidget {
@@ -20,6 +21,10 @@ class _SearchPeopleScreenState extends State<SearchPeopleScreen> {
   final _items = groupsDB
       .getAllGroups()
       .map((gName) => MultiSelectItem(gName, gName.groupName))
+      .toList();
+  final notFriends = usersDB
+      .getUsers()
+      .where((user) => !currentUser.friends.contains(user))
       .toList();
 
   @override
@@ -115,9 +120,7 @@ class _SearchPeopleScreenState extends State<SearchPeopleScreen> {
                 });
               }),
             ),
-            ...usersDB
-                .getUsers()
-                .map((uName) => UserCardSearch(name: uName.displayName)),
+            ...notFriends.map((user) => UserCardWidget(user: user)),
           ],
         ),
       ),

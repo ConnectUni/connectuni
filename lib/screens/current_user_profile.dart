@@ -1,5 +1,4 @@
 import 'package:connectuni/model/user.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:connectuni/model/userList.dart';
 import 'package:connectuni/model/group.dart';

@@ -7,24 +7,23 @@ import '../model/userList.dart';
 import '../screens/other_user_profile.dart';
 
 class UserCardWidget extends StatelessWidget {
-  const UserCardWidget({Key? key, required this.id}) : super(key: key);
+  const UserCardWidget({Key? key, required this.user}) : super(key: key);
 
-  final String id;
+  final User user;
 
   @override
   Widget build(BuildContext context) {
-    User thisUser = usersDB.getUserByID(id);
 
     return GestureDetector(
       onTap: () {
         Navigator.push(
           context,
           CupertinoPageRoute(
-              builder: (context) => OtherUserProfile(uid: thisUser.uid)
+              builder: (context) => OtherUserProfile(uid: user.uid)
           )
         );
       },
-      child: UserCardSearch(name: thisUser.displayName)
+      child: UserCardSearch(name: user.displayName),
     );
   }
 }
