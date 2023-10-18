@@ -2,6 +2,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 import '../model/group.dart';
+import '../model/group_list.dart';
 import '../model/message.dart';
 import '../model/message_list.dart';
 import '../model/user.dart';

@@ -3,6 +3,8 @@ import 'package:flutter/material.dart';
 import 'package:connectuni/model/group.dart';
 import 'package:connectuni/model/user.dart';
 
+import '../model/group_list.dart';
+
 /**
  * Information page for a specific group that displays the group members as well as a description of the selected group.
  * There is an icon at the upper righthand corner for more statistic-related properties of the group.

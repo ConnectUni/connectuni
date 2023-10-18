@@ -3,6 +3,8 @@ import 'package:flutter/material.dart';
 import 'package:connectuni/model/user_list.dart';
 import 'package:connectuni/model/group.dart';
 
+import '../model/group_list.dart';
+
 /**
  *  Profile Page that the User sees when they click the Navbar Profile icon.
  */

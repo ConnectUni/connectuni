@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 
 import 'package:connectuni/model/group.dart';
 import 'package:connectuni/model/group_card_view.dart';
+import '../model/group_list.dart';
 import '/screens/chatpage.dart';
 
 class GroupsScreen extends StatefulWidget {

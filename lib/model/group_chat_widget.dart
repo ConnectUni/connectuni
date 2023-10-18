@@ -3,6 +3,7 @@ import 'package:connectuni/screens/group_chat_screen.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'group.dart';
+import 'group_list.dart';
 
 /// GroupChatWidget is a widget that displays the group chat.
 /// It is a clickable widget that takes the user to the group chat page.
@@ -29,8 +30,7 @@ class _GroupChatWidgetState extends State<GroupChatWidget> {
         Navigator.push(
           context,
           CupertinoPageRoute(
-              builder: (context) => GroupChatScreen(id: groupData.groupID)
-          ),
+              builder: (context) => GroupChatScreen(id: groupData.groupID)),
         );
       },
       child: Container(

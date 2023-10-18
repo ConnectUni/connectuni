@@ -5,6 +5,8 @@ import '../model/event_db.dart';
 import '../model/group.dart';
 import 'package:multi_select_flutter/multi_select_flutter.dart';
 
+import '../model/group_list.dart';
+
 class EventCalendar extends StatefulWidget {
   @override
   _EventCalendarState createState() => _EventCalendarState();

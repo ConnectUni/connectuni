@@ -3,6 +3,7 @@ import 'package:multi_select_flutter/multi_select_flutter.dart';
 
 import '../model/group.dart';
 import '../model/group_card_view.dart';
+import '../model/group_list.dart';
 
 
 class SearchGroupsScreen extends StatefulWidget {

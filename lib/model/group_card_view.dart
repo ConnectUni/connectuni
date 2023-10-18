@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 
 import 'package:connectuni/model/group.dart';
 
+import 'group_list.dart';
+
 class GroupCardView extends StatelessWidget {
   const GroupCardView({Key? key, required this.id}) : super(key: key);
 
