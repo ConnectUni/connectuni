@@ -13,7 +13,7 @@ class Group {
   String groupDescription;
   List<Message>
       newMessages; //may need to implement for displaying how many new messages each gc has
-  List<String> chatID;
+  String chatID;
   List<String> eventIDs;
   List<String> userIDs;
   List<String> interests;
@@ -61,7 +61,7 @@ class Group {
     return newMessages;
   }
 
-  List<String> getChatID() {
+  String getChatID() {
     return chatID;
   }
 
@@ -77,181 +77,59 @@ class Group {
     return interests;
   }
 
-  /// Add a chat ID to the group.
-  void addChatId(String chatId) {
-    chatID.add(chatId);
+  /// Get all users - maybe we can move this code to where it's actually being rendered?
+  List<User> getAllUsersInGroup() {
+    return userIDs.map((userId) => usersDB.getUserByID(userId)).toList();
   }
 
-  //Setter method for removing a chat ID from the group.
-  void removeChatId(String chatId) {
-    chatID.remove(chatId);
-  }
-
-  //Setter method for adding an event ID to the group.
+  /// Add an event ID to the group
   void addEventId(String eventId) {
     eventIDs.add(eventId);
   }
 
-  //Setter method for removing an event ID from the group.
+  /// Remove an event ID from the group
   void removeEventId(String eventId) {
     eventIDs.remove(eventId);
   }
 
-  //Setter method for adding a user ID to the gsroup.
+  /// Add a user ID to the group
   void addUserId(String userId) {
     if (!userIDs.contains(userId)) {
       userIDs.add(userId);
     }
   }
 
-  //Setter method for removing a user ID from the group.
+  /// Remove a user ID from the group
   void removeUserId(String userId) {
     if (userIDs.contains(userId)) {
       userIDs.remove(userId);
     }
   }
 
-  //Setter method to update the number of new messages.
-  void updateNewMessages(int newMessages) {
+  /// Set the list of new messages
+  void setNewMessages(List<Message> newMessages) {
     this.newMessages = newMessages;
   }
 
-  //Setter method to update the group image.
-  void updateGroupImage(String groupImage) {
+  /// Set the group image
+  void setGroupImage(String groupImage) {
     this.groupImage = groupImage;
   }
 
-  //Setter methtod to update the group description.
-  void updateGroupDescription(String newDesc) {
+  /// Set the group description
+  void setGroupDescription(String newDesc) {
     groupDescription = newDesc;
   }
 
-  //Setter method for adding interests.
+  /// Add an interest
   void addInterest(String interest) {
     interests.add(interest);
   }
 
-  //Setter method for removing interests.
+  /// Remove an interest
   void removeInterest(String interest) {
-    interests.remove(interest);
-  }
-
-  ///Getter methods for list fields.
-  //Getter method for grabbing all users in a group.
-  List<User> getAllUsersInGroup() {
-    return userIDs.map((userId) => usersDB.getUserByID(userId)).toList();
+    if (interests.contains(interest)) {
+      interests.remove(interest);
+    }
   }
 }
-
-///Provides access to and operations on all defined groups.
-class GroupsDB {
-  final List<Group> allGroups = [
-    Group(
-      groupID: 'group-001',
-      groupName: 'ICS 466',
-      semYear: 'Fall 2023',
-      owner: 'Philip Johnson',
-      groupImage: 'group-001.png',
-      groupDescription: "This is a group for ICS 466.",
-      newMessages: 3,
-      chatID: [],
-      eventIDs: ['event-001'],
-      userIDs: ['user-001', 'user-002', 'user-003', 'user-004', 'user-005'],
-      interests: ['Computer Science'],
-    ),
-    Group(
-      groupID: 'group-002',
-      groupName: 'ICS 332',
-      semYear: 'Fall 2023',
-      groupImage: 'group-002.png',
-      owner: 'Henri Casanova',
-      groupDescription: "This is a group for ICS 332.",
-      newMessages: 17,
-      chatID: [],
-      eventIDs: [],
-      userIDs: ['user-001', 'user-002', 'user-003', 'user-004', 'user-005'],
-      interests: ['Computer Science'],
-    ),
-    Group(
-      groupID: 'group-003',
-      groupName: 'ICS 312',
-      semYear: 'Fall 2023',
-      groupImage: 'group-003.png',
-      owner: 'Kim Binsted',
-      groupDescription: "This is a group for ICS 312.",
-      newMessages: 0,
-      chatID: [],
-      eventIDs: [],
-      userIDs: ['user-001', 'user-002', 'user-003', 'user-004', 'user-005'],
-      interests: ['Computer Science'],
-    ),
-    Group(
-      groupID: 'group-004',
-      groupName: 'Math 307',
-      semYear: 'Fall 2023',
-      groupImage: 'group-004.png',
-      owner: 'Julian Hachmeister',
-      groupDescription: "This is a group for Math 307.",
-      newMessages: 10,
-      chatID: [],
-      eventIDs: ['event-003', 'event-004'],
-      userIDs: ['user-001', 'user-002', 'user-003', 'user-004', 'user-005'],
-      interests: ['Mathematics'],
-    ),
-    Group(
-      groupID: 'group-005',
-      groupName: 'ICS 496',
-      semYear: 'Fall 2023',
-      groupImage: 'group-005.png',
-      owner: 'Anthony Peruma',
-      groupDescription: "This is a group for ICS 496.",
-      newMessages: 2,
-      chatID: [],
-      eventIDs: ['event-005'],
-      userIDs: ['user-001', 'user-002', 'user-003', 'user-004', 'user-005'],
-      interests: ['Computer Science'],
-    ),
-  ];
-
-  ///SETTER METHODS:
-  void addGroup(Group group) {
-    allGroups.add(group);
-  }
-
-  void removeGroup(Group group) {
-    allGroups.remove(group);
-  }
-
-  ///GETTER METHODS:
-  //Getter method for grabbing a group by its ID.
-  Group getGroupById(String groupId) {
-    return allGroups.firstWhere((group) => group.groupID == groupId);
-  }
-
-  //Getter method for grabbing a group by its name.
-  Group getGroupByName(String groupName) {
-    return allGroups.firstWhere((group) => group.groupName == groupName);
-  }
-
-  //Getter method for grabbing a group by its semester and year.
-  Group getGroupBySemYear(String semYear) {
-    return allGroups.firstWhere((group) => group.semYear == semYear);
-  }
-
-  //Getter method for grabbing a group by its professor.
-  Group getGroupByProfessor(String professor) {
-    return allGroups.firstWhere((group) => group.owner == professor);
-  }
-
-  //Getter method for grabbing all groups that have a certain user.
-  List<Group> getGroupsByUser(String userId) {
-    return allGroups.where((group) => group.userIDs.contains(userId)).toList();
-  }
-
-  //Getter method for grabbing all groups.
-  List<Group> getAllGroups() {
-    return allGroups;
-  } //loadGroups
-} //Groups Repository
-
-GroupsDB groupsDB = GroupsDB();
