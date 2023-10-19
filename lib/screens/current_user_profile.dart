@@ -3,19 +3,20 @@ import 'package:flutter/material.dart';
 import 'package:connectuni/model/userList.dart';
 import 'package:connectuni/model/group.dart';
 
-/**
- *  Profile Page that the User sees when they click the Navbar Profile icon.
- */
+import 'friendslist.dart';
 
-class ProfilePage extends StatefulWidget {
-  ProfilePage({
+///  Profile Page that the User sees when they click the Navbar Profile icon.
+
+class CurrentUserProfilePage extends StatefulWidget {
+  const CurrentUserProfilePage({
     super.key,
   });
 
-  State<ProfilePage> createState() => _ProfilePageState();
+  @override
+  State<CurrentUserProfilePage> createState() => _CurrentUserProfilePageState();
 }
 
-class _ProfilePageState extends State<ProfilePage> {
+class _CurrentUserProfilePageState extends State<CurrentUserProfilePage> {
   int _selectedIndex = 0;
 
   void _onItemTapped(int index) {
@@ -40,8 +41,12 @@ class _ProfilePageState extends State<ProfilePage> {
               semanticLabel: 'friends list',
             ),
             onPressed: () {
-              //Routes to the Friends List Page.
-              Navigator.restorablePushNamed(context, '/friendslist', arguments: '/');
+              Navigator.push(
+                  context,
+                  MaterialPageRoute(builder: (context) {
+                    return const FriendsList();
+                  })
+              );
             },
           ),
           IconButton(
@@ -57,56 +62,55 @@ class _ProfilePageState extends State<ProfilePage> {
         ],
       ),
       body: ListView(
-        padding: EdgeInsets.all(20.0),
+        padding: const EdgeInsets.all(20.0),
         children: [
-          Container(
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-              children: [
-                Column(
-                  children: [CircleAvatar(
-                    radius: 50,
-                    backgroundImage: AssetImage(currentUser.pfp),
-                  ),
-            ]
-                ),
-                Expanded(child: Column(
+          Row(
+            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+            children: [
+              Column(
                   children: [
-                    Text(
-                      currentUser.displayName,
-                      style: const TextStyle(
-                        fontSize: 23,
-                        fontWeight: FontWeight.bold,
-                      ),
+                    CircleAvatar(
+                      radius: 50,
+                      backgroundImage: AssetImage(currentUser.pfp),
                     ),
-                    Text(
-                      'Major: ${currentUser.major}',
-                      style: const TextStyle(
-                        fontSize: 15,
-                      ),
+                  ]
+              ),
+              Expanded(child: Column(
+                children: [
+                  Text(
+                    currentUser.displayName,
+                    style: const TextStyle(
+                      fontSize: 23,
+                      fontWeight: FontWeight.bold,
                     ),
-                    Text(
-                      'Projected Grad: ${currentUser.projectedGraduation}',
-                      style: const TextStyle(
-                        fontSize: 15,
-                      ),
+                  ),
+                  Text(
+                    'Major: ${currentUser.major}',
+                    style: const TextStyle(
+                      fontSize: 15,
                     ),
-                    Padding(
-                      padding: const EdgeInsets.all(10.0),
-                      child: TextButton(
-                        onPressed: null,
-                        style: ButtonStyle(
-                          backgroundColor: MaterialStateProperty.all<Color>(Colors.green),
-                          foregroundColor: MaterialStateProperty.all<Color>(Colors.white),
-                        ),
-                        child: const Text('Edit Profile'),
-                      ),
+                  ),
+                  Text(
+                    'Projected Grad: ${currentUser.projectedGraduation}',
+                    style: const TextStyle(
+                      fontSize: 15,
                     ),
-                  ],
-                ),
-                ),
-              ]
-            ),
+                  ),
+                  Padding(
+                    padding: const EdgeInsets.all(10.0),
+                    child: TextButton(
+                      onPressed: null,
+                      style: ButtonStyle(
+                        backgroundColor: MaterialStateProperty.all<Color>(Colors.green),
+                        foregroundColor: MaterialStateProperty.all<Color>(Colors.white),
+                      ),
+                      child: const Text('Edit Profile'),
+                    ),
+                  ),
+                ],
+              ),
+              ),
+            ]
           ),
           const Divider(
             height: 7,
@@ -116,7 +120,7 @@ class _ProfilePageState extends State<ProfilePage> {
             color: Colors.black,
           ),
           Container(
-            padding: EdgeInsets.all(10.0),
+            padding: const EdgeInsets.all(10.0),
             child:
               Column(
                 crossAxisAlignment: CrossAxisAlignment.stretch,
@@ -134,7 +138,7 @@ class _ProfilePageState extends State<ProfilePage> {
                       Padding(
                         padding: const EdgeInsets.all(10.0),
                         child: ListTile(
-                          title: Center(child: Text(interest, style: const TextStyle(fontWeight: FontWeight.bold)),),
+                          title: Center(child: Text(interest, style: const TextStyle(fontWeight: FontWeight.bold))),
                           textColor: Colors.white,
                           tileColor: Colors.lightBlue,
                         ),
@@ -202,7 +206,7 @@ class _ProfilePageState extends State<ProfilePage> {
                                   )
                               ),
                               Padding(
-                                  padding: EdgeInsets.only(left: 15.0, top: 2.0),
+                                  padding: const EdgeInsets.only(left: 15.0, top: 2.0),
                                   child: Align(
                                     alignment: Alignment.centerLeft,
                                     child: Text("${group.userIds.length} people"),
@@ -229,7 +233,6 @@ class _ProfilePageState extends State<ProfilePage> {
                     ),
                   ]
                 ),
-
               ],
             ),
           ), //Courses

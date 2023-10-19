@@ -1,5 +1,7 @@
 import 'package:connectuni/home/home.dart';
+import 'package:connectuni/screens/createprofile.dart';
 import 'package:connectuni/screens/profile.dart';
+import 'package:connectuni/screens/current_user_profile.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
@@ -181,7 +183,7 @@ class _SignUpPageState extends State<SignUpPage> {
                         Navigator.push(
                           context,
                           CupertinoPageRoute(
-                              builder: (context) => const HomePage()),
+                              builder: (context) => const CreateProfile()),
                         );
                       } else {
                         _emailController.text = "not same passowrd";
