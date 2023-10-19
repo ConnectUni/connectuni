@@ -11,7 +11,7 @@ import 'home/home.dart';
 import 'screens/chatpage.dart';
 import 'screens/groupinfo.dart';
 import 'screens/settings.dart';
-import 'screens/profile.dart';
+import 'screens/current_user_profile.dart';
 import 'screens/search_people_screen.dart';
 import 'screens/search_groups_screen.dart';
 
@@ -46,7 +46,7 @@ class ConnectUniApp extends StatelessWidget {
         '/groupinfo': (BuildContext context) => const GroupInfo(id: ''),
         '/eventinfo': (BuildContext context) => const EventInfoScreen(id: '',),
         '/conversations': (BuildContext context) => const ChatPage(),
-        '/profile': (BuildContext context) => ProfilePage(),
+        '/profile': (BuildContext context) => const CurrentUserProfilePage(),
         '/friendslist': (BuildContext context) => const FriendsList(),
       },
     );
