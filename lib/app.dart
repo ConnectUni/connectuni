@@ -1,3 +1,4 @@
+import 'package:connectuni/screens/createprofile.dart';
 import 'package:connectuni/screens/event_info_screen.dart';
 import 'package:connectuni/screens/search_events_screen.dart';
 import 'package:connectuni/screens/signup.dart';
@@ -30,6 +31,7 @@ class ConnectUniApp extends StatelessWidget {
         // TODO: Insert routes
         '/login': (BuildContext context) => const LoginPage(),
         '/signup': (BuildContext context) => const SignUpPage(),
+        '/createprofile': (BuildContext context) => const CreateProfile(),
         '/home': (BuildContext context) => const HomePage(),
         '/settings': (BuildContext context) => const Settings(),
         '/searchgroups': (BuildContext context) => SearchGroupsScreen(
