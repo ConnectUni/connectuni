@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:table_calendar/table_calendar.dart';
 
-import '../model/event_db.dart';
-import '../model/group.dart';
+import '../model/event.dart';
+import '../model/event_list.dart';
 import 'package:multi_select_flutter/multi_select_flutter.dart';
 
 import '../model/group_list.dart';
@@ -14,7 +14,10 @@ class EventCalendar extends StatefulWidget {
 
 class _EventCalendarState extends State<EventCalendar> {
   late final ValueNotifier<List<Event>> _selectedEvents;
-  final _items = groupsDB.getAllGroups().map((gName) => MultiSelectItem(gName, gName.groupName)).toList();
+  final _items = groupsDB
+      .getAllGroups()
+      .map((gName) => MultiSelectItem(gName, gName.groupName))
+      .toList();
   CalendarFormat _calendarFormat = CalendarFormat.month;
   RangeSelectionMode _rangeSelectionMode = RangeSelectionMode
       .toggledOff; // Can be toggled on/off by longpressing a date
@@ -39,9 +42,11 @@ class _EventCalendarState extends State<EventCalendar> {
 
   List<Event> _getEventsForDay(DateTime day) {
     // Implementation example
-    return eventsDB.getAllEvents().where((event) => isSameDay(event.eventDate, day)).toList();
+    return eventsDB
+        .getAllEvents()
+        .where((event) => isSameDay(event.eventDate, day))
+        .toList();
   }
-
 
   void _onDaySelected(DateTime selectedDay, DateTime focusedDay) {
     if (!isSameDay(_selectedDay, selectedDay)) {
@@ -134,9 +139,12 @@ class _EventCalendarState extends State<EventCalendar> {
             },
           ),
           const SizedBox(height: 8.0),
-          Text("Events for ${_selectedDay?.month}/${_selectedDay?.day}/${_selectedDay?.year}:",
-            style: const TextStyle(fontSize: 20,
-              fontWeight: FontWeight.bold,),
+          Text(
+            "Events for ${_selectedDay?.month}/${_selectedDay?.day}/${_selectedDay?.year}:",
+            style: const TextStyle(
+              fontSize: 20,
+              fontWeight: FontWeight.bold,
+            ),
             textAlign: TextAlign.left,
           ),
           Expanded(
@@ -157,8 +165,10 @@ class _EventCalendarState extends State<EventCalendar> {
                       ),
                       child: ListTile(
                         //TODO: Implement onTap to send user to event page
-                        onTap: () => print('SEND USER TO ${value[index].eventName} PAGE'),
-                        title: Text('${value[index].eventName} | ${value[index].eventLocation}'),
+                        onTap: () => print(
+                            'SEND USER TO ${value[index].eventName} PAGE'),
+                        title: Text(
+                            '${value[index].eventName} | ${value[index].eventLocation}'),
                       ),
                     );
                   },

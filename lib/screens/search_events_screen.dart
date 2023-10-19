@@ -2,11 +2,11 @@ import 'package:connectuni/model/event_card_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:multi_select_flutter/multi_select_flutter.dart';
 
-import '../model/event_db.dart';
-import '../model/event_card_view.dart';
+import '../model/event_list.dart';
 
 class SearchEventsScreen extends StatefulWidget {
-  const SearchEventsScreen({Key? key, required this.pageController}) : super(key: key);
+  const SearchEventsScreen({Key? key, required this.pageController})
+      : super(key: key);
 
   static const String routeName = '/search_events';
   final PageController pageController;
@@ -16,7 +16,10 @@ class SearchEventsScreen extends StatefulWidget {
 }
 
 class _SearchEventsScreenState extends State<SearchEventsScreen> {
-  final _items = eventsDB.getAllEvents().map((eName) => MultiSelectItem(eName, eName.eventName)).toList();
+  final _items = eventsDB
+      .getAllEvents()
+      .map((eName) => MultiSelectItem(eName, eName.eventName))
+      .toList();
 
   @override
   Widget build(BuildContext context) {
@@ -30,7 +33,9 @@ class _SearchEventsScreenState extends State<SearchEventsScreen> {
               semanticLabel: 'Search for groups',
             ),
             onPressed: () {
-              widget.pageController.animateToPage(0, duration: const Duration(milliseconds: 300), curve: Curves.easeInOut);
+              widget.pageController.animateToPage(0,
+                  duration: const Duration(milliseconds: 300),
+                  curve: Curves.easeInOut);
             },
           ),
           IconButton(
@@ -39,7 +44,9 @@ class _SearchEventsScreenState extends State<SearchEventsScreen> {
               semanticLabel: 'Search for people',
             ),
             onPressed: () {
-              widget.pageController.animateToPage(1, duration: const Duration(milliseconds: 300), curve: Curves.easeInOut);
+              widget.pageController.animateToPage(1,
+                  duration: const Duration(milliseconds: 300),
+                  curve: Curves.easeInOut);
             },
           ),
         ],
@@ -92,7 +99,8 @@ class _SearchEventsScreenState extends State<SearchEventsScreen> {
                     leading: const Icon(Icons.search),
                   );
                 },
-                suggestionsBuilder: (BuildContext context, SearchController controller) {
+                suggestionsBuilder:
+                    (BuildContext context, SearchController controller) {
                   return List<ListTile>.generate(5, (int index) {
                     final String item = 'item $index';
                     return ListTile(
@@ -109,9 +117,9 @@ class _SearchEventsScreenState extends State<SearchEventsScreen> {
               'Events',
               textAlign: TextAlign.left,
             ),
-            ...eventsDB
-            .getAllEvents()
-            .map((eid) => EventCardWidget(eventId: eid.eventId,))
+            ...eventsDB.getAllEvents().map((eid) => EventCardWidget(
+                  eventId: eid.eventID,
+                ))
           ],
         ),
       ),
