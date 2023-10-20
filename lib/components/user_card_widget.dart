@@ -1,9 +1,6 @@
 import 'package:connectuni/components/user_card_search.dart';
 import 'package:flutter/cupertino.dart';
-import 'package:flutter/material.dart';
-
 import '../model/user.dart';
-import '../model/userList.dart';
 import '../screens/other_user_profile.dart';
 
 class UserCardWidget extends StatelessWidget {
@@ -19,11 +16,11 @@ class UserCardWidget extends StatelessWidget {
         Navigator.push(
           context,
           CupertinoPageRoute(
-              builder: (context) => OtherUserProfile(uid: user.uid)
+              builder: (context) => OtherUserProfile(user: user,)
           )
         );
       },
-      child: UserCardSearch(name: user.displayName),
+      child: UserCardSearch(user: user),
     );
   }
 }

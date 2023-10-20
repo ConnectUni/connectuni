@@ -5,9 +5,9 @@ import '../model/user.dart';
 import '../model/userList.dart';
 
 class OtherUserProfile extends StatelessWidget {
-  const OtherUserProfile({Key? key, required this.uid}) : super(key: key);
+  const OtherUserProfile({Key? key, required this.user}) : super(key: key);
 
-  final String uid;
+  final User user;
 
   bool isFriend(User user) {
     if (currentUser.friends.contains(user)) {
@@ -18,11 +18,10 @@ class OtherUserProfile extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    User thisUser = usersDB.getUserByID(uid);
 
     return Scaffold(
       appBar: AppBar(
-        title: Text(thisUser.displayName),
+        title: Text(user.displayName),
         actions: [
           IconButton(
             icon: const Icon(
@@ -33,10 +32,10 @@ class OtherUserProfile extends StatelessWidget {
               // TODO Add functionality to message user
             },
           ),
-         isFriend(thisUser) ?
+         isFriend(user) ?
               IconButton(
                   onPressed: () {
-                    currentUser.friends.remove(thisUser);
+                    currentUser.friends.remove(user);
                   },
                   icon: const Icon(
                     Icons.person_remove,
@@ -45,7 +44,7 @@ class OtherUserProfile extends StatelessWidget {
               ) :
               IconButton(
                   onPressed: () {
-                    currentUser.friends.remove(thisUser);
+                    currentUser.friends.remove(user);
                   },
                   icon: const Icon(
                     Icons.person_add,
@@ -61,35 +60,35 @@ class OtherUserProfile extends StatelessWidget {
               children: [
                 CircleAvatar(
                   radius: 50,
-                  backgroundImage: AssetImage(thisUser.pfp),
+                  backgroundImage: AssetImage(user.pfp),
                 ),
                 Text(
-                  thisUser.displayName,
+                  user.displayName,
                   style: const TextStyle(
                     fontSize: 23.0,
                     fontWeight: FontWeight.bold,
                   ),
                 ),
                 Text(
-                  'Major: ${thisUser.major}',
+                  'Major: ${user.major}',
                   style: const TextStyle(
                     fontSize: 15.0,
                   ),
                 ),
                 Text(
-                  'Projected Grad: ${thisUser.projectedGraduation}',
+                  'Projected Grad: ${user.projectedGraduation}',
                   style: const TextStyle(
                     fontSize: 15.0,
                   ),
                 ),
                 Text(
-                  'Status: ${thisUser.status}',
+                  'Status: ${user.status}',
                   style: const TextStyle(
                     fontSize: 15.0,
                   ),
                 ),
                 Text(
-                  'Friends: ${thisUser.friends.length}',
+                  'Friends: ${user.friends.length}',
                   style: const TextStyle(
                     fontSize: 15.0,
                   ),
@@ -160,7 +159,7 @@ class OtherUserProfile extends StatelessWidget {
                       Column(
                         children: [
                           ...groupsDB
-                              .getGroupsByUser(thisUser.uid)
+                              .getGroupsByUser(user.uid)
                               .map((group) =>
                               Card(
                                 elevation: 8,
@@ -197,7 +196,7 @@ class OtherUserProfile extends StatelessWidget {
                                         child: Align(
                                           alignment: Alignment.bottomRight,
                                           child: TextButton(
-                                            onPressed: () {group.addUserId(thisUser.uid);},
+                                            onPressed: () {group.addUserId(user.uid);},
                                             style: ButtonStyle(
                                               backgroundColor: MaterialStateProperty.all<Color>(Colors.green),
                                               foregroundColor: MaterialStateProperty.all<Color>(Colors.white),
