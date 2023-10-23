@@ -1,11 +1,12 @@
 import 'package:connectuni/model/userList.dart';
 import 'package:flutter/material.dart';
 import 'package:multi_select_flutter/multi_select_flutter.dart';
-
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import '../components/user_card_widget.dart';
+import '../model/user.dart';
 import '../model/group.dart';
 
-class SearchPeopleScreen extends StatefulWidget {
+class SearchPeopleScreen extends ConsumerStatefulWidget {
   const SearchPeopleScreen({Key? key, required this.pageController})
       : super(key: key);
 
@@ -13,21 +14,23 @@ class SearchPeopleScreen extends StatefulWidget {
   final PageController pageController;
 
   @override
-  State<SearchPeopleScreen> createState() => _SearchPeopleScreenState();
+  ConsumerState<SearchPeopleScreen> createState() => _SearchPeopleScreenState();
 }
 
-class _SearchPeopleScreenState extends State<SearchPeopleScreen> {
-  final _items = groupsDB
-      .getAllGroups()
-      .map((gName) => MultiSelectItem(gName, gName.groupName))
-      .toList();
-  final notFriends = usersDB
-      .getUsers()
-      .where((user) => !currentUser.friends.contains(user))
-      .toList();
+class _SearchPeopleScreenState extends ConsumerState<SearchPeopleScreen> {
 
   @override
   Widget build(BuildContext context) {
+    final UserList usersDB = ref.read(userDBProvider);
+    final User currentUser = usersDB.getUserByID(ref.read(currentUserProvider));
+    final _items = groupsDB
+        .getAllGroups()
+        .map((gName) => MultiSelectItem(gName, gName.groupName))
+        .toList();
+    final notFriends = usersDB
+        .getUsers()
+        .where((user) => !currentUser.friends.contains(user))
+        .toList();
     return Scaffold(
       appBar: AppBar(
         title: const Text('Search for People'),

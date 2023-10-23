@@ -1,6 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import '../model/group.dart';
 import '../model/message.dart';
 import '../model/message_list.dart';
@@ -8,7 +8,7 @@ import '../model/user.dart';
 import '../model/userList.dart';
 import 'groupinfo.dart';
 
-class GroupChatScreen extends StatefulWidget {
+class GroupChatScreen extends ConsumerStatefulWidget {
   final String id;
 
   const GroupChatScreen({
@@ -17,12 +17,13 @@ class GroupChatScreen extends StatefulWidget {
   }) : super(key: key);
 
   @override
-  State<GroupChatScreen> createState() => _GroupChatScreenState();
+  ConsumerState<GroupChatScreen> createState() => _GroupChatScreenState();
 }
 
-class _GroupChatScreenState extends State<GroupChatScreen> {
+class _GroupChatScreenState extends ConsumerState<GroupChatScreen> {
   @override
   Widget build(BuildContext context) {
+    final UserList usersDB = ref.read(userDBProvider);
     Group groupData = groupsDB.getGroupById(widget.id);
     Iterable<User> groupMembers = usersDB.getGroupMembers(groupData.userIds);
     Iterable<Message> messageData =

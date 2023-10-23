@@ -1,16 +1,17 @@
 import 'package:connectuni/screens/other_user_profile.dart';
 import 'package:flutter/material.dart';
-
 import 'package:connectuni/model/user.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import '../model/userList.dart';
 
-class UserCardSearch extends StatelessWidget {
+class UserCardSearch extends ConsumerWidget {
   const UserCardSearch({Key? key, required this.name}) : super(key: key);
 
   final String name;
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
+    final UserList usersDB = ref.watch(userDBProvider);
     User thisUser = usersDB.getUserByName(name);
 
     return Padding(

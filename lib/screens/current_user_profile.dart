@@ -2,21 +2,19 @@ import 'package:connectuni/model/user.dart';
 import 'package:flutter/material.dart';
 import 'package:connectuni/model/userList.dart';
 import 'package:connectuni/model/group.dart';
-
 import 'friendslist.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 ///  Profile Page that the User sees when they click the Navbar Profile icon.
 
-class CurrentUserProfilePage extends StatefulWidget {
-  const CurrentUserProfilePage({
-    super.key,
-  });
+class CurrentUserProfilePage extends ConsumerStatefulWidget {
+  const CurrentUserProfilePage({Key? key});
 
   @override
-  State<CurrentUserProfilePage> createState() => _CurrentUserProfilePageState();
+  CurrentUserProfilePageState createState() => CurrentUserProfilePageState();
 }
 
-class _CurrentUserProfilePageState extends State<CurrentUserProfilePage> {
+class CurrentUserProfilePageState extends ConsumerState<CurrentUserProfilePage> {
   int _selectedIndex = 0;
 
   void _onItemTapped(int index) {
@@ -29,8 +27,8 @@ class _CurrentUserProfilePageState extends State<CurrentUserProfilePage> {
 
   @override
   Widget build(BuildContext context) {
-    //Temporary local variable to be replaced later.
-    User currentUser = usersDB.getUserByID('user-004');
+    final UserList userList = ref.read(userDBProvider);
+    final User currentUser = userList.getUserByID(ref.read(currentUserProvider));
     return Scaffold(
       appBar: AppBar(
         title: const Text('My Profile'),
