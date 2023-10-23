@@ -1,13 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:multi_select_flutter/multi_select_flutter.dart';
 
-import '../model/group.dart';
-import '../model/group_card_view.dart';
+import '../components/group_card_view.dart';
 import '../model/group_list.dart';
 
-
 class SearchGroupsScreen extends StatefulWidget {
-  const SearchGroupsScreen({Key? key, required this.pageController}) : super(key: key);
+  const SearchGroupsScreen({Key? key, required this.pageController})
+      : super(key: key);
 
   static const String routeName = '/search_groups';
   final PageController pageController;
@@ -17,7 +16,10 @@ class SearchGroupsScreen extends StatefulWidget {
 }
 
 class _SearchGroupsScreenState extends State<SearchGroupsScreen> {
-  final _items = groupsDB.getAllGroups().map((gName) => MultiSelectItem(gName, gName.groupName)).toList();
+  final _items = groupsDB
+      .getAllGroups()
+      .map((gName) => MultiSelectItem(gName, gName.groupName))
+      .toList();
 
   @override
   Widget build(BuildContext context) {
@@ -31,7 +33,9 @@ class _SearchGroupsScreenState extends State<SearchGroupsScreen> {
               semanticLabel: 'Search for people',
             ),
             onPressed: () {
-              widget.pageController.animateToPage(1, duration: const Duration(milliseconds: 300), curve: Curves.easeInOut);
+              widget.pageController.animateToPage(1,
+                  duration: const Duration(milliseconds: 300),
+                  curve: Curves.easeInOut);
             },
           ),
           IconButton(
@@ -40,7 +44,9 @@ class _SearchGroupsScreenState extends State<SearchGroupsScreen> {
               semanticLabel: 'Search for events',
             ),
             onPressed: () {
-              widget.pageController.animateToPage(2, duration: const Duration(milliseconds: 300), curve: Curves.easeInOut);
+              widget.pageController.animateToPage(2,
+                  duration: const Duration(milliseconds: 300),
+                  curve: Curves.easeInOut);
             },
           ),
         ],
@@ -82,32 +88,31 @@ class _SearchGroupsScreenState extends State<SearchGroupsScreen> {
               padding: const EdgeInsets.all(8.0),
               child: SearchAnchor(
                   builder: (BuildContext context, SearchController controller) {
-                    return SearchBar(
-                      controller: controller,
-                      onTap: () {
-                        controller.openView();
-                      },
-                      onChanged: (_) {
-                        controller.openView();
-                      },
-                      hintText: 'Search...',
-                      leading: const Icon(Icons.search),
-                    );
+                return SearchBar(
+                  controller: controller,
+                  onTap: () {
+                    controller.openView();
                   },
-                  suggestionsBuilder:
+                  onChanged: (_) {
+                    controller.openView();
+                  },
+                  hintText: 'Search...',
+                  leading: const Icon(Icons.search),
+                );
+              }, suggestionsBuilder:
                       (BuildContext context, SearchController controller) {
-                    return List<ListTile>.generate(5, (int index) {
-                      final String item = 'item $index';
-                      return ListTile(
-                        title: Text(item),
-                        onTap: () {
-                          setState(() {
-                            controller.closeView(item);
-                          });
-                        },
-                      );
-                    });
-                  }),
+                return List<ListTile>.generate(5, (int index) {
+                  final String item = 'item $index';
+                  return ListTile(
+                    title: Text(item),
+                    onTap: () {
+                      setState(() {
+                        controller.closeView(item);
+                      });
+                    },
+                  );
+                });
+              }),
             ),
             const Text(
               'RelatedCourses/Groups',
@@ -123,9 +128,7 @@ class _SearchGroupsScreenState extends State<SearchGroupsScreen> {
             ...groupsDB
                 .getAllGroups()
                 .map((gName) => GroupCardView(id: gName.groupID)),
-            const Text(
-                'Events'
-            ),
+            const Text('Events'),
           ],
         ),
       ),

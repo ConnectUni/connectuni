@@ -1,9 +1,10 @@
-import 'package:connectuni/model/group_card_view.dart';
+import 'package:connectuni/components/group_card_view.dart';
 import 'package:connectuni/screens/group_chat_screen.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'group.dart';
-import 'group_list.dart';
+
+import '../model/group.dart';
+import '../model/group_list.dart';
 
 /// GroupChatWidget is a widget that displays the group chat.
 /// It is a clickable widget that takes the user to the group chat page.

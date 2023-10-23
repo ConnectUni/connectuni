@@ -1,7 +1,7 @@
 import 'package:connectuni/screens/event_info_screen.dart';
 import 'package:connectuni/screens/search_events_screen.dart';
 import 'package:connectuni/screens/signup.dart';
-import 'package:connectuni/screens/friendslist.dart';
+import 'package:connectuni/screens/friend_list.dart';
 
 import 'package:flutter/material.dart';
 
@@ -10,7 +10,7 @@ import 'home/home.dart';
 import 'screens/chatpage.dart';
 import 'screens/groupinfo.dart';
 import 'screens/settings.dart';
-import 'screens/profile.dart';
+import 'screens/current_user_profile.dart';
 import 'screens/search_people_screen.dart';
 import 'screens/search_groups_screen.dart';
 
@@ -42,9 +42,11 @@ class ConnectUniApp extends StatelessWidget {
               pageController: _pageController,
             ),
         '/groupinfo': (BuildContext context) => const GroupInfo(id: ''),
-        '/eventinfo': (BuildContext context) => const EventInfoScreen(id: '',),
+        '/eventinfo': (BuildContext context) => const EventInfoScreen(
+              id: '',
+            ),
         '/conversations': (BuildContext context) => const ChatPage(),
-        '/profile': (BuildContext context) => ProfilePage(),
+        '/profile': (BuildContext context) => const CurrentUserProfilePage(),
         '/friendslist': (BuildContext context) => const FriendsList(),
       },
     );

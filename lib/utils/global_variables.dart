@@ -1,5 +1,5 @@
 import 'package:connectuni/screens/eventCalendar.dart';
-import 'package:connectuni/screens/profile.dart';
+import 'package:connectuni/screens/current_user_profile.dart';
 import 'package:flutter/material.dart';
 import 'package:connectuni/home/search_page_controller.dart';
 import 'package:connectuni/screens/groups_screen.dart';
@@ -9,7 +9,7 @@ List<Widget> screenItems = [
   const GroupsScreen(),
   const SearchPageController(),
   EventCalendar(),
-  ProfilePage()
+  const CurrentUserProfilePage()
 ];
 
 // This is a list of interests that can be called from anywhere in the app.

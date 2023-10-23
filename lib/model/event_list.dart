@@ -2,47 +2,47 @@ import 'event.dart';
 
 /// The EventList object.
 class EventList {
-  List<Event> allEvents;
+  List<SingleEvent> allEvents;
 
   ///Constructor
   EventList(this.allEvents);
 
   /// Add an Event
-  void addEvent(Event newEvent) {
+  void addEvent(SingleEvent newEvent) {
     allEvents.add(newEvent);
   }
 
   /// Remove an Event
-  void removeEvent(Event event) {
+  void removeEvent(SingleEvent event) {
     if (allEvents.contains(event)) {
       allEvents.remove(event);
     }
   }
 
   /// Return single Event object, search by its eventID
-  Event getEventById(String eventId) {
+  SingleEvent getEventById(String eventId) {
     return allEvents.firstWhere((event) => event.eventID == eventId);
   }
 
   /// Return single Event object, search by its eventName
-  Event getEventByName(String eventName) {
+  SingleEvent getEventByName(String eventName) {
     return allEvents.firstWhere((event) => event.eventName == eventName);
   }
 
   /// Return list of Event objects, search by groupID
-  List<Event> getEventsByGroupId(String groupID) {
+  List<SingleEvent> getEventsByGroupId(String groupID) {
     return allEvents.where((event) => event.groupID == groupID).toList();
   }
 
   /// Return allEvents
-  List<Event> getAllEvents() {
+  List<SingleEvent> getAllEvents() {
     return allEvents;
   }
 }
 
 /// DELETE THIS BOTTOM SECTION AFTER GETTING REAL DB
-List<Event> allEvents = [
-  Event(
+List<SingleEvent> allEvents = [
+  SingleEvent(
     eventID: 'event-001',
     eventName: 'ICS 466 Pizza Party',
     eventIcon: 'assets/images/pizzaparty.jpg',
@@ -52,7 +52,7 @@ List<Event> allEvents = [
     groupID: 'group-001',
     userIDs: ['user-001', 'user-002', 'user-003'],
   ),
-  Event(
+  SingleEvent(
     eventID: 'event-002',
     eventName: 'ICS 332 Study Session',
     eventIcon: 'assets/images/studysesh.jpg',
@@ -63,7 +63,7 @@ List<Event> allEvents = [
     groupID: 'group-002',
     userIDs: ['user-001'],
   ),
-  Event(
+  SingleEvent(
     eventID: 'event-003',
     eventName: 'MATH 307 Bowling Outing',
     eventIcon: 'assets/images/aieabowl.jpg',
@@ -74,7 +74,7 @@ List<Event> allEvents = [
     groupID: 'group-003',
     userIDs: ['user-002', 'user-003'],
   ),
-  Event(
+  SingleEvent(
     eventID: 'event-004',
     eventName: 'Final Exam Date',
     eventIcon: 'assets/images/finalexam.jpg',

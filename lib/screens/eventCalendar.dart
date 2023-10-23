@@ -1,11 +1,12 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:table_calendar/table_calendar.dart';
 
 import '../model/event.dart';
 import '../model/event_list.dart';
 import 'package:multi_select_flutter/multi_select_flutter.dart';
-
 import '../model/group_list.dart';
+import 'event_info_screen.dart';
 
 class EventCalendar extends StatefulWidget {
   @override
@@ -13,7 +14,7 @@ class EventCalendar extends StatefulWidget {
 }
 
 class _EventCalendarState extends State<EventCalendar> {
-  late final ValueNotifier<List<Event>> _selectedEvents;
+  late final ValueNotifier<List<SingleEvent>> _selectedEvents;
   final _items = groupsDB
       .getAllGroups()
       .map((gName) => MultiSelectItem(gName, gName.groupName))
@@ -40,7 +41,7 @@ class _EventCalendarState extends State<EventCalendar> {
     super.dispose();
   }
 
-  List<Event> _getEventsForDay(DateTime day) {
+  List<SingleEvent> _getEventsForDay(DateTime day) {
     // Implementation example
     return eventsDB
         .getAllEvents()
@@ -110,7 +111,7 @@ class _EventCalendarState extends State<EventCalendar> {
               },
             ),
           ),
-          TableCalendar<Event>(
+          TableCalendar<SingleEvent>(
             firstDay: DateTime.utc(2023, 10, 1),
             lastDay: DateTime.utc(2024, 12, 31),
             focusedDay: _focusedDay,
@@ -148,7 +149,7 @@ class _EventCalendarState extends State<EventCalendar> {
             textAlign: TextAlign.left,
           ),
           Expanded(
-            child: ValueListenableBuilder<List<Event>>(
+            child: ValueListenableBuilder<List<SingleEvent>>(
               valueListenable: _selectedEvents,
               builder: (context, value, _) {
                 return ListView.builder(
@@ -165,8 +166,13 @@ class _EventCalendarState extends State<EventCalendar> {
                       ),
                       child: ListTile(
                         //TODO: Implement onTap to send user to event page
-                        onTap: () => print(
-                            'SEND USER TO ${value[index].eventName} PAGE'),
+                        onTap: () => {
+                          Navigator.push(
+                              context,
+                              CupertinoPageRoute(
+                                  builder: (context) => EventInfoScreen(
+                                      id: value[index].eventID)))
+                        },
                         title: Text(
                             '${value[index].eventName} | ${value[index].eventLocation}'),
                       ),

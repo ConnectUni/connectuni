@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
-
-import 'event.dart';
-import 'event_list.dart';
+import '../model/event.dart';
+import '../model/event_list.dart';
 
 class EventCardView extends StatelessWidget {
   const EventCardView({Key? key, required this.id}) : super(key: key);
@@ -10,7 +9,7 @@ class EventCardView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    Event thisEvent = eventsDB.getEventById(id);
+    SingleEvent thisEvent = eventsDB.getEventById(id);
 
     return Padding(
       padding: const EdgeInsets.all(3.5),

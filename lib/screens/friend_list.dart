@@ -1,7 +1,6 @@
 import 'package:connectuni/model/user_list.dart';
+import 'package:connectuni/components/user_card_widget.dart';
 import 'package:flutter/material.dart';
-
-import '../model/user_card_search.dart';
 
 class FriendsList extends StatefulWidget {
   const FriendsList({Key? key}) : super(key: key);
@@ -51,9 +50,7 @@ class _FriendsListState extends State<FriendsList> {
                 });
               }),
             ),
-            ...usersDB
-                .getUsers()
-                .map((uName) => UserCardSearch(name: uName.displayName)),
+            ...currentUser.friends.map((user) => UserCardWidget(user: user)),
           ],
         ),
       ),

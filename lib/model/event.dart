@@ -1,5 +1,5 @@
 /// The Event object.
-class Event {
+class SingleEvent {
   final String eventID;
   final String eventName;
   final String eventLocation;
@@ -10,7 +10,7 @@ class Event {
   List<String> userIDs;
 
   /// Constructor
-  Event({
+  SingleEvent({
     required this.eventID,
     required this.eventName,
     required this.eventIcon,

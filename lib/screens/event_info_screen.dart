@@ -11,7 +11,7 @@ class EventInfoScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    Event thisEvent = eventsDB.getEventById(id);
+    SingleEvent thisEvent = eventsDB.getEventById(id);
 
     return Scaffold(
       body: NestedScrollView(
