@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-
-import 'package:connectuni/model/user.dart';
+import '../model/user.dart';
+import '../model/user_list.dart';
 
 class UserCardSearch extends StatelessWidget {
   const UserCardSearch({Key? key, required this.user}) : super(key: key);
@@ -23,7 +23,17 @@ class UserCardSearch extends StatelessWidget {
                 title: Text(user.displayName,
                     style: Theme.of(context).textTheme.titleLarge),
                 subtitle:
-                    Text("${user.major}\n${user.projectedGraduation}"),
+                    Text("${thisUser.major}\n${thisUser.projectedGraduation}"),
+                trailing: IconButton(
+                  icon: const Icon(Icons.message),
+                  onPressed: () {
+                    // TODO Add functionality to message user
+                    Navigator.push(context,
+                        MaterialPageRoute(builder: (context) {
+                      return OtherUserProfile(uid: thisUser.uid);
+                    }));
+                  },
+                ),
               ),
             ],
           )),

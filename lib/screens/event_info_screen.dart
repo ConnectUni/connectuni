@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 
-import '../model/event_db.dart';
+import '../model/event.dart';
+import '../model/event_list.dart';
 
 class EventInfoScreen extends StatelessWidget {
   const EventInfoScreen({Key? key, required this.id}) : super(key: key);
@@ -10,7 +11,7 @@ class EventInfoScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    Event thisEvent = eventsDB.getEventById(id);
+    SingleEvent thisEvent = eventsDB.getEventById(id);
 
     return Scaffold(
       body: NestedScrollView(
@@ -73,7 +74,7 @@ class EventInfoScreen extends StatelessWidget {
             Padding(
               padding: const EdgeInsets.all(10),
               child: Text(
-                'Members going: ${thisEvent.userIds.length}',
+                'Members going: ${thisEvent.userIDs.length}',
                 style: const TextStyle(
                   fontSize: 20,
                 ),

@@ -1,8 +1,8 @@
-import 'package:connectuni/model/group.dart';
 import 'package:flutter/material.dart';
 
+import '../model/group_list.dart';
 import '../model/user.dart';
-import '../model/userList.dart';
+import '../model/user_list.dart';
 
 class OtherUserProfile extends StatelessWidget {
   const OtherUserProfile({Key? key, required this.user}) : super(key: key);
@@ -113,48 +113,43 @@ class OtherUserProfile extends StatelessWidget {
                         ),
                         textAlign: TextAlign.left,
                       ),
-                      Column(
-                        children:[
-                          ...currentUser.interests.map((interest) => Padding(
-                            padding: const EdgeInsets.all(5.0),
-                            child: ListTile(
-                              title: Center(
-                                child: Text(
-                                  interest,
-                                  style: const TextStyle(
-                                    fontWeight: FontWeight.bold,
+                      Column(children: [
+                        ...currentUser.interests.map((interest) => Padding(
+                              padding: const EdgeInsets.all(5.0),
+                              child: ListTile(
+                                title: Center(
+                                  child: Text(
+                                    interest,
+                                    style: const TextStyle(
+                                      fontWeight: FontWeight.bold,
+                                    ),
                                   ),
                                 ),
+                                textColor: Colors.white,
+                                tileColor: Colors.lightBlue,
                               ),
-                              textColor: Colors.white,
-                              tileColor: Colors.lightBlue,
-                            ),
-                          )),
-                        ]
-                      ),
+                            )),
+                      ]),
                     ],
-                  )
-                ),
-                const Divider(
-                  height:7,
-                  thickness: 2,
-                  indent: 20,
-                  endIndent: 20,
-                  color: Colors.black,
-                ),
-                Container(
-                  padding: const EdgeInsets.only(top: 10, left: 5, right: 5),
-                  child: Column(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    crossAxisAlignment: CrossAxisAlignment.stretch,
-                    children: [
-                      const Text(
-                        "Their Courses:",
-                        style: TextStyle(
-                          fontSize: 20,
-                          fontWeight: FontWeight.bold,
-                        ),
-                        textAlign: TextAlign.left,
+                  )),
+              const Divider(
+                height: 7,
+                thickness: 2,
+                indent: 20,
+                endIndent: 20,
+                color: Colors.black,
+              ),
+              Container(
+                padding: const EdgeInsets.only(top: 10, left: 5, right: 5),
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  crossAxisAlignment: CrossAxisAlignment.stretch,
+                  children: [
+                    const Text(
+                      "Their Courses:",
+                      style: TextStyle(
+                        fontSize: 20,
+                        fontWeight: FontWeight.bold,
                       ),
                       Column(
                         children: [
@@ -175,50 +170,55 @@ class OtherUserProfile extends StatelessWidget {
                                   children: [
                                     ListTile(
                                       title: Text(group.groupName,
-                                          style: const TextStyle(fontWeight: FontWeight.bold)),
+                                          style: const TextStyle(
+                                              fontWeight: FontWeight.bold)),
                                     ),
                                     Padding(
-                                        padding: const EdgeInsets.only(left: 15.0, top: 5.0),
+                                        padding: const EdgeInsets.only(
+                                            left: 15.0, top: 5.0),
                                         child: Align(
                                           alignment: Alignment.centerLeft,
-                                          child: Text("${group.semYear} | ${group.professor}"),
-                                        )
-                                    ),
+                                          child: Text(
+                                              "${group.semYear} | ${group.getOwner()}"),
+                                        )),
                                     Padding(
-                                        padding: const EdgeInsets.only(left: 15.0, top: 2.0),
+                                        padding: const EdgeInsets.only(
+                                            left: 15.0, top: 2.0),
                                         child: Align(
                                           alignment: Alignment.centerLeft,
-                                          child: Text("${group.userIds.length} people"),
-                                        )
-                                    ),
+                                          child: Text(
+                                              "${group.userIDs.length} people"),
+                                        )),
                                     Padding(
-                                        padding: const EdgeInsets.only(right: 15.0),
+                                        padding:
+                                            const EdgeInsets.only(right: 15.0),
                                         child: Align(
                                           alignment: Alignment.bottomRight,
                                           child: TextButton(
                                             onPressed: () {group.addUserId(user.uid);},
                                             style: ButtonStyle(
-                                              backgroundColor: MaterialStateProperty.all<Color>(Colors.green),
-                                              foregroundColor: MaterialStateProperty.all<Color>(Colors.white),
+                                              backgroundColor:
+                                                  MaterialStateProperty.all<
+                                                      Color>(Colors.green),
+                                              foregroundColor:
+                                                  MaterialStateProperty.all<
+                                                      Color>(Colors.white),
                                             ),
                                             child: const Text('Join'),
                                           ),
-                                        )
-                                    ),
+                                        )),
                                     const SizedBox(height: 10)
                                   ],
                                 ),
                               ),
-                          ),
-                        ],
-                      )
-                    ],
-                  ),
+                            ),
+                      ],
+                    )
+                  ],
                 ),
-              ]
-          ),
-        ],
-      )
-    );
+              ),
+            ]),
+          ],
+        ));
   }
 }

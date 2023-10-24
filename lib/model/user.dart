@@ -1,4 +1,3 @@
-
 /// The User object.
 
 class User {

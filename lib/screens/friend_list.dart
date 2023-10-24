@@ -1,5 +1,5 @@
+import 'package:connectuni/model/user_list.dart';
 import 'package:connectuni/components/user_card_widget.dart';
-import 'package:connectuni/model/userList.dart';
 import 'package:flutter/material.dart';
 
 class FriendsList extends StatefulWidget {
@@ -50,9 +50,7 @@ class _FriendsListState extends State<FriendsList> {
                 });
               }),
             ),
-            ...currentUser
-                .friends
-                .map((user) => UserCardWidget(user: user)),
+            ...currentUser.friends.map((user) => UserCardWidget(user: user)),
           ],
         ),
       ),

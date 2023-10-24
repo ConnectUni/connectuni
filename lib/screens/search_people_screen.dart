@@ -1,9 +1,8 @@
-import 'package:connectuni/model/userList.dart';
+import 'package:connectuni/model/user_list.dart';
 import 'package:flutter/material.dart';
 import 'package:multi_select_flutter/multi_select_flutter.dart';
-
 import '../components/user_card_widget.dart';
-import '../model/group.dart';
+import '../model/group_list.dart';
 
 class SearchPeopleScreen extends StatefulWidget {
   const SearchPeopleScreen({Key? key, required this.pageController})

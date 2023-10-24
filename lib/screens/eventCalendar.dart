@@ -2,19 +2,23 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:table_calendar/table_calendar.dart';
 
-import '../model/event_db.dart';
-import '../model/group.dart';
+import '../model/event.dart';
+import '../model/event_list.dart';
 import 'package:multi_select_flutter/multi_select_flutter.dart';
+import '../model/group_list.dart';
+import 'event_info_screen.dart';
 
-
-import 'event_info_screen.dart';class EventCalendar extends StatefulWidget {
+class EventCalendar extends StatefulWidget {
   @override
   _EventCalendarState createState() => _EventCalendarState();
 }
 
 class _EventCalendarState extends State<EventCalendar> {
-  late final ValueNotifier<List<Event>> _selectedEvents;
-  final _items = groupsDB.getAllGroups().map((gName) => MultiSelectItem(gName, gName.groupName)).toList();
+  late final ValueNotifier<List<SingleEvent>> _selectedEvents;
+  final _items = groupsDB
+      .getAllGroups()
+      .map((gName) => MultiSelectItem(gName, gName.groupName))
+      .toList();
   CalendarFormat _calendarFormat = CalendarFormat.month;
   RangeSelectionMode _rangeSelectionMode = RangeSelectionMode
       .toggledOff; // Can be toggled on/off by longpressing a date
@@ -37,11 +41,13 @@ class _EventCalendarState extends State<EventCalendar> {
     super.dispose();
   }
 
-  List<Event> _getEventsForDay(DateTime day) {
+  List<SingleEvent> _getEventsForDay(DateTime day) {
     // Implementation example
-    return eventsDB.getAllEvents().where((event) => isSameDay(event.eventDate, day)).toList();
+    return eventsDB
+        .getAllEvents()
+        .where((event) => isSameDay(event.eventDate, day))
+        .toList();
   }
-
 
   void _onDaySelected(DateTime selectedDay, DateTime focusedDay) {
     if (!isSameDay(_selectedDay, selectedDay)) {
@@ -105,7 +111,7 @@ class _EventCalendarState extends State<EventCalendar> {
               },
             ),
           ),
-          TableCalendar<Event>(
+          TableCalendar<SingleEvent>(
             firstDay: DateTime.utc(2023, 10, 1),
             lastDay: DateTime.utc(2024, 12, 31),
             focusedDay: _focusedDay,
@@ -134,13 +140,16 @@ class _EventCalendarState extends State<EventCalendar> {
             },
           ),
           const SizedBox(height: 8.0),
-          Text("Events for ${_selectedDay?.month}/${_selectedDay?.day}/${_selectedDay?.year}:",
-            style: const TextStyle(fontSize: 20,
-              fontWeight: FontWeight.bold,),
+          Text(
+            "Events for ${_selectedDay?.month}/${_selectedDay?.day}/${_selectedDay?.year}:",
+            style: const TextStyle(
+              fontSize: 20,
+              fontWeight: FontWeight.bold,
+            ),
             textAlign: TextAlign.left,
           ),
           Expanded(
-            child: ValueListenableBuilder<List<Event>>(
+            child: ValueListenableBuilder<List<SingleEvent>>(
               valueListenable: _selectedEvents,
               builder: (context, value, _) {
                 return ListView.builder(
@@ -159,13 +168,13 @@ class _EventCalendarState extends State<EventCalendar> {
                         //TODO: Implement onTap to send user to event page
                         onTap: () => {
                           Navigator.push(
-                          context,
-                          CupertinoPageRoute(
-                          builder: (context) => EventInfoScreen(id: value[index].eventId)
-                          )
-                        )
-                      },
-                        title: Text('${value[index].eventName} | ${value[index].eventLocation}'),
+                              context,
+                              CupertinoPageRoute(
+                                  builder: (context) => EventInfoScreen(
+                                      id: value[index].eventID)))
+                        },
+                        title: Text(
+                            '${value[index].eventName} | ${value[index].eventLocation}'),
                       ),
                     );
                   },
