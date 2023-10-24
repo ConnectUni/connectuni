@@ -1,7 +1,6 @@
 import 'package:connectuni/components/event_card_view.dart';
 import 'package:connectuni/screens/event_info_screen.dart';
 import 'package:flutter/cupertino.dart';
-import 'package:flutter/material.dart';
 
 class EventCardWidget extends StatelessWidget {
   const EventCardWidget({Key? key, required this.eventId}) : super(key: key);

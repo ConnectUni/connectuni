@@ -1,3 +1,4 @@
+import 'package:connectuni/screens/other_user_profile.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -82,12 +83,24 @@ class _GroupChatScreenState extends ConsumerState<GroupChatScreen> {
                         .displayName,
                     style: const TextStyle(fontSize: 12),
                   ),
-                  CircleAvatar(
-                    backgroundImage: AssetImage(groupMembers
-                        .firstWhere((user) =>
-                            user.uid == messageData.elementAt(index).senderId)
-                        .pfp),
-                    maxRadius: 20,
+                  GestureDetector(
+                    onTap: () {
+                      Navigator.push(
+                        context,
+                        CupertinoPageRoute(
+                            builder: (context) => OtherUserProfile(user: groupMembers
+                                .firstWhere((user) =>
+                            user.uid == messageData.elementAt(index).senderId))
+                        ),
+                      );
+                    },
+                    child: CircleAvatar(
+                      backgroundImage: AssetImage(groupMembers
+                          .firstWhere((user) =>
+                              user.uid == messageData.elementAt(index).senderId)
+                          .pfp),
+                      maxRadius: 20,
+                    ),
                   )
                 ],
               ),

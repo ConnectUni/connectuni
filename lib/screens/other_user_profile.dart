@@ -5,9 +5,8 @@ import '../model/user.dart';
 import '../model/user_list.dart';
 
 class OtherUserProfile extends ConsumerWidget {
-  const OtherUserProfile({Key? key, required this.uid}) : super(key: key);
-
-  final String uid;
+  const OtherUserProfile({Key? key, required this.user}) : super(key: key);
+  final User user;
 
   bool isFriend(User user, WidgetRef ref) {
     final UserList userList = ref.read(userDBProvider);
@@ -20,89 +19,92 @@ class OtherUserProfile extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
+    final uid = user.uid;
     final UserList usersDB = ref.read(userDBProvider);
     User thisUser = usersDB.getUserByID(uid);
     final User currentUser = usersDB.getUserByID(ref.read(currentUserProvider));
     return Scaffold(
-        appBar: AppBar(
-          title: Text(thisUser.displayName),
-          actions: [
-            IconButton(
-              icon: const Icon(
-                Icons.message,
-                semanticLabel: 'message',
-              ),
-              onPressed: () {
-                // TODO Add functionality to message user
-              },
+      appBar: AppBar(
+        title: Text(user.displayName),
+        actions: [
+          IconButton(
+            icon: const Icon(
+              Icons.message,
+              semanticLabel: 'message',
             ),
-            isFriend(thisUser, ref)
-                ? IconButton(
-                    onPressed: () {
-                      currentUser.friends.remove(thisUser);
-                    },
-                    icon: const Icon(
-                      Icons.person_remove,
-                      semanticLabel: 'remove friend',
-                    ),
+            onPressed: () {
+              // TODO Add functionality to message user
+            },
+          ),
+         isFriend(user, ref) ?
+              IconButton(
+                  onPressed: () {
+                    currentUser.friends.remove(user);
+                  },
+                  icon: const Icon(
+                    Icons.person_remove,
+                    semanticLabel: 'remove friend',
+                  ),
+              ) :
+              IconButton(
+                  onPressed: () {
+                    currentUser.friends.remove(user);
+                  },
+                  icon: const Icon(
+                    Icons.person_add,
+                    semanticLabel: 'add friend',
                   )
-                : IconButton(
-                    onPressed: () {
-                      currentUser.friends.remove(thisUser);
-                    },
-                    icon: const Icon(
-                      Icons.person_add,
-                      semanticLabel: 'add friend',
-                    ))
-          ],
-        ),
-        body: ListView(
-          padding: const EdgeInsets.all(20.0),
-          children: [
-            Column(children: [
-              CircleAvatar(
-                radius: 50,
-                backgroundImage: AssetImage(thisUser.pfp),
-              ),
-              Text(
-                thisUser.displayName,
-                style: const TextStyle(
-                  fontSize: 23.0,
-                  fontWeight: FontWeight.bold,
+              )
+        ],
+      ),
+      body: ListView(
+        padding: const EdgeInsets.all(20.0),
+        children: [
+          Column(
+              children: [
+                CircleAvatar(
+                  radius: 50,
+                  backgroundImage: AssetImage(user.pfp),
                 ),
-              ),
-              Text(
-                'Major: ${thisUser.major}',
-                style: const TextStyle(
-                  fontSize: 15.0,
+                Text(
+                  user.displayName,
+                  style: const TextStyle(
+                    fontSize: 23.0,
+                    fontWeight: FontWeight.bold,
+                  ),
                 ),
-              ),
-              Text(
-                'Projected Grad: ${thisUser.projectedGraduation}',
-                style: const TextStyle(
-                  fontSize: 15.0,
+                Text(
+                  'Major: ${user.major}',
+                  style: const TextStyle(
+                    fontSize: 15.0,
+                  ),
                 ),
-              ),
-              Text(
-                'Status: ${thisUser.status}',
-                style: const TextStyle(
-                  fontSize: 15.0,
+                Text(
+                  'Projected Grad: ${user.projectedGraduation}',
+                  style: const TextStyle(
+                    fontSize: 15.0,
+                  ),
                 ),
-              ),
-              Text(
-                'Friends: ${thisUser.friends.length}',
-                style: const TextStyle(
-                  fontSize: 15.0,
+                Text(
+                  'Status: ${user.status}',
+                  style: const TextStyle(
+                    fontSize: 15.0,
+                  ),
                 ),
-              ),
-              const Divider(
-                height: 7,
-                thickness: 2,
-                indent: 20,
-                endIndent: 20,
-                color: Colors.black,
-              ),
-              Container(
+                Text(
+                  'Friends: ${user.friends.length}',
+                  style: const TextStyle(
+                    fontSize: 15.0,
+                  ),
+                ),
+                const Divider(
+                  height:7,
+                  thickness: 2,
+                  indent: 20,
+                  endIndent: 20,
+                  color: Colors.black,
+                ),
+                Container(
                   padding: const EdgeInsets.all(10.0),
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.stretch,
@@ -155,10 +157,12 @@ class OtherUserProfile extends ConsumerWidget {
                       ),
                       textAlign: TextAlign.left,
                     ),
-                    Column(
-                      children: [
-                        ...TempGroupsDB.getGroupsByUser(thisUser.uid).map(
-                              (group) => Card(
+                      Column(
+                        children: [
+                          ...TempGroupsDB
+                              .getGroupsByUser(user.uid)
+                              .map((group) =>
+                              Card(
                                 elevation: 8,
                                 color: Colors.white,
                                 shape: RoundedRectangleBorder(
@@ -197,9 +201,7 @@ class OtherUserProfile extends ConsumerWidget {
                                         child: Align(
                                           alignment: Alignment.bottomRight,
                                           child: TextButton(
-                                            onPressed: () {
-                                              group.addUserId(thisUser.uid);
-                                            },
+                                            onPressed: () {group.addUserId(user.uid);},
                                             style: ButtonStyle(
                                               backgroundColor:
                                                   MaterialStateProperty.all<

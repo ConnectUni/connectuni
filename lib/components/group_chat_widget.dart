@@ -2,7 +2,6 @@ import 'package:connectuni/components/group_card_view.dart';
 import 'package:connectuni/screens/group_chat_screen.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-
 import '../model/group.dart';
 import '../model/group_list.dart';
 
