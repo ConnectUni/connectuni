@@ -37,7 +37,7 @@ class GroupCardView extends StatelessWidget {
                   padding: const EdgeInsets.only(left: 15.0, top: 2.0),
                   child: Align(
                       alignment: Alignment.centerLeft,
-                      child: Text("${thisGrouping.newMessages} new messages"))),
+                      child: Text("${thisGrouping.newMessages.length} new messages"))),
               const SizedBox(height: 10)
             ],
           )),

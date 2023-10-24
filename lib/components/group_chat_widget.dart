@@ -34,10 +34,7 @@ class _GroupChatWidgetState extends State<GroupChatWidget> {
               builder: (context) => GroupChatScreen(id: groupData.groupID)),
         );
       },
-      child: Container(
-        padding: const EdgeInsets.all(8.0),
-        child: GroupCardView(id: groupData.groupID),
-      ),
+      child: GroupCardView(id: groupData.groupID),
     );
   }
 }

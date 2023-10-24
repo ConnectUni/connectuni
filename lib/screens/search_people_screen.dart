@@ -4,7 +4,6 @@ import 'package:multi_select_flutter/multi_select_flutter.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import '../components/user_card_widget.dart';
 import '../model/user.dart';
-import '../model/group.dart';
 import '../model/group_list.dart';
 
 class SearchPeopleScreen extends ConsumerStatefulWidget {
@@ -19,12 +18,26 @@ class SearchPeopleScreen extends ConsumerStatefulWidget {
 }
 
 class _SearchPeopleScreenState extends ConsumerState<SearchPeopleScreen> {
+  final controller = TextEditingController();
+  List<User> users = TempUsersDB.getUsers();
+
+  List<User> showSearchedUser(String query) {
+    final suggestions = TempUsersDB
+        .getUsers()
+        .where((user) => user.displayName.toLowerCase().contains(query.toLowerCase()))
+        .toList();
+
+    setState(() {
+      users = suggestions;
+    });
+    return suggestions;
+  }
 
   @override
   Widget build(BuildContext context) {
     final UserList usersDB = ref.read(userDBProvider);
     final User currentUser = usersDB.getUserByID(ref.read(currentUserProvider));
-    final _items = TempGroupsDB
+    final items = TempGroupsDB
         .getAllGroups()
         .map((gName) => MultiSelectItem(gName, gName.groupName))
         .toList();
@@ -60,72 +73,62 @@ class _SearchPeopleScreenState extends ConsumerState<SearchPeopleScreen> {
           ),
         ],
       ),
-      body: SingleChildScrollView(
-        child: Column(
-          children: [
-            Padding(
-              padding: const EdgeInsets.all(8.0),
-              child: MultiSelectDialogField(
-                items: _items,
-                title: const Text("People"),
-                selectedColor: Colors.blue,
-                decoration: BoxDecoration(
-                  color: Colors.blue.withOpacity(0.1),
-                  borderRadius: const BorderRadius.all(Radius.circular(40)),
-                  border: Border.all(
-                    color: Colors.blue,
-                    width: 2,
-                  ),
-                ),
-                buttonIcon: const Icon(
-                  Icons.filter,
+      body: Column(
+        children: [
+          Padding(
+            padding: const EdgeInsets.all(8.0),
+            child: MultiSelectDialogField(
+              items: items,
+              title: const Text("People"),
+              selectedColor: Colors.blue,
+              decoration: BoxDecoration(
+                color: Colors.blue.withOpacity(0.1),
+                borderRadius: const BorderRadius.all(Radius.circular(40)),
+                border: Border.all(
                   color: Colors.blue,
+                  width: 2,
                 ),
-                buttonText: Text(
-                  "Filter by:",
-                  style: TextStyle(
-                    color: Colors.blue[800],
-                    fontSize: 16,
-                  ),
-                ),
-                onConfirm: (results) {
-                  //_selectedAnimals = results;
-                },
               ),
+              buttonIcon: const Icon(
+                Icons.filter,
+                color: Colors.blue,
+              ),
+              buttonText: Text(
+                "Filter by:",
+                style: TextStyle(
+                  color: Colors.blue[800],
+                  fontSize: 16,
+                ),
+              ),
+              onConfirm: (results) {
+                //_selectedAnimals = results;
+              },
             ),
-            Padding(
-              padding: const EdgeInsets.all(8.0),
-              child: SearchAnchor(
-                  builder: (BuildContext context, SearchController controller) {
-                return SearchBar(
-                  controller: controller,
-                  onTap: () {
-                    controller.openView();
-                  },
-                  onChanged: (_) {
-                    controller.openView();
-                  },
-                  hintText: 'Search...',
-                  leading: const Icon(Icons.search),
-                );
-              }, suggestionsBuilder:
-                      (BuildContext context, SearchController controller) {
-                return List<ListTile>.generate(5, (int index) {
-                  final String item = 'item $index';
-                  return ListTile(
-                    title: Text(item),
-                    onTap: () {
-                      setState(() {
-                        controller.closeView(item);
-                      });
-                    },
-                  );
-                });
-              }),
+          ),
+          Padding(
+            padding: const EdgeInsets.all(8.0),
+            child: TextField(
+              controller: controller,
+              decoration: InputDecoration(
+                hintText: 'Search...',
+                prefixIcon: const Icon(Icons.search),
+                border: OutlineInputBorder(
+                  borderRadius: BorderRadius.circular(50),
+                  borderSide: const BorderSide(color: Colors.blue),
+                ),
+              ),
+              onChanged: showSearchedUser,
             ),
-            ...notFriends.map((user) => UserCardWidget(user: user)),
-          ],
-        ),
+          ),
+          Expanded(
+            child: ListView.builder(
+              itemCount: users.length,
+              itemBuilder: (context, index) {
+                return UserCardWidget(user: users[index]);
+              },
+            ),
+          )
+        ],
       ),
     );
   }
