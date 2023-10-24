@@ -1,15 +1,16 @@
 import 'package:flutter/material.dart';
-
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import '../model/group_list.dart';
 import '../model/user.dart';
 import '../model/user_list.dart';
 
-class OtherUserProfile extends StatelessWidget {
+class OtherUserProfile extends ConsumerWidget {
   const OtherUserProfile({Key? key, required this.user}) : super(key: key);
-
   final User user;
 
-  bool isFriend(User user) {
+  bool isFriend(User user, WidgetRef ref) {
+    final UserList userList = ref.read(userDBProvider);
+    final User currentUser = userList.getUserByID(ref.read(currentUserProvider));
     if (currentUser.friends.contains(user)) {
       return true;
     }
@@ -17,8 +18,11 @@ class OtherUserProfile extends StatelessWidget {
   }
 
   @override
-  Widget build(BuildContext context) {
-
+  Widget build(BuildContext context, WidgetRef ref) {
+    final uid = user.uid;
+    final UserList usersDB = ref.read(userDBProvider);
+    User thisUser = usersDB.getUserByID(uid);
+    final User currentUser = usersDB.getUserByID(ref.read(currentUserProvider));
     return Scaffold(
       appBar: AppBar(
         title: Text(user.displayName),
@@ -32,7 +36,7 @@ class OtherUserProfile extends StatelessWidget {
               // TODO Add functionality to message user
             },
           ),
-         isFriend(user) ?
+         isFriend(user, ref) ?
               IconButton(
                   onPressed: () {
                     currentUser.friends.remove(user);
@@ -151,9 +155,11 @@ class OtherUserProfile extends StatelessWidget {
                         fontSize: 20,
                         fontWeight: FontWeight.bold,
                       ),
+                      textAlign: TextAlign.left,
+                    ),
                       Column(
                         children: [
-                          ...groupsDB
+                          ...TempGroupsDB
                               .getGroupsByUser(user.uid)
                               .map((group) =>
                               Card(

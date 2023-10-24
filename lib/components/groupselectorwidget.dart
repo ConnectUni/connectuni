@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-
 import '../model/group.dart';
+import '../model/group_list.dart';
 import '../model/user.dart';
 
 class GroupSelector extends StatefulWidget {
@@ -11,7 +11,7 @@ class GroupSelector extends StatefulWidget {
 }
 
 class _GroupSelectorState extends State<GroupSelector> {
-  final List<Group> _allGroups = groupsDB.getAllGroups();
+  final List<Group> _allGroups = TempGroupsDB.getAllGroups();
   final List<Group> _selectedGroups = [];
   late User currentUser;
 

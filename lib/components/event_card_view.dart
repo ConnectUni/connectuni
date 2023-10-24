@@ -9,7 +9,7 @@ class EventCardView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    SingleEvent thisEvent = eventsDB.getEventById(id);
+    SingleEvent thisEvent = TempEventsDB.getEventById(id);
 
     return Padding(
       padding: const EdgeInsets.all(3.5),

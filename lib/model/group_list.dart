@@ -2,8 +2,8 @@
 // import 'package:./js_util/js_util.dart';
 
 import 'package:connectuni/model/message.dart';
-
 import 'group.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 /// The GroupList object.
 class GroupList {
@@ -178,5 +178,7 @@ final List<Group> allGroups = [
     interests: ['Computer Science'],
   ),
 ];
+//TODO: Replace all instances of TempGroupsDB with the provider below
+GroupList TempGroupsDB = GroupList(allGroups);
 
-GroupList groupsDB = GroupList(allGroups);
+final groupsDBProvider = Provider<GroupList>((ref) { return GroupList(allGroups); });

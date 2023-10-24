@@ -15,7 +15,7 @@ class EventCalendar extends StatefulWidget {
 
 class _EventCalendarState extends State<EventCalendar> {
   late final ValueNotifier<List<SingleEvent>> _selectedEvents;
-  final _items = groupsDB
+  final _items = TempGroupsDB
       .getAllGroups()
       .map((gName) => MultiSelectItem(gName, gName.groupName))
       .toList();
@@ -43,7 +43,7 @@ class _EventCalendarState extends State<EventCalendar> {
 
   List<SingleEvent> _getEventsForDay(DateTime day) {
     // Implementation example
-    return eventsDB
+    return TempEventsDB
         .getAllEvents()
         .where((event) => isSameDay(event.eventDate, day))
         .toList();

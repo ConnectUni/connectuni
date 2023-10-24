@@ -1,4 +1,5 @@
 import 'chat.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 /// The ChatList object.
 class ChatList {
@@ -37,5 +38,7 @@ final List<Chat> mockChats = [
       userIDs: ['user-003', 'user-004', 'user-005'],
       messageIDs: ['message-013', 'message-014', 'message-015'])
 ];
+//TODO: replace all instances of this chatlist with the provider below:
+ChatList TempChatDB = ChatList(mockChats);
 
-ChatList chatDB = ChatList(mockChats);
+final chatDBProvider = Provider<ChatList>((ref) { return ChatList(mockChats); });

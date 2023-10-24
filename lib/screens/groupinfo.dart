@@ -22,7 +22,7 @@ class GroupInfo extends StatefulWidget {
 class _GroupInfoState extends State<GroupInfo> {
   @override
   Widget build(BuildContext context) {
-    Group groupData = groupsDB.getGroupById(widget.id);
+    Group groupData = TempGroupsDB.getGroupById(widget.id);
     return Scaffold(
       appBar: AppBar(
         leading: const BackButton(),

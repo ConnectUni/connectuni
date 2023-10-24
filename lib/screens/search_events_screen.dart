@@ -15,7 +15,7 @@ class SearchEventsScreen extends StatefulWidget {
 }
 
 class _SearchEventsScreenState extends State<SearchEventsScreen> {
-  final _items = eventsDB
+  final _items = TempEventsDB
       .getAllEvents()
       .map((eName) => MultiSelectItem(eName, eName.eventName))
       .toList();
@@ -116,7 +116,7 @@ class _SearchEventsScreenState extends State<SearchEventsScreen> {
               'Events',
               textAlign: TextAlign.left,
             ),
-            ...eventsDB.getAllEvents().map((eid) => EventCardWidget(
+            ...TempEventsDB.getAllEvents().map((eid) => EventCardWidget(
                   eventId: eid.eventID,
                 ))
           ],

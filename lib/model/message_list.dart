@@ -1,4 +1,5 @@
 import './message.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 class MessageList {
   List<Message> allMessages;
@@ -112,5 +113,7 @@ final List<Message> mockMessages = [
     messageContent: 'i think i find this stuff interesting',
   ),
 ];
+//TODO: replace all instances of TempMessagesDB with provider below
+MessageList TempMessagesDB = MessageList(allMessages: mockMessages);
 
-MessageList messagesDB = MessageList(allMessages: mockMessages);
+final messagesDBProvider = Provider<MessageList>((ref) { return MessageList(allMessages: mockMessages); });

@@ -1,7 +1,7 @@
 import 'package:connectuni/screens/other_user_profile.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import '../model/group.dart';
 import '../model/group_list.dart';
 import '../model/message.dart';
@@ -10,7 +10,7 @@ import '../model/user.dart';
 import '../model/user_list.dart';
 import 'groupinfo.dart';
 
-class GroupChatScreen extends StatefulWidget {
+class GroupChatScreen extends ConsumerStatefulWidget {
   final String id;
 
   const GroupChatScreen({
@@ -19,16 +19,17 @@ class GroupChatScreen extends StatefulWidget {
   }) : super(key: key);
 
   @override
-  State<GroupChatScreen> createState() => _GroupChatScreenState();
+  ConsumerState<GroupChatScreen> createState() => _GroupChatScreenState();
 }
 
-class _GroupChatScreenState extends State<GroupChatScreen> {
+class _GroupChatScreenState extends ConsumerState<GroupChatScreen> {
   @override
   Widget build(BuildContext context) {
-    Group groupData = groupsDB.getGroupById(widget.id);
+    final UserList usersDB = ref.read(userDBProvider);
+    Group groupData = TempGroupsDB.getGroupById(widget.id);
     Iterable<User> groupMembers = usersDB.getGroupMembers(groupData.userIDs);
     Iterable<Message> messageData =
-        messagesDB.getGroupMessages(groupData.groupID);
+        TempMessagesDB.getGroupMessages(groupData.groupID);
     String currentUID = 'user-001';
 
     return Scaffold(

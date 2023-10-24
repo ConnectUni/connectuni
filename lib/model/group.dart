@@ -2,6 +2,14 @@ import 'package:connectuni/model/message.dart';
 
 import 'user.dart';
 import 'user_list.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
+
+/**
+ * Generic outline of the different groups that will be described by each page.
+ *
+ * Last updated: 10/10 added interests field and setter method.
+ *
+ */
 
 /// The Group object.
 class Group {
@@ -79,7 +87,7 @@ class Group {
 
   /// Get all users - maybe we can move this code to where it's actually being rendered?
   List<User> getAllUsersInGroup() {
-    return userIDs.map((userId) => usersDB.getUserByID(userId)).toList();
+    return userIDs.map((userId) => TempUsersDB.getUserByID(userId)).toList();
   }
 
   /// Add an event ID to the group
@@ -125,7 +133,6 @@ class Group {
   void addInterest(String interest) {
     interests.add(interest);
   }
-
   /// Remove an interest
   void removeInterest(String interest) {
     if (interests.contains(interest)) {

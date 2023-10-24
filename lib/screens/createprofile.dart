@@ -3,21 +3,19 @@ import 'package:flutter/material.dart';
 import 'package:connectuni/model/user.dart';
 import '../components/interestswidget.dart';
 import '../components/pfpwidget.dart';
-import '../model/userList.dart';
+import '../model/user_list.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-class CreateProfile extends StatefulWidget {
-  const CreateProfile({Key? key}) : super(key: key);
+class CreateProfile extends ConsumerStatefulWidget {
+  const CreateProfile({Key? key});
   static const routeName = '/createprofile';
 
   @override
   CreateProfileState createState() => CreateProfileState();
 }
 
-class CreateProfileState extends State<CreateProfile> {
+class CreateProfileState extends ConsumerState<CreateProfile> {
   final _usernameController = TextEditingController();
-
-  //temporary user to test, need to implement way to be "current" user
-  late User currentUser = usersDB.getUserByID('user-004');
   List<String> interests = [''];
   String? _selectedSemester;
   String? _selectedYear;
@@ -25,6 +23,8 @@ class CreateProfileState extends State<CreateProfile> {
 
   @override
   Widget build(BuildContext context) {
+    final UserList userList = ref.read(userDBProvider);
+    final User currentUser = userList.getUserByID(ref.read(currentUserProvider));
     return Scaffold(
         appBar: AppBar(
           title: const Text('Create Profile'),
@@ -140,6 +140,8 @@ class CreateProfileState extends State<CreateProfile> {
 
 
   Widget buildMajorSelector() {
+    final UserList userList = ref.read(userDBProvider);
+    final User currentUser = userList.getUserByID(ref.read(currentUserProvider));
     return Container(
       padding: const EdgeInsets.all(10),
       child: DropdownButtonFormField(
@@ -166,6 +168,8 @@ class CreateProfileState extends State<CreateProfile> {
   }
 
   Widget buildGraduationSelector() {
+    final UserList userList = ref.read(userDBProvider);
+    final User currentUser = userList.getUserByID(ref.read(currentUserProvider));
     return Container(
       padding: const EdgeInsets.all(20),
       child: Row(

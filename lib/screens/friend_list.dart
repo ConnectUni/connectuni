@@ -1,17 +1,22 @@
 import 'package:connectuni/model/user_list.dart';
 import 'package:connectuni/components/user_card_widget.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
+import '../model/user.dart';
 
-class FriendsList extends StatefulWidget {
+
+class FriendsList extends ConsumerStatefulWidget {
   const FriendsList({Key? key}) : super(key: key);
 
   @override
-  State createState() => _FriendsListState();
+  ConsumerState createState() => _FriendsListState();
 }
 
-class _FriendsListState extends State<FriendsList> {
+class _FriendsListState extends ConsumerState<FriendsList> {
   @override
   Widget build(BuildContext context) {
+    final UserList userList = ref.read(userDBProvider);
+    final User currentUser = userList.getUserByID(ref.read(currentUserProvider));
     return Scaffold(
       appBar: AppBar(title: const Text('Friends List'), actions: <Widget>[
         IconButton(

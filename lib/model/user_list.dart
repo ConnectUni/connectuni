@@ -1,9 +1,9 @@
 import 'user.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 /// The UserList object.
 class UserList {
   List<User> allUsers;
-
   /// Constructor
   UserList(this.allUsers);
 
@@ -193,6 +193,10 @@ final List<User> mockUsers = [
   friend2,
 ];
 
-UserList usersDB = UserList(mockUsers);
+//TODO: REMOVE THIS LATER WHEN WE FIGURE OUT HOW TO WORK BETWEEN THESE TWO.
+UserList TempUsersDB = UserList(mockUsers);
 
-User currentUser = usersDB.getUserByID('user-001');
+//User currentUser = usersDB.getUserByID('user-001');
+
+final userDBProvider = Provider<UserList>((ref) { return UserList(mockUsers); });
+final currentUserProvider = StateProvider<String>((ref) => 'user-001');

@@ -3,19 +3,18 @@ import 'package:flutter/material.dart';
 import 'package:connectuni/model/user_list.dart';
 import '../model/group_list.dart';
 import 'friend_list.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 ///  Profile Page that the User sees when they click the Navbar Profile icon.
 
-class CurrentUserProfilePage extends StatefulWidget {
-  const CurrentUserProfilePage({
-    super.key,
-  });
+class CurrentUserProfilePage extends ConsumerStatefulWidget {
+  const CurrentUserProfilePage({Key? key});
 
   @override
-  State<CurrentUserProfilePage> createState() => _CurrentUserProfilePageState();
+  CurrentUserProfilePageState createState() => CurrentUserProfilePageState();
 }
 
-class _CurrentUserProfilePageState extends State<CurrentUserProfilePage> {
+class CurrentUserProfilePageState extends ConsumerState<CurrentUserProfilePage> {
   int _selectedIndex = 0;
 
   void _onItemTapped(int index) {
@@ -28,8 +27,8 @@ class _CurrentUserProfilePageState extends State<CurrentUserProfilePage> {
 
   @override
   Widget build(BuildContext context) {
-    //Temporary local variable to be replaced later.
-    User currentUser = usersDB.getUserByID('user-004');
+    final UserList userList = ref.watch(userDBProvider);
+    final User currentUser = userList.getUserByID(ref.watch(currentUserProvider));
     return Scaffold(
         appBar: AppBar(
           title: const Text('My Profile'),
@@ -91,7 +90,7 @@ class _CurrentUserProfilePageState extends State<CurrentUserProfilePage> {
                   Padding(
                     padding: const EdgeInsets.all(10.0),
                     child: TextButton(
-                      onPressed: null,
+                      onPressed: () => {ref.read(currentUserProvider.state).state = 'user-002'},
                       style: ButtonStyle(
                         backgroundColor:
                             MaterialStateProperty.all<Color>(Colors.green),
@@ -197,7 +196,7 @@ class _CurrentUserProfilePageState extends State<CurrentUserProfilePage> {
                         textAlign: TextAlign.left,
                       ),
                       Column(children: [
-                        ...groupsDB.getGroupsByUser(currentUser.uid).map(
+                        ...TempGroupsDB.getGroupsByUser(currentUser.uid).map(
                               (group) => Card(
                                 elevation: 8,
                                 color: Colors.white,

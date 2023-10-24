@@ -1,4 +1,5 @@
 import 'event.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 /// The EventList object.
 class EventList {
@@ -86,4 +87,7 @@ List<SingleEvent> allEvents = [
   ),
 ];
 
-EventList eventsDB = EventList(allEvents);
+//TODO: Replace all instances of TempEventsDB with the provider below
+EventList TempEventsDB = EventList(allEvents);
+//TODO: USE BELOW
+final eventsDBProvider = Provider<EventList>((ref) { return EventList(allEvents); });
