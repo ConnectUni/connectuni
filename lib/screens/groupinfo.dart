@@ -1,12 +1,10 @@
+import 'package:connectuni/components/group_member_widget.dart';
 import 'package:flutter/material.dart';
 
 import 'package:connectuni/model/group.dart';
-import 'package:connectuni/model/user.dart';
 
-/**
- * Information page for a specific group that displays the group members as well as a description of the selected group.
- * There is an icon at the upper righthand corner for more statistic-related properties of the group.
- */
+/// Information page for a specific group that displays the group members as well as a description of the selected group.
+/// There is an icon at the upper right-hand corner for more statistic-related properties of the group.
 
 class GroupInfo extends StatefulWidget {
   final String id;
@@ -34,7 +32,7 @@ class _GroupInfoState extends State<GroupInfo> {
               semanticLabel: 'Information',
             ),
             onPressed: () {
-              print('Go to Information page');
+              print('Go to Information page'); // 10/20/23: Is this not the information page? do we need this icon?
             },
           ),
         ],
@@ -53,20 +51,11 @@ class _GroupInfoState extends State<GroupInfo> {
             ),
           ),
           Padding(
-            padding: EdgeInsets.all(10),
+            padding: const EdgeInsets.all(10),
             child: Column(
               children: [
                 ...groupData.getAllUsersInGroup()
-                    .map((uName) =>
-                    Card(
-                      child: ListTile(
-                        leading: CircleAvatar(
-                          radius: 18,
-                          backgroundImage: AssetImage(uName.pfp),
-                        ),
-                        title: Text(uName.displayName),
-                      ),
-                    ),
+                    .map((user) => GroupMemberWidget(user: user)
                 ),
               ],
             ),
