@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:multi_select_flutter/multi_select_flutter.dart';
 import '../model/event.dart';
 import '../model/event_list.dart';
+import '../utils/global_variables.dart';
 
 class SearchEventsScreen extends StatefulWidget {
   const SearchEventsScreen({Key? key, required this.pageController})
@@ -17,24 +18,28 @@ class SearchEventsScreen extends StatefulWidget {
 
 class _SearchEventsScreenState extends State<SearchEventsScreen> {
   final controller = TextEditingController();
-  List<SingleEvent> events = TempEventsDB.getAllEvents();
+  final _interests = interests
+      .map((interest) => MultiSelectItem(interest, interest))
+      .toList();
 
+  List<String> selectedFilters = [];
+  List<SingleEvent> events = TempEventsDB.getAllEvents();
   List<SingleEvent> showSearchedEvent(String query) {
     final suggestions = TempEventsDB
         .getAllEvents()
-        .where((event) => event.eventName.toLowerCase().contains(query.toLowerCase()))
-        .toList();
+        .where((event) {
+          if(selectedFilters.isNotEmpty) {
+            return event.eventName.toLowerCase().contains(query.toLowerCase()) && event.interests.any((interest) => selectedFilters.contains(interest));
+          } else {
+            return event.eventName.toLowerCase().contains(query.toLowerCase());
+          }
+    }).toList();
     setState(() {
       events = suggestions;
     });
 
     return suggestions;
   }
-
-  final _items = TempEventsDB
-      .getAllEvents()
-      .map((eName) => MultiSelectItem(eName, eName.eventName))
-      .toList();
 
   @override
   Widget build(BuildContext context) {
@@ -71,8 +76,10 @@ class _SearchEventsScreenState extends State<SearchEventsScreen> {
           Padding(
             padding: const EdgeInsets.all(8.0),
             child: MultiSelectDialogField(
-              items: _items,
+              items: _interests,
+              title: const Text("Interests"),
               selectedColor: Colors.blue,
+              selectedItemsTextStyle: const TextStyle(color: Colors.black),
               decoration: BoxDecoration(
                 color: Colors.blue.withOpacity(0.1),
                 borderRadius: const BorderRadius.all(Radius.circular(40)),
@@ -82,19 +89,30 @@ class _SearchEventsScreenState extends State<SearchEventsScreen> {
                 ),
               ),
               buttonIcon: const Icon(
-                Icons.filter,
+                Icons.filter_alt,
                 color: Colors.blue,
               ),
-              buttonText: const Text(
+              buttonText: Text(
                 "Filter by:",
                 style: TextStyle(
-                  color: Colors.blue,
+                  color: Colors.blue[800],
                   fontSize: 16,
                 ),
               ),
+              listType: MultiSelectListType.CHIP,
               onConfirm: (results) {
-                // TODO: Filter the events list
+                selectedFilters = List<String>.from(results);
+                showSearchedEvent(controller.text);
               },
+              chipDisplay: MultiSelectChipDisplay(
+                onTap: (item) {
+                  setState(() {
+                    selectedFilters.remove(item);
+                    showSearchedEvent(controller.text);
+                  });
+                  return selectedFilters;
+                },
+              ),
             ),
           ),
           Padding(

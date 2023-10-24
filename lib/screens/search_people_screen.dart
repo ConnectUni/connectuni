@@ -4,7 +4,7 @@ import 'package:multi_select_flutter/multi_select_flutter.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import '../components/user_card_widget.dart';
 import '../model/user.dart';
-import '../model/group_list.dart';
+import '../utils/global_variables.dart';
 
 class SearchPeopleScreen extends ConsumerStatefulWidget {
   const SearchPeopleScreen({Key? key, required this.pageController})
@@ -19,32 +19,31 @@ class SearchPeopleScreen extends ConsumerStatefulWidget {
 
 class _SearchPeopleScreenState extends ConsumerState<SearchPeopleScreen> {
   final controller = TextEditingController();
-  List<User> users = TempUsersDB.getUsers();
+  final _interests = interests
+      .map((interest) => MultiSelectItem(interest, interest))
+      .toList();
 
+  List<String> selectedFilters = [];
+  List<User> users = TempUsersDB.getUsers();
   List<User> showSearchedUser(String query) {
     final suggestions = TempUsersDB
         .getUsers()
-        .where((user) => user.displayName.toLowerCase().contains(query.toLowerCase()))
-        .toList();
-
+        .where((user) {
+          if(selectedFilters.isNotEmpty) {
+            return user.displayName.toLowerCase().contains(query.toLowerCase()) && user.interests.any((interest) => selectedFilters.contains(interest));
+          } else {
+            return user.displayName.toLowerCase().contains(query.toLowerCase());
+          }
+    }).toList();
     setState(() {
       users = suggestions;
     });
+
     return suggestions;
   }
 
   @override
   Widget build(BuildContext context) {
-    final UserList usersDB = ref.read(userDBProvider);
-    final User currentUser = usersDB.getUserByID(ref.read(currentUserProvider));
-    final items = TempGroupsDB
-        .getAllGroups()
-        .map((gName) => MultiSelectItem(gName, gName.groupName))
-        .toList();
-    final notFriends = usersDB
-        .getUsers()
-        .where((user) => !currentUser.friends.contains(user))
-        .toList();
     return Scaffold(
       appBar: AppBar(
         title: const Text('Search for People'),
@@ -78,9 +77,10 @@ class _SearchPeopleScreenState extends ConsumerState<SearchPeopleScreen> {
           Padding(
             padding: const EdgeInsets.all(8.0),
             child: MultiSelectDialogField(
-              items: items,
+              items: _interests,
               title: const Text("People"),
               selectedColor: Colors.blue,
+              selectedItemsTextStyle: const TextStyle(color: Colors.black),
               decoration: BoxDecoration(
                 color: Colors.blue.withOpacity(0.1),
                 borderRadius: const BorderRadius.all(Radius.circular(40)),
@@ -90,7 +90,7 @@ class _SearchPeopleScreenState extends ConsumerState<SearchPeopleScreen> {
                 ),
               ),
               buttonIcon: const Icon(
-                Icons.filter,
+                Icons.filter_alt,
                 color: Colors.blue,
               ),
               buttonText: Text(
@@ -100,9 +100,20 @@ class _SearchPeopleScreenState extends ConsumerState<SearchPeopleScreen> {
                   fontSize: 16,
                 ),
               ),
+              listType: MultiSelectListType.CHIP,
               onConfirm: (results) {
-                //_selectedAnimals = results;
+                selectedFilters = List<String>.from(results);
+                showSearchedUser(controller.text);
               },
+              chipDisplay: MultiSelectChipDisplay(
+                onTap: (item) {
+                  setState(() {
+                    selectedFilters.remove(item);
+                    showSearchedUser(controller.text);
+                  });
+                  return selectedFilters;
+                },
+              ),
             ),
           ),
           Padding(
