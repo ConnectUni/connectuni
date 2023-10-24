@@ -1,5 +1,6 @@
 import 'user.dart';
 import 'userList.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 /**
  * Generic outline of the different groups that will be described by each page.
@@ -197,4 +198,5 @@ class GroupsDB {
   }//loadGroups
 } //Groups Repository
 
+//TODO: Remove all instances of this with the Riverpod provider below.
 GroupsDB groupsDB = GroupsDB();
