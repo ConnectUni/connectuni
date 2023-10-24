@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:multi_select_flutter/multi_select_flutter.dart';
-
 import '../components/group_card_view.dart';
 import '../model/group_list.dart';
 
-class SearchGroupsScreen extends StatefulWidget {
+class SearchGroupsScreen extends ConsumerStatefulWidget {
   const SearchGroupsScreen({Key? key, required this.pageController})
       : super(key: key);
 
@@ -12,17 +12,18 @@ class SearchGroupsScreen extends StatefulWidget {
   final PageController pageController;
 
   @override
-  State<SearchGroupsScreen> createState() => _SearchGroupsScreenState();
+  ConsumerState<SearchGroupsScreen> createState() => _SearchGroupsScreenState();
 }
 
-class _SearchGroupsScreenState extends State<SearchGroupsScreen> {
-  final _items = TempGroupsDB
-      .getAllGroups()
-      .map((gName) => MultiSelectItem(gName, gName.groupName))
-      .toList();
+class _SearchGroupsScreenState extends ConsumerState<SearchGroupsScreen> {
 
   @override
   Widget build(BuildContext context) {
+    final GroupList groupsDB = ref.watch(groupsDBProvider);
+    final _items = groupsDB
+        .getAllGroups()
+        .map((gName) => MultiSelectItem(gName, gName.groupName))
+        .toList();
     return Scaffold(
       appBar: AppBar(
         title: const Text('Search for Groups'),
@@ -118,14 +119,14 @@ class _SearchGroupsScreenState extends State<SearchGroupsScreen> {
               'RelatedCourses/Groups',
               textAlign: TextAlign.left,
             ),
-            ...TempGroupsDB
+            ...groupsDB
                 .getAllGroups()
                 .map((gName) => GroupCardView(id: gName.groupID)),
             const Text(
               'Other Groups',
               textAlign: TextAlign.left,
             ),
-            ...TempGroupsDB
+            ...groupsDB
                 .getAllGroups()
                 .map((gName) => GroupCardView(id: gName.groupID)),
             const Text('Events'),

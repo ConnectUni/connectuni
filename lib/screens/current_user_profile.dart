@@ -29,6 +29,7 @@ class CurrentUserProfilePageState extends ConsumerState<CurrentUserProfilePage> 
   Widget build(BuildContext context) {
     final UserList userList = ref.watch(userDBProvider);
     final User currentUser = userList.getUserByID(ref.watch(currentUserProvider));
+    final GroupList groupDB = ref.watch(groupsDBProvider);
     return Scaffold(
         appBar: AppBar(
           title: const Text('My Profile'),
@@ -196,7 +197,7 @@ class CurrentUserProfilePageState extends ConsumerState<CurrentUserProfilePage> 
                         textAlign: TextAlign.left,
                       ),
                       Column(children: [
-                        ...TempGroupsDB.getGroupsByUser(currentUser.uid).map(
+                        ...groupDB.getGroupsByUser(currentUser.uid).map(
                               (group) => Card(
                                 elevation: 8,
                                 color: Colors.white,

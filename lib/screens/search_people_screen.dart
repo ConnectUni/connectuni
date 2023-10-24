@@ -24,7 +24,8 @@ class _SearchPeopleScreenState extends ConsumerState<SearchPeopleScreen> {
   Widget build(BuildContext context) {
     final UserList usersDB = ref.read(userDBProvider);
     final User currentUser = usersDB.getUserByID(ref.read(currentUserProvider));
-    final _items = TempGroupsDB
+    final GroupList groupsDB = ref.watch(groupsDBProvider);
+    final _items = groupsDB
         .getAllGroups()
         .map((gName) => MultiSelectItem(gName, gName.groupName))
         .toList();

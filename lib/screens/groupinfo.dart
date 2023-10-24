@@ -1,6 +1,6 @@
 import 'package:connectuni/components/group_member_widget.dart';
 import 'package:flutter/material.dart';
-
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:connectuni/model/group.dart';
 import '../model/group_list.dart';
 
@@ -8,7 +8,7 @@ import '../model/group_list.dart';
 /// There is an icon at the upper right-hand corner for more statistic-related properties of the group.
 
 
-class GroupInfo extends StatefulWidget {
+class GroupInfo extends ConsumerStatefulWidget {
   final String id;
 
   const GroupInfo({
@@ -16,13 +16,14 @@ class GroupInfo extends StatefulWidget {
     required this.id,
   }) : super(key: key);
 
-  State<GroupInfo> createState() => _GroupInfoState();
+  ConsumerState<GroupInfo> createState() => _GroupInfoState();
 }
 
-class _GroupInfoState extends State<GroupInfo> {
+class _GroupInfoState extends ConsumerState<GroupInfo> {
   @override
   Widget build(BuildContext context) {
-    Group groupData = TempGroupsDB.getGroupById(widget.id);
+    final GroupList groupsDB = ref.watch(groupsDBProvider);
+    Group groupData = groupsDB.getGroupById(widget.id);
     return Scaffold(
       appBar: AppBar(
         leading: const BackButton(),
