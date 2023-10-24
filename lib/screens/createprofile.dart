@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:connectuni/model/user.dart';
 import '../components/interestswidget.dart';
 import '../components/pfpwidget.dart';
-import '../model/userList.dart';
+import '../model/user_list.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 class CreateProfile extends ConsumerStatefulWidget {

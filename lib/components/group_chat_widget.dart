@@ -24,7 +24,7 @@ class GroupChatWidget extends StatefulWidget {
 class _GroupChatWidgetState extends State<GroupChatWidget> {
   @override
   Widget build(BuildContext context) {
-    Group groupData = groupsDB.getGroupById(widget.id);
+    Group groupData = TempGroupsDB.getGroupById(widget.id);
 
     return GestureDetector(
       onTap: () {

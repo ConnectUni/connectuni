@@ -16,7 +16,7 @@ class SearchGroupsScreen extends StatefulWidget {
 }
 
 class _SearchGroupsScreenState extends State<SearchGroupsScreen> {
-  final _items = groupsDB
+  final _items = TempGroupsDB
       .getAllGroups()
       .map((gName) => MultiSelectItem(gName, gName.groupName))
       .toList();
@@ -118,14 +118,14 @@ class _SearchGroupsScreenState extends State<SearchGroupsScreen> {
               'RelatedCourses/Groups',
               textAlign: TextAlign.left,
             ),
-            ...groupsDB
+            ...TempGroupsDB
                 .getAllGroups()
                 .map((gName) => GroupCardView(id: gName.groupID)),
             const Text(
               'Other Groups',
               textAlign: TextAlign.left,
             ),
-            ...groupsDB
+            ...TempGroupsDB
                 .getAllGroups()
                 .map((gName) => GroupCardView(id: gName.groupID)),
             const Text('Events'),
