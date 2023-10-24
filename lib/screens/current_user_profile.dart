@@ -27,8 +27,8 @@ class CurrentUserProfilePageState extends ConsumerState<CurrentUserProfilePage> 
 
   @override
   Widget build(BuildContext context) {
-    final UserList userList = ref.read(userDBProvider);
-    final User currentUser = userList.getUserByID(ref.read(currentUserProvider));
+    final UserList userList = ref.watch(userDBProvider);
+    final User currentUser = userList.getUserByID(ref.watch(currentUserProvider));
     return Scaffold(
         appBar: AppBar(
           title: const Text('My Profile'),
@@ -90,7 +90,7 @@ class CurrentUserProfilePageState extends ConsumerState<CurrentUserProfilePage> 
                   Padding(
                     padding: const EdgeInsets.all(10.0),
                     child: TextButton(
-                      onPressed: null,
+                      onPressed: () => {ref.read(currentUserProvider.state).state = 'user-002'},
                       style: ButtonStyle(
                         backgroundColor:
                             MaterialStateProperty.all<Color>(Colors.green),
