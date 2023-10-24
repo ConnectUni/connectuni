@@ -3,7 +3,6 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 import '../model/user.dart';
-import '../model/userList.dart';
 import '../screens/other_user_profile.dart';
 
 class UserCardWidget extends StatelessWidget {
@@ -13,15 +12,12 @@ class UserCardWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-
     return GestureDetector(
       onTap: () {
         Navigator.push(
-          context,
-          CupertinoPageRoute(
-              builder: (context) => OtherUserProfile(uid: user.uid)
-          )
-        );
+            context,
+            CupertinoPageRoute(
+                builder: (context) => OtherUserProfile(uid: user.uid)));
       },
       child: UserCardSearch(name: user.displayName),
     );

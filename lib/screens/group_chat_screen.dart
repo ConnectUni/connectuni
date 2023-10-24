@@ -2,10 +2,11 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import '../model/group.dart';
+import '../model/group_list.dart';
 import '../model/message.dart';
 import '../model/message_list.dart';
 import '../model/user.dart';
-import '../model/userList.dart';
+import '../model/user_list.dart';
 import 'groupinfo.dart';
 
 class GroupChatScreen extends ConsumerStatefulWidget {
@@ -25,14 +26,14 @@ class _GroupChatScreenState extends ConsumerState<GroupChatScreen> {
   Widget build(BuildContext context) {
     final UserList usersDB = ref.read(userDBProvider);
     Group groupData = groupsDB.getGroupById(widget.id);
-    Iterable<User> groupMembers = usersDB.getGroupMembers(groupData.userIds);
+    Iterable<User> groupMembers = usersDB.getGroupMembers(groupData.userIDs);
     Iterable<Message> messageData =
         messagesDB.getGroupMessages(groupData.groupID);
     String currentUID = 'user-001';
 
     return Scaffold(
       appBar: AppBar(
-        title: Text("${groupData.groupName} | ${groupData.professor}"),
+        title: Text("${groupData.groupName} | ${groupData.owner}"),
         actions: [
           IconButton(
             icon: const Icon(Icons.info),
@@ -40,8 +41,7 @@ class _GroupChatScreenState extends ConsumerState<GroupChatScreen> {
               Navigator.push(
                 context,
                 CupertinoPageRoute(
-                    builder: (context) => GroupInfo(id: widget.id)
-                ),
+                    builder: (context) => GroupInfo(id: widget.id)),
               );
             },
           ),

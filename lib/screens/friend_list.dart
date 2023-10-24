@@ -1,5 +1,5 @@
+import 'package:connectuni/model/user_list.dart';
 import 'package:connectuni/components/user_card_widget.dart';
-import 'package:connectuni/model/userList.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import '../model/user.dart';
@@ -55,9 +55,7 @@ class _FriendsListState extends ConsumerState<FriendsList> {
                 });
               }),
             ),
-            ...currentUser
-                .friends
-                .map((user) => UserCardWidget(user: user)),
+            ...currentUser.friends.map((user) => UserCardWidget(user: user)),
           ],
         ),
       ),

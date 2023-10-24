@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-
-import '../model/event_db.dart';
+import '../model/event.dart';
+import '../model/event_list.dart';
 
 class EventCardView extends StatelessWidget {
   const EventCardView({Key? key, required this.id}) : super(key: key);
@@ -9,7 +9,7 @@ class EventCardView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    Event thisEvent = eventsDB.getEventById(id);
+    SingleEvent thisEvent = eventsDB.getEventById(id);
 
     return Padding(
       padding: const EdgeInsets.all(3.5),
@@ -18,11 +18,10 @@ class EventCardView extends StatelessWidget {
         child: Column(
           children: [
             ListTile(
-              title: Text(
-                thisEvent.eventName,
-                style: Theme.of(context).textTheme.titleLarge,
-              )
-            ),
+                title: Text(
+              thisEvent.eventName,
+              style: Theme.of(context).textTheme.titleLarge,
+            )),
             Padding(
               padding: const EdgeInsets.only(left: 15.0, top: 2.0),
               child: Align(

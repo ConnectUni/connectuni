@@ -2,7 +2,7 @@ import 'package:connectuni/screens/other_user_profile.dart';
 import 'package:flutter/material.dart';
 import 'package:connectuni/model/user.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import '../model/userList.dart';
+import '../model/user_list.dart';
 
 class UserCardSearch extends ConsumerWidget {
   const UserCardSearch({Key? key, required this.name}) : super(key: key);
@@ -33,12 +33,10 @@ class UserCardSearch extends ConsumerWidget {
                   icon: const Icon(Icons.message),
                   onPressed: () {
                     // TODO Add functionality to message user
-                    Navigator.push(
-                        context,
+                    Navigator.push(context,
                         MaterialPageRoute(builder: (context) {
-                          return OtherUserProfile(uid: thisUser.uid);
-                        })
-                    );
+                      return OtherUserProfile(uid: thisUser.uid);
+                    }));
                   },
                 ),
               ),
