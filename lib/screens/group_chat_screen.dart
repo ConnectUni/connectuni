@@ -28,10 +28,11 @@ class _GroupChatScreenState extends ConsumerState<GroupChatScreen> {
     final UserList usersDB = ref.read(userDBProvider);
     final GroupList groupsDB = ref.watch(groupsDBProvider);
     Group groupData = groupsDB.getGroupById(widget.id);
-
+    final MessageList messagesDB = ref.read(messagesDBProvider);
     Iterable<User> groupMembers = usersDB.getGroupMembers(groupData.userIDs);
-    Iterable<Message> messageData =
-        TempMessagesDB.getGroupMessages(groupData.groupID);
+
+    Iterable<Message> messageData = messagesDB.getGroupMessages(groupData.groupID);
+
     String currentUID = 'user-001';
 
     return Scaffold(
