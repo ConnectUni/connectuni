@@ -212,3 +212,4 @@ final List<Group> allGroups = [
     interests: ['Computer Science'],
   ),
 ];
+GroupList TempGroupsDB = GroupList(allGroups);
