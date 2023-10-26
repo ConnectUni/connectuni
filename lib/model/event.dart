@@ -8,6 +8,7 @@ class SingleEvent {
   String eventIcon;
   String eventDescription;
   List<String> userIDs;
+  List<String> interests;
 
   /// Constructor
   SingleEvent({
@@ -19,6 +20,7 @@ class SingleEvent {
     required this.eventDate, //Ex. DateTime(2023, 10, 13, 12, 30)
     required this.groupID,
     required this.userIDs,
+    required this.interests,
   });
 
   /// Set a new Event icon

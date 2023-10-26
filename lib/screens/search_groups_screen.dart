@@ -1,7 +1,11 @@
+import 'package:connectuni/model/group.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:multi_select_flutter/multi_select_flutter.dart';
+
 import '../components/group_card_view.dart';
+import 'package:connectuni/utils/global_variables.dart';
+import '../components/group_chat_widget.dart';
 import '../model/group_list.dart';
 
 class SearchGroupsScreen extends ConsumerStatefulWidget {
@@ -16,10 +20,32 @@ class SearchGroupsScreen extends ConsumerStatefulWidget {
 }
 
 class _SearchGroupsScreenState extends ConsumerState<SearchGroupsScreen> {
+  final controller = TextEditingController();
+  final _interests = interests
+      .map((interest) => MultiSelectItem(interest, interest))
+      .toList();
+  List<String> selectedFilters = [];
 
   @override
   Widget build(BuildContext context) {
     final GroupList groupsDB = ref.watch(groupsDBProvider);
+    List<Group> groups = groupsDB.getAllGroups();
+    List<Group> showSearchedGroup(String query) {
+      final suggestions = groupsDB
+          .getAllGroups()
+          .where((group) {
+        if(selectedFilters.isNotEmpty) {
+          return group.groupName.toLowerCase().contains(query.toLowerCase()) && group.interests.any((interest) => selectedFilters.contains(interest));
+        } else {
+          return group.groupName.toLowerCase().contains(query.toLowerCase());
+        }
+      }).toList();
+      setState(() {
+        groups = suggestions;
+      });
+
+      return suggestions;
+    }
     final _items = groupsDB
         .getAllGroups()
         .map((gName) => MultiSelectItem(gName, gName.groupName))
@@ -52,86 +78,74 @@ class _SearchGroupsScreenState extends ConsumerState<SearchGroupsScreen> {
           ),
         ],
       ),
-      body: SingleChildScrollView(
-        child: Column(
-          children: [
-            Padding(
-              padding: const EdgeInsets.all(8.0),
-              child: MultiSelectDialogField(
-                items: _items,
-                title: const Text("Groups"),
-                selectedColor: Colors.blue,
-                decoration: BoxDecoration(
-                  color: Colors.blue.withOpacity(0.1),
-                  borderRadius: const BorderRadius.all(Radius.circular(40)),
-                  border: Border.all(
-                    color: Colors.blue,
-                    width: 2,
-                  ),
-                ),
-                buttonIcon: const Icon(
-                  Icons.filter,
+      body: Column(
+        children: [
+          Padding(
+            padding: const EdgeInsets.all(8.0),
+            child: MultiSelectDialogField(
+              items: _interests,
+              title: const Text("Interests"),
+              selectedColor: Colors.blue,
+              selectedItemsTextStyle: const TextStyle(color: Colors.black),
+              decoration: BoxDecoration(
+                color: Colors.blue.withOpacity(0.1),
+                borderRadius: const BorderRadius.all(Radius.circular(40)),
+                border: Border.all(
                   color: Colors.blue,
+                  width: 2,
                 ),
-                buttonText: Text(
-                  "Filter by:",
-                  style: TextStyle(
-                    color: Colors.blue[800],
-                    fontSize: 16,
-                  ),
+              ),
+              buttonIcon: const Icon(
+                Icons.filter_alt,
+                color: Colors.blue,
+              ),
+              buttonText: Text(
+                "Filter by:",
+                style: TextStyle(
+                  color: Colors.blue[800],
+                  fontSize: 16,
                 ),
-                onConfirm: (results) {
-                  // TODO: Filter groups by results
+              ),
+              listType: MultiSelectListType.CHIP,
+              onConfirm: (results) {
+                selectedFilters = List<String>.from(results);
+                showSearchedGroup(controller.text);
+              },
+              chipDisplay: MultiSelectChipDisplay(
+                onTap: (item) {
+                  setState(() {
+                    selectedFilters.remove(item);
+                    showSearchedGroup(controller.text);
+                  });
+                  return selectedFilters;
                 },
               ),
             ),
-            Padding(
-              padding: const EdgeInsets.all(8.0),
-              child: SearchAnchor(
-                  builder: (BuildContext context, SearchController controller) {
-                return SearchBar(
-                  controller: controller,
-                  onTap: () {
-                    controller.openView();
-                  },
-                  onChanged: (_) {
-                    controller.openView();
-                  },
-                  hintText: 'Search...',
-                  leading: const Icon(Icons.search),
-                );
-              }, suggestionsBuilder:
-                      (BuildContext context, SearchController controller) {
-                return List<ListTile>.generate(5, (int index) {
-                  final String item = 'item $index';
-                  return ListTile(
-                    title: Text(item),
-                    onTap: () {
-                      setState(() {
-                        controller.closeView(item);
-                      });
-                    },
-                  );
-                });
-              }),
+          ),
+          Padding(
+            padding: const EdgeInsets.all(8.0),
+            child: TextField(
+              controller: controller,
+              decoration: InputDecoration(
+                hintText: 'Search...',
+                prefixIcon: const Icon(Icons.search),
+                border: OutlineInputBorder(
+                  borderRadius: BorderRadius.circular(50),
+                  borderSide: const BorderSide(color: Colors.blue),
+                )
+              ),
+              onChanged: showSearchedGroup,
             ),
-            const Text(
-              'RelatedCourses/Groups',
-              textAlign: TextAlign.left,
-            ),
-            ...groupsDB
-                .getAllGroups()
-                .map((gName) => GroupCardView(id: gName.groupID)),
-            const Text(
-              'Other Groups',
-              textAlign: TextAlign.left,
-            ),
-            ...groupsDB
-                .getAllGroups()
-                .map((gName) => GroupCardView(id: gName.groupID)),
-            const Text('Events'),
-          ],
-        ),
+          ),
+          Expanded(
+              child: ListView.builder(
+                itemCount: groups.length,
+                itemBuilder: (context, index) {
+                  return GroupChatWidget(id: groups[index].groupID);
+                },
+              )
+          ),
+        ],
       ),
     );
   }
