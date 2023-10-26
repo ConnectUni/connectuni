@@ -180,4 +180,4 @@ final List<Group> allGroups = [
 ];
 
 //Provider that gives access to the total groups database.
-final groupsDBProvider = Provider<GroupList>((ref) { return GroupList(allGroups); });
+final groupsDBProvider = StateProvider<GroupList>((ref) { return GroupList(allGroups); });

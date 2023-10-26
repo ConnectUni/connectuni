@@ -104,6 +104,7 @@ class _GroupInfoState extends ConsumerState<GroupInfo> {
                 onPressed: () {
                   //Placeholder currently only removes the first user:
                   groupData.removeUserId('user-001');
+                  ref.refresh(groupsDBProvider);
                 },
                 style: ButtonStyle(
                   backgroundColor: MaterialStateProperty.all<Color>(Colors.red),
@@ -122,6 +123,7 @@ class _GroupInfoState extends ConsumerState<GroupInfo> {
                 onPressed: () {
                   //Placeholder currently only removes the first user:
                   groupData.addUserId('user-001');
+                  ref.refresh(groupsDBProvider);
                 },
                 style: ButtonStyle(
                   backgroundColor:

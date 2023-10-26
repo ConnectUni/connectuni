@@ -2,6 +2,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:connectuni/components/group_chat_widget.dart';
 import 'package:flutter/material.dart';
 import '../model/group_list.dart';
+import '../model/user_list.dart';
 import '/screens/chatpage.dart';
 
 class GroupsScreen extends ConsumerStatefulWidget {
@@ -15,6 +16,7 @@ class _GroupsScreenState extends ConsumerState<GroupsScreen> {
   @override
   Widget build(BuildContext context) {
     final GroupList groupsDB = ref.watch(groupsDBProvider);
+    final String userId = ref.watch(currentUserProvider);
     return Scaffold(
       appBar: AppBar(
         title: const Text('My Groups'),
@@ -45,7 +47,7 @@ class _GroupsScreenState extends ConsumerState<GroupsScreen> {
         children: [
           //TODO: Implement functionality and make cards interactive rather than simply visual.
           ...groupsDB
-              .getAllGroups()
+              .getGroupsByUser(userId)
               .map((gName) => GroupChatWidget(id: gName.groupID)),
           const Center(
             //TODO: Implement functionality and change from ICON to Button
