@@ -52,6 +52,7 @@ List<SingleEvent> allEvents = [
     eventDate: DateTime(2023, 10, 13, 12, 30),
     groupID: 'group-001',
     userIDs: ['user-001', 'user-002', 'user-003'],
+    interests: ['Computer Science'],
   ),
   SingleEvent(
     eventID: 'event-002',
@@ -63,6 +64,7 @@ List<SingleEvent> allEvents = [
     eventDate: DateTime(2023, 10, 9, 9, 00),
     groupID: 'group-002',
     userIDs: ['user-001'],
+    interests: ['Computer Science'],
   ),
   SingleEvent(
     eventID: 'event-003',
@@ -74,6 +76,7 @@ List<SingleEvent> allEvents = [
     eventDate: DateTime(2023, 10, 25, 18, 30),
     groupID: 'group-003',
     userIDs: ['user-002', 'user-003'],
+    interests: ['Mathematics'],
   ),
   SingleEvent(
     eventID: 'event-004',
@@ -84,6 +87,7 @@ List<SingleEvent> allEvents = [
     eventDate: DateTime(2023, 11, 3, 7, 30),
     groupID: 'group-001',
     userIDs: ['user-001', 'user-002'],
+    interests: ['Computer Science'],
   ),
 ];
 
