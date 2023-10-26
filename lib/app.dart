@@ -1,3 +1,4 @@
+import 'package:connectuni/screens/createevent.dart';
 import 'package:connectuni/screens/createprofile.dart';
 import 'package:connectuni/screens/event_info_screen.dart';
 import 'package:connectuni/screens/search_events_screen.dart';
@@ -43,6 +44,7 @@ class ConnectUniApp extends StatelessWidget {
         '/searchevents': (BuildContext context) => SearchEventsScreen(
               pageController: _pageController,
             ),
+        '/createevent': (BuildContext context) => const CreateEvent(),
         '/groupinfo': (BuildContext context) => const GroupInfo(id: ''),
         '/eventinfo': (BuildContext context) => const EventInfoScreen(
               id: '',

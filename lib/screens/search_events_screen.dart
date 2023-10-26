@@ -122,6 +122,12 @@ class _SearchEventsScreenState extends State<SearchEventsScreen> {
           ],
         ),
       ),
+      floatingActionButton: FloatingActionButton(
+        onPressed: () {
+          Navigator.pushNamed(context, '/createevent');
+        },
+        child: const Icon(Icons.add),
+      ),
     );
   }
 }

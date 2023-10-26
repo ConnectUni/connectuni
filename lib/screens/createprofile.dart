@@ -1,4 +1,5 @@
 import 'package:connectuni/components/groupselectorwidget.dart';
+import 'package:connectuni/home/home.dart';
 import 'package:flutter/material.dart';
 import 'package:connectuni/model/user.dart';
 import '../components/interestswidget.dart';
@@ -126,7 +127,7 @@ class CreateProfileState extends ConsumerState<CreateProfile> {
                       onPressed: () {
                         ///implement update/save user?
                         ///then navigate to home screen
-                        Navigator.pushNamed(context, '/home');
+                        Navigator.pushReplacementNamed(context, HomePage.routeName);
                       },
                       child: const Text('Continue'),
                     ),

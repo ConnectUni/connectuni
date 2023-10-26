@@ -1,5 +1,4 @@
 import 'package:connectuni/screens/createprofile.dart';
-import 'package:connectuni/screens/current_user_profile.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
@@ -9,7 +8,7 @@ class SignUpPage extends StatefulWidget {
   const SignUpPage({Key? key}) : super(key: key);
 
   @override
-  _SignUpPageState createState() => _SignUpPageState();
+  State<SignUpPage> createState() => _SignUpPageState();
 }
 
 class _SignUpPageState extends State<SignUpPage> {
@@ -178,7 +177,7 @@ class _SignUpPageState extends State<SignUpPage> {
                       //check if all fields are filled
                       if (_samePassword()) {
                         //validate passwords match
-                        Navigator.push(
+                        Navigator.pushReplacement(
                           context,
                           CupertinoPageRoute(
                               builder: (context) => const CreateProfile()),
