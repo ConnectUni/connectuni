@@ -1,15 +1,15 @@
-import 'package:connectuni/features/user/presentation/createprofile.dart';
-import 'package:connectuni/features/event/presentation/event_info_screen.dart';
-import 'package:connectuni/features/event/presentation/search_events_screen.dart';
-import 'package:connectuni/features/authentication/presentation/signup.dart';
-import 'package:connectuni/features/user/presentation/friend_list.dart';
-
+import 'package:connectuni/screens/createevent.dart';
+import 'package:connectuni/screens/search_events_screen.dart';
 import 'package:flutter/material.dart';
 
+import 'features/authentication/presentation/signup.dart';
 import 'features/chat/presentation/chatpage.dart';
+import 'features/event/presentation/event_info_screen.dart';
 import 'features/home/presentation/home.dart';
 import 'features/settings/presentation/settings.dart';
+import 'features/user/presentation/createprofile.dart';
 import 'features/user/presentation/current_user_profile.dart';
+import 'features/user/presentation/friend_list.dart';
 import 'features/user/presentation/search_people_screen.dart';
 import 'model/app_theme.dart';
 import 'screens/login.dart';
@@ -46,6 +46,7 @@ class ConnectUniApp extends ConsumerWidget {
         '/searchevents': (BuildContext context) => SearchEventsScreen(
               pageController: _pageController,
             ),
+        '/createevent': (BuildContext context) => const CreateEvent(),
         '/groupinfo': (BuildContext context) => const GroupInfo(id: ''),
         '/eventinfo': (BuildContext context) => const EventInfoScreen(
               id: '',

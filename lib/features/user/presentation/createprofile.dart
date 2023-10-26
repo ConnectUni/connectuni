@@ -129,8 +129,8 @@ class CreateProfileState extends ConsumerState<CreateProfile> {
                       onPressed: () {
                         ///implement update/save user?
                         ///then navigate to home screen
-                        Navigator.pushNamedAndRemoveUntil(
-                            context, HomePage.routeName, (route) => false);
+                        Navigator.pushReplacementNamed(
+                            context, HomePage.routeName);
                       },
                       child: const Text('Continue'),
                     ),
