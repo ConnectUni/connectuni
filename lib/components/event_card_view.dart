@@ -1,15 +1,17 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import '../model/event.dart';
 import '../model/event_list.dart';
 
-class EventCardView extends StatelessWidget {
+class EventCardView extends ConsumerWidget {
   const EventCardView({Key? key, required this.id}) : super(key: key);
 
   final String id;
 
   @override
-  Widget build(BuildContext context) {
-    SingleEvent thisEvent = TempEventsDB.getEventById(id);
+  Widget build(BuildContext context, WidgetRef ref) {
+    EventList eventsDB = ref.watch(eventsDBProvider);
+    SingleEvent thisEvent = eventsDB.getEventById(id);
 
     return Padding(
       padding: const EdgeInsets.all(3.5),

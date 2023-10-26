@@ -1,5 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:table_calendar/table_calendar.dart';
 
 import '../model/event.dart';
@@ -8,13 +9,16 @@ import 'package:multi_select_flutter/multi_select_flutter.dart';
 import '../model/group_list.dart';
 import 'event_info_screen.dart';
 
-class EventCalendar extends StatefulWidget {
+class EventCalendar extends ConsumerStatefulWidget {
+  const EventCalendar({super.key});
+
   @override
-  _EventCalendarState createState() => _EventCalendarState();
+  ConsumerState createState() => _EventCalendarState();
 }
 
-class _EventCalendarState extends State<EventCalendar> {
+class _EventCalendarState extends ConsumerState<EventCalendar> {
   late final ValueNotifier<List<SingleEvent>> _selectedEvents;
+
   final _items = TempGroupsDB
       .getAllGroups()
       .map((gName) => MultiSelectItem(gName, gName.groupName))
@@ -42,8 +46,10 @@ class _EventCalendarState extends State<EventCalendar> {
   }
 
   List<SingleEvent> _getEventsForDay(DateTime day) {
+    final EventList eventsDB = ref.watch(eventsDBProvider);
+
     // Implementation example
-    return TempEventsDB
+    return eventsDB
         .getAllEvents()
         .where((event) => isSameDay(event.eventDate, day))
         .toList();
