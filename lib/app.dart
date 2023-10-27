@@ -44,7 +44,7 @@ class ConnectUniApp extends ConsumerWidget {
         '/searchpeople': (BuildContext context) => SearchPeopleScreen(
               pageController: _pageController,
             ),
-        '/searchevents': (BuildContext context) => SearchEventsScreen(
+        '/search_events': (BuildContext context) => SearchEventsScreen(
               pageController: _pageController,
             ),
         '/createevent': (BuildContext context) => CreateEvent(),
