@@ -8,13 +8,12 @@ import '../features/event/domain/event.dart';
 import '../features/event/domain/event_list.dart';
 import '../features/home/presentation/home.dart';
 
-/// Create a new Event.
 class CreateEvent extends ConsumerWidget {
   CreateEvent({Key? key}) : super(key: key);
 
   static const routeName = '/addEventView';
   final _formKey = GlobalKey<FormBuilderState>();
-  final _nameFieldKey = GlobalKey<FormBuilderFieldState>();
+  final _eventNameFieldKey = GlobalKey<FormBuilderFieldState>();
   final _locationFieldKey = GlobalKey<FormBuilderFieldState>();
   final _dateFieldKey = GlobalKey<FormBuilderFieldState>();
   final _iconFieldKey = GlobalKey<FormBuilderFieldState>();
@@ -30,9 +29,20 @@ class CreateEvent extends ConsumerWidget {
     void onSubmit() {
       bool isValid = _formKey.currentState?.saveAndValidate() ?? false;
       if (!isValid) return;
-      String name = _nameFieldKey.currentState?.value;
+      int id = eventDB.allEvents.length + 1;
+      String getEventID() {
+        if (id < 10) {
+          return "group-00$id";
+        } else if (id < 100) {
+          return "group-0$id";
+        } else {
+          return "group-$id";
+        }
+      }
+
+      String name = _eventNameFieldKey.currentState?.value;
       String location = _locationFieldKey.currentState?.value;
-      DateTime date = DateTime.parse(_dateFieldKey.currentState?.value ?? '');
+      DateTime date = _dateFieldKey.currentState?.value;
       String icon = _iconFieldKey.currentState?.value;
       String description = _descriptionFieldKey.currentState?.value;
       String groupID = _groupIDFieldKey.currentState?.value;
@@ -43,8 +53,7 @@ class CreateEvent extends ConsumerWidget {
 
       // Create a new event
       eventDB.addEvent(SingleEvent(
-        //for event id increment the latest id by 1
-        eventID: 'event-${eventDB.allEvents.length + 1}',
+        eventID: getEventID(),
         eventName: name,
         eventIcon: icon,
         eventLocation: location,
@@ -54,6 +63,7 @@ class CreateEvent extends ConsumerWidget {
         userIDs: userIDs,
         interests: interests,
       ));
+      ref.refresh(eventsDBProvider);
       Navigator.pushReplacementNamed(context, HomePage.routeName);
     }
 
@@ -74,12 +84,14 @@ class CreateEvent extends ConsumerWidget {
                   key: _formKey,
                   child: Column(
                     children: [
-                      EventNameField(fieldKey: _nameFieldKey),
+                      EventNameField(fieldKey: _eventNameFieldKey),
                       EventLocationField(fieldKey: _locationFieldKey),
                       EventDateField(fieldKey: _dateFieldKey),
                       EventIconField(fieldKey: _iconFieldKey),
                       EventDescriptionField(fieldKey: _descriptionFieldKey),
                       InterestsField(fieldKey: _interestsFieldKey),
+                      GroupIDField(fieldKey: _groupIDFieldKey),
+                      UsersField(fieldKey: _usersFieldKey),
                     ],
                   ),
                 ),
@@ -87,6 +99,7 @@ class CreateEvent extends ConsumerWidget {
                   children: [
                     ElevatedButton(
                         onPressed: onSubmit, child: const Text('Submit')),
+                    const SizedBox(width: 10),
                     ElevatedButton(
                         onPressed: onReset, child: const Text('Reset')),
                   ],
