@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_form_builder/flutter_form_builder.dart';
 import 'package:form_builder_validators/form_builder_validators.dart';
 import '../features/home/domain/global_variables.dart';
+import '../screens/groups_screen/form-fields/field_padding.dart';
 
 class EventNameField extends StatelessWidget {
   const EventNameField({Key? key, required this.fieldKey}) : super(key: key);
@@ -72,37 +73,6 @@ class EventIconField extends StatelessWidget {
   }
 }
 
-class InterestsField extends StatefulWidget {
-  const InterestsField(
-      {super.key, required this.fieldKey, this.selectedInterests});
-
-  final List<String>? selectedInterests;
-  final GlobalKey<FormBuilderFieldState<FormBuilderField<dynamic>, dynamic>>
-      fieldKey;
-
-  @override
-  State<InterestsField> createState() => _InterestsFieldState();
-}
-
-class _InterestsFieldState extends State<InterestsField> {
-  @override
-  Widget build(BuildContext context) {
-    String fieldName = 'Interests';
-    return FormBuilderTextField(
-      name: fieldName,
-      key: widget.fieldKey,
-      initialValue: widget.selectedInterests?.join(','),
-      decoration: InputDecoration(
-        labelText: fieldName,
-        hintText: 'Example: computer science, animation, music',
-      ),
-      validator: FormBuilderValidators.compose([
-        FormBuilderValidators.required(),
-      ]),
-    );
-  }
-}
-
 class EventLocationField extends StatelessWidget {
   const EventLocationField(
       {super.key, required this.fieldKey, this.currLocation});
@@ -142,7 +112,7 @@ class EventDateField extends StatelessWidget {
       name: fieldName,
       key: fieldKey,
       initialValue: currDate,
-      inputType: InputType.date,
+      inputType: InputType.both,
       decoration: InputDecoration(
         labelText: fieldName,
       ),
@@ -154,49 +124,39 @@ class EventDateField extends StatelessWidget {
 }
 
 class GroupIDField extends StatelessWidget {
-  const GroupIDField({super.key, required this.fieldKey, this.currGroupID});
+  const GroupIDField(
+      {super.key,
+      required this.fieldKey,
+      required this.groupNames,
+      this.currGroup});
 
-  final String? currGroupID;
+  final String? currGroup;
+  final List<String> groupNames;
   final GlobalKey<FormBuilderFieldState<FormBuilderField<dynamic>, dynamic>>
       fieldKey;
 
   @override
   Widget build(BuildContext context) {
-    String fieldName = 'Group ID';
-    return FormBuilderTextField(
-      name: fieldName,
-      key: fieldKey,
-      initialValue: currGroupID,
-      decoration: InputDecoration(
-        labelText: fieldName,
+    String fieldName = 'Group';
+    return FieldPadding(
+      child: FormBuilderDropdown<String>(
+        name: fieldName,
+        initialValue: currGroup,
+        key: fieldKey,
+        decoration: InputDecoration(
+          labelText: fieldName,
+        ),
+        validator:
+            FormBuilderValidators.compose([FormBuilderValidators.required()]),
+        items: groupNames
+            .map((name) => DropdownMenuItem(
+                  alignment: AlignmentDirectional.centerStart,
+                  value: name,
+                  child: Text(name),
+                ))
+            .toList(),
+        valueTransformer: (val) => val?.toString(),
       ),
-      validator: FormBuilderValidators.compose([
-        FormBuilderValidators.required(),
-      ]),
-    );
-  }
-}
-
-class UsersField extends StatelessWidget {
-  const UsersField({super.key, required this.fieldKey, this.currUsers});
-
-  final String? currUsers;
-  final GlobalKey<FormBuilderFieldState<FormBuilderField<dynamic>, dynamic>>
-      fieldKey;
-
-  @override
-  Widget build(BuildContext context) {
-    String fieldName = 'Users';
-    return FormBuilderTextField(
-      name: fieldName,
-      key: fieldKey,
-      initialValue: currUsers,
-      decoration: InputDecoration(
-        labelText: fieldName,
-      ),
-      validator: FormBuilderValidators.compose([
-        FormBuilderValidators.required(),
-      ]),
     );
   }
 }

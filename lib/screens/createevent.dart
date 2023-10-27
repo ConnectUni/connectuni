@@ -1,3 +1,4 @@
+import 'package:connectuni/screens/search_events_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_form_builder/flutter_form_builder.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -6,12 +7,13 @@ import '../components/event_form_fields.dart';
 import '../features/event/data/event_providers.dart';
 import '../features/event/domain/event.dart';
 import '../features/event/domain/event_list.dart';
+import '../features/group/data/group_providers.dart';
 import '../features/home/presentation/home.dart';
 
 class CreateEvent extends ConsumerWidget {
   CreateEvent({Key? key}) : super(key: key);
 
-  static const routeName = '/addEventView';
+  static const routeName = '/createevent';
   final _formKey = GlobalKey<FormBuilderState>();
   final _eventNameFieldKey = GlobalKey<FormBuilderFieldState>();
   final _locationFieldKey = GlobalKey<FormBuilderFieldState>();
@@ -21,6 +23,9 @@ class CreateEvent extends ConsumerWidget {
   final _groupIDFieldKey = GlobalKey<FormBuilderFieldState>();
   final _usersFieldKey = GlobalKey<FormBuilderFieldState>();
   final _interestsFieldKey = GlobalKey<FormBuilderFieldState>();
+
+  final List<String> userIDs = [];
+  final List<String> interests = [];
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
@@ -46,6 +51,7 @@ class CreateEvent extends ConsumerWidget {
       String icon = _iconFieldKey.currentState?.value;
       String description = _descriptionFieldKey.currentState?.value;
       String groupID = _groupIDFieldKey.currentState?.value;
+
       List<String> userIDs = (_usersFieldKey.currentState?.value ?? '')
           .split(','); // assuming comma-separated
       List<String> interests = (_interestsFieldKey.currentState?.value ?? '')
@@ -64,7 +70,7 @@ class CreateEvent extends ConsumerWidget {
         interests: interests,
       ));
       ref.refresh(eventsDBProvider);
-      Navigator.pushReplacementNamed(context, HomePage.routeName);
+      Navigator.pushReplacementNamed(context, SearchEventsScreen.routeName);
     }
 
     void onReset() {
@@ -89,9 +95,10 @@ class CreateEvent extends ConsumerWidget {
                       EventDateField(fieldKey: _dateFieldKey),
                       EventIconField(fieldKey: _iconFieldKey),
                       EventDescriptionField(fieldKey: _descriptionFieldKey),
-                      InterestsField(fieldKey: _interestsFieldKey),
-                      GroupIDField(fieldKey: _groupIDFieldKey),
-                      UsersField(fieldKey: _usersFieldKey),
+                      GroupIDField(
+                          fieldKey: _groupIDFieldKey,
+                          groupNames:
+                              ref.watch(groupsDBProvider).getGroupNames()),
                     ],
                   ),
                 ),

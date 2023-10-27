@@ -27,6 +27,10 @@ class GroupList {
     return allGroups.firstWhere((group) => group.groupID == groupId);
   }
 
+  List<String> getGroupNames() {
+    return allGroups.map((group) => group.groupName).toList();
+  }
+
   /// Return single Group object, search with their group name
   Group getGroupByName(String groupName) {
     return allGroups.firstWhere((group) => group.groupName == groupName);
