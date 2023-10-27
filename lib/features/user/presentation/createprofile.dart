@@ -1,4 +1,3 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:connectuni/features/user/domain/user.dart';
 import '../../group/presentation/groupselectorwidget.dart';
