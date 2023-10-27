@@ -17,6 +17,11 @@ class GroupList {
     return allGroups;
   }
 
+  /// Return number of Group Objects
+  int groupLength() {
+    return allGroups.length;
+  }
+
   /// Return single Group object, search with their group ID
   Group getGroupById(String groupId) {
     return allGroups.firstWhere((group) => group.groupID == groupId);
@@ -47,6 +52,36 @@ class GroupList {
     allGroups.add(group);
   }
 
+  void updateGroup({
+    required String groupID,
+    required String groupName,
+    required String semYear,
+    required String owner,
+    required String groupImage,
+    required String groupDescription,
+    required List<Message> newMessages,
+    required String chatID,
+    required List<String> eventIDs,
+    required List<String> userIDs,
+    required List<String> interests,
+  }) {
+    allGroups.removeWhere((group) => group.groupID == groupID);
+    allGroups.add(
+      Group(
+        groupID: groupID,
+        groupName: groupName,
+        semYear: semYear,
+        owner: owner,
+        groupImage: groupImage,
+        groupDescription: groupDescription,
+        newMessages: newMessages,
+        chatID: chatID,
+        eventIDs: eventIDs,
+        userIDs: userIDs,
+        interests: interests,
+      )
+    );
+  }
   /// Remove a group
   void removeGroup(Group group) {
     if (allGroups.contains(group)) {
@@ -178,7 +213,8 @@ final List<Group> allGroups = [
     interests: ['Computer Science'],
   ),
 ];
-//TODO: Replace all instances of TempGroupsDB with the provider below
-GroupList TempGroupsDB = GroupList(allGroups);
 
-final groupsDBProvider = Provider<GroupList>((ref) { return GroupList(allGroups); });
+//Provider that gives access to the total groups database.
+final groupsDBProvider = StateProvider<GroupList>((ref) { return GroupList(allGroups); });
+
+final groupsIDProvider = StateProvider<int>((ref) { return GroupList(allGroups).groupLength(); });

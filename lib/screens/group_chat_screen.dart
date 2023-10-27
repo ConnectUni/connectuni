@@ -8,7 +8,7 @@ import '../model/message.dart';
 import '../model/message_list.dart';
 import '../model/user.dart';
 import '../model/user_list.dart';
-import 'groupinfo.dart';
+import 'groups_screen/groupinfo.dart';
 
 class GroupChatScreen extends ConsumerStatefulWidget {
   final String id;
@@ -26,10 +26,13 @@ class _GroupChatScreenState extends ConsumerState<GroupChatScreen> {
   @override
   Widget build(BuildContext context) {
     final UserList usersDB = ref.read(userDBProvider);
-    Group groupData = TempGroupsDB.getGroupById(widget.id);
+    final GroupList groupsDB = ref.watch(groupsDBProvider);
+    Group groupData = groupsDB.getGroupById(widget.id);
+    final MessageList messagesDB = ref.read(messagesDBProvider);
     Iterable<User> groupMembers = usersDB.getGroupMembers(groupData.userIDs);
-    Iterable<Message> messageData =
-        TempMessagesDB.getGroupMessages(groupData.groupID);
+
+    Iterable<Message> messageData = messagesDB.getGroupMessages(groupData.groupID);
+
     String currentUID = 'user-001';
 
     return Scaffold(
