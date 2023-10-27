@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_form_builder/flutter_form_builder.dart';
 import 'package:form_builder_validators/form_builder_validators.dart';
 
-import '../utils/global_variables.dart';
 
 class EventNameField extends StatelessWidget{
   const EventNameField({Key? key, required this.fieldKey}) : super(key: key);
@@ -88,29 +87,18 @@ class _InterestsFieldState extends State<InterestsField> {
 
   @override
   Widget build(BuildContext context) {
-    return Column(
-      children: [
-        Expanded(
-          child: ListView.builder(
-            itemCount: interests.length,
-            itemBuilder: (BuildContext context, int index) {
-              return CheckboxListTile(
-                title: Text(interests[index]),
-                value: widget.selectedInterests?.contains(interests[index]),
-                onChanged: (bool? value) {
-                  setState(() {
-                    if (value == true) {
-                      widget.selectedInterests?.add(interests[index]);
-                    } else {
-                      widget.selectedInterests?.remove(interests[index]);
-                    }
-                  });
-                },
-              );
-            },
-          ),
-        ),
-      ],
+  String fieldName = 'Interests';
+    return FormBuilderTextField(
+      name: fieldName,
+      key: widget.fieldKey,
+      initialValue: widget.selectedInterests?.join(','),
+      decoration: InputDecoration(
+        labelText: fieldName,
+        hintText: 'Example: computer science, animation, music',
+      ),
+      validator: FormBuilderValidators.compose([
+        FormBuilderValidators.required(),
+      ]),
     );
   }
 }
@@ -192,7 +180,6 @@ class GroupIDField extends StatelessWidget {
 }
 
 class UsersField extends StatelessWidget {
-  //create a drop down where you can select from list of current users
   const UsersField(
       {super.key, required this.fieldKey, this.currUsers});
 
