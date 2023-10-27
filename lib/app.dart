@@ -51,6 +51,8 @@ class ConnectUniApp extends StatelessWidget {
         '/profile': (BuildContext context) => const CurrentUserProfilePage(),
         '/friendslist': (BuildContext context) => const FriendsList(),
       },
+      theme: AppTheme.lightTheme,
+      darkTheme: AppTheme.darkTheme,
     );
   }
 }
