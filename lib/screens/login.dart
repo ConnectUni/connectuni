@@ -1,6 +1,4 @@
 import 'package:connectuni/home/home.dart';
-import 'package:connectuni/screens/groups_screen/form-fields/login_email_field.dart';
-import 'package:connectuni/screens/groups_screen/form-fields/login_password_field.dart';
 import 'package:connectuni/screens/signup.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -8,6 +6,8 @@ import 'package:flutter_form_builder/flutter_form_builder.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../model/user_list.dart';
+import 'groups_screen/form-fields/login_email_field.dart';
+import 'groups_screen/form-fields/login_password_field.dart';
 
 class LoginPage extends ConsumerStatefulWidget {
   const LoginPage({Key? key}) : super(key: key);
@@ -41,7 +41,7 @@ class LoginPageState extends ConsumerState<LoginPage> {
       body: SafeArea(
         child: ListView(
           padding: const EdgeInsets.symmetric(
-              horizontal: 50.0), //controls width of text fields
+              horizontal: 50.0), //controls width of textfields
           children: <Widget>[
             const SizedBox(height: 80.0),
             Column(
@@ -102,8 +102,8 @@ class LoginPageState extends ConsumerState<LoginPage> {
                 Flexible(
                   child: TextButton(
                     onPressed: () {
-                      emailFieldKey.clear();
-                      passwordFieldKey.clear();
+                      emailFieldKey.currentState!.didChange(null);
+                      passwordFieldKey.currentState!.didChange(null);
                     },
                     child: const Text("CLEAR"),
                   ),
