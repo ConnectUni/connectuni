@@ -1,18 +1,16 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:connectuni/features/group/domain/group.dart';
-import '../data/group_providers.dart';
+
+import '../domain/group.dart';
 import '../domain/group_list.dart';
 
-class GroupCardView extends ConsumerWidget {
+class GroupCardView extends StatelessWidget {
   const GroupCardView({Key? key, required this.id}) : super(key: key);
 
   final String id;
 
   @override
-  Widget build(BuildContext context, WidgetRef ref) {
-    final GroupList groupsDB = ref.watch(groupsDBProvider);
-    Group thisGrouping = groupsDB.getGroupById(id);
+  Widget build(BuildContext context) {
+    Group thisGrouping = TempGroupsDB.getGroupById(id);
 
     return Padding(
       padding: const EdgeInsets.all(3.5),

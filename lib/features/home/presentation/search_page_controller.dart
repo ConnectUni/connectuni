@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 
+import '../../event/presentation/search_events_screen.dart';
 import '../../group/presentation/search_groups_screen.dart';
 import '../../user/presentation/search_people_screen.dart';
-import '../../event/presentation/search_events_screen.dart';
 
 class SearchPageController extends StatefulWidget {
   const SearchPageController({Key? key}) : super(key: key);

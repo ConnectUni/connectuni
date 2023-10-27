@@ -17,11 +17,6 @@ class GroupList {
     return allGroups;
   }
 
-  /// Return number of Group Objects
-  int groupLength() {
-    return allGroups.length;
-  }
-
   /// Return single Group object, search with their group ID
   Group getGroupById(String groupId) {
     return allGroups.firstWhere((group) => group.groupID == groupId);
@@ -45,6 +40,10 @@ class GroupList {
   /// Return list of Group objects that a user is in, search with their user ID
   List<Group> getGroupsByUser(String userId) {
     return allGroups.where((group) => group.userIDs.contains(userId)).toList();
+  }
+
+  int groupLength() {
+    return allGroups.length;
   }
 
   /// Add a group
@@ -212,4 +211,5 @@ final List<Group> allGroups = [
     interests: ['Computer Science'],
   ),
 ];
+//TODO: Replace all instances of TempGroupsDB with the provider below
 GroupList TempGroupsDB = GroupList(allGroups);

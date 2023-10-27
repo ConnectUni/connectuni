@@ -1,15 +1,12 @@
 import 'package:connectuni/features/group/domain/group.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:multi_select_flutter/multi_select_flutter.dart';
 
-import 'package:connectuni/features/home/domain/global_variables.dart';
-import '../data/group_providers.dart';
-import 'group_info_widget.dart';
+import '../../home/domain/global_variables.dart';
 import '../domain/group_list.dart';
-import 'add_group.dart';
+import 'group_chat_widget.dart';
 
-class SearchGroupsScreen extends ConsumerStatefulWidget {
+class SearchGroupsScreen extends StatefulWidget {
   const SearchGroupsScreen({Key? key, required this.pageController})
       : super(key: key);
 
@@ -17,40 +14,35 @@ class SearchGroupsScreen extends ConsumerStatefulWidget {
   final PageController pageController;
 
   @override
-  ConsumerState<SearchGroupsScreen> createState() => _SearchGroupsScreenState();
+  State<SearchGroupsScreen> createState() => _SearchGroupsScreenState();
 }
 
-class _SearchGroupsScreenState extends ConsumerState<SearchGroupsScreen> {
+class _SearchGroupsScreenState extends State<SearchGroupsScreen> {
   final controller = TextEditingController();
-  final _interests = interests
-      .map((interest) => MultiSelectItem(interest, interest))
-      .toList();
+  final _interests =
+      interests.map((interest) => MultiSelectItem(interest, interest)).toList();
+
   List<String> selectedFilters = [];
+  List<Group> groups = TempGroupsDB.getAllGroups();
+  List<Group> showSearchedGroup(String query) {
+    final suggestions = TempGroupsDB.getAllGroups().where((group) {
+      if (selectedFilters.isNotEmpty) {
+        return group.groupName.toLowerCase().contains(query.toLowerCase()) &&
+            group.interests
+                .any((interest) => selectedFilters.contains(interest));
+      } else {
+        return group.groupName.toLowerCase().contains(query.toLowerCase());
+      }
+    }).toList();
+    setState(() {
+      groups = suggestions;
+    });
+
+    return suggestions;
+  }
 
   @override
   Widget build(BuildContext context) {
-    final GroupList groupsDB = ref.watch(groupsDBProvider);
-    List<Group> groups = groupsDB.getAllGroups();
-    List<Group> showSearchedGroup(String query) {
-      final suggestions = groupsDB
-          .getAllGroups()
-          .where((group) {
-        if(selectedFilters.isNotEmpty) {
-          return group.groupName.toLowerCase().contains(query.toLowerCase()) && group.interests.any((interest) => selectedFilters.contains(interest));
-        } else {
-          return group.groupName.toLowerCase().contains(query.toLowerCase());
-        }
-      }).toList();
-      setState(() {
-        groups = suggestions;
-      });
-
-      return suggestions;
-    }
-    final _items = groupsDB
-        .getAllGroups()
-        .map((gName) => MultiSelectItem(gName, gName.groupName))
-        .toList();
     return Scaffold(
       appBar: AppBar(
         title: const Text('Search for Groups'),
@@ -128,53 +120,22 @@ class _SearchGroupsScreenState extends ConsumerState<SearchGroupsScreen> {
             child: TextField(
               controller: controller,
               decoration: InputDecoration(
-                hintText: 'Search...',
-                prefixIcon: const Icon(Icons.search),
-                border: OutlineInputBorder(
-                  borderRadius: BorderRadius.circular(50),
-                  borderSide: const BorderSide(color: Colors.blue),
-                )
-              ),
+                  hintText: 'Search...',
+                  prefixIcon: const Icon(Icons.search),
+                  border: OutlineInputBorder(
+                    borderRadius: BorderRadius.circular(50),
+                    borderSide: const BorderSide(color: Colors.blue),
+                  )),
               onChanged: showSearchedGroup,
             ),
           ),
           Expanded(
               child: ListView.builder(
-                itemCount: groups.length,
-                itemBuilder: (context, index) {
-                  return GroupInfoWidget(id: groups[index].groupID);
-                },
-              )
-          ),
-          Padding(
-            padding: EdgeInsets.all(8.0),
-            child:
-                Column(
-                  children: [
-                    const Text(
-                      "Can't find what you're looking for? Create a new group!"
-                    ),
-                    Padding(
-                      padding: EdgeInsets.all(10.0),
-                      child: ListTile(
-                        title: const Center(
-                            child: Text("Add a Group.",
-                                style: TextStyle(fontWeight: FontWeight.bold))),
-                        textColor: Colors.white,
-                        tileColor: Colors.black54,
-                        onTap: () {
-                          Navigator.push(
-                              context, MaterialPageRoute(builder: (context) {
-                            return AddGroup();
-                          }));
-                        }
-                      ),
-                    ),
-                  ],
-                ),
-
-          ),
-
+            itemCount: groups.length,
+            itemBuilder: (context, index) {
+              return GroupChatWidget(id: groups[index].groupID);
+            },
+          )),
         ],
       ),
     );

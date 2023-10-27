@@ -1,42 +1,41 @@
-import 'package:connectuni/features/user/domain/user_list.dart';
-import 'package:connectuni/features/user/presentation/user_card_widget.dart';
+import 'package:connectuni/features/group/domain/group.dart';
 import 'package:flutter/material.dart';
 import 'package:multi_select_flutter/multi_select_flutter.dart';
-import 'package:flutter_riverpod/flutter_riverpod.dart';
 
+import '../../group/domain/group_list.dart';
+import '../../group/presentation/group_chat_widget.dart';
 import '../../home/domain/global_variables.dart';
-import '../domain/user.dart';
 
-class SearchPeopleScreen extends ConsumerStatefulWidget {
-  const SearchPeopleScreen({Key? key, required this.pageController})
+class SearchGroupsScreen extends StatefulWidget {
+  const SearchGroupsScreen({Key? key, required this.pageController})
       : super(key: key);
 
-  static const String routeName = '/search_people';
+  static const String routeName = '/search_groups';
   final PageController pageController;
 
   @override
-  ConsumerState<SearchPeopleScreen> createState() => _SearchPeopleScreenState();
+  State<SearchGroupsScreen> createState() => _SearchGroupsScreenState();
 }
 
-class _SearchPeopleScreenState extends ConsumerState<SearchPeopleScreen> {
+class _SearchGroupsScreenState extends State<SearchGroupsScreen> {
   final controller = TextEditingController();
   final _interests =
       interests.map((interest) => MultiSelectItem(interest, interest)).toList();
 
   List<String> selectedFilters = [];
-  List<User> users = TempUsersDB.getUsers();
-  List<User> showSearchedUser(String query) {
-    final suggestions = TempUsersDB.getUsers().where((user) {
+  List<Group> groups = TempGroupsDB.getAllGroups();
+  List<Group> showSearchedGroup(String query) {
+    final suggestions = TempGroupsDB.getAllGroups().where((group) {
       if (selectedFilters.isNotEmpty) {
-        return user.displayName.toLowerCase().contains(query.toLowerCase()) &&
-            user.interests
+        return group.groupName.toLowerCase().contains(query.toLowerCase()) &&
+            group.interests
                 .any((interest) => selectedFilters.contains(interest));
       } else {
-        return user.displayName.toLowerCase().contains(query.toLowerCase());
+        return group.groupName.toLowerCase().contains(query.toLowerCase());
       }
     }).toList();
     setState(() {
-      users = suggestions;
+      groups = suggestions;
     });
 
     return suggestions;
@@ -46,15 +45,15 @@ class _SearchPeopleScreenState extends ConsumerState<SearchPeopleScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Search for People'),
+        title: const Text('Search for Groups'),
         actions: <Widget>[
           IconButton(
             icon: const Icon(
-              Icons.group,
-              semanticLabel: 'Search for groups',
+              Icons.person_search,
+              semanticLabel: 'Search for people',
             ),
             onPressed: () {
-              widget.pageController.animateToPage(0,
+              widget.pageController.animateToPage(1,
                   duration: const Duration(milliseconds: 300),
                   curve: Curves.easeInOut);
             },
@@ -78,7 +77,7 @@ class _SearchPeopleScreenState extends ConsumerState<SearchPeopleScreen> {
             padding: const EdgeInsets.all(8.0),
             child: MultiSelectDialogField(
               items: _interests,
-              title: const Text("People"),
+              title: const Text("Interests"),
               selectedColor: Colors.blue,
               selectedItemsTextStyle: const TextStyle(color: Colors.black),
               decoration: BoxDecoration(
@@ -103,13 +102,13 @@ class _SearchPeopleScreenState extends ConsumerState<SearchPeopleScreen> {
               listType: MultiSelectListType.CHIP,
               onConfirm: (results) {
                 selectedFilters = List<String>.from(results);
-                showSearchedUser(controller.text);
+                showSearchedGroup(controller.text);
               },
               chipDisplay: MultiSelectChipDisplay(
                 onTap: (item) {
                   setState(() {
                     selectedFilters.remove(item);
-                    showSearchedUser(controller.text);
+                    showSearchedGroup(controller.text);
                   });
                   return selectedFilters;
                 },
@@ -121,24 +120,22 @@ class _SearchPeopleScreenState extends ConsumerState<SearchPeopleScreen> {
             child: TextField(
               controller: controller,
               decoration: InputDecoration(
-                hintText: 'Search...',
-                prefixIcon: const Icon(Icons.search),
-                border: OutlineInputBorder(
-                  borderRadius: BorderRadius.circular(50),
-                  borderSide: const BorderSide(color: Colors.blue),
-                ),
-              ),
-              onChanged: showSearchedUser,
+                  hintText: 'Search...',
+                  prefixIcon: const Icon(Icons.search),
+                  border: OutlineInputBorder(
+                    borderRadius: BorderRadius.circular(50),
+                    borderSide: const BorderSide(color: Colors.blue),
+                  )),
+              onChanged: showSearchedGroup,
             ),
           ),
           Expanded(
-            child: ListView.builder(
-              itemCount: users.length,
-              itemBuilder: (context, index) {
-                return UserCardWidget(user: users[index]);
-              },
-            ),
-          )
+              child: ListView.builder(
+            itemCount: groups.length,
+            itemBuilder: (context, index) {
+              return GroupChatWidget(id: groups[index].groupID);
+            },
+          )),
         ],
       ),
     );

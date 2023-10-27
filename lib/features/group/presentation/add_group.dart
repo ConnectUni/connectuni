@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_form_builder/flutter_form_builder.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../data/group_providers.dart';
@@ -15,7 +14,7 @@ import 'form-fields/semyear_field.dart';
 import 'form-fields/submit_button.dart';
 
 //Creates a new Group
-class AddGroup extends ConsumerWidget {
+class AddGroup extends ConsumerStatefulWidget {
   AddGroup({Key? key}) : super(key: key);
   final _formKey = GlobalKey<FormBuilderState>();
   final _groupNameFieldKey = GlobalKey<FormBuilderFieldState>();

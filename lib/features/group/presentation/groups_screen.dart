@@ -1,24 +1,19 @@
-import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:connectuni/features/group/presentation/group_chat_widget.dart';
 import 'package:flutter/material.dart';
-import '../../user/data/user_providers.dart';
-import '../data/group_providers.dart';
-import '../domain/group_list.dart';
-import '../../user/domain/user_list.dart';
-import '../../chat/presentation/chatpage.dart';
 
-class GroupsScreen extends ConsumerStatefulWidget {
+import '../../chat/presentation/chatpage.dart';
+import '../domain/group_list.dart';
+import 'group_chat_widget.dart';
+
+class GroupsScreen extends StatefulWidget {
   const GroupsScreen({Key? key}) : super(key: key);
 
   @override
-  ConsumerState createState() => _GroupsScreenState();
+  State createState() => _GroupsScreenState();
 }
 
-class _GroupsScreenState extends ConsumerState<GroupsScreen> {
+class _GroupsScreenState extends State<GroupsScreen> {
   @override
   Widget build(BuildContext context) {
-    final GroupList groupsDB = ref.watch(groupsDBProvider);
-    final String userId = ref.watch(currentUserProvider);
     return Scaffold(
       appBar: AppBar(
         title: const Text('My Groups'),
@@ -48,22 +43,15 @@ class _GroupsScreenState extends ConsumerState<GroupsScreen> {
       body: ListView(
         children: [
           //TODO: Implement functionality and make cards interactive rather than simply visual.
-          ...groupsDB
-              .getGroupsByUser(userId)
+          ...TempGroupsDB.getAllGroups()
               .map((gName) => GroupChatWidget(id: gName.groupID)),
           const Center(
-            child:
-            Padding(
-              padding: EdgeInsets.only(bottom: 10.0),
-              child: IconButton(
-                onPressed: null,
-                icon: Icon(
-                  Icons.add_circle_outline,
-                  color: Colors.grey,
-                  size: 40.0,
-                ),
-              ),
-            )
+            //TODO: Implement functionality and change from ICON to Button
+            child: Icon(
+              Icons.add_circle_outline,
+              color: Colors.grey,
+              size: 40.0,
+            ),
           ),
         ],
       ),
