@@ -19,10 +19,6 @@ class EventCalendar extends ConsumerStatefulWidget {
 class _EventCalendarState extends ConsumerState<EventCalendar> {
   late final ValueNotifier<List<SingleEvent>> _selectedEvents;
 
-  final _items = TempGroupsDB
-      .getAllGroups()
-      .map((gName) => MultiSelectItem(gName, gName.groupName))
-      .toList();
   CalendarFormat _calendarFormat = CalendarFormat.month;
   RangeSelectionMode _rangeSelectionMode = RangeSelectionMode
       .toggledOff; // Can be toggled on/off by longpressing a date
@@ -36,19 +32,16 @@ class _EventCalendarState extends ConsumerState<EventCalendar> {
     super.initState();
 
     _selectedDay = _focusedDay;
-    _selectedEvents = ValueNotifier(_getEventsForDay(_selectedDay!));
-  }
 
-  @override
-  void dispose() {
-    _selectedEvents.dispose();
-    super.dispose();
+    // Using ref.read() inside initState.
+    final EventList eventsDB = ref.read(eventsDBProvider);
+    _selectedEvents = ValueNotifier(
+        eventsDB.getAllEvents().where((event) => isSameDay(event.eventDate, _selectedDay!)).toList()
+    );
   }
 
   List<SingleEvent> _getEventsForDay(DateTime day) {
-    final EventList eventsDB = ref.watch(eventsDBProvider);
-
-    // Implementation example
+    final EventList eventsDB = ref.watch(eventsDBProvider);  // Using ref.watch() if you expect the data to change and want the widget to rebuild.
     return eventsDB
         .getAllEvents()
         .where((event) => isSameDay(event.eventDate, day))
@@ -81,6 +74,8 @@ class _EventCalendarState extends ConsumerState<EventCalendar> {
 
   @override
   Widget build(BuildContext context) {
+    final groups = ref.watch(groupsDBProvider);
+    final items = groups.getAllGroups().map((group) => MultiSelectItem(group.groupID, group.groupName)).toList();
     return Scaffold(
       appBar: AppBar(
         title: const Text('Events Calendar'),
@@ -90,7 +85,7 @@ class _EventCalendarState extends ConsumerState<EventCalendar> {
           Padding(
             padding: const EdgeInsets.all(8.0),
             child: MultiSelectDialogField(
-              items: _items,
+              items: items,
               title: const Text("Viewing events for group:"),
               selectedColor: Colors.blue,
               decoration: BoxDecoration(
