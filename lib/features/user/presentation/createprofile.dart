@@ -1,6 +1,8 @@
-import 'package:connectuni/features/group/presentation/groupselectorwidget.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:connectuni/features/user/domain/user.dart';
+import '../../group/presentation/groupselectorwidget.dart';
+import '../../home/presentation/home.dart';
 import '../data/user_providers.dart';
 import 'interestswidget.dart';
 import 'pfpwidget.dart';
@@ -8,8 +10,8 @@ import '../domain/user_list.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 class CreateProfile extends ConsumerStatefulWidget {
-  const CreateProfile({Key? key});
   static const routeName = '/createprofile';
+  const CreateProfile({super.key});
 
   @override
   CreateProfileState createState() => CreateProfileState();
@@ -25,7 +27,8 @@ class CreateProfileState extends ConsumerState<CreateProfile> {
   @override
   Widget build(BuildContext context) {
     final UserList userList = ref.read(userDBProvider);
-    final User currentUser = userList.getUserByID(ref.read(currentUserProvider));
+    final User currentUser =
+        userList.getUserByID(ref.read(currentUserProvider));
     return Scaffold(
         appBar: AppBar(
           title: const Text('Create Profile'),
@@ -127,22 +130,21 @@ class CreateProfileState extends ConsumerState<CreateProfile> {
                       onPressed: () {
                         ///implement update/save user?
                         ///then navigate to home screen
-                        Navigator.pushNamed(context, '/home');
+                        Navigator.pushNamedAndRemoveUntil(
+                            context, HomePage.routeName, (route) => false);
                       },
                       child: const Text('Continue'),
                     ),
-                  ]
-              ),
+                  ]),
             ),
           ),
-        )
-    );
+        ));
   }
-
 
   Widget buildMajorSelector() {
     final UserList userList = ref.read(userDBProvider);
-    final User currentUser = userList.getUserByID(ref.read(currentUserProvider));
+    final User currentUser =
+        userList.getUserByID(ref.read(currentUserProvider));
     return Container(
       padding: const EdgeInsets.all(10),
       child: DropdownButtonFormField(
@@ -170,7 +172,8 @@ class CreateProfileState extends ConsumerState<CreateProfile> {
 
   Widget buildGraduationSelector() {
     final UserList userList = ref.read(userDBProvider);
-    final User currentUser = userList.getUserByID(ref.read(currentUserProvider));
+    final User currentUser =
+        userList.getUserByID(ref.read(currentUserProvider));
     return Container(
       padding: const EdgeInsets.all(20),
       child: Row(
@@ -185,10 +188,8 @@ class CreateProfileState extends ConsumerState<CreateProfile> {
                   currentUser.projectedGraduation = grad;
                 });
               },
-              items: <String>[
-                'Fall',
-                'Spring'
-              ].map<DropdownMenuItem<String>>((String value) {
+              items: <String>['Fall', 'Spring']
+                  .map<DropdownMenuItem<String>>((String value) {
                 return DropdownMenuItem<String>(
                   value: value,
                   child: Text(value),
@@ -207,14 +208,8 @@ class CreateProfileState extends ConsumerState<CreateProfile> {
                   currentUser.projectedGraduation = grad;
                 });
               },
-              items: <String>[
-                '2023',
-                '2024',
-                '2025',
-                '2026',
-                '2027',
-                '2028'
-              ].map<DropdownMenuItem<String>>((String value) {
+              items: <String>['2023', '2024', '2025', '2026', '2027', '2028']
+                  .map<DropdownMenuItem<String>>((String value) {
                 return DropdownMenuItem<String>(
                   value: value,
                   child: Text(value),
