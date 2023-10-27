@@ -2,10 +2,10 @@ import 'package:flutter/material.dart';
 import 'package:flutter_form_builder/flutter_form_builder.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-import '../data/group_providers.dart';
-import '../domain/group.dart';
-import '../domain/group_list.dart';
-import '../../message/domain/message.dart';
+import '../../features/group/data/group_providers.dart';
+import '../../features/group/domain/group.dart';
+import '../../features/group/domain/group_list.dart';
+import '../../features/message/domain/message.dart';
 import 'form-fields/group_description_field.dart';
 import 'form-fields/group_image_field.dart';
 import 'form-fields/group_name_field.dart';

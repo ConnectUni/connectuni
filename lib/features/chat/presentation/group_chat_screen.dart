@@ -2,7 +2,7 @@ import 'package:connectuni/features/user/presentation/other_user_profile.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-
+import '../../group/data/group_providers.dart';
 import '../../group/domain/group.dart';
 import '../../group/domain/group_list.dart';
 import '../../group/presentation/groupinfo.dart';
@@ -28,9 +28,9 @@ class _GroupChatScreenState extends ConsumerState<GroupChatScreen> {
   @override
   Widget build(BuildContext context) {
     final UserList usersDB = ref.read(userDBProvider);
+    final GroupList groupsDB = ref.watch(groupsDBProvider);
+    Group groupData = groupsDB.getGroupById(widget.id);
     final MessageList messagesDB = ref.read(messagesDBProvider);
-
-    Group groupData = TempGroupsDB.getGroupById(widget.id);
     Iterable<User> groupMembers = usersDB.getGroupMembers(groupData.userIDs);
 
     Iterable<Message> messageData =

@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
+import '../../../screens/groups_screen/search_groups_screen.dart';
 import '../../event/presentation/search_events_screen.dart';
-import '../../group/presentation/search_groups_screen.dart';
 import '../../user/presentation/search_people_screen.dart';
 
 class SearchPageController extends StatefulWidget {

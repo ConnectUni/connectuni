@@ -4,7 +4,10 @@ import 'package:flutter/material.dart';
 import 'package:multi_select_flutter/multi_select_flutter.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
+import '../../group/data/group_providers.dart';
+import '../../group/domain/group_list.dart';
 import '../../home/domain/global_variables.dart';
+import '../data/user_providers.dart';
 import '../domain/user.dart';
 
 class SearchPeopleScreen extends ConsumerStatefulWidget {
@@ -44,6 +47,17 @@ class _SearchPeopleScreenState extends ConsumerState<SearchPeopleScreen> {
 
   @override
   Widget build(BuildContext context) {
+    final UserList usersDB = ref.read(userDBProvider);
+    final User currentUser = usersDB.getUserByID(ref.read(currentUserProvider));
+    final GroupList groupsDB = ref.watch(groupsDBProvider);
+    final _items = groupsDB
+        .getAllGroups()
+        .map((gName) => MultiSelectItem(gName, gName.groupName))
+        .toList();
+    final notFriends = usersDB
+        .getUsers()
+        .where((user) => !currentUser.friends.contains(user))
+        .toList();
     return Scaffold(
       appBar: AppBar(
         title: const Text('Search for People'),

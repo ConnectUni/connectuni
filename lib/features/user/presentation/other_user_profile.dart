@@ -25,6 +25,7 @@ class OtherUserProfile extends ConsumerWidget {
     final UserList usersDB = ref.read(userDBProvider);
     User thisUser = usersDB.getUserByID(uid);
     final User currentUser = usersDB.getUserByID(ref.read(currentUserProvider));
+    final GroupList groupsDB = ref.watch(groupsDBProvider);
     return Scaffold(
       appBar: AppBar(
         title: Text(user.displayName),
@@ -161,7 +162,7 @@ class OtherUserProfile extends ConsumerWidget {
                     ),
                       Column(
                         children: [
-                          ...TempGroupsDB
+                          ...groupsDB
                               .getGroupsByUser(user.uid)
                               .map((group) =>
                               Card(

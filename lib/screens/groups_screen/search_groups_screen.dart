@@ -2,11 +2,11 @@ import 'package:connectuni/features/group/domain/group.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:multi_select_flutter/multi_select_flutter.dart';
-import '../../home/domain/global_variables.dart';
-import '../data/group_providers.dart';
-import '../domain/group_list.dart';
+import '../../features/group/data/group_providers.dart';
+import '../../features/group/domain/group_list.dart';
+import '../../features/group/presentation/group_info_widget.dart';
+import '../../features/home/domain/global_variables.dart';
 import 'add_group.dart';
-import 'group_info_widget.dart';
 
 class SearchGroupsScreen extends ConsumerStatefulWidget {
   const SearchGroupsScreen({Key? key, required this.pageController})
@@ -21,10 +21,10 @@ class SearchGroupsScreen extends ConsumerStatefulWidget {
 
 class _SearchGroupsScreenState extends ConsumerState<SearchGroupsScreen> {
   final controller = TextEditingController();
-
   final _interests =
       interests.map((interest) => MultiSelectItem(interest, interest)).toList();
   List<String> selectedFilters = [];
+
   @override
   Widget build(BuildContext context) {
     final GroupList groupsDB = ref.watch(groupsDBProvider);

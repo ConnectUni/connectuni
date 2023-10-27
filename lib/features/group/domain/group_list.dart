@@ -17,6 +17,11 @@ class GroupList {
     return allGroups;
   }
 
+  /// Return number of Group Objects
+  int groupLength() {
+    return allGroups.length;
+  }
+
   /// Return single Group object, search with their group ID
   Group getGroupById(String groupId) {
     return allGroups.firstWhere((group) => group.groupID == groupId);
@@ -40,10 +45,6 @@ class GroupList {
   /// Return list of Group objects that a user is in, search with their user ID
   List<Group> getGroupsByUser(String userId) {
     return allGroups.where((group) => group.userIDs.contains(userId)).toList();
-  }
-
-  int groupLength() {
-    return allGroups.length;
   }
 
   /// Add a group
@@ -79,12 +80,12 @@ class GroupList {
       interests: interests,
     ));
   }
+}
 
-  /// Remove a group
-  void removeGroup(Group group) {
-    if (allGroups.contains(group)) {
-      allGroups.remove(group);
-    }
+/// Remove a group
+void removeGroup(Group group) {
+  if (allGroups.contains(group)) {
+    allGroups.remove(group);
   }
 }
 

@@ -1,10 +1,10 @@
 import 'package:connectuni/features/group/presentation/group_member_widget.dart';
 import 'package:flutter/material.dart';
-import '../../user/data/user_providers.dart';
-import '../data/group_providers.dart';
-import '../domain/group.dart';
-import '../domain/group_list.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import '../../features/group/data/group_providers.dart';
+import '../../features/group/domain/group.dart';
+import '../../features/group/domain/group_list.dart';
+import '../../features/user/data/user_providers.dart';
 import 'edit_group.dart';
 
 /// Information page for a specific group that displays the group members as well as a description of the selected group.

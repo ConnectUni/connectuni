@@ -1,38 +1,49 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 
+import '../../user/data/user_providers.dart';
 import '../../user/domain/user.dart';
+import '../../user/domain/user_list.dart';
+import '../data/group_providers.dart';
 import '../domain/group.dart';
 import '../domain/group_list.dart';
 
-class GroupSelector extends StatefulWidget {
+class GroupSelector extends ConsumerStatefulWidget {
   const GroupSelector({super.key});
 
   @override
-  State<GroupSelector> createState() => _GroupSelectorState();
+  ConsumerState<GroupSelector> createState() => _GroupSelectorState();
 }
 
-class _GroupSelectorState extends State<GroupSelector> {
-  final List<Group> _allGroups = TempGroupsDB.getAllGroups();
-  final List<Group> _selectedGroups = [];
-  late User currentUser;
-
+class _GroupSelectorState extends ConsumerState<GroupSelector> {
   @override
   Widget build(BuildContext context) {
+    final GroupList groupsDB = ref.watch(groupsDBProvider);
+    final List<Group> allGroups = groupsDB.getAllGroups();
+    final List<Group> selectedGroups = [];
+    final UserList userList = ref.watch(userDBProvider);
+    final User currentUser =
+        userList.getUserByID(ref.watch(currentUserProvider));
+    void updateUserGroups() {
+      //i used a cast, not sure if this is the best way to implement
+      currentUser.groupIDs = selectedGroups.cast<String>();
+    }
+
     return Column(
       children: [
         Wrap(
           spacing: 6.0, // gap between adjacent chips
           runSpacing: 6.0, // gap between lines
-          children: _allGroups
+          children: allGroups
               .map((group) => ChoiceChip(
                     label: Text(group.groupName),
-                    selected: _selectedGroups.contains(group),
+                    selected: selectedGroups.contains(group),
                     onSelected: (selected) {
                       setState(() {
                         if (selected) {
-                          _selectedGroups.add(group);
+                          selectedGroups.add(group);
                         } else {
-                          _selectedGroups.remove(group);
+                          selectedGroups.remove(group);
                         }
                       });
                     },
@@ -40,15 +51,10 @@ class _GroupSelectorState extends State<GroupSelector> {
               .toList(),
         ),
         ElevatedButton(
-          onPressed: _updateUserGroups,
+          onPressed: updateUserGroups,
           child: const Text("Update Groups"),
         )
       ],
     );
-  }
-
-  void _updateUserGroups() {
-    //i used a cast, not sure if this is the best way to implement
-    currentUser.groupIDs = _selectedGroups.cast<String>();
   }
 }

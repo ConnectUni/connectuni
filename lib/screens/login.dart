@@ -1,13 +1,14 @@
-import 'package:connectuni/features/authentication/presentation/signup.dart';
-import 'package:connectuni/features/home/presentation/home.dart';
+import 'package:connectuni/screens/groups_screen/form-fields/login_email_field.dart';
+import 'package:connectuni/screens/groups_screen/form-fields/login_password_field.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_form_builder/flutter_form_builder.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import '../../group/presentation/form-fields/login_email_field.dart';
-import '../../group/presentation/form-fields/login_password_field.dart';
-import '../../user/data/user_providers.dart';
-import '../../user/domain/user_list.dart';
+
+import '../features/authentication/presentation/signup.dart';
+import '../features/home/presentation/home.dart';
+import '../features/user/data/user_providers.dart';
+import '../features/user/domain/user_list.dart';
 
 class LoginPage extends ConsumerStatefulWidget {
   const LoginPage({Key? key}) : super(key: key);
@@ -17,19 +18,44 @@ class LoginPage extends ConsumerStatefulWidget {
 }
 
 class LoginPageState extends ConsumerState<LoginPage> {
+  final _emailController = TextEditingController();
+  final _passwordController = TextEditingController();
+  final _correctEmail = "correct";
+  final _correctPassword = "pass";
+
+  //could also implement a disabled Login button - only enabled when credentials are valid (db will have to check all the time though)
+  // void _toggleDisabled() {
+  //   setState(() {
+  //     _validLogin = !_validLogin;
+  //   });
+  // }
+  //
+  // void _toggleEnabled() {
+  //   setState(() {
+  //     _validLogin = !_validLogin;
+  //   });
+  // }
   final formKey = GlobalKey<FormBuilderState>();
   final emailFieldKey = GlobalKey<FormBuilderFieldState>();
   final passwordFieldKey = GlobalKey<FormBuilderFieldState>();
+  // final emailErrorProvider =
+  //     StateProvider<String?>((ref) => null); //set Email error to null
 
-  void _checkValidLogin(UserList userList) {
+  void _checkValidEmail(UserList userList) {
     if (formKey.currentState!.validate()) {
+      // Retrieving the email entered by the user
       String email = emailFieldKey.currentState!.value;
-      // Check if the email exists matches in the user list
+      // Check if the email exists in the user list
       if (userList.getUserByEmail(email) != null) {
         ref.read(currentUserProvider.notifier).state =
             userList.getUserByEmail(email).getUid();
         Navigator.pushReplacement(context,
             CupertinoPageRoute(builder: (context) => const HomePage()));
+      } else {
+        //show error message for invalid email
+
+        // ref.read(emailErrorProvider.notifier).state = "Invalid email";
+        // setState(() {}); //trigger rebuild
       }
     }
   }
@@ -41,7 +67,7 @@ class LoginPageState extends ConsumerState<LoginPage> {
       body: SafeArea(
         child: ListView(
           padding: const EdgeInsets.symmetric(
-              horizontal: 50.0), //controls width of textfields
+              horizontal: 50.0), //controls width of text fields
           children: <Widget>[
             const SizedBox(height: 80.0),
             Column(
@@ -64,15 +90,8 @@ class LoginPageState extends ConsumerState<LoginPage> {
             FormBuilder(
               key: formKey,
               child: Column(children: [
-                LoginEmailField(
-                  fieldKey: emailFieldKey,
-                ),
-                LoginPasswordField(
-                  fieldKey: passwordFieldKey,
-                  getPassword: () => passwordFieldKey.currentState?.value,
-                  email: () => emailFieldKey.currentState?.value,
-                  userList: userList,
-                ),
+                LoginEmailField(fieldKey: emailFieldKey),
+                LoginPasswordField(fieldKey: passwordFieldKey),
               ]),
             ),
             Row(
@@ -84,11 +103,13 @@ class LoginPageState extends ConsumerState<LoginPage> {
                   width: 40.0,
                 ),
                 ElevatedButton(
-                  onPressed: () => _checkValidLogin(userList),
+                  onPressed: () => _checkValidEmail(userList),
                   child: const Text("LOGIN"),
                 ),
                 ElevatedButton(
                   onPressed: () {
+                    //create new account stuff - pick username, icons, etc.
+                    //uncomment out after creating SignUpPage
                     Navigator.push(
                       context,
                       CupertinoPageRoute(

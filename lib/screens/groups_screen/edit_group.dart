@@ -1,11 +1,10 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_form_builder/flutter_form_builder.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:flutter_form_builder/flutter_form_builder.dart';
 
-import '../data/group_providers.dart';
-import '../domain/group.dart';
-import '../domain/group_list.dart';
-import '../../message/domain/message.dart';
+import '../../features/group/data/group_providers.dart';
+import '../../features/group/domain/group.dart';
+import '../../features/group/domain/group_list.dart';
 import 'form-fields/group_description_field.dart';
 import 'form-fields/group_image_field.dart';
 import 'form-fields/group_name_field.dart';
@@ -14,9 +13,10 @@ import 'form-fields/reset_button.dart';
 import 'form-fields/semyear_field.dart';
 import 'form-fields/submit_button.dart';
 
-//Creates a new Group
-class AddGroup extends ConsumerWidget {
-  AddGroup({Key? key}) : super(key: key);
+class EditGroup extends ConsumerWidget {
+  final String id;
+  EditGroup({Key? key, required this.id}) : super(key: key);
+
   final _formKey = GlobalKey<FormBuilderState>();
   final _groupNameFieldKey = GlobalKey<FormBuilderFieldState>();
   final _semYearFieldKey = GlobalKey<FormBuilderFieldState>();
@@ -24,59 +24,34 @@ class AddGroup extends ConsumerWidget {
   final _groupImageFieldKey = GlobalKey<FormBuilderFieldState>();
   final _groupDescriptionFieldKey = GlobalKey<FormBuilderFieldState>();
 
-  final List<Message> newMessages = [];
-  final List<String> eventIDs = [];
-  final List<String> userIDs = [];
-  final List<String> interests = [];
-
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final GroupList groupsDB = ref.watch(groupsDBProvider);
-    int id = groupsDB.groupLength() + 1;
-    String getGroupID() {
-      if (id < 10) {
-        return "group-00$id";
-      } else if (id < 100) {
-        return "group-0$id";
-      } else {
-        return "group-$id";
-      }
-    }
-
-    String getChatID() {
-      if (id < 10) {
-        return "chat-00$id";
-      } else if (id < 100) {
-        return "chat-0$id";
-      } else {
-        return "chat-$id";
-      }
-    }
+    Group editGroup = groupsDB.getGroupById(id);
 
     void onSubmit() {
       bool isValid = _formKey.currentState?.saveAndValidate() ?? false;
       if (!isValid) return;
-      String groupID = getGroupID();
+      String groupID = id;
       String groupName = _groupNameFieldKey.currentState?.value;
       String semYear = _semYearFieldKey.currentState?.value;
       String owner = _ownerFieldKey.currentState?.value;
       String groupImage = _groupImageFieldKey.currentState?.value ?? '';
       String groupDescription =
           _groupDescriptionFieldKey.currentState?.value ?? '';
-      String chatID = getChatID();
-      groupsDB.addGroup(Group(
+      groupsDB.updateGroup(
         groupID: groupID,
         groupName: groupName,
         semYear: semYear,
         owner: owner,
         groupImage: groupImage,
         groupDescription: groupDescription,
-        newMessages: newMessages,
-        chatID: chatID,
-        eventIDs: eventIDs,
-        userIDs: userIDs,
-        interests: interests,
-      ));
+        newMessages: editGroup.newMessages,
+        chatID: editGroup.chatID,
+        eventIDs: editGroup.eventIDs,
+        userIDs: editGroup.userIDs,
+        interests: editGroup.interests,
+      );
       //Return to the previous page
       ref.refresh(groupsDBProvider);
       Navigator.pop(context);
@@ -88,7 +63,7 @@ class AddGroup extends ConsumerWidget {
 
     return Scaffold(
         appBar: AppBar(
-          title: const Text('Add Group'),
+          title: Text('Edit Group'),
         ),
         body: ListView(
           padding: const EdgeInsets.symmetric(horizontal: 24.0),
@@ -98,11 +73,20 @@ class AddGroup extends ConsumerWidget {
                 FormBuilder(
                   key: _formKey,
                   child: Column(children: [
-                    GroupNameField(fieldKey: _groupNameFieldKey),
-                    SemYearField(fieldKey: _semYearFieldKey),
-                    OwnerField(fieldKey: _ownerFieldKey),
-                    GroupImageField(fieldKey: _groupImageFieldKey),
-                    GroupDescriptionField(fieldKey: _groupDescriptionFieldKey),
+                    GroupNameField(
+                        fieldKey: _groupNameFieldKey,
+                        currName: editGroup.groupName),
+                    SemYearField(
+                        fieldKey: _semYearFieldKey,
+                        currSemYear: editGroup.semYear),
+                    OwnerField(
+                        fieldKey: _ownerFieldKey, currOwner: editGroup.owner),
+                    GroupImageField(
+                        fieldKey: _groupImageFieldKey,
+                        currImage: editGroup.groupImage),
+                    GroupDescriptionField(
+                        fieldKey: _groupDescriptionFieldKey,
+                        currDesc: editGroup.groupDescription),
                   ]),
                 ),
                 Row(children: [
