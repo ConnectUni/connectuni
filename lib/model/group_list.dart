@@ -52,6 +52,36 @@ class GroupList {
     allGroups.add(group);
   }
 
+  void updateGroup({
+    required String groupID,
+    required String groupName,
+    required String semYear,
+    required String owner,
+    required String groupImage,
+    required String groupDescription,
+    required List<Message> newMessages,
+    required String chatID,
+    required List<String> eventIDs,
+    required List<String> userIDs,
+    required List<String> interests,
+  }) {
+    allGroups.removeWhere((group) => group.groupID == groupID);
+    allGroups.add(
+      Group(
+        groupID: groupID,
+        groupName: groupName,
+        semYear: semYear,
+        owner: owner,
+        groupImage: groupImage,
+        groupDescription: groupDescription,
+        newMessages: newMessages,
+        chatID: chatID,
+        eventIDs: eventIDs,
+        userIDs: userIDs,
+        interests: interests,
+      )
+    );
+  }
   /// Remove a group
   void removeGroup(Group group) {
     if (allGroups.contains(group)) {

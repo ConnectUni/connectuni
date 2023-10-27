@@ -1,5 +1,5 @@
 import 'package:connectuni/components/group_card_view.dart';
-import 'package:connectuni/screens/groupinfo.dart';
+import 'package:connectuni/screens/groups_screen/groupinfo.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import '../model/group.dart';

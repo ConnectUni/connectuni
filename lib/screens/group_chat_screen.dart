@@ -8,7 +8,7 @@ import '../model/message.dart';
 import '../model/message_list.dart';
 import '../model/user.dart';
 import '../model/user_list.dart';
-import 'groupinfo.dart';
+import 'groups_screen/groupinfo.dart';
 
 class GroupChatScreen extends ConsumerStatefulWidget {
   final String id;

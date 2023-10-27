@@ -58,8 +58,8 @@ class AddGroup extends ConsumerWidget {
       String groupName = _groupNameFieldKey.currentState?.value;
       String semYear = _semYearFieldKey.currentState?.value;
       String owner = _ownerFieldKey.currentState?.value;
-      String groupImage = _groupImageFieldKey.currentState?.value;
-      String groupDescription = _groupDescriptionFieldKey.currentState?.value;
+      String groupImage = _groupImageFieldKey.currentState?.value ?? '';
+      String groupDescription = _groupDescriptionFieldKey.currentState?.value ?? '';
       String chatID = getChatID();
       groupsDB.addGroup(
         Group(
