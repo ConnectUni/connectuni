@@ -2,6 +2,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:table_calendar/table_calendar.dart';
+
 import '../model/event.dart';
 import '../model/event_list.dart';
 import 'package:multi_select_flutter/multi_select_flutter.dart';
@@ -18,6 +19,10 @@ class EventCalendar extends ConsumerStatefulWidget {
 class _EventCalendarState extends ConsumerState<EventCalendar> {
   late final ValueNotifier<List<SingleEvent>> _selectedEvents;
 
+  final _items = TempGroupsDB
+      .getAllGroups()
+      .map((gName) => MultiSelectItem(gName, gName.groupName))
+      .toList();
   CalendarFormat _calendarFormat = CalendarFormat.month;
   RangeSelectionMode _rangeSelectionMode = RangeSelectionMode
       .toggledOff; // Can be toggled on/off by longpressing a date
@@ -76,11 +81,6 @@ class _EventCalendarState extends ConsumerState<EventCalendar> {
 
   @override
   Widget build(BuildContext context) {
-    final GroupList groupsDB = ref.watch(groupsDBProvider);
-    final _items = groupsDB
-        .getAllGroups()
-        .map((gName) => MultiSelectItem(gName, gName.groupName))
-        .toList();
     return Scaffold(
       appBar: AppBar(
         title: const Text('Events Calendar'),

@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-import '../screens/groups_screen/search_groups_screen.dart';
+import '../screens/search_groups_screen.dart';
 import '../screens/search_people_screen.dart';
 import '../screens/search_events_screen.dart';
 

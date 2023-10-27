@@ -6,27 +6,24 @@ import 'package:connectuni/screens/friend_list.dart';
 
 import 'package:flutter/material.dart';
 
-import 'model/app_theme.dart';
 import 'screens/login.dart';
 import 'home/home.dart';
 import 'screens/chatpage.dart';
-import 'screens/groups_screen/groupinfo.dart';
+import 'screens/groupinfo.dart';
 import 'screens/settings.dart';
 import 'screens/current_user_profile.dart';
 import 'screens/search_people_screen.dart';
-import 'screens/groups_screen/search_groups_screen.dart';
-import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'screens/search_groups_screen.dart';
 
 // TODO: Import route files
 
-class ConnectUniApp extends ConsumerWidget {
+class ConnectUniApp extends StatelessWidget {
   ConnectUniApp({Key? key}) : super(key: key);
   final PageController _pageController =
       PageController(); // this does nothing for now, I need it here to initialize the routes
 
   @override
-  Widget build(BuildContext context, WidgetRef ref) {
-    final appThemeState = ref.watch(appThemeStateProvider);
+  Widget build(BuildContext context) {
     return MaterialApp(
       title: 'ConnectUni',
       initialRoute: '/login',
@@ -54,9 +51,6 @@ class ConnectUniApp extends ConsumerWidget {
         '/profile': (BuildContext context) => const CurrentUserProfilePage(),
         '/friendslist': (BuildContext context) => const FriendsList(),
       },
-      theme: AppTheme.lightTheme,
-      darkTheme: AppTheme.darkTheme,
-      themeMode: appThemeState ? ThemeMode.dark : ThemeMode.light,
     );
   }
 }

@@ -34,8 +34,6 @@ dependencies:
   flutter_native_splash:
   table_calendar: ^3.0.9
   flutter_riverpod: ^2.3.6
-  flutter_form_builder: ">=7.7.0"
-  form_builder_validators: ">=8.4.0"
 
 
   # The following adds the Cupertino Icons font to your application.
