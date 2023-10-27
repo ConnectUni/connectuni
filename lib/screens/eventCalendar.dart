@@ -2,7 +2,6 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:table_calendar/table_calendar.dart';
-
 import '../model/event.dart';
 import '../model/event_list.dart';
 import 'package:multi_select_flutter/multi_select_flutter.dart';
