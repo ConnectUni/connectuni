@@ -46,12 +46,4 @@ final appThemeStateProvider = StateProvider<bool>((ref) => false);
 
 class AppThemeState extends ChangeNotifier {
   bool isDark = false;
-  void setLightTheme() {
-    isDark = false;
-    notifyListeners();
-  }
-  void setDarkTheme() {
-    isDark = true;
-    notifyListeners();
-  }
 }
