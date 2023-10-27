@@ -9,11 +9,11 @@ import 'package:flutter/material.dart';
 import 'screens/login.dart';
 import 'home/home.dart';
 import 'screens/chatpage.dart';
-import 'screens/groupinfo.dart';
+import 'screens/groups_screen/groupinfo.dart';
 import 'screens/settings.dart';
 import 'screens/current_user_profile.dart';
 import 'screens/search_people_screen.dart';
-import 'screens/search_groups_screen.dart';
+import 'screens/groups_screen/search_groups_screen.dart';
 
 // TODO: Import route files
 

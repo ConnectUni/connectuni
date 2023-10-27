@@ -50,12 +50,18 @@ class _GroupsScreenState extends ConsumerState<GroupsScreen> {
               .getGroupsByUser(userId)
               .map((gName) => GroupChatWidget(id: gName.groupID)),
           const Center(
-            //TODO: Implement functionality and change from ICON to Button
-            child: Icon(
-              Icons.add_circle_outline,
-              color: Colors.grey,
-              size: 40.0,
-            ),
+            child:
+            Padding(
+              padding: EdgeInsets.only(bottom: 10.0),
+              child: IconButton(
+                onPressed: null,
+                icon: Icon(
+                  Icons.add_circle_outline,
+                  color: Colors.grey,
+                  size: 40.0,
+                ),
+              ),
+            )
           ),
         ],
       ),
