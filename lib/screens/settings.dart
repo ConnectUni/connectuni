@@ -25,10 +25,7 @@ class _SettingsState extends State<Settings> {
   }
 
   //TODO: Implement the actual functionality of the settings boolean.
-  bool notif = true;
-  bool nFriend = true;
-  bool groupMemb = true;
-  bool search = true;
+  bool darkMode = false;
 
   @override
   Widget build(BuildContext context) {
@@ -53,62 +50,15 @@ class _SettingsState extends State<Settings> {
           ),
           ListTile(
             leading: Switch(
-              value: notif,
+              value: darkMode,
               activeColor: Colors.black26,
               onChanged: (bool value) {
                 setState(() {
-                  notif = value;
+                  darkMode = value;
                 });
               },
             ),
-            title: const Text("Receive notifications"),
-          ),
-          const Padding(
-            padding: EdgeInsets.all(10.0),
-            child: ListTile(
-              leading: Icon(Icons.arrow_downward, color: Colors.black),
-              title: Text("Privacy",
-                  style: TextStyle(fontWeight: FontWeight.bold)),
-              trailing: Icon(Icons.messenger_outline, color: Colors.black),
-              textColor: Colors.black,
-              tileColor: Colors.green,
-            ),
-          ),
-          ListTile(
-            leading: Switch(
-              value: nFriend,
-              activeColor: Colors.black26,
-              onChanged: (bool value) {
-                setState(() {
-                  nFriend = value;
-                });
-              },
-            ),
-            title: const Text("Allow messages from non-friends"),
-          ),
-          ListTile(
-            leading: Switch(
-              value: groupMemb,
-              activeColor: Colors.black26,
-              onChanged: (bool value) {
-                setState(() {
-                  groupMemb = value;
-                });
-              },
-            ),
-            title: const Text("Allow messages from group members"),
-          ),
-          ListTile(
-            leading: Switch(
-              value: search,
-              activeColor: Colors.black26,
-              onChanged: (bool value) {
-                setState(() {
-                  search = value;
-                });
-              },
-            ),
-            title: const Text("Allow discovery on search page"),
+            title: const Text("Dark Mode"),
           ),
           const Padding(
             padding: EdgeInsets.all(10.0),
