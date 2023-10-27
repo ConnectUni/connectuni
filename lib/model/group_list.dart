@@ -178,7 +178,6 @@ final List<Group> allGroups = [
     interests: ['Computer Science'],
   ),
 ];
-//TODO: Replace all instances of TempGroupsDB with the provider below
-GroupList TempGroupsDB = GroupList(allGroups);
 
-final groupsDBProvider = Provider<GroupList>((ref) { return GroupList(allGroups); });
+//Provider that gives access to the total groups database.
+final groupsDBProvider = StateProvider<GroupList>((ref) { return GroupList(allGroups); });

@@ -4,11 +4,12 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import '../model/group.dart';
 import '../model/group_list.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 /// GroupChatWidget is a widget that displays the group chat.
 /// It is a clickable widget that takes the user to the group chat page.
 
-class GroupChatWidget extends StatefulWidget {
+class GroupChatWidget extends ConsumerStatefulWidget {
   String id;
 
   GroupChatWidget({
@@ -17,13 +18,14 @@ class GroupChatWidget extends StatefulWidget {
   });
 
   @override
-  State<GroupChatWidget> createState() => _GroupChatWidgetState();
+  ConsumerState<GroupChatWidget> createState() => _GroupChatWidgetState();
 }
 
-class _GroupChatWidgetState extends State<GroupChatWidget> {
+class _GroupChatWidgetState extends ConsumerState<GroupChatWidget> {
   @override
   Widget build(BuildContext context) {
-    Group groupData = TempGroupsDB.getGroupById(widget.id);
+    final GroupList groupsDB = ref.watch(groupsDBProvider);
+    Group groupData = groupsDB.getGroupById(widget.id);
 
     return GestureDetector(
       onTap: () {
