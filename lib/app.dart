@@ -44,7 +44,7 @@ class ConnectUniApp extends StatelessWidget {
         '/searchevents': (BuildContext context) => SearchEventsScreen(
               pageController: _pageController,
             ),
-        '/createevent': (BuildContext context) => const CreateEvent(),
+        '/createevent': (BuildContext context) => CreateEvent(),
         '/groupinfo': (BuildContext context) => const GroupInfo(id: ''),
         '/eventinfo': (BuildContext context) => const EventInfoScreen(
               id: '',
