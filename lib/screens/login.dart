@@ -102,8 +102,8 @@ class LoginPageState extends ConsumerState<LoginPage> {
                 Flexible(
                   child: TextButton(
                     onPressed: () {
-                      emailFieldKey.currentState!.didChange(null);
-                      passwordFieldKey.currentState!.didChange(null);
+                      emailFieldKey.clear();
+                      passwordFieldKey.clear();
                     },
                     child: const Text("CLEAR"),
                   ),
