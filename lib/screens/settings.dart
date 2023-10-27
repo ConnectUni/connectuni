@@ -1,19 +1,20 @@
+import 'package:connectuni/model/app_theme.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'login.dart';
 
 /// Settings page that allows the user to changes their preferences.
 
-class Settings extends StatefulWidget {
+class Settings extends ConsumerStatefulWidget {
   const Settings({
     super.key,
   });
 
-  State<Settings> createState() => _SettingsState();
+  ConsumerState<Settings> createState() => _SettingsState();
 }
 
-class _SettingsState extends State<Settings> {
+class _SettingsState extends ConsumerState<Settings> {
   int _selectedIndex = 0;
 
   void _onItemTapped(int index) {
@@ -24,11 +25,9 @@ class _SettingsState extends State<Settings> {
     }
   }
 
-  //TODO: Implement the actual functionality of the settings boolean.
-  bool darkMode = false;
-
   @override
   Widget build(BuildContext context) {
+    final appThemeState = ref.watch(appThemeStateProvider);
     return Scaffold(
       appBar: AppBar(
         title: const Text('Settings & Privacy'),
@@ -50,13 +49,9 @@ class _SettingsState extends State<Settings> {
           ),
           ListTile(
             leading: Switch(
-              value: darkMode,
+              value: appThemeState,
               activeColor: Colors.black26,
-              onChanged: (bool value) {
-                setState(() {
-                  darkMode = value;
-                });
-              },
+              onChanged: (value) => ref.read(appThemeStateProvider.state).state = value,
             ),
             title: const Text("Dark Mode"),
           ),
