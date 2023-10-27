@@ -3,10 +3,10 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:multi_select_flutter/multi_select_flutter.dart';
 
-import '../components/group_card_view.dart';
 import 'package:connectuni/utils/global_variables.dart';
-import '../components/group_chat_widget.dart';
-import '../model/group_list.dart';
+import '../../components/group_info_widget.dart';
+import '../../model/group_list.dart';
+import 'add_group.dart';
 
 class SearchGroupsScreen extends ConsumerStatefulWidget {
   const SearchGroupsScreen({Key? key, required this.pageController})
@@ -141,10 +141,39 @@ class _SearchGroupsScreenState extends ConsumerState<SearchGroupsScreen> {
               child: ListView.builder(
                 itemCount: groups.length,
                 itemBuilder: (context, index) {
-                  return GroupChatWidget(id: groups[index].groupID);
+                  return GroupInfoWidget(id: groups[index].groupID);
                 },
               )
           ),
+          Padding(
+            padding: EdgeInsets.all(8.0),
+            child:
+                Column(
+                  children: [
+                    const Text(
+                      "Can't find what you're looking for? Create a new group!"
+                    ),
+                    Padding(
+                      padding: EdgeInsets.all(10.0),
+                      child: ListTile(
+                        title: const Center(
+                            child: Text("Add a Group.",
+                                style: TextStyle(fontWeight: FontWeight.bold))),
+                        textColor: Colors.white,
+                        tileColor: Colors.black54,
+                        onTap: () {
+                          Navigator.push(
+                              context, MaterialPageRoute(builder: (context) {
+                            return AddGroup();
+                          }));
+                        }
+                      ),
+                    ),
+                  ],
+                ),
+
+          ),
+
         ],
       ),
     );

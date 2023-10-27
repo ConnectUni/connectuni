@@ -17,6 +17,11 @@ class GroupList {
     return allGroups;
   }
 
+  /// Return number of Group Objects
+  int groupLength() {
+    return allGroups.length;
+  }
+
   /// Return single Group object, search with their group ID
   Group getGroupById(String groupId) {
     return allGroups.firstWhere((group) => group.groupID == groupId);
@@ -181,3 +186,5 @@ final List<Group> allGroups = [
 
 //Provider that gives access to the total groups database.
 final groupsDBProvider = StateProvider<GroupList>((ref) { return GroupList(allGroups); });
+
+final groupsIDProvider = StateProvider<int>((ref) { return GroupList(allGroups).groupLength(); });

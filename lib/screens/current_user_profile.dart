@@ -1,6 +1,7 @@
 import 'package:connectuni/model/user.dart';
 import 'package:flutter/material.dart';
 import 'package:connectuni/model/user_list.dart';
+import '../model/group.dart';
 import '../model/group_list.dart';
 import 'friend_list.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -238,8 +239,10 @@ class CurrentUserProfilePageState extends ConsumerState<CurrentUserProfilePage> 
                                           alignment: Alignment.bottomRight,
                                           child: TextButton(
                                             onPressed: () {
-                                              group.removeUserId(
-                                                  currentUser.uid);
+                                            //Remove the user from the group's database. Then Refresh the group's database.
+                                            group.removeUserId(currentUser.uid);
+                                             //TODO: Remove groupId from user.
+                                            ref.refresh(groupsDBProvider);
                                             },
                                             style: ButtonStyle(
                                               backgroundColor:
