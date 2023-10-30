@@ -1,5 +1,5 @@
-import 'package:connectuni/screens/createprofile.dart';
-import 'package:connectuni/screens/current_user_profile.dart';
+import 'package:connectuni/features/user/presentation/createprofile.dart';
+import 'package:connectuni/features/user/presentation/current_user_profile.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
