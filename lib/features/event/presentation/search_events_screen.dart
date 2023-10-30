@@ -1,8 +1,8 @@
 import 'package:connectuni/features/event/presentation/event_card_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:multi_select_flutter/multi_select_flutter.dart';
+import '../data/event_providers.dart';
 import '../domain/event.dart';
-import '../domain/event_list.dart';
 import '../../home/domain/global_variables.dart';
 
 class SearchEventsScreen extends StatefulWidget {

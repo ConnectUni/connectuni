@@ -2,6 +2,7 @@ import 'package:connectuni/features/user/domain/user_list.dart';
 import 'package:connectuni/features/user/presentation/user_card_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import '../data/user_providers.dart';
 import '../domain/user.dart';
 
 

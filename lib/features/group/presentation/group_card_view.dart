@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:connectuni/features/group/domain/group.dart';
+import '../data/group_providers.dart';
 import '../domain/group_list.dart';
 
 class GroupCardView extends ConsumerWidget {
