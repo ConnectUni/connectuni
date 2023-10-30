@@ -1,6 +1,7 @@
 import 'package:connectuni/features/group/presentation/groupselectorwidget.dart';
 import 'package:flutter/material.dart';
 import 'package:connectuni/features/user/domain/user.dart';
+import '../data/user_providers.dart';
 import 'interestswidget.dart';
 import 'pfpwidget.dart';
 import '../domain/user_list.dart';

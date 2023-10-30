@@ -2,6 +2,8 @@ import 'package:connectuni/features/user/domain/user_list.dart';
 import 'package:flutter/material.dart';
 import 'package:multi_select_flutter/multi_select_flutter.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import '../../group/data/group_providers.dart';
+import '../data/user_providers.dart';
 import 'user_card_widget.dart';
 import '../domain/user.dart';
 import '../../home/domain/global_variables.dart';

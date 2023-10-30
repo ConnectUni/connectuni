@@ -197,6 +197,3 @@ final List<User> mockUsers = [
 UserList TempUsersDB = UserList(mockUsers);
 
 //User currentUser = usersDB.getUserByID('user-001');
-
-final userDBProvider = Provider<UserList>((ref) { return UserList(mockUsers); });
-final currentUserProvider = StateProvider<String>((ref) => 'user-001');

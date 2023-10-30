@@ -91,7 +91,3 @@ List<SingleEvent> allEvents = [
   ),
 ];
 
-//TODO: Replace all instances of TempEventsDB with the provider below
-EventList TempEventsDB = EventList(allEvents);
-//TODO: USE BELOW
-final eventsDBProvider = Provider<EventList>((ref) { return EventList(allEvents); });
