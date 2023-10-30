@@ -1,8 +1,10 @@
 import 'package:connectuni/features/user/domain/user.dart';
 import 'package:flutter/material.dart';
 import 'package:connectuni/features/user/domain/user_list.dart';
+import '../../group/data/group_providers.dart';
 import '../../group/domain/group.dart';
 import '../../group/domain/group_list.dart';
+import '../data/user_providers.dart';
 import 'friend_list.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 

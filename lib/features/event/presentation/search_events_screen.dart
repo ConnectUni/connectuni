@@ -1,8 +1,8 @@
 import 'package:connectuni/features/event/presentation/event_card_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:multi_select_flutter/multi_select_flutter.dart';
+import '../data/event_providers.dart';
 import '../domain/event.dart';
-import '../domain/event_list.dart';
 import '../../home/domain/global_variables.dart';
 
 class SearchEventsScreen extends StatefulWidget {
@@ -18,21 +18,20 @@ class SearchEventsScreen extends StatefulWidget {
 
 class _SearchEventsScreenState extends State<SearchEventsScreen> {
   final controller = TextEditingController();
-  final _interests = interests
-      .map((interest) => MultiSelectItem(interest, interest))
-      .toList();
+  final _interests =
+      interests.map((interest) => MultiSelectItem(interest, interest)).toList();
 
   List<String> selectedFilters = [];
   List<SingleEvent> events = TempEventsDB.getAllEvents();
   List<SingleEvent> showSearchedEvent(String query) {
-    final suggestions = TempEventsDB
-        .getAllEvents()
-        .where((event) {
-          if(selectedFilters.isNotEmpty) {
-            return event.eventName.toLowerCase().contains(query.toLowerCase()) && event.interests.any((interest) => selectedFilters.contains(interest));
-          } else {
-            return event.eventName.toLowerCase().contains(query.toLowerCase());
-          }
+    final suggestions = TempEventsDB.getAllEvents().where((event) {
+      if (selectedFilters.isNotEmpty) {
+        return event.eventName.toLowerCase().contains(query.toLowerCase()) &&
+            event.interests
+                .any((interest) => selectedFilters.contains(interest));
+      } else {
+        return event.eventName.toLowerCase().contains(query.toLowerCase());
+      }
     }).toList();
     setState(() {
       events = suggestions;
@@ -125,8 +124,7 @@ class _SearchEventsScreenState extends State<SearchEventsScreen> {
                   border: OutlineInputBorder(
                     borderRadius: BorderRadius.circular(50),
                     borderSide: const BorderSide(color: Colors.blue),
-                  )
-              ),
+                  )),
               onChanged: showSearchedEvent,
             ),
           ),

@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:connectuni/features/user/domain/user.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import '../data/user_providers.dart';
 import '../domain/user_list.dart';
 import 'other_user_profile.dart';
 

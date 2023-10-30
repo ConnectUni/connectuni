@@ -38,5 +38,3 @@ final List<Chat> mockChats = [
       userIDs: ['user-003', 'user-004', 'user-005'],
       messageIDs: ['message-013', 'message-014', 'message-015'])
 ];
-
-final chatDBProvider = Provider<ChatList>((ref) { return ChatList(mockChats); });

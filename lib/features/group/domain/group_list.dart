@@ -66,22 +66,21 @@ class GroupList {
     required List<String> interests,
   }) {
     allGroups.removeWhere((group) => group.groupID == groupID);
-    allGroups.add(
-      Group(
-        groupID: groupID,
-        groupName: groupName,
-        semYear: semYear,
-        owner: owner,
-        groupImage: groupImage,
-        groupDescription: groupDescription,
-        newMessages: newMessages,
-        chatID: chatID,
-        eventIDs: eventIDs,
-        userIDs: userIDs,
-        interests: interests,
-      )
-    );
+    allGroups.add(Group(
+      groupID: groupID,
+      groupName: groupName,
+      semYear: semYear,
+      owner: owner,
+      groupImage: groupImage,
+      groupDescription: groupDescription,
+      newMessages: newMessages,
+      chatID: chatID,
+      eventIDs: eventIDs,
+      userIDs: userIDs,
+      interests: interests,
+    ));
   }
+
   /// Remove a group
   void removeGroup(Group group) {
     if (allGroups.contains(group)) {
@@ -213,8 +212,3 @@ final List<Group> allGroups = [
     interests: ['Computer Science'],
   ),
 ];
-
-//Provider that gives access to the total groups database.
-final groupsDBProvider = StateProvider<GroupList>((ref) { return GroupList(allGroups); });
-
-final groupsIDProvider = StateProvider<int>((ref) { return GroupList(allGroups).groupLength(); });

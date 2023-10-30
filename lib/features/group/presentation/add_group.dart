@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_form_builder/flutter_form_builder.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
+import '../data/group_providers.dart';
 import '../domain/group.dart';
 import '../domain/group_list.dart';
 import '../../message/domain/message.dart';
@@ -41,6 +42,7 @@ class AddGroup extends ConsumerWidget {
         return "group-$id";
       }
     }
+
     String getChatID() {
       if (id < 10) {
         return "chat-00$id";
@@ -59,10 +61,10 @@ class AddGroup extends ConsumerWidget {
       String semYear = _semYearFieldKey.currentState?.value;
       String owner = _ownerFieldKey.currentState?.value;
       String groupImage = _groupImageFieldKey.currentState?.value ?? '';
-      String groupDescription = _groupDescriptionFieldKey.currentState?.value ?? '';
+      String groupDescription =
+          _groupDescriptionFieldKey.currentState?.value ?? '';
       String chatID = getChatID();
-      groupsDB.addGroup(
-        Group(
+      groupsDB.addGroup(Group(
         groupID: groupID,
         groupName: groupName,
         semYear: semYear,
@@ -74,12 +76,10 @@ class AddGroup extends ConsumerWidget {
         eventIDs: eventIDs,
         userIDs: userIDs,
         interests: interests,
-        )
-      );
+      ));
       //Return to the previous page
       ref.refresh(groupsDBProvider);
       Navigator.pop(context);
-
     }
 
     void onReset() {
@@ -87,36 +87,31 @@ class AddGroup extends ConsumerWidget {
     }
 
     return Scaffold(
-      appBar: AppBar(
-        title: const Text('Add Group'),
-      ),
-      body: ListView(
-        padding: const EdgeInsets.symmetric(horizontal: 24.0),
-        children: [
-          Column(
-            children: [
-              FormBuilder(
-                key: _formKey,
-                child: Column(
-                  children: [
+        appBar: AppBar(
+          title: const Text('Add Group'),
+        ),
+        body: ListView(
+          padding: const EdgeInsets.symmetric(horizontal: 24.0),
+          children: [
+            Column(
+              children: [
+                FormBuilder(
+                  key: _formKey,
+                  child: Column(children: [
                     GroupNameField(fieldKey: _groupNameFieldKey),
                     SemYearField(fieldKey: _semYearFieldKey),
                     OwnerField(fieldKey: _ownerFieldKey),
                     GroupImageField(fieldKey: _groupImageFieldKey),
                     GroupDescriptionField(fieldKey: _groupDescriptionFieldKey),
-                  ]
+                  ]),
                 ),
-              ),
-              Row(
-                children: [
+                Row(children: [
                   SubmitButton(onSubmit: onSubmit),
                   ResetButton(onReset: onReset),
-                ]
-              )
-            ],
-          ),
-        ],
-      )
-    );
+                ])
+              ],
+            ),
+          ],
+        ));
   }
 }

@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:connectuni/features/group/domain/group.dart';
+import '../data/group_providers.dart';
 import '../domain/group_list.dart';
 
 class GroupCardView extends ConsumerWidget {
@@ -39,7 +40,8 @@ class GroupCardView extends ConsumerWidget {
                   padding: const EdgeInsets.only(left: 15.0, top: 2.0),
                   child: Align(
                       alignment: Alignment.centerLeft,
-                      child: Text("${thisGrouping.newMessages.length} new messages"))),
+                      child: Text(
+                          "${thisGrouping.newMessages.length} new messages"))),
               const SizedBox(height: 10)
             ],
           )),

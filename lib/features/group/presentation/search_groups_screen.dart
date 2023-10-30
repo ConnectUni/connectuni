@@ -4,6 +4,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:multi_select_flutter/multi_select_flutter.dart';
 
 import 'package:connectuni/features/home/domain/global_variables.dart';
+import '../data/group_providers.dart';
 import 'group_info_widget.dart';
 import '../domain/group_list.dart';
 import 'add_group.dart';
