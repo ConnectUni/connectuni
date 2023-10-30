@@ -4,7 +4,6 @@ import 'package:form_builder_validators/form_builder_validators.dart';
 
 import '../../../model/user_list.dart';
 import 'field_padding.dart';
-import 'package:connectuni/screens/login.dart' as something;
 
 class LoginPasswordField extends StatelessWidget {
   const LoginPasswordField(
