@@ -1,13 +1,13 @@
 import 'package:connectuni/screens/createprofile.dart';
 import 'package:connectuni/screens/event_info_screen.dart';
 import 'package:connectuni/screens/search_events_screen.dart';
-import 'package:connectuni/screens/signup.dart';
+import 'package:connectuni/features/authentication/presentation/signup.dart';
 import 'package:connectuni/screens/friend_list.dart';
 
 import 'package:flutter/material.dart';
 
 import 'model/app_theme.dart';
-import 'screens/login.dart';
+import 'features/authentication/presentation/login.dart';
 import 'home/home.dart';
 import 'screens/chatpage.dart';
 import 'screens/groups_screen/groupinfo.dart';
