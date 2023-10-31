@@ -9,7 +9,7 @@ class SignUpPage extends StatefulWidget {
   const SignUpPage({Key? key}) : super(key: key);
 
   @override
-  _SignUpPageState createState() => _SignUpPageState();
+  State<SignUpPage> createState() => _SignUpPageState();
 }
 
 class _SignUpPageState extends State<SignUpPage> {
@@ -178,7 +178,7 @@ class _SignUpPageState extends State<SignUpPage> {
                       //check if all fields are filled
                       if (_samePassword()) {
                         //validate passwords match
-                        Navigator.push(
+                        Navigator.pushReplacement(
                           context,
                           CupertinoPageRoute(
                               builder: (context) => const CreateProfile()),

@@ -4,6 +4,7 @@ import 'package:connectuni/features/event/presentation/search_events_screen.dart
 import 'package:connectuni/features/authentication/presentation/signup.dart';
 import 'package:connectuni/features/user/presentation/friend_list.dart';
 
+
 import 'package:flutter/material.dart';
 
 import 'features/settings/presentation/app_theme.dart';
@@ -12,6 +13,7 @@ import 'features/home/presentation/home.dart';
 import 'features/chat/presentation/chatpage.dart';
 import 'features/group/presentation/groupinfo.dart';
 import 'features/settings/presentation/settings.dart';
+import 'features/user/presentation/createevent.dart';
 import 'features/user/presentation/current_user_profile.dart';
 import 'features/user/presentation/search_people_screen.dart';
 import 'features/group/presentation/search_groups_screen.dart';
@@ -43,9 +45,10 @@ class ConnectUniApp extends ConsumerWidget {
         '/searchpeople': (BuildContext context) => SearchPeopleScreen(
               pageController: _pageController,
             ),
-        '/searchevents': (BuildContext context) => SearchEventsScreen(
+        '/search_events': (BuildContext context) => SearchEventsScreen(
               pageController: _pageController,
             ),
+        '/createevent': (BuildContext context) => CreateEvent(),
         '/groupinfo': (BuildContext context) => const GroupInfo(id: ''),
         '/eventinfo': (BuildContext context) => const EventInfoScreen(
               id: '',
