@@ -8,8 +8,8 @@ import '../model/user_list.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 class CreateProfile extends ConsumerStatefulWidget {
-  const CreateProfile({Key? key});
   static const routeName = '/createprofile';
+  const CreateProfile({super.key});
 
   @override
   CreateProfileState createState() => CreateProfileState();
@@ -127,7 +127,7 @@ class CreateProfileState extends ConsumerState<CreateProfile> {
                       onPressed: () {
                         ///implement update/save user?
                         ///then navigate to home screen
-                        Navigator.pushReplacementNamed(context, HomePage.routeName);
+                        Navigator.pushNamedAndRemoveUntil(context, HomePage.routeName, (route) => false);               
                       },
                       child: const Text('Continue'),
                     ),
