@@ -2,12 +2,12 @@ import 'package:flutter/material.dart';
 import 'package:flutter_form_builder/flutter_form_builder.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-import '../../event/data/event_providers.dart';
-import '../../event/domain/event.dart';
-import '../../event/domain/event_list.dart';
-import '../../event/presentation/search_events_screen.dart';
+import '../data/event_providers.dart';
+import '../domain/event.dart';
+import '../domain/event_list.dart';
+import 'search_events_screen.dart';
 import '../../group/data/group_providers.dart';
-import '../../group/presentation/event_form_fields.dart';
+import 'event_form_fields.dart';
 
 
 
