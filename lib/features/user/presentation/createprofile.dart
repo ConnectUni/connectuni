@@ -1,6 +1,7 @@
 import 'package:connectuni/features/group/presentation/groupselectorwidget.dart';
 import 'package:flutter/material.dart';
 import 'package:connectuni/features/user/domain/user.dart';
+import '../../home/presentation/home.dart';
 import '../data/user_providers.dart';
 import 'interestswidget.dart';
 import 'pfpwidget.dart';
@@ -8,8 +9,8 @@ import '../domain/user_list.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 class CreateProfile extends ConsumerStatefulWidget {
-  const CreateProfile({Key? key});
   static const routeName = '/createprofile';
+  const CreateProfile({super.key});
 
   @override
   CreateProfileState createState() => CreateProfileState();
@@ -127,8 +128,7 @@ class CreateProfileState extends ConsumerState<CreateProfile> {
                       onPressed: () {
                         ///implement update/save user?
                         ///then navigate to home screen
-                        Navigator.pushNamed(context, '/home');
-                      },
+                        Navigator.pushNamedAndRemoveUntil(context, HomePage.routeName, (route) => false);               },
                       child: const Text('Continue'),
                     ),
                   ]

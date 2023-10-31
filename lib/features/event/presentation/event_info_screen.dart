@@ -1,16 +1,19 @@
 import 'package:flutter/material.dart';
 import '../data/event_providers.dart';
 import '../domain/event.dart';
+import '../domain/event_list.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-class EventInfoScreen extends StatelessWidget {
+class EventInfoScreen extends ConsumerWidget {
   const EventInfoScreen({Key? key, required this.id}) : super(key: key);
 
   final String id;
   static const String routeName = '/event_info';
 
   @override
-  Widget build(BuildContext context) {
-    SingleEvent thisEvent = TempEventsDB.getEventById(id);
+  Widget build(BuildContext context, WidgetRef ref) {
+    EventList eventsDB = ref.watch(eventsDBProvider);
+    SingleEvent thisEvent = eventsDB.getEventById(id);
 
     return Scaffold(
       body: NestedScrollView(
