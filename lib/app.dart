@@ -1,4 +1,3 @@
-import 'package:connectuni/screens/createevent.dart';
 import 'package:connectuni/screens/search_events_screen.dart';
 import 'package:flutter/material.dart';
 
@@ -7,6 +6,7 @@ import 'features/chat/presentation/chatpage.dart';
 import 'features/event/presentation/event_info_screen.dart';
 import 'features/home/presentation/home.dart';
 import 'features/settings/presentation/settings.dart';
+import 'features/event/presentation/createevent.dart';
 import 'features/user/presentation/createprofile.dart';
 import 'features/user/presentation/current_user_profile.dart';
 import 'features/user/presentation/friend_list.dart';

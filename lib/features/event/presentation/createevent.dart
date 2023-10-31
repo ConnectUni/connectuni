@@ -2,12 +2,11 @@ import 'package:connectuni/screens/search_events_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_form_builder/flutter_form_builder.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-
-import '../components/event_form_fields.dart';
-import '../features/event/data/event_providers.dart';
-import '../features/event/domain/event.dart';
-import '../features/event/domain/event_list.dart';
-import '../features/group/data/group_providers.dart';
+import '../../../components/event_form_fields.dart';
+import '../data/event_providers.dart';
+import '../domain/event.dart';
+import '../domain/event_list.dart';
+import '../../group/data/group_providers.dart';
 
 class CreateEvent extends ConsumerWidget {
   CreateEvent({Key? key}) : super(key: key);
