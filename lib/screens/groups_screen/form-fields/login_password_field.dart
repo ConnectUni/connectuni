@@ -12,6 +12,7 @@ class LoginPasswordField extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    String? passwordError;
     String fieldName = 'Password';
     return FieldPadding(
       child: FormBuilderTextField(

@@ -40,12 +40,14 @@ class LoginPageState extends ConsumerState<LoginPage> {
   // final emailErrorProvider =
   //     StateProvider<String?>((ref) => null); //set Email error to null
 
-  void _checkValidEmail(UserList userList) {
+  void _checkValidLogin(UserList userList) {
     if (formKey.currentState!.validate()) {
-      // Retrieving the email entered by the user
+      // Retrieving the email and password entered by the user
       String email = emailFieldKey.currentState!.value;
-      // Check if the email exists in the user list
-      if (userList.getUserByEmail(email) != null) {
+      String password = passwordFieldKey.currentState!.value;
+      // Check if the email exists and password matches in the user list
+      if (userList.getUserByEmail(email) != null &&
+          userList.getPassword(email) == password) {
         ref.read(currentUserProvider.notifier).state =
             userList.getUserByEmail(email).getUid();
         Navigator.pushReplacement(context,
@@ -55,6 +57,8 @@ class LoginPageState extends ConsumerState<LoginPage> {
         // emailFieldKey.currentState?.invalidate('Email already taken');
         // ref.read(emailErrorProvider.notifier).state = "Invalid email";
         // setState(() {}); //trigger rebuild
+        // passwordFieldKey.currentState?.invalidate("errorText");
+        // print(passwordFieldKey.currentState);
       }
     }
   }
@@ -102,7 +106,7 @@ class LoginPageState extends ConsumerState<LoginPage> {
                   width: 40.0,
                 ),
                 ElevatedButton(
-                  onPressed: () => _checkValidEmail(userList),
+                  onPressed: () => _checkValidLogin(userList),
                   child: const Text("LOGIN"),
                 ),
                 ElevatedButton(
