@@ -39,7 +39,7 @@ class LoginPageState extends ConsumerState<LoginPage> {
   final passwordFieldKey = GlobalKey<FormBuilderFieldState>();
   // final emailErrorProvider =
   //     StateProvider<String?>((ref) => null); //set Email error to null
-
+  String? passwordError;
   void _checkValidLogin(UserList userList) {
     if (formKey.currentState!.validate()) {
       // Retrieving the email and password entered by the user
@@ -52,13 +52,6 @@ class LoginPageState extends ConsumerState<LoginPage> {
             userList.getUserByEmail(email).getUid();
         Navigator.pushReplacement(context,
             CupertinoPageRoute(builder: (context) => const HomePage()));
-      } else {
-        //show error message for invalid email
-        // emailFieldKey.currentState?.invalidate('Email already taken');
-        // ref.read(emailErrorProvider.notifier).state = "Invalid email";
-        // setState(() {}); //trigger rebuild
-        // passwordFieldKey.currentState?.invalidate("errorText");
-        // print(passwordFieldKey.currentState);
       }
     }
   }
@@ -94,7 +87,12 @@ class LoginPageState extends ConsumerState<LoginPage> {
               key: formKey,
               child: Column(children: [
                 LoginEmailField(fieldKey: emailFieldKey),
-                LoginPasswordField(fieldKey: passwordFieldKey),
+                LoginPasswordField(
+                  fieldKey: passwordFieldKey,
+                  getPassword: () => passwordFieldKey.currentState?.value,
+                  email: () => emailFieldKey.currentState?.value,
+                  userList: userList,
+                ),
               ]),
             ),
             Row(

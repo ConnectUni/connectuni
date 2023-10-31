@@ -2,17 +2,27 @@ import 'package:flutter/material.dart';
 import 'package:flutter_form_builder/flutter_form_builder.dart';
 import 'package:form_builder_validators/form_builder_validators.dart';
 
+import '../../../model/user_list.dart';
 import 'field_padding.dart';
+import 'package:connectuni/screens/login.dart' as something;
 
 class LoginPasswordField extends StatelessWidget {
-  const LoginPasswordField({super.key, required this.fieldKey});
+  const LoginPasswordField(
+      {super.key,
+      required this.fieldKey,
+      this.getPassword,
+      required this.userList,
+      this.email});
 
   final GlobalKey<FormBuilderFieldState<FormBuilderField<dynamic>, dynamic>>
       fieldKey;
 
+  final ValueGetter<String?>? getPassword;
+  final ValueGetter<String?>? email;
+  final UserList userList;
+
   @override
   Widget build(BuildContext context) {
-    String? passwordError;
     String fieldName = 'Password';
     return FieldPadding(
       child: FormBuilderTextField(
@@ -22,9 +32,23 @@ class LoginPasswordField extends StatelessWidget {
           labelText: fieldName,
           hintText: "Enter your password",
         ),
-        validator: FormBuilderValidators.compose([
-          FormBuilderValidators.required(),
-        ]),
+        // validator: (input) {
+        //   if (input != 'yuh') {
+        //     return "wrong password";
+        //   }
+        // },
+        validator: (input) {
+          if (input!.isEmpty) {
+            return 'This field is required';
+          }
+          // Use the callback to get the email value.
+          String? password = getPassword?.call();
+          String? inputEmail = email?.call();
+          if (password != userList.getPassword(inputEmail!)) {
+            return "Password is incorrect";
+          }
+          return null; // return null if validation passes
+        },
         obscureText: true,
       ),
     );
