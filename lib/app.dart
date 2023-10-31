@@ -1,21 +1,22 @@
-import 'package:connectuni/screens/createevent.dart';
-import 'package:connectuni/screens/createprofile.dart';
-import 'package:connectuni/screens/event_info_screen.dart';
-import 'package:connectuni/screens/search_events_screen.dart';
-import 'package:connectuni/screens/signup.dart';
-import 'package:connectuni/screens/friend_list.dart';
+import 'package:connectuni/features/user/presentation/createprofile.dart';
+import 'package:connectuni/features/event/presentation/event_info_screen.dart';
+import 'package:connectuni/features/event/presentation/search_events_screen.dart';
+import 'package:connectuni/features/authentication/presentation/signup.dart';
+import 'package:connectuni/features/user/presentation/friend_list.dart';
+
 
 import 'package:flutter/material.dart';
 
-import 'model/app_theme.dart';
-import 'screens/login.dart';
-import 'home/home.dart';
-import 'screens/chatpage.dart';
-import 'screens/groups_screen/groupinfo.dart';
-import 'screens/settings.dart';
-import 'screens/current_user_profile.dart';
-import 'screens/search_people_screen.dart';
-import 'screens/groups_screen/search_groups_screen.dart';
+import 'features/settings/presentation/app_theme.dart';
+import 'features/authentication/presentation/login.dart';
+import 'features/home/presentation/home.dart';
+import 'features/chat/presentation/chatpage.dart';
+import 'features/group/presentation/groupinfo.dart';
+import 'features/settings/presentation/settings.dart';
+import 'features/event/presentation/createevent.dart';
+import 'features/user/presentation/current_user_profile.dart';
+import 'features/user/presentation/search_people_screen.dart';
+import 'features/group/presentation/search_groups_screen.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 // TODO: Import route files
