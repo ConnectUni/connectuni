@@ -1,3 +1,4 @@
+import 'package:connectuni/screens/createevent.dart';
 import 'package:connectuni/screens/createprofile.dart';
 import 'package:connectuni/screens/event_info_screen.dart';
 import 'package:connectuni/screens/search_events_screen.dart';
@@ -43,9 +44,10 @@ class ConnectUniApp extends ConsumerWidget {
         '/searchpeople': (BuildContext context) => SearchPeopleScreen(
               pageController: _pageController,
             ),
-        '/searchevents': (BuildContext context) => SearchEventsScreen(
+        '/search_events': (BuildContext context) => SearchEventsScreen(
               pageController: _pageController,
             ),
+        '/createevent': (BuildContext context) => CreateEvent(),
         '/groupinfo': (BuildContext context) => const GroupInfo(id: ''),
         '/eventinfo': (BuildContext context) => const EventInfoScreen(
               id: '',
