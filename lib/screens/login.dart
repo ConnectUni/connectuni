@@ -52,7 +52,7 @@ class LoginPageState extends ConsumerState<LoginPage> {
             CupertinoPageRoute(builder: (context) => const HomePage()));
       } else {
         //show error message for invalid email
-
+        // emailFieldKey.currentState?.invalidate('Email already taken');
         // ref.read(emailErrorProvider.notifier).state = "Invalid email";
         // setState(() {}); //trigger rebuild
       }

@@ -25,6 +25,7 @@ class LoginEmailField extends StatelessWidget {
         ),
         validator: FormBuilderValidators.compose([
           FormBuilderValidators.required(),
+          FormBuilderValidators.email(),
         ]),
       ),
     );
