@@ -1,11 +1,12 @@
 import 'package:connectuni/components/event_card_widget.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:multi_select_flutter/multi_select_flutter.dart';
 import '../model/event.dart';
 import '../model/event_list.dart';
 import '../utils/global_variables.dart';
 
-class SearchEventsScreen extends StatefulWidget {
+class SearchEventsScreen extends ConsumerStatefulWidget {
   const SearchEventsScreen({Key? key, required this.pageController})
       : super(key: key);
 
@@ -13,26 +14,24 @@ class SearchEventsScreen extends StatefulWidget {
   final PageController pageController;
 
   @override
-  State<SearchEventsScreen> createState() => _SearchEventsScreenState();
+  ConsumerState<SearchEventsScreen> createState() => _SearchEventsScreenState();
 }
 
-class _SearchEventsScreenState extends State<SearchEventsScreen> {
+class _SearchEventsScreenState extends ConsumerState<SearchEventsScreen> {
   final controller = TextEditingController();
   final _interests = interests
       .map((interest) => MultiSelectItem(interest, interest))
       .toList();
 
   List<String> selectedFilters = [];
-  List<SingleEvent> events = TempEventsDB.getAllEvents();
+  List<SingleEvent> events = [];
   List<SingleEvent> showSearchedEvent(String query) {
-    final suggestions = TempEventsDB
-        .getAllEvents()
-        .where((event) {
-          if(selectedFilters.isNotEmpty) {
-            return event.eventName.toLowerCase().contains(query.toLowerCase()) && event.interests.any((interest) => selectedFilters.contains(interest));
-          } else {
-            return event.eventName.toLowerCase().contains(query.toLowerCase());
-          }
+    final suggestions = ref.watch(eventsDBProvider).getAllEvents().where((event) {
+      if(selectedFilters.isNotEmpty) {
+        return event.eventName.toLowerCase().contains(query.toLowerCase()) && event.interests.any((interest) => selectedFilters.contains(interest));
+      } else {
+        return event.eventName.toLowerCase().contains(query.toLowerCase());
+      }
     }).toList();
     setState(() {
       events = suggestions;
