@@ -32,19 +32,13 @@ class LoginPasswordField extends StatelessWidget {
           labelText: fieldName,
           hintText: "Enter your password",
         ),
-        // validator: (input) {
-        //   if (input != 'yuh') {
-        //     return "wrong password";
-        //   }
-        // },
         validator: (input) {
           if (input!.isEmpty) {
             return 'This field is required';
           }
-          // Use the callback to get the email value.
-          String? password = getPassword?.call();
+          // Use the callback to get the email value
           String? inputEmail = email?.call();
-          if (password != userList.getPassword(inputEmail!)) {
+          if (input != userList.getPassword(inputEmail!)) {
             return "Password is incorrect";
           }
           return null; // return null if validation passes

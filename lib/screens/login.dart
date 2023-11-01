@@ -17,37 +17,15 @@ class LoginPage extends ConsumerStatefulWidget {
 }
 
 class LoginPageState extends ConsumerState<LoginPage> {
-  final _emailController = TextEditingController();
-  final _passwordController = TextEditingController();
-  final _correctEmail = "correct";
-  final _correctPassword = "pass";
-
-  //could also implement a disabled Login button - only enabled when credentials are valid (db will have to check all the time though)
-  // void _toggleDisabled() {
-  //   setState(() {
-  //     _validLogin = !_validLogin;
-  //   });
-  // }
-  //
-  // void _toggleEnabled() {
-  //   setState(() {
-  //     _validLogin = !_validLogin;
-  //   });
-  // }
   final formKey = GlobalKey<FormBuilderState>();
   final emailFieldKey = GlobalKey<FormBuilderFieldState>();
   final passwordFieldKey = GlobalKey<FormBuilderFieldState>();
-  // final emailErrorProvider =
-  //     StateProvider<String?>((ref) => null); //set Email error to null
-  String? passwordError;
+
   void _checkValidLogin(UserList userList) {
     if (formKey.currentState!.validate()) {
-      // Retrieving the email and password entered by the user
       String email = emailFieldKey.currentState!.value;
-      String password = passwordFieldKey.currentState!.value;
-      // Check if the email exists and password matches in the user list
-      if (userList.getUserByEmail(email) != null &&
-          userList.getPassword(email) == password) {
+      // Check if the email exists matches in the user list
+      if (userList.getUserByEmail(email) != null) {
         ref.read(currentUserProvider.notifier).state =
             userList.getUserByEmail(email).getUid();
         Navigator.pushReplacement(context,
@@ -86,7 +64,9 @@ class LoginPageState extends ConsumerState<LoginPage> {
             FormBuilder(
               key: formKey,
               child: Column(children: [
-                LoginEmailField(fieldKey: emailFieldKey),
+                LoginEmailField(
+                  fieldKey: emailFieldKey,
+                ),
                 LoginPasswordField(
                   fieldKey: passwordFieldKey,
                   getPassword: () => passwordFieldKey.currentState?.value,
@@ -109,8 +89,6 @@ class LoginPageState extends ConsumerState<LoginPage> {
                 ),
                 ElevatedButton(
                   onPressed: () {
-                    //create new account stuff - pick username, icons, etc.
-                    //uncomment out after creating SignUpPage
                     Navigator.push(
                       context,
                       CupertinoPageRoute(
