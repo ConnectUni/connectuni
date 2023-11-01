@@ -30,6 +30,7 @@ class LoginPasswordField extends StatelessWidget {
           hintText: "Enter your password",
         ),
         validator: (input) {
+          return "no";
           if (input!.isEmpty) {
             return 'This field is required';
           }
