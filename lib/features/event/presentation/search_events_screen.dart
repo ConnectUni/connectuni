@@ -34,7 +34,7 @@ final filteredEvents = Provider<List<SingleEvent>?>((ref) {
   final query = ref.watch(searchQueryProvider);
   final suggestions = events.where((event) {
     if(filters!.isNotEmpty) {
-      return event.eventName.toLowerCase().contains(query!.toLowerCase()) && event.interests.any((interest) => filters!.contains(interest));
+      return event.eventName.toLowerCase().contains(query!.toLowerCase()) && event.interests.any((interest) => filters.contains(interest));
     } else {
       return event.eventName.toLowerCase().contains(query!.toLowerCase());
     }

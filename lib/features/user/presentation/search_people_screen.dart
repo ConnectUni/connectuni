@@ -46,13 +46,13 @@ final notUsersFriendsProvider = Provider<List<User>?>((ref) {
  * This provider will be used to filter the users based on the selected
  * interests and the search query from the providers above.
  */
-final filterUsers = Provider<List<User>?>((ref) {
+final filteredUsers = Provider<List<User>?>((ref) {
   final filters = ref.watch(selectedFiltersProvider);
   final users = ref.watch(notUsersFriendsProvider);
   final query = ref.watch(searchQueryProvider);
   final suggestions = users?.where((user) {
     if(filters!.isNotEmpty) {
-      return user.displayName.toLowerCase().contains(query!.toLowerCase()) && user.interests.any((interest) => filters!.contains(interest));
+      return user.displayName.toLowerCase().contains(query!.toLowerCase()) && user.interests.any((interest) => filters.contains(interest));
     } else {
       return user.displayName.toLowerCase().contains(query!.toLowerCase());
     }
@@ -71,7 +71,7 @@ class _SearchPeopleScreenState extends ConsumerState<SearchPeopleScreen> {
 
   @override
   Widget build(BuildContext context) {
-    final List<User>? filteredUserList = ref.watch(filterUsers);
+    final List<User>? filteredUserList = ref.watch(filteredUsers);
 
     return Scaffold(
       appBar: AppBar(
