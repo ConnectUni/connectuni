@@ -105,7 +105,7 @@ class _SearchPeopleScreenState extends ConsumerState<SearchPeopleScreen> {
         children: [
           Padding(
             padding: const EdgeInsets.all(8.0),
-            child: MultiSelectDialogField(
+            child: MultiSelectBottomSheetField(
               items: _interests,
               title: const Text("People"),
               selectedColor: Colors.blue,
@@ -146,6 +146,7 @@ class _SearchPeopleScreenState extends ConsumerState<SearchPeopleScreen> {
                   return selectedFilters;
                 },
               ),
+              isDismissible: false,
             ),
           ),
           Padding(
