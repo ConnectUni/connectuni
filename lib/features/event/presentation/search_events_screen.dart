@@ -17,6 +17,20 @@ class SearchEventsScreen extends ConsumerStatefulWidget {
   ConsumerState<SearchEventsScreen> createState() => _SearchEventsScreenState();
 }
 
+final selectedFiltersProvider = StateProvider<List<String>?>((ref) => []);
+
+final filteredEvents = Provider<List<SingleEvent>>((ref) {
+  final filters = ref.watch(selectedFiltersProvider);
+  final events = ref.watch(eventsDBProvider).getAllEvents();
+
+  if (filters!.isNotEmpty) {
+    return events.where((event) => event.interests.any((interest) => filters.contains(interest))).toList();
+  } else {
+    return events;
+  }
+});
+
+
 class _SearchEventsScreenState extends ConsumerState<SearchEventsScreen> {
   final controller = TextEditingController();
   final _interests = interests
@@ -24,24 +38,11 @@ class _SearchEventsScreenState extends ConsumerState<SearchEventsScreen> {
       .toList();
 
   List<String> selectedFilters = [];
-  List<SingleEvent> events = [];
-  List<SingleEvent> showSearchedEvent(String query) {
-    final suggestions = ref.watch(eventsDBProvider).getAllEvents().where((event) {
-      if(selectedFilters.isNotEmpty) {
-        return event.eventName.toLowerCase().contains(query.toLowerCase()) && event.interests.any((interest) => selectedFilters.contains(interest));
-      } else {
-        return event.eventName.toLowerCase().contains(query.toLowerCase());
-      }
-    }).toList();
-    setState(() {
-      events = suggestions;
-    });
-
-    return suggestions;
-  }
 
   @override
   Widget build(BuildContext context) {
+    final List<SingleEvent> filteredEventList = ref.watch(filteredEvents);
+
     return Scaffold(
       appBar: AppBar(
         title: const Text('Search for Events'),
@@ -101,14 +102,19 @@ class _SearchEventsScreenState extends ConsumerState<SearchEventsScreen> {
               listType: MultiSelectListType.CHIP,
               onConfirm: (results) {
                 selectedFilters = List<String>.from(results);
-                showSearchedEvent(controller.text);
+                ref.read(selectedFiltersProvider.notifier).update((state) => selectedFilters);
+                //showSearchedEvent(controller.text);
+              },
+              onSelectionChanged: (results) {
+                selectedFilters = List<String>.from(results);
+                ref.read(selectedFiltersProvider.notifier).update((state) => selectedFilters);
+                //showSearchedEvent(controller.text);
               },
               chipDisplay: MultiSelectChipDisplay(
                 onTap: (item) {
-                  setState(() {
-                    selectedFilters.remove(item);
-                    showSearchedEvent(controller.text);
-                  });
+                  selectedFilters.remove(item);
+                  selectedFilters = List<String>.from(selectedFilters);
+                  ref.read(selectedFiltersProvider.notifier).update((state) => selectedFilters);
                   return selectedFilters;
                 },
               ),
@@ -126,14 +132,14 @@ class _SearchEventsScreenState extends ConsumerState<SearchEventsScreen> {
                     borderSide: const BorderSide(color: Colors.blue),
                   )
               ),
-              onChanged: showSearchedEvent,
+              //onChanged: showSearchedEvent,
             ),
           ),
           Expanded(
             child: ListView.builder(
-              itemCount: events.length,
+              itemCount: filteredEventList.length,
               itemBuilder: (context, index) {
-                return EventCardWidget(eventId: events[index].eventID);
+                return EventCardWidget(eventId: filteredEventList[index].eventID);
               },
             ),
           ),
