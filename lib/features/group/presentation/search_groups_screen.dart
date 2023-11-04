@@ -4,11 +4,8 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:multi_select_flutter/multi_select_flutter.dart';
 
 import 'package:connectuni/features/home/domain/global_variables.dart';
-import '../../user/data/user_providers.dart';
-import '../../user/domain/user.dart';
 import '../data/group_providers.dart';
 import 'group_info_widget.dart';
-import '../domain/group_list.dart';
 import 'add_group.dart';
 
 class SearchGroupsScreen extends ConsumerStatefulWidget {
@@ -21,48 +18,6 @@ class SearchGroupsScreen extends ConsumerStatefulWidget {
   @override
   ConsumerState<SearchGroupsScreen> createState() => _SearchGroupsScreenState();
 }
-
-/*
- * These are the state providers that will be used to check the selected
- * interests and the search query.
- */
-final selectedFiltersProvider = StateProvider<List<String>?>((ref) => []);
-final searchQueryProvider = StateProvider<String?>((ref) => "");
-
-/*
- * This provider will be used to find the groups that the current user is not
- * a part of.
- */
-final notUsersGroupsProvider = Provider<List<Group>?>((ref) {
-  final groupsDB = ref.watch(groupsDBProvider);
-  final usersDB = ref.watch(userDBProvider);
-  final User currentUser = usersDB.getUserByID(ref.read(currentUserProvider));
-  final notGroups = groupsDB
-      .getAllGroups()
-      .where((group) => !currentUser.groupIDs.contains(group.groupID))
-      .toList();
-
-  return notGroups;
-});
-
-/*
- * This provider will be used to filter the groups based on the selected
- * interests and the search query from the providers above.
- */
-final filteredGroups = Provider<List<Group>?>((ref) {
-  final filters = ref.watch(selectedFiltersProvider);
-  final groups = ref.watch(groupsDBProvider).getAllGroups();
-  final query = ref.watch(searchQueryProvider);
-  final suggestions = groups.where((group) {
-    if(filters!.isNotEmpty) {
-      return group.groupName.toLowerCase().contains(query!.toLowerCase()) && group.interests.any((interest) => filters.contains(interest));
-    } else {
-      return group.groupName.toLowerCase().contains(query!.toLowerCase());
-    }
-  }).toList();
-
-  return suggestions;
-});
 
 class _SearchGroupsScreenState extends ConsumerState<SearchGroupsScreen> {
   final controller = TextEditingController();
@@ -178,7 +133,7 @@ class _SearchGroupsScreenState extends ConsumerState<SearchGroupsScreen> {
               )
           ),
           Padding( // TODO: Fix overflow
-            padding: EdgeInsets.all(8.0),
+            padding: const EdgeInsets.all(8.0),
             child:
                 Column(
                   children: [
@@ -186,7 +141,7 @@ class _SearchGroupsScreenState extends ConsumerState<SearchGroupsScreen> {
                       "Can't find what you're looking for? Create a new group!"
                     ),
                     Padding(
-                      padding: EdgeInsets.all(10.0),
+                      padding: const EdgeInsets.all(10.0),
                       child: ListTile(
                         title: const Center(
                             child: Text("Add a Group.",
