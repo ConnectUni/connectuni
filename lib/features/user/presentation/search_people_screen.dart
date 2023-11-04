@@ -145,12 +145,14 @@ class _SearchPeopleScreenState extends ConsumerState<SearchPeopleScreen> {
                       children: [
                         const Text('Recent Searches'),
                         const Spacer(),
-                        InkWell(
-                          child: const Text('Clear Recents', style: TextStyle(color: Colors.blue)),
-                          onTap: () {
-                            ref.read(recentSearchesProvider.notifier).clear();
-                          },
-                        ),
+                        if (recentSearches!.isNotEmpty) ...[
+                          InkWell(
+                            child: const Text('Clear Recents', style: TextStyle(color: Colors.blue)),
+                            onTap: () {
+                              ref.read(recentSearchesProvider.notifier).clear();
+                            },
+                          ),
+                        ]
                       ]
                   ),
                   const Divider(),
