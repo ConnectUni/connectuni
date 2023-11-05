@@ -30,3 +30,9 @@ final filteredEvents = Provider<List<SingleEvent>?>((ref) {
 
   return suggestions;
 });
+
+final isSearchFilledProvider = Provider<bool>((ref) {
+  final query = ref.watch(searchQueryProvider);
+
+  return query!.isNotEmpty;
+});

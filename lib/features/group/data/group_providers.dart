@@ -50,3 +50,9 @@ final filteredGroups = Provider<List<Group>?>((ref) {
 
   return suggestions;
 });
+
+final isSearchFilledProvider = Provider<bool>((ref) {
+  final query = ref.watch(searchQueryProvider);
+
+  return query!.isNotEmpty;
+});

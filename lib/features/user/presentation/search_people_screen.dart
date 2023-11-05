@@ -121,13 +121,13 @@ class _SearchPeopleScreenState extends ConsumerState<SearchPeopleScreen> {
                   borderRadius: BorderRadius.circular(50),
                   borderSide: const BorderSide(color: Colors.blue),
                 ),
-                suffixIcon: IconButton(
+                suffixIcon: isSearchbarFilled ? IconButton(
                   icon: const Icon(Icons.clear),
                   onPressed: () {
                     controller.clear();
                     ref.read(searchQueryProvider.notifier).update((state) => "");
-                  },
-                )
+                  }
+                ) : null,
               ),
               onChanged: (value) { // This updates the page based on the search query
                 ref.read(searchQueryProvider.notifier).update((state) => value);

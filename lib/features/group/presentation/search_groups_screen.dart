@@ -30,6 +30,7 @@ class _SearchGroupsScreenState extends ConsumerState<SearchGroupsScreen> {
   @override
   Widget build(BuildContext context) {
     final List<Group>? filteredGroupList = ref.watch(filteredGroups);
+    final bool isSearchbarFilled = ref.watch(isSearchFilledProvider);
 
     return Scaffold(
       appBar: AppBar(
@@ -114,6 +115,13 @@ class _SearchGroupsScreenState extends ConsumerState<SearchGroupsScreen> {
               decoration: InputDecoration(
                 hintText: 'Search...',
                 prefixIcon: const Icon(Icons.search),
+                suffixIcon: isSearchbarFilled ? IconButton(
+                  icon: const Icon(Icons.clear),
+                  onPressed: () {
+                    controller.clear();
+                    ref.read(searchQueryProvider.notifier).update((state) => "");
+                  }
+                ) : null,
                 border: OutlineInputBorder(
                   borderRadius: BorderRadius.circular(50),
                   borderSide: const BorderSide(color: Colors.blue),
