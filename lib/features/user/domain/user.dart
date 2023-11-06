@@ -13,6 +13,7 @@ class User {
   List<String> groupIDs;
   List<String> eventIDs;
   List<String> interests;
+  String password;
 
   /// Constructor
   User(
@@ -27,7 +28,8 @@ class User {
       this.images,
       this.groupIDs,
       this.eventIDs,
-      this.interests);
+      this.interests,
+      this.password);
 
   /// Change name.
   void setUserName(String newName) {
@@ -146,5 +148,9 @@ class User {
 
   List<String> getEventIDs() {
     return eventIDs;
+  }
+
+  String getPassword() {
+    return password;
   }
 }

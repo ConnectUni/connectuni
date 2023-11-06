@@ -4,6 +4,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 /// The UserList object.
 class UserList {
   List<User> allUsers;
+
   /// Constructor
   UserList(this.allUsers);
 
@@ -31,38 +32,44 @@ class UserList {
   List<User> getUsers() {
     return allUsers;
   }
+
+  String getPassword(String email) {
+    return getUserByEmail(email).getPassword();
+  }
 }
 
 /// DELETE THIS BOTTOM SECTION AFTER GETTING REAL DB
 
 final User friend1 = User(
-    'user-111',
-    'email@one.edu',
-    'Friend1',
-    '',
-    'Finance',
-    'December 2025',
-    'School makes me wanna wake up every morning!',
-    [],
-    ['assets/images/friend.png'],
-    ['group-456'],
-    ['event-111'],
-    ['Finance', 'Business']
+  'user-111',
+  'email@one.edu',
+  'Friend1',
+  '',
+  'Finance',
+  'December 2025',
+  'School makes me wanna wake up every morning!',
+  [],
+  ['assets/images/friend.png'],
+  ['group-456'],
+  ['event-111'],
+  ['Finance', 'Business'],
+  'password',
 );
 
 final User friend2 = User(
-    'user-222',
-    'email@two.edu',
-    'Friend2',
-    '',
-    'Finance',
-    'May 2025',
-    'I never wanna leave school!',
-    [friend1],
-    ['assets/images/friend.png'],
-    ['group-123'],
-    ['event-222'],
-    []
+  'user-222',
+  'email@two.edu',
+  'Friend2',
+  '',
+  'Finance',
+  'May 2025',
+  'I never wanna leave school!',
+  [friend1],
+  ['assets/images/friend.png'],
+  ['group-123'],
+  ['event-222'],
+  [],
+  'changeme',
 );
 
 /// The mock users DB
@@ -90,6 +97,7 @@ final List<User> mockUsers = [
       'event-222',
     ],
     ['Mathematics', 'Computer Science'],
+    'imthebest',
   ),
   User(
     'user-002',
@@ -114,6 +122,7 @@ final List<User> mockUsers = [
       'event-333',
     ],
     ['Art', 'Graphic Design'],
+    'noimthebest',
   ),
   User(
     'user-003',
@@ -137,6 +146,7 @@ final List<User> mockUsers = [
       'event-333',
     ],
     ['Business', 'Computer Science'],
+    'calebsmith',
   ),
   User(
     'user-004',
@@ -160,7 +170,8 @@ final List<User> mockUsers = [
       'event-111',
       'event-222',
     ],
-    []
+    [],
+    'dianajones1',
   ),
   User(
     'user-005',
@@ -188,6 +199,7 @@ final List<User> mockUsers = [
       'event-333',
     ],
     ['Computer Science', 'Mathematics'],
+    'brownisthebest',
   ),
   friend1,
   friend2,

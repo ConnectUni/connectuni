@@ -1,8 +1,14 @@
-import 'package:connectuni/features/home/presentation/home.dart';
 import 'package:connectuni/features/authentication/presentation/signup.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_form_builder/flutter_form_builder.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+
+import '../../group/presentation/form-fields/login_email_field.dart';
+import '../../group/presentation/form-fields/login_password_field.dart';
+import '../../home/presentation/home.dart';
+import '../../user/data/user_providers.dart';
+import '../../user/domain/user_list.dart';
 
 class LoginPage extends ConsumerStatefulWidget {
   const LoginPage({Key? key}) : super(key: key);
@@ -12,45 +18,31 @@ class LoginPage extends ConsumerStatefulWidget {
 }
 
 class LoginPageState extends ConsumerState<LoginPage> {
-  final _emailController = TextEditingController();
-  final _passwordController = TextEditingController();
-  final _correctEmail = "correct";
-  final _correctPassword = "pass";
-  // late bool _validLogin = true;
-  //
-  // @override
-  // void initState() {
-  //   _validLogin = false;
-  // }
+  final formKey = GlobalKey<FormBuilderState>();
+  final emailFieldKey = GlobalKey<FormBuilderFieldState>();
+  final passwordFieldKey = GlobalKey<FormBuilderFieldState>();
 
-  bool checkValidLogin() {
-    if (_emailController.text == _correctEmail &&
-        _passwordController.text == _correctPassword) {
-      return true;
+  void _checkValidLogin(UserList userList) {
+    if (formKey.currentState!.validate()) {
+      String email = emailFieldKey.currentState!.value;
+      // Check if the email exists matches in the user list
+      if (userList.getUserByEmail(email) != null) {
+        ref.read(currentUserProvider.notifier).state =
+            userList.getUserByEmail(email).getUid();
+        Navigator.pushReplacement(context,
+            CupertinoPageRoute(builder: (context) => const HomePage()));
+      }
     }
-    return false;
   }
-
-  //could also implement a disabled Login button - only enabled when credentials are valid (db will have to check all the time though)
-  // void _toggleDisabled() {
-  //   setState(() {
-  //     _validLogin = !_validLogin;
-  //   });
-  // }
-  //
-  // void _toggleEnabled() {
-  //   setState(() {
-  //     _validLogin = !_validLogin;
-  //   });
-  // }
 
   @override
   Widget build(BuildContext context) {
+    final UserList userList = ref.watch(userDBProvider);
     return Scaffold(
       body: SafeArea(
         child: ListView(
           padding: const EdgeInsets.symmetric(
-              horizontal: 50.0), //controls width of textfields
+              horizontal: 50.0), //controls width of text fields
           children: <Widget>[
             const SizedBox(height: 80.0),
             Column(
@@ -70,19 +62,20 @@ class LoginPageState extends ConsumerState<LoginPage> {
             const SizedBox(
               height: 75.0,
             ),
-            TextField(
-                controller: _emailController,
-                decoration: const InputDecoration(
-                  filled: true,
-                  labelText: "Email",
-                )),
-            TextField(
-              controller: _passwordController,
-              decoration: const InputDecoration(
-                filled: true,
-                labelText: "Password",
-              ),
-              obscureText: true,
+            FormBuilder(
+              key: formKey,
+              child: Column(children: [
+                LoginEmailField(
+                  fieldKey: emailFieldKey,
+                  userList: userList,
+                ),
+                LoginPasswordField(
+                  fieldKey: passwordFieldKey,
+                  getPassword: () => passwordFieldKey.currentState?.value,
+                  email: () => emailFieldKey.currentState?.value,
+                  userList: userList,
+                ),
+              ]),
             ),
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -93,24 +86,11 @@ class LoginPageState extends ConsumerState<LoginPage> {
                   width: 40.0,
                 ),
                 ElevatedButton(
-                  onPressed: () {
-                    if (checkValidLogin()) {
-                      //would switch to user's home screen
-                      Navigator.pushReplacement(
-                        context,
-                        CupertinoPageRoute(
-                            builder: (context) => const HomePage()),
-                      );
-                    } else {
-                      _emailController.text = "nuh";
-                    }
-                  },
+                  onPressed: () => _checkValidLogin(userList),
                   child: const Text("LOGIN"),
                 ),
                 ElevatedButton(
                   onPressed: () {
-                    //create new account stuff - pick username, icons, etc.
-                    //uncomment out after creating SignUpPage
                     Navigator.push(
                       context,
                       CupertinoPageRoute(
@@ -124,8 +104,8 @@ class LoginPageState extends ConsumerState<LoginPage> {
                 Flexible(
                   child: TextButton(
                     onPressed: () {
-                      _emailController.clear();
-                      _passwordController.clear();
+                      emailFieldKey.currentState!.didChange(null);
+                      passwordFieldKey.currentState!.didChange(null);
                     },
                     child: const Text("CLEAR"),
                   ),
