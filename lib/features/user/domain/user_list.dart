@@ -1,5 +1,6 @@
 import 'user.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:collection/collection.dart';
 
 /// The UserList object.
 class UserList {
@@ -19,8 +20,8 @@ class UserList {
   }
 
   /// Return single User object, search with their email.
-  User getUserByEmail(String email) {
-    return allUsers.firstWhere((user) => user.email == email);
+  User? getUserByEmail(String email) {
+    return allUsers.firstWhereOrNull((user) => user.email == email);
   }
 
   /// Return iterable list of User objects.
@@ -33,8 +34,9 @@ class UserList {
     return allUsers;
   }
 
-  String getPassword(String email) {
-    return getUserByEmail(email).getPassword();
+  /// Return password - for validation use for now.
+  String? getPassword(String email) {
+    return getUserByEmail(email)?.getPassword();
   }
 }
 

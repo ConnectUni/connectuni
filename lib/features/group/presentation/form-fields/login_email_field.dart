@@ -31,7 +31,7 @@ class LoginEmailField extends StatelessWidget {
             return 'This field is required';
           }
           if (userList.getUserByEmail(input) == null) {
-            return "Password is incorrect";
+            return "Email is not valid";
           }
           return null; // return null if validation passes
         },

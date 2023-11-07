@@ -28,7 +28,7 @@ class LoginPageState extends ConsumerState<LoginPage> {
       // Check if the email exists matches in the user list
       if (userList.getUserByEmail(email) != null) {
         ref.read(currentUserProvider.notifier).state =
-            userList.getUserByEmail(email).getUid();
+            userList.getUserByEmail(email)!.getUid();
         Navigator.pushReplacement(context,
             CupertinoPageRoute(builder: (context) => const HomePage()));
       }
