@@ -17,9 +17,17 @@ class SearchEventsScreen extends ConsumerStatefulWidget {
   ConsumerState<SearchEventsScreen> createState() => _SearchEventsScreenState();
 }
 
+/*
+ * These are the state providers that will be used to check the selected
+ * interests and the search query.
+ */
 final selectedFiltersProvider = StateProvider<List<String>?>((ref) => []);
 final searchQueryProvider = StateProvider<String?>((ref) => "");
 
+/*
+ * This provider will be used to filter the events based on the selected
+ * interests and the search query from the providers above.
+ */
 final filteredEvents = Provider<List<SingleEvent>?>((ref) {
   final filters = ref.watch(selectedFiltersProvider);
   final events = ref.watch(eventsDBProvider).getAllEvents();
@@ -105,18 +113,16 @@ class _SearchEventsScreenState extends ConsumerState<SearchEventsScreen> {
                 ),
               ),
               listType: MultiSelectListType.CHIP,
-              onConfirm: (results) {
+              onConfirm: (results) { // This updates the selected filters on confirm
                 selectedFilters = List<String>.from(results);
                 ref.read(selectedFiltersProvider.notifier).update((state) => selectedFilters);
-                //showSearchedEvent(controller.text);
               },
-              onSelectionChanged: (results) {
+              onSelectionChanged: (results) { // This updates the selected filters on selection change
                 selectedFilters = List<String>.from(results);
                 ref.read(selectedFiltersProvider.notifier).update((state) => selectedFilters);
-                //showSearchedEvent(controller.text);
               },
               chipDisplay: MultiSelectChipDisplay(
-                onTap: (item) {
+                onTap: (item) { // This removes the selected filter on tap
                   selectedFilters.remove(item);
                   selectedFilters = List<String>.from(selectedFilters);
                   ref.read(selectedFiltersProvider.notifier).update((state) => selectedFilters);
@@ -138,7 +144,7 @@ class _SearchEventsScreenState extends ConsumerState<SearchEventsScreen> {
                     borderSide: const BorderSide(color: Colors.blue),
                   )
               ),
-              onChanged: (value) {
+              onChanged: (value) { // This updates the page based on the search query
                 ref.read(searchQueryProvider.notifier).update((state) => state = value);
                 //showSearchedEvent(value);
               },

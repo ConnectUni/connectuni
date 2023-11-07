@@ -20,6 +20,47 @@ class SearchPeopleScreen extends ConsumerStatefulWidget {
   ConsumerState<SearchPeopleScreen> createState() => _SearchPeopleScreenState();
 }
 
+/*
+ * These are the state providers that will be used to check the selected
+ * interests and the search query.
+ */
+final selectedFiltersProvider = StateProvider<List<String>?>((ref) => []);
+final searchQueryProvider = StateProvider<String?>((ref) => "");
+
+/*
+ * This provider will be used to find the users that are not friends with the
+ * current user
+ */
+final notUsersFriendsProvider = Provider<List<User>?>((ref) {
+  final usersDB = ref.watch(userDBProvider);
+  final User currentUser = usersDB.getUserByID(ref.read(currentUserProvider));
+  final notFriends = usersDB
+      .getUsers()
+      .where((user) => !currentUser.friends.contains(user))
+      .toList();
+
+  return notFriends;
+});
+
+/*
+ * This provider will be used to filter the users based on the selected
+ * interests and the search query from the providers above.
+ */
+final filterUsers = Provider<List<User>?>((ref) {
+  final filters = ref.watch(selectedFiltersProvider);
+  final users = ref.watch(notUsersFriendsProvider);
+  final query = ref.watch(searchQueryProvider);
+  final suggestions = users?.where((user) {
+    if(filters!.isNotEmpty) {
+      return user.displayName.toLowerCase().contains(query!.toLowerCase()) && user.interests.any((interest) => filters!.contains(interest));
+    } else {
+      return user.displayName.toLowerCase().contains(query!.toLowerCase());
+    }
+  }).toList();
+
+  return suggestions;
+});
+
 class _SearchPeopleScreenState extends ConsumerState<SearchPeopleScreen> {
   final controller = TextEditingController();
   final _interests = interests
@@ -27,37 +68,11 @@ class _SearchPeopleScreenState extends ConsumerState<SearchPeopleScreen> {
       .toList();
 
   List<String> selectedFilters = [];
-  List<User> users = TempUsersDB.getUsers();
-  List<User> showSearchedUser(String query) {
-    final suggestions = TempUsersDB
-        .getUsers()
-        .where((user) {
-          if(selectedFilters.isNotEmpty) {
-            return user.displayName.toLowerCase().contains(query.toLowerCase()) && user.interests.any((interest) => selectedFilters.contains(interest));
-          } else {
-            return user.displayName.toLowerCase().contains(query.toLowerCase());
-          }
-    }).toList();
-    setState(() {
-      users = suggestions;
-    });
-
-    return suggestions;
-  }
 
   @override
   Widget build(BuildContext context) {
-    final UserList usersDB = ref.read(userDBProvider);
-    final User currentUser = usersDB.getUserByID(ref.read(currentUserProvider));
-    final GroupList groupsDB = ref.watch(groupsDBProvider);
-    final _items = groupsDB
-        .getAllGroups()
-        .map((gName) => MultiSelectItem(gName, gName.groupName))
-        .toList();
-    final notFriends = usersDB
-        .getUsers()
-        .where((user) => !currentUser.friends.contains(user))
-        .toList();
+    final List<User>? filteredUserList = ref.watch(filterUsers);
+
     return Scaffold(
       appBar: AppBar(
         title: const Text('Search for People'),
@@ -90,7 +105,7 @@ class _SearchPeopleScreenState extends ConsumerState<SearchPeopleScreen> {
         children: [
           Padding(
             padding: const EdgeInsets.all(8.0),
-            child: MultiSelectDialogField(
+            child: MultiSelectBottomSheetField(
               items: _interests,
               title: const Text("People"),
               selectedColor: Colors.blue,
@@ -115,19 +130,23 @@ class _SearchPeopleScreenState extends ConsumerState<SearchPeopleScreen> {
                 ),
               ),
               listType: MultiSelectListType.CHIP,
-              onConfirm: (results) {
+              onConfirm: (results) { // This updates the selected filters on confirm
                 selectedFilters = List<String>.from(results);
-                showSearchedUser(controller.text);
+                ref.read(selectedFiltersProvider.notifier).update((state) => selectedFilters);
+              },
+              onSelectionChanged: (results) { // This updates the selected filters on selection change
+                selectedFilters = List<String>.from(results);
+                ref.read(selectedFiltersProvider.notifier).update((state) => selectedFilters);
               },
               chipDisplay: MultiSelectChipDisplay(
-                onTap: (item) {
-                  setState(() {
-                    selectedFilters.remove(item);
-                    showSearchedUser(controller.text);
-                  });
+                onTap: (item) { // This removes the selected filter on tap
+                  selectedFilters.remove(item);
+                  selectedFilters = List<String>.from(selectedFilters);
+                  ref.read(selectedFiltersProvider.notifier).update((state) => selectedFilters);
                   return selectedFilters;
                 },
               ),
+              isDismissible: false,
             ),
           ),
           Padding(
@@ -142,14 +161,16 @@ class _SearchPeopleScreenState extends ConsumerState<SearchPeopleScreen> {
                   borderSide: const BorderSide(color: Colors.blue),
                 ),
               ),
-              onChanged: showSearchedUser,
+              onChanged: (value) { // This updates the page based on the search query
+                ref.read(searchQueryProvider.notifier).update((state) => value);
+              },
             ),
           ),
           Expanded(
             child: ListView.builder(
-              itemCount: users.length,
+              itemCount: filteredUserList?.length,
               itemBuilder: (context, index) {
-                return UserCardWidget(user: users[index]);
+                return UserCardWidget(user: filteredUserList![index]);
               },
             ),
           )
