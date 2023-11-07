@@ -4,6 +4,8 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:multi_select_flutter/multi_select_flutter.dart';
 
 import 'package:connectuni/features/home/domain/global_variables.dart';
+import '../../user/data/user_providers.dart';
+import '../../user/domain/user.dart';
 import '../data/group_providers.dart';
 import 'group_info_widget.dart';
 import '../domain/group_list.dart';
@@ -20,37 +22,60 @@ class SearchGroupsScreen extends ConsumerStatefulWidget {
   ConsumerState<SearchGroupsScreen> createState() => _SearchGroupsScreenState();
 }
 
+/*
+ * These are the state providers that will be used to check the selected
+ * interests and the search query.
+ */
+final selectedFiltersProvider = StateProvider<List<String>?>((ref) => []);
+final searchQueryProvider = StateProvider<String?>((ref) => "");
+
+/*
+ * This provider will be used to find the groups that the current user is not
+ * a part of.
+ */
+final notUsersGroupsProvider = Provider<List<Group>?>((ref) {
+  final groupsDB = ref.watch(groupsDBProvider);
+  final usersDB = ref.watch(userDBProvider);
+  final User currentUser = usersDB.getUserByID(ref.read(currentUserProvider));
+  final notGroups = groupsDB
+      .getAllGroups()
+      .where((group) => !currentUser.groupIDs.contains(group.groupID))
+      .toList();
+
+  return notGroups;
+});
+
+/*
+ * This provider will be used to filter the groups based on the selected
+ * interests and the search query from the providers above.
+ */
+final filteredGroups = Provider<List<Group>?>((ref) {
+  final filters = ref.watch(selectedFiltersProvider);
+  final groups = ref.watch(groupsDBProvider).getAllGroups();
+  final query = ref.watch(searchQueryProvider);
+  final suggestions = groups.where((group) {
+    if(filters!.isNotEmpty) {
+      return group.groupName.toLowerCase().contains(query!.toLowerCase()) && group.interests.any((interest) => filters.contains(interest));
+    } else {
+      return group.groupName.toLowerCase().contains(query!.toLowerCase());
+    }
+  }).toList();
+
+  return suggestions;
+});
+
 class _SearchGroupsScreenState extends ConsumerState<SearchGroupsScreen> {
   final controller = TextEditingController();
   final _interests = interests
       .map((interest) => MultiSelectItem(interest, interest))
       .toList();
+
   List<String> selectedFilters = [];
 
   @override
   Widget build(BuildContext context) {
-    final GroupList groupsDB = ref.watch(groupsDBProvider);
-    List<Group> groups = groupsDB.getAllGroups();
-    List<Group> showSearchedGroup(String query) {
-      final suggestions = groupsDB
-          .getAllGroups()
-          .where((group) {
-        if(selectedFilters.isNotEmpty) {
-          return group.groupName.toLowerCase().contains(query.toLowerCase()) && group.interests.any((interest) => selectedFilters.contains(interest));
-        } else {
-          return group.groupName.toLowerCase().contains(query.toLowerCase());
-        }
-      }).toList();
-      setState(() {
-        groups = suggestions;
-      });
+    final List<Group>? filteredGroupList = ref.watch(filteredGroups);
 
-      return suggestions;
-    }
-    final _items = groupsDB
-        .getAllGroups()
-        .map((gName) => MultiSelectItem(gName, gName.groupName))
-        .toList();
     return Scaffold(
       appBar: AppBar(
         title: const Text('Search for Groups'),
@@ -83,7 +108,7 @@ class _SearchGroupsScreenState extends ConsumerState<SearchGroupsScreen> {
         children: [
           Padding(
             padding: const EdgeInsets.all(8.0),
-            child: MultiSelectDialogField(
+            child: MultiSelectBottomSheetField(
               items: _interests,
               title: const Text("Interests"),
               selectedColor: Colors.blue,
@@ -108,19 +133,23 @@ class _SearchGroupsScreenState extends ConsumerState<SearchGroupsScreen> {
                 ),
               ),
               listType: MultiSelectListType.CHIP,
-              onConfirm: (results) {
+              onConfirm: (results) { // This updates the selected filters on confirm
                 selectedFilters = List<String>.from(results);
-                showSearchedGroup(controller.text);
+                ref.read(selectedFiltersProvider.notifier).update((state) => selectedFilters);
               },
-              chipDisplay: MultiSelectChipDisplay(
-                onTap: (item) {
-                  setState(() {
-                    selectedFilters.remove(item);
-                    showSearchedGroup(controller.text);
-                  });
+              onSelectionChanged: (results) { // This updates the selected filters on selection change
+                selectedFilters = List<String>.from(results);
+                ref.read(selectedFiltersProvider.notifier).update((state) => selectedFilters);
+              } ,
+              chipDisplay: MultiSelectChipDisplay( // This removes the selected filter on tap
+                onTap: (item) { // This removes the selected filter on tap
+                  selectedFilters.remove(item);
+                  selectedFilters = List<String>.from(selectedFilters);
+                  ref.read(selectedFiltersProvider.notifier).update((state) => selectedFilters);
                   return selectedFilters;
                 },
               ),
+              isDismissible: false,
             ),
           ),
           Padding(
@@ -135,18 +164,20 @@ class _SearchGroupsScreenState extends ConsumerState<SearchGroupsScreen> {
                   borderSide: const BorderSide(color: Colors.blue),
                 )
               ),
-              onChanged: showSearchedGroup,
+              onChanged: (value) { // This updates the page based on the search query
+                ref.read(searchQueryProvider.notifier).update((state) => value);
+              },
             ),
           ),
           Expanded(
               child: ListView.builder(
-                itemCount: groups.length,
+                itemCount: filteredGroupList?.length,
                 itemBuilder: (context, index) {
-                  return GroupInfoWidget(id: groups[index].groupID);
+                  return GroupInfoWidget(id: filteredGroupList![index].groupID);
                 },
               )
           ),
-          Padding(
+          Padding( // TODO: Fix overflow
             padding: EdgeInsets.all(8.0),
             child:
                 Column(
@@ -172,9 +203,7 @@ class _SearchGroupsScreenState extends ConsumerState<SearchGroupsScreen> {
                     ),
                   ],
                 ),
-
           ),
-
         ],
       ),
     );
