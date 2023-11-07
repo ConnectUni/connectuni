@@ -1,13 +1,10 @@
-import 'package:connectuni/features/user/domain/user_list.dart';
 import 'package:flutter/material.dart';
 import 'package:multi_select_flutter/multi_select_flutter.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import '../../group/data/group_providers.dart';
 import '../data/user_providers.dart';
 import 'user_card_widget.dart';
 import '../domain/user.dart';
 import '../../home/domain/global_variables.dart';
-import '../../group/domain/group_list.dart';
 
 class SearchPeopleScreen extends ConsumerStatefulWidget {
   const SearchPeopleScreen({Key? key, required this.pageController})
@@ -20,58 +17,22 @@ class SearchPeopleScreen extends ConsumerStatefulWidget {
   ConsumerState<SearchPeopleScreen> createState() => _SearchPeopleScreenState();
 }
 
-/*
- * These are the state providers that will be used to check the selected
- * interests and the search query.
- */
-final selectedFiltersProvider = StateProvider<List<String>?>((ref) => []);
-final searchQueryProvider = StateProvider<String?>((ref) => "");
-
-/*
- * This provider will be used to find the users that are not friends with the
- * current user
- */
-final notUsersFriendsProvider = Provider<List<User>?>((ref) {
-  final usersDB = ref.watch(userDBProvider);
-  final User currentUser = usersDB.getUserByID(ref.read(currentUserProvider));
-  final notFriends = usersDB
-      .getUsers()
-      .where((user) => !currentUser.friends.contains(user))
-      .toList();
-
-  return notFriends;
-});
-
-/*
- * This provider will be used to filter the users based on the selected
- * interests and the search query from the providers above.
- */
-final filteredUsers = Provider<List<User>?>((ref) {
-  final filters = ref.watch(selectedFiltersProvider);
-  final users = ref.watch(notUsersFriendsProvider);
-  final query = ref.watch(searchQueryProvider);
-  final suggestions = users?.where((user) {
-    if(filters!.isNotEmpty) {
-      return user.displayName.toLowerCase().contains(query!.toLowerCase()) && user.interests.any((interest) => filters.contains(interest));
-    } else {
-      return user.displayName.toLowerCase().contains(query!.toLowerCase());
-    }
-  }).toList();
-
-  return suggestions;
-});
-
 class _SearchPeopleScreenState extends ConsumerState<SearchPeopleScreen> {
-  final controller = TextEditingController();
+  // final controller = TextEditingController();
   final _interests = interests
       .map((interest) => MultiSelectItem(interest, interest))
       .toList();
 
+  final controller = TextEditingController();
   List<String> selectedFilters = [];
+  List<User> recentSearches = [];
 
   @override
   Widget build(BuildContext context) {
     final List<User>? filteredUserList = ref.watch(filteredUsers);
+    final bool isSearchbarFilled = ref.watch(isSearchFilledProvider);
+    final List<User>? recentSearches = ref.watch(recentSearchesProvider);
+    var users = [];
 
     return Scaffold(
       appBar: AppBar(
@@ -160,21 +121,64 @@ class _SearchPeopleScreenState extends ConsumerState<SearchPeopleScreen> {
                   borderRadius: BorderRadius.circular(50),
                   borderSide: const BorderSide(color: Colors.blue),
                 ),
+                suffixIcon: isSearchbarFilled ? IconButton(
+                  icon: const Icon(Icons.clear),
+                  onPressed: () {
+                    controller.clear();
+                    ref.read(searchQueryProvider.notifier).update((state) => "");
+                  }
+                ) : null,
               ),
               onChanged: (value) { // This updates the page based on the search query
                 ref.read(searchQueryProvider.notifier).update((state) => value);
               },
             ),
           ),
-          Expanded(
-            child: ListView.builder(
-              itemCount: filteredUserList?.length,
-              itemBuilder: (context, index) {
-                return UserCardWidget(user: filteredUserList![index]);
-              },
+          if (isSearchbarFilled) ...[
+            SearchView(users: filteredUserList!)
+          ] else ...[
+            Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: Column(
+                children: [
+                  Row(
+                      children: [
+                        const Text('Recent Searches'),
+                        const Spacer(),
+                        if (recentSearches!.isNotEmpty) ...[
+                          InkWell(
+                            child: const Text('Clear Recents', style: TextStyle(color: Colors.blue)),
+                            onTap: () {
+                              ref.read(recentSearchesProvider.notifier).clear();
+                            },
+                          ),
+                        ]
+                      ]
+                  ),
+                  const Divider(),
+                ],
+              ),
             ),
-          )
+            SearchView(users: recentSearches!)
+          ]
         ],
+      ),
+    );
+  }
+}
+
+class SearchView extends StatelessWidget {
+  const SearchView({Key? key, required this.users}) : super(key: key);
+  final List<User> users;
+
+  @override
+  Widget build(BuildContext context) {
+    return Expanded(
+      child: ListView.builder(
+        itemCount: users.length,
+        itemBuilder: (context, index) {
+          return UserCardWidget(onSearchPage: true, user: users[index]);
+        },
       ),
     );
   }
