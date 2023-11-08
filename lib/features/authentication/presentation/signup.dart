@@ -2,43 +2,29 @@ import 'package:connectuni/features/user/presentation/createprofile.dart';
 import 'package:connectuni/features/user/presentation/current_user_profile.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_form_builder/flutter_form_builder.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 
+import '../../group/presentation/form-fields/signup_email_field.dart';
+import '../../group/presentation/form-fields/signup_password_field.dart';
+import '../../user/data/user_providers.dart';
+import '../../user/domain/user_list.dart';
 import 'login.dart';
 
-class SignUpPage extends StatefulWidget {
+class SignUpPage extends ConsumerStatefulWidget {
   const SignUpPage({Key? key}) : super(key: key);
 
   @override
-  State<SignUpPage> createState() => _SignUpPageState();
+  SignUpPageState createState() => SignUpPageState();
 }
 
-class _SignUpPageState extends State<SignUpPage> {
-  final _emailController = TextEditingController();
-  final _usernameController = TextEditingController();
-  final _passwordController = TextEditingController();
-  final _passwordCheckController = TextEditingController();
+class SignUpPageState extends ConsumerState<SignUpPage> {
+  final formKey = GlobalKey<FormBuilderState>();
+  final emailFieldKey = GlobalKey<FormBuilderFieldState>();
+  final passwordFieldKey = GlobalKey<FormBuilderFieldState>();
 
-  @override
-  void dispose() {
-    _emailController.dispose();
-    _usernameController.dispose();
-    _passwordController.dispose();
-    _passwordCheckController.dispose();
-    super.dispose();
-  }
-
-  bool _filledFields() {
-    if (_usernameController.value.text.isNotEmpty &&
-        _passwordController.value.text.isNotEmpty &&
-        _passwordCheckController.value.text.isNotEmpty &&
-        _emailController.value.text.isNotEmpty) {
-      return true;
-    }
-    return false;
-  }
-
-  bool _samePassword() {
-    if (_passwordController.value == _passwordCheckController.value) {
+  bool _checkValidForm(UserList userList) {
+    if (formKey.currentState!.validate()) {
       return true;
     }
     return false;
@@ -50,16 +36,10 @@ class _SignUpPageState extends State<SignUpPage> {
     }
     return true;
   }
-  //
-  // String? get _errorMessage {
-  //   final input = controllerName.value.text;
-  //   if (input.isEmpty) {
-  //     return true;
-  //   }
-  // }
 
   @override
   Widget build(BuildContext context) {
+    final UserList userList = ref.watch(userDBProvider);
     return Scaffold(
       body: SafeArea(
         child: ListView(
@@ -78,64 +58,19 @@ class _SignUpPageState extends State<SignUpPage> {
             const SizedBox(
               height: 75.0, //padding from title to textfields
             ),
-            const Text('Enter your email'),
-            TextField(
-              controller: _emailController,
-              decoration: InputDecoration(
-                  filled: true,
-                  labelText: "Email",
-                  errorText: !_emptyField(_emailController)
-                      ? 'Email can\'t be empty'
-                      : null),
-              onChanged: (text) => setState(() => _emailController.value),
+            FormBuilder(
+              key: formKey,
+              child: Column(children: [
+                SignupEmailField(
+                  fieldKey: emailFieldKey,
+                ),
+                SignupPasswordField(
+                  fieldKey: passwordFieldKey,
+                ),
+              ]),
             ),
             const SizedBox(
               height: 30.0,
-            ),
-            const Text('Enter your username'),
-            TextField(
-              controller: _usernameController,
-              decoration: InputDecoration(
-                  filled: true,
-                  labelText: "Username",
-                  errorText: !_emptyField(_usernameController)
-                      ? 'Username can\'t be empty'
-                      : null),
-              onChanged: (text) => setState(() => _usernameController.value),
-            ),
-            const SizedBox(
-              height: 30.0,
-            ),
-            const Text('Enter your password'),
-            TextField(
-              controller: _passwordController,
-              decoration: InputDecoration(
-                filled: true,
-                labelText: "Password",
-                errorText: !_emptyField(_passwordController)
-                    ? 'Password can\'t be empty'
-                    : null,
-              ),
-              onChanged: (text) => setState(() => _passwordController.value),
-              obscureText: true,
-            ),
-            const SizedBox(
-              height: 30.0,
-            ),
-            const Text('Re-type your password'),
-            TextField(
-              controller: _passwordCheckController,
-              //install a listener to compare it to the password value above
-              decoration: InputDecoration(
-                filled: true,
-                labelText: "Password",
-                errorText: !_emptyField(_passwordCheckController)
-                    ? 'Password can\'t be empty'
-                    : null,
-              ),
-              onChanged: (text) =>
-                  setState(() => _passwordCheckController.value),
-              obscureText: true,
             ),
             Row(
               mainAxisAlignment: MainAxisAlignment.end,
@@ -148,10 +83,8 @@ class _SignUpPageState extends State<SignUpPage> {
                 //clear button
                 TextButton(
                   onPressed: () {
-                    _emailController.clear();
-                    _passwordController.clear();
-                    _usernameController.clear();
-                    _passwordCheckController.clear();
+                    emailFieldKey.currentState!.didChange(null);
+                    passwordFieldKey.currentState!.didChange(null);
                   },
                   child: const Text("CLEAR"),
                 ),
@@ -174,23 +107,15 @@ class _SignUpPageState extends State<SignUpPage> {
                   //   );
 
                   onPressed: () {
-                    if (_filledFields()) {
-                      //check if all fields are filled
-                      if (_samePassword()) {
-                        //validate passwords match
-                        Navigator.pushReplacement(
-                          context,
-                          CupertinoPageRoute(
-                              builder: (context) => const CreateProfile()),
-                        );
-                      } else {
-                        _emailController.text = "not same passowrd";
-                      }
-                    } else {
-                      _emailController.text = "whaaauhhhh";
+                    if (_checkValidForm(userList)) {
+                      //send info to create profile page where it completes the necessary data to make a new user
+                      //call to create profile page
+                      Navigator.pushReplacement(
+                        context,
+                        CupertinoPageRoute(
+                            builder: (context) => const CreateProfile()),
+                      );
                     }
-
-                    //create new account stuff - pick username, icons, etc.
                   },
                   child: const Text('SIGN UP'),
                 ),
