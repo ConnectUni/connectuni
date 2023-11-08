@@ -1,3 +1,4 @@
+import 'package:connectuni/features/group/presentation/form-fields/signup_username_field.dart';
 import 'package:connectuni/features/user/presentation/createprofile.dart';
 import 'package:connectuni/features/user/presentation/current_user_profile.dart';
 import 'package:flutter/cupertino.dart';
@@ -6,6 +7,7 @@ import 'package:flutter_form_builder/flutter_form_builder.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../../group/presentation/form-fields/signup_email_field.dart';
+import '../../group/presentation/form-fields/signup_passwordCheck_field.dart';
 import '../../group/presentation/form-fields/signup_password_field.dart';
 import '../../user/data/user_providers.dart';
 import '../../user/domain/user_list.dart';
@@ -20,8 +22,10 @@ class SignUpPage extends ConsumerStatefulWidget {
 
 class SignUpPageState extends ConsumerState<SignUpPage> {
   final formKey = GlobalKey<FormBuilderState>();
+  final userNameFieldKey = GlobalKey<FormBuilderFieldState>();
   final emailFieldKey = GlobalKey<FormBuilderFieldState>();
   final passwordFieldKey = GlobalKey<FormBuilderFieldState>();
+  final passwordCheckFieldKey = GlobalKey<FormBuilderFieldState>();
 
   bool _checkValidForm(UserList userList) {
     if (formKey.currentState!.validate()) {
@@ -61,11 +65,18 @@ class SignUpPageState extends ConsumerState<SignUpPage> {
             FormBuilder(
               key: formKey,
               child: Column(children: [
+                SignupUsernameField(
+                  fieldKey: userNameFieldKey,
+                ),
                 SignupEmailField(
                   fieldKey: emailFieldKey,
                 ),
                 SignupPasswordField(
                   fieldKey: passwordFieldKey,
+                ),
+                SignupPasswordCheckField(
+                  fieldKey: passwordCheckFieldKey,
+                  getPassword: () => passwordFieldKey.currentState?.value,
                 ),
               ]),
             ),
