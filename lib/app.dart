@@ -7,6 +7,9 @@ import 'package:connectuni/features/user/presentation/friend_list.dart';
 
 import 'package:flutter/material.dart';
 
+import 'features/authentication/presentation/forgot_password_view.dart';
+import 'features/authentication/presentation/signin_view.dart';
+import 'features/authentication/presentation/verify_email_view.dart';
 import 'features/settings/presentation/app_theme.dart';
 import 'features/authentication/presentation/login.dart';
 import 'features/home/presentation/home.dart';
@@ -31,11 +34,14 @@ class ConnectUniApp extends ConsumerWidget {
     final appThemeState = ref.watch(appThemeStateProvider);
     return MaterialApp(
       title: 'ConnectUni',
-      initialRoute: '/login',
+      initialRoute: '/signin',
       routes: {
         // TODO: Insert routes
         '/login': (BuildContext context) => const LoginPage(),
         '/signup': (BuildContext context) => const SignUpPage(),
+        '/signin': (BuildContext context) => const SignInView(),
+        '/verify-email': (BuildContext context) => const VerifyEmailView(),
+        '/forgot-password': (BuildContext context) => const ForgotPasswordView(),
         '/createprofile': (BuildContext context) => const CreateProfile(),
         '/home': (BuildContext context) => const HomePage(),
         '/settings': (BuildContext context) => const Settings(),
