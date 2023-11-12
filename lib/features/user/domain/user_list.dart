@@ -9,6 +9,11 @@ class UserList {
   /// Constructor
   UserList(this.allUsers);
 
+  /// Return number of Group Objects
+  int userLength() {
+    return allUsers.length;
+  }
+
   /// Return single User object, search with their name.
   User getUserByName(String name) {
     return allUsers.firstWhere((user) => user.displayName == name);
@@ -21,6 +26,12 @@ class UserList {
 
   /// Return single User object, search with their email.
   User? getUserByEmail(String email) {
+    return allUsers.firstWhereOrNull((user) => user.email == email);
+  }
+
+  /// Return single User object, search with their email.
+  User? getUserByPotentialEmail(String? email) {
+    if(email == null) return null;
     return allUsers.firstWhereOrNull((user) => user.email == email);
   }
 
@@ -38,197 +49,182 @@ class UserList {
   String? getPassword(String email) {
     return getUserByEmail(email)?.getPassword();
   }
+
+  /// Add a user
+  void addUser(User user) {
+    allUsers.add(user);
+  }
 }
 
 /// DELETE THIS BOTTOM SECTION AFTER GETTING REAL DB
 
 final User friend1 = User(
-  'user-111',
-  'email@one.edu',
-  'Friend1',
-  '',
-  'Finance',
-  'December 2025',
-  'School makes me wanna wake up every morning!',
-  [],
-  ['assets/images/friend.png'],
-  ['group-456'],
-  ['event-111'],
-  ['Finance', 'Business'],
-  'password',
+  uid: 'user-006',
+  email: 'email@one.edu',
+  displayName: 'Friend1',
+  pfp: '',
+  major: 'Finance',
+  projectedGraduation: 'December 2025',
+  status: 'School makes me wanna wake up every morning!',
+  friends: [],
+  groupIDs: ['group-456'],
+  eventIDs: ['event-111'],
+  interests: ['Finance', 'Business'],
+  password: 'password',
 );
 
 final User friend2 = User(
-  'user-222',
-  'email@two.edu',
-  'Friend2',
-  '',
-  'Finance',
-  'May 2025',
-  'I never wanna leave school!',
-  [friend1],
-  ['assets/images/friend.png'],
-  ['group-123'],
-  ['event-222'],
-  [],
-  'changeme',
+  uid: 'user-007',
+  email: 'email@two.edu',
+  displayName: 'Friend2',
+  pfp: '',
+  major: 'Finance',
+  projectedGraduation: 'May 2025',
+  status: 'I never wanna leave school!',
+  friends: [friend1],
+  groupIDs:['group-123'],
+  eventIDs: ['event-222'],
+  interests: [],
+  password: 'changeme',
 );
 
 /// The mock users DB
 final List<User> mockUsers = [
   User(
-    'user-001',
-    'braddahal@foo.edu',
-    'Albert Flores',
-    'assets/images/albert.png',
-    'Computer Science',
-    'Spring 2024',
-    'Almost Friday!',
-    [
+    uid: 'user-001',
+    email: 'braddahal@foo.edu',
+    displayName: 'Albert Flores',
+    pfp: 'assets/images/albert.png',
+    major: 'Computer Science',
+    projectedGraduation: 'Spring 2024',
+    status: 'Almost Friday!',
+    friends: [
       friend1,
     ],
-    [
-      'assets/images/Feed1.png',
-    ],
-    [
+    groupIDs:[
       'group-123',
       'group-456',
     ],
-    [
+    eventIDs: [
       'event-111',
       'event-222',
     ],
-    ['Mathematics', 'Computer Science'],
-    'imthebest',
+    interests: ['Mathematics', 'Computer Science'],
+    password: 'imthebest',
   ),
   User(
-    'user-002',
-    'bmiller@foo.edu',
-    'Bella Miller',
-    'assets/images/bella.png',
-    'Liberal Arts',
-    'Fall 2025',
-    'I need a nap.',
-    [
+    uid: 'user-002',
+    email: 'bmiller@foo.edu',
+    displayName: 'Bella Miller',
+    pfp: 'assets/images/bella.png',
+    major: 'Liberal Arts',
+    projectedGraduation: 'Fall 2025',
+    status: 'I need a nap.',
+    friends: [
       friend1,
       friend2,
     ],
-    [
-      'assets/images/Feed1.png',
-    ],
-    [
+    groupIDs:[
       'group-123',
     ],
-    [
+    eventIDs: [
       'event-111',
       'event-333',
     ],
-    ['Art', 'Graphic Design'],
-    'noimthebest',
+    interests: ['Art', 'Graphic Design'],
+    password: 'noimthebest',
   ),
   User(
-    'user-003',
-    'coolcaleb@foo.edu',
-    'Caleb Smith',
-    'assets/images/caleb.png',
-    'Mathematics',
-    'Fall 2023',
-    'I love math!',
-    [
+    uid: 'user-003',
+    email: 'coolcaleb@foo.edu',
+    displayName: 'Caleb Smith',
+    pfp: 'assets/images/caleb.png',
+    major: 'Mathematics',
+    projectedGraduation: 'Fall 2023',
+    status: 'I love math!',
+    friends: [
       friend2,
     ],
-    [
-      'assets/images/Feed1.png',
-    ],
-    [
+    groupIDs:[
       'group-456',
     ],
-    [
+    eventIDs: [
       'event-222',
       'event-333',
     ],
-    ['Business', 'Computer Science'],
-    'calebsmith',
+    interests: ['Business', 'Computer Science'],
+    password: 'calebsmith',
   ),
   User(
-    'user-004',
-    'dbonejones@foo.edu',
-    'Diana Jones',
-    'assets/images/diana.png',
-    'Graphic Design',
-    'Spring 2024',
-    'I love art!',
-    [
+    uid: 'user-004',
+    email: 'dbonejones@foo.edu',
+    displayName: 'Diana Jones',
+    pfp: 'assets/images/diana.png',
+    major: 'Graphic Design',
+    projectedGraduation: 'Spring 2024',
+    status: 'I love art!',
+    friends: [
       friend1,
     ],
-    [
-      'assets/images/Feed1.png',
-    ],
-    [
+    groupIDs:[
       'group-789',
       'group-456',
     ],
-    [
+    eventIDs: [
       'event-111',
       'event-222',
     ],
-    [],
-    'dianajones1',
+    interests: [],
+    password: 'dianajones1',
   ),
   User(
-    'user-005',
-    'brown@foo.edu',
-    'Ethan Brown',
-    'assets/images/ethan.png',
-    'Business',
-    'Fall 2025',
-    'I love business!',
-    [
+    uid: 'user-005',
+    email: 'brown@foo.edu',
+    displayName: 'Ethan Brown',
+    pfp: 'assets/images/ethan.png',
+    major: 'Business',
+    projectedGraduation: 'Fall 2025',
+    status: 'I love business!',
+    friends: [
       friend1,
       friend2,
     ],
-    [
-      'assets/images/Feed1.png',
-    ],
-    [
+    groupIDs:[
       'group-123',
       'group-456',
       'group-789',
     ],
-    [
+    eventIDs: [
       'event-111',
       'event-222',
       'event-333',
     ],
-    ['Computer Science', 'Mathematics'],
-    'brownisthebest',
+    interests: ['Computer Science', 'Mathematics'],
+    password: 'brownisthebest',
   ),
   friend1,
   friend2,
   User(
-    'user-006',
-    'kenjisan@hawaii.edu',
-    'Kenji Sanehira',
-    'assets/images/Logo.png',
-    'Computer Science',
-    'Spring 2024',
-    'This is an annoying test',
-    [
+    uid: 'user-008',
+    email: 'kenjisan@hawaii.edu',
+    displayName: 'Kenji Sanehira',
+    pfp: 'assets/images/Logo.png',
+    major: 'Computer Science',
+    projectedGraduation: 'Spring 2024',
+    status: 'This is an annoying test',
+    friends: [
       friend1,
     ],
-    [
-      'assets/images/Feed1.png',
-    ],
-    [
+    groupIDs:[
       'group-123',
       'group-456',
     ],
-    [
+    eventIDs: [
       'event-111',
       'event-222',
     ],
-    ['Computer Science'],
-    'test01',
+    interests: ['Computer Science'],
+    password: 'test01',
   ),
 ];
 

@@ -1,4 +1,4 @@
-import 'package:connectuni/features/authentication/presentation/signup.dart';
+import 'package:connectuni/features/user/TempDel/signup.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_form_builder/flutter_form_builder.dart';
@@ -7,8 +7,8 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import '../../group/presentation/form-fields/login_email_field.dart';
 import '../../group/presentation/form-fields/login_password_field.dart';
 import '../../home/presentation/home.dart';
-import '../../user/data/user_providers.dart';
-import '../../user/domain/user_list.dart';
+import '../data/user_providers.dart';
+import '../domain/user_list.dart';
 
 class LoginPage extends ConsumerStatefulWidget {
   const LoginPage({Key? key}) : super(key: key);

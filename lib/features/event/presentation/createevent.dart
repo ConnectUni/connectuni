@@ -7,7 +7,7 @@ import '../domain/event.dart';
 import '../domain/event_list.dart';
 import 'search_events_screen.dart';
 import '../../group/data/group_providers.dart';
-import 'event_form_fields.dart';
+import 'form-fields/event_form_fields.dart';
 
 
 

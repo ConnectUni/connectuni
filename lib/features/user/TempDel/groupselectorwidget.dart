@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import '../../user/data/user_providers.dart';
-import '../data/group_providers.dart';
-import '../domain/group.dart';
-import '../domain/group_list.dart';
-import '../../user/domain/user.dart';
-import '../../user/domain/user_list.dart';
+import '../data/user_providers.dart';
+import '../../group/data/group_providers.dart';
+import '../../group/domain/group.dart';
+import '../../group/domain/group_list.dart';
+import '../domain/user.dart';
+import '../domain/user_list.dart';
 
 class GroupSelector extends ConsumerStatefulWidget {
   const GroupSelector({super.key});

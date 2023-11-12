@@ -5,6 +5,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import '../../home/presentation/home.dart';
 import '../../user/data/user_providers.dart';
 import '../../user/domain/user.dart';
+import '../../user/presentation/add_user.dart';
 import 'decorations.dart';
 import 'forgot_password_view.dart';
 import 'verify_email_view.dart';
@@ -30,43 +31,31 @@ class SignInView extends ConsumerWidget {
         AuthStateChangeAction<SignedIn>((context, state) {
           if (!state.user!.emailVerified) {
             Navigator.pushNamed(context, VerifyEmailView.routeName);
+          } else if (usersDB.getUserByPotentialEmail(state.user!.email!) == null) {
+            Navigator.pushReplacementNamed(context, AddUser.routeName);
           } else {
-            String email = state.user!.email!;
-            User exists = usersDB.getUserByEmail(email)!;
-            if (exists == null) {
-              Navigator.pushReplacementNamed(context, HomePage.routeName);
-            } else {
-              ref.read(currentUserProvider.state).state = exists.uid;
-              Navigator.pushReplacementNamed(context, HomePage.routeName);
-            }
+            ref.read(currentUserProvider.state).state = usersDB.getUserByEmail(state.user!.email!)!.uid;
+            Navigator.pushReplacementNamed(context, HomePage.routeName);
           }
         }),
         AuthStateChangeAction<UserCreated>((context, state) {
           if (!state.credential.user!.emailVerified) {
             Navigator.pushNamed(context, VerifyEmailView.routeName);
+          } else if (usersDB.getUserByPotentialEmail(state.credential.user!.email!) == null) {
+            Navigator.pushReplacementNamed(context, AddUser.routeName);
           } else {
-            String email = state.credential.user!.email!;
-            User exists = usersDB.getUserByEmail(email)!;
-            if (exists == null) {
-              Navigator.pushReplacementNamed(context, HomePage.routeName);
-            } else {
-              ref.read(currentUserProvider.state).state = exists.uid;
-              Navigator.pushReplacementNamed(context, HomePage.routeName);
-            }
+            ref.read(currentUserProvider.state).state = usersDB.getUserByEmail(state.credential.user!.email!)!.uid;
+            Navigator.pushReplacementNamed(context, HomePage.routeName);
           }
         }),
         AuthStateChangeAction<CredentialLinked>((context, state) {
           if (!state.user.emailVerified) {
             Navigator.pushNamed(context, VerifyEmailView.routeName);
+          } else if (usersDB.getUserByPotentialEmail(state.user!.email!) == null) {
+            Navigator.pushReplacementNamed(context, AddUser.routeName);
           } else {
-            String email = state.user.email!;
-            User exists = usersDB.getUserByEmail(email)!;
-            if (exists == null) {
-              Navigator.pushReplacementNamed(context, HomePage.routeName);
-            } else {
-              ref.read(currentUserProvider.state).state = exists.uid;
-              Navigator.pushReplacementNamed(context, HomePage.routeName);
-            }
+            ref.read(currentUserProvider.state).state = usersDB.getUserByEmail(state.user!.email!)!.uid;
+            Navigator.pushReplacementNamed(context, HomePage.routeName);
           }
         }),
       ],

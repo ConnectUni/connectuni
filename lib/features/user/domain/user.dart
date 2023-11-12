@@ -9,27 +9,26 @@ class User {
   String projectedGraduation;
   String status;
   List<User> friends;
-  List<String> images;
   List<String> groupIDs;
   List<String> eventIDs;
   List<String> interests;
   String password;
 
   /// Constructor
-  User(
-      this.uid,
-      this.email,
-      this.displayName,
-      this.pfp,
-      this.major,
-      this.projectedGraduation,
-      this.status,
-      this.friends,
-      this.images,
-      this.groupIDs,
-      this.eventIDs,
-      this.interests,
-      this.password);
+  User({
+    required this.uid,
+    required this.email,
+    required this.displayName,
+    required this.pfp,
+    required this.major,
+    required this.projectedGraduation,
+    required this.status,
+    required this.friends,
+    required this.groupIDs,
+    required this.eventIDs,
+    required this.interests,
+    required this.password,
+  });
 
   /// Change name.
   void setUserName(String newName) {
@@ -64,16 +63,6 @@ class User {
   /// Delete User from friends list.
   void deleteFriend(User deleteFriend) {
     friends.remove(deleteFriend);
-  }
-
-  /// Add image to profile gallery.
-  void addImage(String newImage) {
-    images.add(newImage);
-  }
-
-  /// Delete image from profile gallery.
-  void deleteImage(String deleteImage) {
-    images.remove(deleteImage);
   }
 
   /// Add a new group ID.
@@ -136,10 +125,6 @@ class User {
 
   List<User> getFriends() {
     return friends;
-  }
-
-  List<String> getImages() {
-    return images;
   }
 
   List<String> getGroupIDs() {
