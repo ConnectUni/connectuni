@@ -1,19 +1,23 @@
 import 'package:firebase_ui_auth/firebase_ui_auth.dart' hide ForgotPasswordView;
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../../home/presentation/home.dart';
+import '../../user/data/user_providers.dart';
+import '../../user/domain/user.dart';
 import 'decorations.dart';
 import 'forgot_password_view.dart';
 import 'verify_email_view.dart';
 
 /// Builds the page containing fields to enter a username and password, plus buttons.
-class SignInView extends StatelessWidget {
+class SignInView extends ConsumerWidget {
   const SignInView({Key? key}) : super(key: key);
 
   static const routeName = '/signin';
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
+    final usersDB = ref.watch(userDBProvider);
     return SignInScreen(
       actions: [
         ForgotPasswordAction((context, email) {
@@ -27,21 +31,42 @@ class SignInView extends StatelessWidget {
           if (!state.user!.emailVerified) {
             Navigator.pushNamed(context, VerifyEmailView.routeName);
           } else {
-            Navigator.pushReplacementNamed(context, HomePage.routeName);
+            String email = state.user!.email!;
+            User exists = usersDB.getUserByEmail(email)!;
+            if (exists == null) {
+              Navigator.pushReplacementNamed(context, HomePage.routeName);
+            } else {
+              ref.read(currentUserProvider.state).state = exists.uid;
+              Navigator.pushReplacementNamed(context, HomePage.routeName);
+            }
           }
         }),
         AuthStateChangeAction<UserCreated>((context, state) {
           if (!state.credential.user!.emailVerified) {
             Navigator.pushNamed(context, VerifyEmailView.routeName);
           } else {
-            Navigator.pushReplacementNamed(context, HomePage.routeName);
+            String email = state.credential.user!.email!;
+            User exists = usersDB.getUserByEmail(email)!;
+            if (exists == null) {
+              Navigator.pushReplacementNamed(context, HomePage.routeName);
+            } else {
+              ref.read(currentUserProvider.state).state = exists.uid;
+              Navigator.pushReplacementNamed(context, HomePage.routeName);
+            }
           }
         }),
         AuthStateChangeAction<CredentialLinked>((context, state) {
           if (!state.user.emailVerified) {
             Navigator.pushNamed(context, VerifyEmailView.routeName);
           } else {
-            Navigator.pushReplacementNamed(context, HomePage.routeName);
+            String email = state.user.email!;
+            User exists = usersDB.getUserByEmail(email)!;
+            if (exists == null) {
+              Navigator.pushReplacementNamed(context, HomePage.routeName);
+            } else {
+              ref.read(currentUserProvider.state).state = exists.uid;
+              Navigator.pushReplacementNamed(context, HomePage.routeName);
+            }
           }
         }),
       ],

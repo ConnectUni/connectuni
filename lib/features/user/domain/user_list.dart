@@ -205,6 +205,31 @@ final List<User> mockUsers = [
   ),
   friend1,
   friend2,
+  User(
+    'user-006',
+    'kenjisan@hawaii.edu',
+    'Kenji Sanehira',
+    'assets/images/Logo.png',
+    'Computer Science',
+    'Spring 2024',
+    'This is an annoying test',
+    [
+      friend1,
+    ],
+    [
+      'assets/images/Feed1.png',
+    ],
+    [
+      'group-123',
+      'group-456',
+    ],
+    [
+      'event-111',
+      'event-222',
+    ],
+    ['Computer Science'],
+    'test01',
+  ),
 ];
 
 //TODO: REMOVE THIS LATER WHEN WE FIGURE OUT HOW TO WORK BETWEEN THESE TWO.
