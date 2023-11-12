@@ -54,6 +54,39 @@ class UserList {
   void addUser(User user) {
     allUsers.add(user);
   }
+
+  void updateUser ({
+  required String uid,
+    required String email,
+    required String displayName,
+    required String pfp,
+    required String major,
+    required String projectedGraduation,
+    required String status,
+    required List<User> friends,
+    required List<String> groupIDs,
+    required List<String> eventIDs,
+    required List<String> interests,
+    required String password,
+  }) {
+    allUsers.removeWhere((user) => user.uid == uid);
+    allUsers.add(
+      User(
+        uid: uid,
+        email: email,
+        displayName: displayName,
+        pfp: pfp,
+        major: major,
+        projectedGraduation: projectedGraduation,
+        status: status,
+        friends: friends,
+        groupIDs: groupIDs,
+        eventIDs: eventIDs,
+        interests: interests,
+        password: password,
+      ),
+    );
+  }
 }
 
 /// DELETE THIS BOTTOM SECTION AFTER GETTING REAL DB
