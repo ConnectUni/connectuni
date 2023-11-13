@@ -29,6 +29,28 @@ class _GroupInfoState extends ConsumerState<GroupInfo> {
     final GroupList groupsDB = ref.watch(groupsDBProvider);
     final String currentUser = ref.watch(currentUserProvider);
     Group groupData = groupsDB.getGroupById(widget.id);
+
+    Widget buildPopupDialog(BuildContext context) {
+      return AlertDialog(
+        title: const Text('Sad to see you leave!'),
+        content: const Column(
+          mainAxisSize: MainAxisSize.min,
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: <Widget>[
+            Text("You have left the group."),
+          ],
+        ),
+        actions: <Widget>[
+          TextButton(
+            onPressed: () {
+              Navigator.of(context).pop();
+            },
+            child: const Text('Close'),
+          ),
+        ],
+      );
+    }
+
     return Scaffold(
       appBar: AppBar(
         leading: const BackButton(),
@@ -127,6 +149,11 @@ class _GroupInfoState extends ConsumerState<GroupInfo> {
                       groupData.removeUserId(currentUser);
                       Navigator.pushNamedAndRemoveUntil(
                           context, HomePage.routeName, (route) => false);
+                      showDialog(
+                        context: context,
+                        builder: (BuildContext context) =>
+                            buildPopupDialog(context),
+                      );
                     },
                     style: ButtonStyle(
                       backgroundColor:
