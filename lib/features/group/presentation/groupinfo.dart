@@ -2,6 +2,7 @@ import 'package:connectuni/features/group/presentation/group_member_widget.dart'
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:connectuni/features/group/domain/group.dart';
+import '../../home/presentation/home.dart';
 import '../../user/data/user_providers.dart';
 import '../data/group_providers.dart';
 import '../domain/group_list.dart';
@@ -10,7 +11,6 @@ import 'edit_group.dart';
 
 /// Information page for a specific group that displays the group members as well as a description of the selected group.
 /// There is an icon at the upper right-hand corner for more statistic-related properties of the group.
-
 
 class GroupInfo extends ConsumerStatefulWidget {
   final String id;
@@ -40,7 +40,8 @@ class _GroupInfoState extends ConsumerState<GroupInfo> {
               semanticLabel: 'Information',
             ),
             onPressed: () {
-              print('Go to Information page'); // 10/20/23: Is this not the information page? do we need this icon?
+              print(
+                  'Go to Information page'); // 10/20/23: Is this not the information page? do we need this icon?
             },
           ),
         ],
@@ -62,10 +63,9 @@ class _GroupInfoState extends ConsumerState<GroupInfo> {
             padding: const EdgeInsets.all(10),
             child: Column(
               children: [
-
-                ...groupData.getAllUsersInGroup()
-                    .map((user) => GroupMemberWidget(user: user)
-                ),
+                ...groupData
+                    .getAllUsersInGroup()
+                    .map((user) => GroupMemberWidget(user: user)),
               ],
             ),
           ),
@@ -103,42 +103,40 @@ class _GroupInfoState extends ConsumerState<GroupInfo> {
           //Display a button to leave the group if the user is in the group.
           if (groupData.userIDs.contains(currentUser))
             Padding(
-              padding: const EdgeInsets.all(10.0),
-              //TODO: Make this button conditional on whether or not the user is in the group.
-              child:
-                Column(
-                  children: [
-                    TextButton(
-                      onPressed: () {
-                        Navigator.push(
-                            context, MaterialPageRoute(builder: (context) {
-                          return EditGroup(id: widget.id);
-                        }));
-                      },
-                      style: ButtonStyle(
-                        backgroundColor: MaterialStateProperty.all<Color>(Colors.lightBlueAccent),
-                        foregroundColor:
-                        MaterialStateProperty.all<Color>(Colors.white),
-                      ),
-                      child: const Text('EDIT THIS GROUP'),
+                padding: const EdgeInsets.all(10.0),
+                //TODO: Make this button conditional on whether or not the user is in the group.
+                child: Column(children: [
+                  TextButton(
+                    onPressed: () {
+                      Navigator.push(context,
+                          MaterialPageRoute(builder: (context) {
+                        return EditGroup(id: widget.id);
+                      }));
+                    },
+                    style: ButtonStyle(
+                      backgroundColor: MaterialStateProperty.all<Color>(
+                          Colors.lightBlueAccent),
+                      foregroundColor:
+                          MaterialStateProperty.all<Color>(Colors.white),
                     ),
-                    TextButton(
-                      onPressed: () {
-                        //Remove the user from the group's database. Then Refresh the group's database.
-                        groupData.removeUserId(currentUser);
-                        //TODO: Remove groupId from user.
-                        ref.refresh(groupsDBProvider);
-                      },
-                      style: ButtonStyle(
-                        backgroundColor: MaterialStateProperty.all<Color>(Colors.red),
-                        foregroundColor:
-                        MaterialStateProperty.all<Color>(Colors.white),
-                      ),
-                      child: const Text('LEAVE THIS GROUP'),
+                    child: const Text('EDIT THIS GROUP'),
+                  ),
+                  TextButton(
+                    onPressed: () {
+                      //Remove the user from the group's database. Then Refresh the group's database.
+                      groupData.removeUserId(currentUser);
+                      Navigator.pushNamedAndRemoveUntil(
+                          context, HomePage.routeName, (route) => false);
+                    },
+                    style: ButtonStyle(
+                      backgroundColor:
+                          MaterialStateProperty.all<Color>(Colors.red),
+                      foregroundColor:
+                          MaterialStateProperty.all<Color>(Colors.white),
                     ),
-                  ]
-                )
-            ),
+                    child: const Text('LEAVE THIS GROUP'),
+                  ),
+                ])),
           //Display a button to join the group if the user is not in the group.
           if (!groupData.userIDs.contains(currentUser))
             Padding(
