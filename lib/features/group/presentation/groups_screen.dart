@@ -1,6 +1,11 @@
+import 'package:connectuni/features/group/presentation/add_group.dart';
+import 'package:connectuni/features/group/presentation/search_groups_screen.dart';
+import 'package:connectuni/features/home/presentation/search_page_controller.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:connectuni/features/group/presentation/group_chat_widget.dart';
 import 'package:flutter/material.dart';
+import '../../home/presentation/home.dart';
 import '../../user/data/user_providers.dart';
 import '../data/group_providers.dart';
 import '../domain/group_list.dart';
@@ -19,6 +24,8 @@ class _GroupsScreenState extends ConsumerState<GroupsScreen> {
   Widget build(BuildContext context) {
     final GroupList groupsDB = ref.watch(groupsDBProvider);
     final String userId = ref.watch(currentUserProvider);
+    late PageController _pageController;
+    _pageController = PageController();
     return Scaffold(
       appBar: AppBar(
         title: const Text('My Groups'),
@@ -51,20 +58,25 @@ class _GroupsScreenState extends ConsumerState<GroupsScreen> {
           ...groupsDB
               .getGroupsByUser(userId)
               .map((gName) => GroupChatWidget(id: gName.groupID)),
-          const Center(
-            child:
-            Padding(
-              padding: EdgeInsets.only(bottom: 10.0),
-              child: IconButton(
-                onPressed: null,
-                icon: Icon(
-                  Icons.add_circle_outline,
-                  color: Colors.grey,
-                  size: 40.0,
-                ),
+          Center(
+              child: Padding(
+            padding: const EdgeInsets.only(bottom: 10.0),
+            child: IconButton(
+              onPressed: () {
+                Navigator.pushReplacement(
+                  context,
+                  CupertinoPageRoute(
+                      builder: (context) =>
+                          SearchGroupsScreen(pageController: _pageController)),
+                );
+              },
+              icon: const Icon(
+                Icons.add_circle_outline,
+                color: Colors.grey,
+                size: 40.0,
               ),
-            )
-          ),
+            ),
+          )),
         ],
       ),
     );
