@@ -12,7 +12,8 @@ class OtherUserProfile extends ConsumerWidget {
 
   bool isFriend(User user, WidgetRef ref) {
     final UserList userList = ref.read(userDBProvider);
-    final User currentUser = userList.getUserByID(ref.read(currentUserProvider));
+    final User currentUser =
+        userList.getUserByID(ref.read(currentUserProvider));
     if (currentUser.friends.contains(user)) {
       return true;
     }
@@ -26,88 +27,115 @@ class OtherUserProfile extends ConsumerWidget {
     User thisUser = usersDB.getUserByID(uid);
     final User currentUser = usersDB.getUserByID(ref.read(currentUserProvider));
     final GroupList groupsDB = ref.watch(groupsDBProvider);
-    return Scaffold(
-      appBar: AppBar(
-        title: Text(user.displayName),
-        actions: [
-          IconButton(
-            icon: const Icon(
-              Icons.message,
-              semanticLabel: 'message',
-            ),
+
+    bool memberOfGroup(String groupId) {
+      if (currentUser.getGroupIDs().contains(groupId)) {
+        return true;
+      }
+      return false;
+    }
+
+    Widget buildPopupDialog(BuildContext context) {
+      return AlertDialog(
+        title: const Text('Sad to see you leave!'),
+        content: const Column(
+          mainAxisSize: MainAxisSize.min,
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: <Widget>[
+            Text("You have left the group."),
+          ],
+        ),
+        actions: <Widget>[
+          TextButton(
             onPressed: () {
-              // TODO Add functionality to message user
+              Navigator.of(context).pop();
             },
+            child: const Text('Close'),
           ),
-         isFriend(user, ref) ?
-              IconButton(
-                  onPressed: () {
-                    currentUser.friends.remove(user);
-                  },
-                  icon: const Icon(
-                    Icons.person_remove,
-                    semanticLabel: 'remove friend',
-                  ),
-              ) :
-              IconButton(
-                  onPressed: () {
-                    currentUser.friends.remove(user);
-                  },
-                  icon: const Icon(
-                    Icons.person_add,
-                    semanticLabel: 'add friend',
-                  )
-              )
         ],
-      ),
-      body: ListView(
-        padding: const EdgeInsets.all(20.0),
-        children: [
-          Column(
-              children: [
-                CircleAvatar(
-                  radius: 50,
-                  backgroundImage: AssetImage(user.pfp),
+      );
+    }
+
+    return Scaffold(
+        appBar: AppBar(
+          title: Text(user.displayName),
+          actions: [
+            IconButton(
+              icon: const Icon(
+                Icons.message,
+                semanticLabel: 'message',
+              ),
+              onPressed: () {
+                // TODO Add functionality to message user
+              },
+            ),
+            isFriend(user, ref)
+                ? IconButton(
+                    onPressed: () {
+                      currentUser.friends.remove(user);
+                    },
+                    icon: const Icon(
+                      Icons.person_remove,
+                      semanticLabel: 'remove friend',
+                    ),
+                  )
+                : IconButton(
+                    onPressed: () {
+                      currentUser.friends.remove(user);
+                    },
+                    icon: const Icon(
+                      Icons.person_add,
+                      semanticLabel: 'add friend',
+                    ))
+          ],
+        ),
+        body: ListView(
+          padding: const EdgeInsets.all(20.0),
+          children: [
+            Column(children: [
+              CircleAvatar(
+                radius: 50,
+                backgroundImage: AssetImage(user.pfp),
+              ),
+              Text(
+                user.displayName,
+                style: const TextStyle(
+                  fontSize: 23.0,
+                  fontWeight: FontWeight.bold,
                 ),
-                Text(
-                  user.displayName,
-                  style: const TextStyle(
-                    fontSize: 23.0,
-                    fontWeight: FontWeight.bold,
-                  ),
+              ),
+              Text(
+                'Major: ${user.major}',
+                style: const TextStyle(
+                  fontSize: 15.0,
                 ),
-                Text(
-                  'Major: ${user.major}',
-                  style: const TextStyle(
-                    fontSize: 15.0,
-                  ),
+              ),
+              Text(
+                'Projected Grad: ${user.projectedGraduation}',
+                style: const TextStyle(
+                  fontSize: 15.0,
                 ),
-                Text(
-                  'Projected Grad: ${user.projectedGraduation}',
-                  style: const TextStyle(
-                    fontSize: 15.0,
-                  ),
+              ),
+              Text(
+                'Status: ${user.status}',
+                style: const TextStyle(
+                  fontSize: 15.0,
                 ),
-                Text(
-                  'Status: ${user.status}',
-                  style: const TextStyle(
-                    fontSize: 15.0,
-                  ),
+              ),
+              Text(
+                'Friends: ${user.friends.length}',
+                style: const TextStyle(
+                  fontSize: 15.0,
                 ),
-                Text(
-                  'Friends: ${user.friends.length}',
-                  style: const TextStyle(
-                    fontSize: 15.0,
-                  ),
-                ),
-                const Divider(
-                  height:7,
-                  thickness: 2,
-                  indent: 20,
-                  endIndent: 20,
-                  color: Colors.black,
-                ),
-                Container(
+              ),
+              const Divider(
+                height: 7,
+                thickness: 2,
+                indent: 20,
+                endIndent: 20,
+                color: Colors.black,
+              ),
+              Container(
                   padding: const EdgeInsets.all(10.0),
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.stretch,
@@ -160,12 +188,10 @@ class OtherUserProfile extends ConsumerWidget {
                       ),
                       textAlign: TextAlign.left,
                     ),
-                      Column(
-                        children: [
-                          ...groupsDB
-                              .getGroupsByUser(user.uid)
-                              .map((group) =>
-                              Card(
+                    Column(
+                      children: [
+                        ...groupsDB.getGroupsByUser(user.uid).map(
+                              (group) => Card(
                                 elevation: 8,
                                 color: Colors.white,
                                 shape: RoundedRectangleBorder(
@@ -199,24 +225,58 @@ class OtherUserProfile extends ConsumerWidget {
                                               "${group.userIDs.length} people"),
                                         )),
                                     Padding(
-                                        padding:
-                                            const EdgeInsets.only(right: 15.0),
-                                        child: Align(
-                                          alignment: Alignment.bottomRight,
-                                          child: TextButton(
-                                            onPressed: () {group.addUserId(user.uid);},
-                                            style: ButtonStyle(
-                                              backgroundColor:
-                                                  MaterialStateProperty.all<
-                                                      Color>(Colors.green),
-                                              foregroundColor:
-                                                  MaterialStateProperty.all<
-                                                      Color>(Colors.white),
+                                      padding:
+                                          const EdgeInsets.only(right: 15.0),
+                                      child: memberOfGroup(group.getGroupID())
+                                          ? Align(
+                                              alignment: Alignment.bottomRight,
+                                              child: TextButton(
+                                                onPressed: () {
+                                                  //Remove the user from the group's database. Then Refresh the group's database.
+                                                  group.removeUserId(
+                                                      currentUser.uid);
+                                                  // //TODO: Remove groupId from user.
+
+                                                  showDialog(
+                                                    context: context,
+                                                    builder: (BuildContext
+                                                            context) =>
+                                                        buildPopupDialog(
+                                                            context),
+                                                  );
+                                                },
+                                                style: ButtonStyle(
+                                                  backgroundColor:
+                                                      MaterialStateProperty.all<
+                                                              Color>(
+                                                          Colors.redAccent),
+                                                  foregroundColor:
+                                                      MaterialStateProperty.all<
+                                                          Color>(Colors.white),
+                                                ),
+                                                child: Text("LEAVE"),
+                                              ),
+                                            )
+                                          : Align(
+                                              alignment: Alignment.bottomRight,
+                                              child: TextButton(
+                                                  onPressed: () {
+                                                    group.addUserId(user.uid);
+                                                  },
+                                                  style: ButtonStyle(
+                                                    backgroundColor:
+                                                        MaterialStateProperty
+                                                            .all<Color>(
+                                                                Colors.green),
+                                                    foregroundColor:
+                                                        MaterialStateProperty
+                                                            .all<Color>(
+                                                                Colors.white),
+                                                  ),
+                                                  child: Text("JOIN")),
                                             ),
-                                            child: const Text('Join'),
-                                          ),
-                                        )),
-                                    const SizedBox(height: 10)
+                                    ),
+                                    const SizedBox(height: 10),
                                   ],
                                 ),
                               ),

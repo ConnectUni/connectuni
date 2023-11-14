@@ -116,9 +116,7 @@ final List<User> mockUsers = [
     [
       'assets/images/Feed1.png',
     ],
-    [
-      'group-123',
-    ],
+    ['group-123', 'group-003'],
     [
       'event-111',
       'event-333',
