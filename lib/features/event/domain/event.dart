@@ -1,3 +1,4 @@
+/***
 /// The Event object.
 class SingleEvent {
   final String eventID;
@@ -49,4 +50,43 @@ class SingleEvent {
   bool isUserInEvent(String userID) {
     return userIDs.contains(userID);
   }
+}
+*/
+import 'package:freezed_annotation/freezed_annotation.dart';
+
+part 'event.freezed.dart';
+part 'event.g.dart';
+
+@Freezed()
+class SingleEvent with _$SingleEvent {
+  const SingleEvent._();
+  const factory SingleEvent({
+    required final String eventID,
+    required final String eventName,
+    required final String eventLocation,
+    required final DateTime eventDate,
+    required final String groupID,
+    required String eventIcon,
+    required String eventDescription,
+    required List<String> userIDs,
+    required List<String> interests,
+}) = _SingleEvent;
+  
+  /// Add a user to the Event, search with their userID
+  void addUser(String userID) {
+    userIDs.add(userID);
+  }
+
+  /// Remove a user from the Event, search with their userID
+  void removeUser(String userID) {
+    if (userIDs.contains(userID)) {
+      userIDs.remove(userID);
+    }
+  }
+
+  /// Check if a user is in the Event, search with their userID
+  bool isUserInEvent(String userID) {
+    return userIDs.contains(userID);
+  }
+  factory SingleEvent.fromJson(Map<String, dynamic> json) => _$SingleEventFromJson(json);
 }
