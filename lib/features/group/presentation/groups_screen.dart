@@ -1,4 +1,3 @@
-import 'package:connectuni/features/group/presentation/search_groups_screen.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:connectuni/features/group/presentation/group_chat_widget.dart';
