@@ -2,7 +2,6 @@ import 'package:connectuni/features/user/domain/user.dart';
 import 'package:flutter/material.dart';
 import 'package:connectuni/features/user/domain/user_list.dart';
 import '../../group/data/group_providers.dart';
-import '../../group/domain/group.dart';
 import '../../group/domain/group_list.dart';
 import '../data/user_providers.dart';
 import 'friend_list.dart';
@@ -17,7 +16,8 @@ class CurrentUserProfilePage extends ConsumerStatefulWidget {
   CurrentUserProfilePageState createState() => CurrentUserProfilePageState();
 }
 
-class CurrentUserProfilePageState extends ConsumerState<CurrentUserProfilePage> {
+class CurrentUserProfilePageState
+    extends ConsumerState<CurrentUserProfilePage> {
   int _selectedIndex = 0;
 
   void _onItemTapped(int index) {
@@ -31,8 +31,31 @@ class CurrentUserProfilePageState extends ConsumerState<CurrentUserProfilePage> 
   @override
   Widget build(BuildContext context) {
     final UserList userList = ref.watch(userDBProvider);
-    final User currentUser = userList.getUserByID(ref.watch(currentUserProvider));
+    final User currentUser =
+        userList.getUserByID(ref.watch(currentUserProvider));
     final GroupList groupDB = ref.watch(groupsDBProvider);
+
+    Widget buildPopupDialog(BuildContext context) {
+      return AlertDialog(
+        title: const Text('Sad to see you leave!'),
+        content: const Column(
+          mainAxisSize: MainAxisSize.min,
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: <Widget>[
+            Text("You have left the group."),
+          ],
+        ),
+        actions: <Widget>[
+          TextButton(
+            onPressed: () {
+              Navigator.of(context).pop();
+            },
+            child: const Text('Close'),
+          ),
+        ],
+      );
+    }
+
     return Scaffold(
         appBar: AppBar(
           title: const Text('My Profile'),
@@ -94,7 +117,9 @@ class CurrentUserProfilePageState extends ConsumerState<CurrentUserProfilePage> 
                   Padding(
                     padding: const EdgeInsets.all(10.0),
                     child: TextButton(
-                      onPressed: () => {ref.read(currentUserProvider.state).state = 'user-002'},
+                      onPressed: () => {
+                        ref.read(currentUserProvider.state).state = 'user-002'
+                      },
                       style: ButtonStyle(
                         backgroundColor:
                             MaterialStateProperty.all<Color>(Colors.green),
@@ -241,10 +266,17 @@ class CurrentUserProfilePageState extends ConsumerState<CurrentUserProfilePage> 
                                           alignment: Alignment.bottomRight,
                                           child: TextButton(
                                             onPressed: () {
-                                            //Remove the user from the group's database. Then Refresh the group's database.
-                                            group.removeUserId(currentUser.uid);
-                                             //TODO: Remove groupId from user.
-                                            ref.refresh(groupsDBProvider);
+                                              //Remove the user from the group's database. Then Refresh the group's database.
+                                              group.removeUserId(
+                                                  currentUser.uid);
+                                              // //TODO: Remove groupId from user.
+                                              ref.refresh(groupsDBProvider);
+                                              showDialog(
+                                                context: context,
+                                                builder: (BuildContext
+                                                        context) =>
+                                                    buildPopupDialog(context),
+                                              );
                                             },
                                             style: ButtonStyle(
                                               backgroundColor:
