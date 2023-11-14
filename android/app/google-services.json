@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "122536634837",
+    "project_id": "connectuni-48a92",
+    "storage_bucket": "connectuni-48a92.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:122536634837:android:b839b2f53d7fb6eccb355c",
+        "android_client_info": {
+          "package_name": "com.connectuni.connectuni"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCCEmsYUXeX9ZK6DBh6GydI9D9h0wukM1k"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

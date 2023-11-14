@@ -3,7 +3,7 @@ import '../domain/user.dart';
 import '../domain/user_list.dart';
 
 final userDBProvider = Provider<UserList>((ref) { return UserList(mockUsers); });
-final currentUserProvider = StateProvider<String>((ref) => 'user-001');
+final currentUserProvider = StateProvider<String>((ref) => 'user-000');
 /*
  * These are the state providers that will be used to check the selected
  * interests and the search query.
