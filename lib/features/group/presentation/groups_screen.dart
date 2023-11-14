@@ -1,16 +1,13 @@
-import 'package:connectuni/features/group/presentation/add_group.dart';
 import 'package:connectuni/features/group/presentation/search_groups_screen.dart';
-import 'package:connectuni/features/home/presentation/search_page_controller.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:connectuni/features/group/presentation/group_chat_widget.dart';
 import 'package:flutter/material.dart';
-import '../../home/presentation/home.dart';
 import '../../user/data/user_providers.dart';
 import '../data/group_providers.dart';
 import '../domain/group_list.dart';
-import '../../user/domain/user_list.dart';
 import '../../chat/presentation/chatpage.dart';
+import 'add_group.dart';
 
 class GroupsScreen extends ConsumerStatefulWidget {
   const GroupsScreen({Key? key}) : super(key: key);
@@ -63,12 +60,9 @@ class _GroupsScreenState extends ConsumerState<GroupsScreen> {
             padding: const EdgeInsets.only(bottom: 10.0),
             child: IconButton(
               onPressed: () {
-                Navigator.pushReplacement(
-                  context,
-                  CupertinoPageRoute(
-                      builder: (context) =>
-                          SearchGroupsScreen(pageController: _pageController)),
-                );
+                Navigator.push(context, MaterialPageRoute(builder: (context) {
+                  return AddGroup();
+                }));
               },
               icon: const Icon(
                 Icons.add_circle_outline,
