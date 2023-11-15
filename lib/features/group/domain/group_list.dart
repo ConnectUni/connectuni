@@ -70,22 +70,21 @@ class GroupList {
     required List<String> interests,
   }) {
     allGroups.removeWhere((group) => group.groupID == groupID);
-    allGroups.add(
-      Group(
-        groupID: groupID,
-        groupName: groupName,
-        semYear: semYear,
-        owner: owner,
-        groupImage: groupImage,
-        groupDescription: groupDescription,
-        newMessages: newMessages,
-        chatID: chatID,
-        eventIDs: eventIDs,
-        userIDs: userIDs,
-        interests: interests,
-      )
-    );
+    allGroups.add(Group(
+      groupID: groupID,
+      groupName: groupName,
+      semYear: semYear,
+      owner: owner,
+      groupImage: groupImage,
+      groupDescription: groupDescription,
+      newMessages: newMessages,
+      chatID: chatID,
+      eventIDs: eventIDs,
+      userIDs: userIDs,
+      interests: interests,
+    ));
   }
+
   /// Remove a group
   void removeGroup(Group group) {
     if (allGroups.contains(group)) {
@@ -189,7 +188,7 @@ final List<Group> allGroups = [
     ],
     chatID: 'chat-004',
     eventIDs: ['event-003', 'event-004'],
-    userIDs: ['user-001', 'user-002', 'user-003', 'user-004', 'user-005'],
+    userIDs: ['user-002', 'user-003', 'user-004', 'user-005'],
     interests: ['Mathematics'],
   ),
   Group(
@@ -213,7 +212,7 @@ final List<Group> allGroups = [
     ],
     chatID: 'chat-005',
     eventIDs: ['event-005'],
-    userIDs: ['user-001', 'user-002', 'user-003', 'user-004', 'user-005'],
+    userIDs: ['user-002', 'user-003', 'user-004', 'user-005'],
     interests: ['Computer Science'],
   ),
 ];
