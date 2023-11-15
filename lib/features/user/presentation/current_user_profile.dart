@@ -4,6 +4,7 @@ import 'package:connectuni/features/user/domain/user_list.dart';
 import '../../group/data/group_providers.dart';
 import '../../group/domain/group_list.dart';
 import '../data/user_providers.dart';
+import 'edit_user.dart';
 import 'friend_list.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
@@ -117,8 +118,11 @@ class CurrentUserProfilePageState
                   Padding(
                     padding: const EdgeInsets.all(10.0),
                     child: TextButton(
-                      onPressed: () => {
-                        ref.read(currentUserProvider.state).state = 'user-002'
+                      onPressed: () {
+                        Navigator.push(context,
+                            MaterialPageRoute(builder: (context) {
+                          return EditUser(id: currentUser.uid);
+                        }));
                       },
                       style: ButtonStyle(
                         backgroundColor:

@@ -1,8 +1,11 @@
 import 'package:connectuni/features/settings/presentation/app_theme.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import '../../authentication/presentation/login.dart';
+
+import '../../authentication/presentation/signin_view.dart';
+
 
 /// Settings page that allows the user to changes their preferences.
 
@@ -71,10 +74,8 @@ class _SettingsState extends ConsumerState<Settings> {
               padding: const EdgeInsets.all(10.0),
               child: TextButton(
                 onPressed: () => {
-                  Navigator.pushReplacement(
-                    context,
-                    CupertinoPageRoute(builder: (context) => const LoginPage()),
-                  )
+                  FirebaseAuth.instance.signOut(),
+                  Navigator.pushReplacementNamed(context, SignInView.routeName),
                 },
                 style: ButtonStyle(
                   backgroundColor:
