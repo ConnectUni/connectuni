@@ -232,11 +232,15 @@ class OtherUserProfile extends ConsumerWidget {
                                               alignment: Alignment.bottomRight,
                                               child: TextButton(
                                                 onPressed: () {
-                                                  //Remove the user from the group's database. Then Refresh the group's database.
+                                                  ///Remove the user from the group's database
                                                   group.removeUserId(
                                                       currentUser.uid);
-                                                  // //TODO: Remove groupId from user.
+                                                  ref.refresh(userDBProvider);
+                                                  ref.refresh(groupsDBProvider);
+                                                  ref.refresh(
+                                                      currentUserProvider);
 
+                                                  ///Modal notification that they left the group
                                                   showDialog(
                                                     context: context,
                                                     builder: (BuildContext
@@ -254,7 +258,7 @@ class OtherUserProfile extends ConsumerWidget {
                                                       MaterialStateProperty.all<
                                                           Color>(Colors.white),
                                                 ),
-                                                child: Text("LEAVE"),
+                                                child: const Text("LEAVE"),
                                               ),
                                             )
                                           : Align(
@@ -262,6 +266,11 @@ class OtherUserProfile extends ConsumerWidget {
                                               child: TextButton(
                                                   onPressed: () {
                                                     group.addUserId(user.uid);
+                                                    ref.refresh(userDBProvider);
+                                                    ref.refresh(
+                                                        groupsDBProvider);
+                                                    ref.refresh(
+                                                        currentUserProvider);
                                                   },
                                                   style: ButtonStyle(
                                                     backgroundColor:
@@ -273,7 +282,7 @@ class OtherUserProfile extends ConsumerWidget {
                                                             .all<Color>(
                                                                 Colors.white),
                                                   ),
-                                                  child: Text("JOIN")),
+                                                  child: const Text("JOIN")),
                                             ),
                                     ),
                                     const SizedBox(height: 10),
