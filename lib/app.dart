@@ -8,6 +8,7 @@ import 'package:flutter/material.dart';
 import 'features/authentication/presentation/forgot_password_view.dart';
 import 'features/authentication/presentation/signin_view.dart';
 import 'features/authentication/presentation/verify_email_view.dart';
+import 'features/event/presentation/eventCalendar.dart';
 import 'features/group/presentation/add_group.dart';
 import 'features/settings/presentation/app_theme.dart';
 import 'features/home/presentation/home.dart';
@@ -60,6 +61,7 @@ class ConnectUniApp extends ConsumerWidget {
         '/conversations': (BuildContext context) => const ChatPage(),
         '/profile': (BuildContext context) => const CurrentUserProfilePage(),
         '/friendslist': (BuildContext context) => const FriendsList(),
+        '/events_calendar': (BuildContext context) => const EventCalendar(),
       },
       theme: AppTheme.lightTheme,
       darkTheme: AppTheme.darkTheme,

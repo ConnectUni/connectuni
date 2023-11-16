@@ -5,6 +5,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import '../data/event_providers.dart';
 import '../domain/event.dart';
 import '../domain/event_list.dart';
+import 'eventCalendar.dart';
 import 'search_events_screen.dart';
 import '../../group/data/group_providers.dart';
 import 'form-fields/event_form_fields.dart';
@@ -65,7 +66,7 @@ class CreateEvent extends ConsumerWidget {
         )
       );
       ref.refresh(eventsDBProvider);
-      Navigator.pushReplacementNamed(context, SearchEventsScreen.routeName);
+      Navigator.pushReplacementNamed(context, EventCalendar.routeName);
     }
 
     void onReset() {
