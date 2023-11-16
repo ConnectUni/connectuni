@@ -21,9 +21,7 @@ Chat _$ChatFromJson(Map<String, dynamic> json) {
 /// @nodoc
 mixin _$Chat {
   String get chatID => throw _privateConstructorUsedError;
-  set chatID(String value) => throw _privateConstructorUsedError;
   String get groupID => throw _privateConstructorUsedError;
-  set groupID(String value) => throw _privateConstructorUsedError;
   List<String> get userIDs => throw _privateConstructorUsedError;
   set userIDs(List<String> value) => throw _privateConstructorUsedError;
   List<String> get messageIDs => throw _privateConstructorUsedError;
@@ -148,9 +146,9 @@ class _$ChatImpl implements _Chat {
       _$$ChatImplFromJson(json);
 
   @override
-  String chatID;
+  final String chatID;
   @override
-  String groupID;
+  final String groupID;
   @override
   List<String> userIDs;
   @override
@@ -177,8 +175,8 @@ class _$ChatImpl implements _Chat {
 
 abstract class _Chat implements Chat {
   factory _Chat(
-      {required String chatID,
-      required String groupID,
+      {required final String chatID,
+      required final String groupID,
       required List<String> userIDs,
       required List<String> messageIDs}) = _$ChatImpl;
 
@@ -186,10 +184,8 @@ abstract class _Chat implements Chat {
 
   @override
   String get chatID;
-  set chatID(String value);
   @override
   String get groupID;
-  set groupID(String value);
   @override
   List<String> get userIDs;
   set userIDs(List<String> value);

@@ -135,7 +135,7 @@ class __$$MessageImplCopyWithImpl<$Res>
 /// @nodoc
 @JsonSerializable()
 class _$MessageImpl implements _Message {
-  _$MessageImpl(
+  const _$MessageImpl(
       {required this.messageId,
       required this.senderId,
       required this.groupId,
@@ -158,6 +158,25 @@ class _$MessageImpl implements _Message {
     return 'Message(messageId: $messageId, senderId: $senderId, groupId: $groupId, messageContent: $messageContent)';
   }
 
+  @override
+  bool operator ==(dynamic other) {
+    return identical(this, other) ||
+        (other.runtimeType == runtimeType &&
+            other is _$MessageImpl &&
+            (identical(other.messageId, messageId) ||
+                other.messageId == messageId) &&
+            (identical(other.senderId, senderId) ||
+                other.senderId == senderId) &&
+            (identical(other.groupId, groupId) || other.groupId == groupId) &&
+            (identical(other.messageContent, messageContent) ||
+                other.messageContent == messageContent));
+  }
+
+  @JsonKey(ignore: true)
+  @override
+  int get hashCode =>
+      Object.hash(runtimeType, messageId, senderId, groupId, messageContent);
+
   @JsonKey(ignore: true)
   @override
   @pragma('vm:prefer-inline')
@@ -173,7 +192,7 @@ class _$MessageImpl implements _Message {
 }
 
 abstract class _Message implements Message {
-  factory _Message(
+  const factory _Message(
       {required final String messageId,
       required final String senderId,
       required final String groupId,

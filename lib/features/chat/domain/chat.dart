@@ -23,8 +23,8 @@ part 'chat.g.dart';
 @unfreezed
 class Chat with _$Chat{
   factory Chat({
-    required String chatID,
-    required String groupID,
+    required final String chatID,
+    required final String groupID,
     required List<String> userIDs,
     required List<String> messageIDs,
 }) = _Chat;
