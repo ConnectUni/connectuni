@@ -248,7 +248,7 @@ class CurrentUserProfilePageState extends ConsumerState<CurrentUserProfilePage> 
                                           child: TextButton(
                                             onPressed: () {
                                             //Remove the user from the group's database. Then Refresh the group's database.
-                                            group.removeUserId(currentUser.uid);
+                                            group.userIDs.remove(currentUser.uid);
                                              //TODO: Remove groupId from user.
                                             ref.refresh(groupsDBProvider);
                                             },

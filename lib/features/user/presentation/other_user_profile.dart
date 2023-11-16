@@ -12,7 +12,7 @@ class OtherUserProfile extends ConsumerWidget {
 
   bool isFriend(User user, WidgetRef ref) {
     final UserList userList = ref.read(userDBProvider);
-    final User currentUser = userList.getUserByID(ref.read(currentUserProvider));
+    final User currentUser = userList.getUserByID(ref.watch(currentUserProvider));
     if (currentUser.friends.contains(user)) {
       return true;
     }
@@ -188,7 +188,7 @@ class OtherUserProfile extends ConsumerWidget {
                                         child: Align(
                                           alignment: Alignment.centerLeft,
                                           child: Text(
-                                              "${group.semYear} | ${group.getOwner()}"),
+                                              "${group.semYear} | ${group.owner}"),
                                         )),
                                     Padding(
                                         padding: const EdgeInsets.only(
@@ -204,7 +204,7 @@ class OtherUserProfile extends ConsumerWidget {
                                         child: Align(
                                           alignment: Alignment.bottomRight,
                                           child: TextButton(
-                                            onPressed: () {group.addUserId(user.uid);},
+                                            onPressed: () {},
                                             style: ButtonStyle(
                                               backgroundColor:
                                                   MaterialStateProperty.all<

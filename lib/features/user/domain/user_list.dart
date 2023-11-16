@@ -47,7 +47,7 @@ class UserList {
 
   /// Return password - for validation use for now.
   String? getPassword(String email) {
-    return getUserByEmail(email)?.getPassword();
+    return getUserByEmail(email)?.password;
   }
 
   /// Add a user
