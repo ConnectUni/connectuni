@@ -5,6 +5,7 @@ import 'package:multi_select_flutter/multi_select_flutter.dart';
 import '../data/event_providers.dart';
 import '../domain/event.dart';
 import '../../home/domain/global_variables.dart';
+import '../domain/event_list.dart';
 
 class SearchEventsScreen extends ConsumerStatefulWidget {
   const SearchEventsScreen({Key? key, required this.pageController})
@@ -29,6 +30,7 @@ class _SearchEventsScreenState extends ConsumerState<SearchEventsScreen> {
   Widget build(BuildContext context) {
     final List<SingleEvent>? filteredEventList = ref.watch(filteredEvents);
     final bool isSearchbarFilled = ref.watch(isSearchFilledProvider);
+    final EventList eventsDB = ref.watch(eventsDBProvider);
 
     return Scaffold(
       appBar: AppBar(
@@ -131,6 +133,30 @@ class _SearchEventsScreenState extends ConsumerState<SearchEventsScreen> {
               },
             ),
           ),
+          if(eventsDB.getAllEvents().isEmpty)
+            const Padding(
+                padding: EdgeInsets.only(top: 30.0),
+                child: Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children:[
+                      Text(
+                        "There are no events yet!",
+                        style: TextStyle(
+                          fontSize: 15.0,
+                        ),
+                        textAlign: TextAlign.center,
+                      ),
+                      Text(
+                        "Consider making one!",
+                        style: TextStyle(
+                          fontSize: 15.0,
+                        ),
+                        textAlign: TextAlign.center,
+                      ),
+                    ]
+                )
+            ),
+          if(eventsDB.getAllEvents().isNotEmpty)
           Expanded(
             child: ListView.builder(
               itemCount: filteredEventList?.length,

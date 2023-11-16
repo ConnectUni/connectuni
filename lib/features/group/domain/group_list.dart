@@ -96,6 +96,7 @@ class GroupList {
 
 /// DELETE THIS BOTTOM SECTION AFTER GETTING REAL DB
 final List<Group> allGroups = [
+  /**
   Group(
     groupID: 'group-001',
     groupName: 'ICS 466',
@@ -216,4 +217,5 @@ final List<Group> allGroups = [
     userIDs: ['user-001', 'user-002', 'user-003', 'user-004', 'user-005'],
     interests: ['Computer Science'],
   ),
+      */
 ];

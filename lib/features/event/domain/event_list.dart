@@ -43,6 +43,7 @@ class EventList {
 
 /// DELETE THIS BOTTOM SECTION AFTER GETTING REAL DB
 List<SingleEvent> allEvents = [
+  /**
   SingleEvent(
     eventID: 'event-001',
     eventName: 'ICS 466 Pizza Party',
@@ -89,5 +90,6 @@ List<SingleEvent> allEvents = [
     userIDs: ['user-001', 'user-002'],
     interests: ['Computer Science'],
   ),
+      */
 ];
 
