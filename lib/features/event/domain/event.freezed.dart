@@ -26,9 +26,13 @@ mixin _$SingleEvent {
   DateTime get eventDate => throw _privateConstructorUsedError;
   String get groupID => throw _privateConstructorUsedError;
   String get eventIcon => throw _privateConstructorUsedError;
+  set eventIcon(String value) => throw _privateConstructorUsedError;
   String get eventDescription => throw _privateConstructorUsedError;
+  set eventDescription(String value) => throw _privateConstructorUsedError;
   List<String> get userIDs => throw _privateConstructorUsedError;
+  set userIDs(List<String> value) => throw _privateConstructorUsedError;
   List<String> get interests => throw _privateConstructorUsedError;
+  set interests(List<String> value) => throw _privateConstructorUsedError;
 
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
   @JsonKey(ignore: true)
@@ -189,11 +193,11 @@ class __$$SingleEventImplCopyWithImpl<$Res>
           : eventDescription // ignore: cast_nullable_to_non_nullable
               as String,
       userIDs: null == userIDs
-          ? _value._userIDs
+          ? _value.userIDs
           : userIDs // ignore: cast_nullable_to_non_nullable
               as List<String>,
       interests: null == interests
-          ? _value._interests
+          ? _value.interests
           : interests // ignore: cast_nullable_to_non_nullable
               as List<String>,
     ));
@@ -202,8 +206,8 @@ class __$$SingleEventImplCopyWithImpl<$Res>
 
 /// @nodoc
 @JsonSerializable()
-class _$SingleEventImpl extends _SingleEvent {
-  const _$SingleEventImpl(
+class _$SingleEventImpl implements _SingleEvent {
+  _$SingleEventImpl(
       {required this.eventID,
       required this.eventName,
       required this.eventLocation,
@@ -211,11 +215,8 @@ class _$SingleEventImpl extends _SingleEvent {
       required this.groupID,
       required this.eventIcon,
       required this.eventDescription,
-      required final List<String> userIDs,
-      required final List<String> interests})
-      : _userIDs = userIDs,
-        _interests = interests,
-        super._();
+      required this.userIDs,
+      required this.interests});
 
   factory _$SingleEventImpl.fromJson(Map<String, dynamic> json) =>
       _$$SingleEventImplFromJson(json);
@@ -231,65 +232,18 @@ class _$SingleEventImpl extends _SingleEvent {
   @override
   final String groupID;
   @override
-  final String eventIcon;
+  String eventIcon;
   @override
-  final String eventDescription;
-  final List<String> _userIDs;
+  String eventDescription;
   @override
-  List<String> get userIDs {
-    if (_userIDs is EqualUnmodifiableListView) return _userIDs;
-    // ignore: implicit_dynamic_type
-    return EqualUnmodifiableListView(_userIDs);
-  }
-
-  final List<String> _interests;
+  List<String> userIDs;
   @override
-  List<String> get interests {
-    if (_interests is EqualUnmodifiableListView) return _interests;
-    // ignore: implicit_dynamic_type
-    return EqualUnmodifiableListView(_interests);
-  }
+  List<String> interests;
 
   @override
   String toString() {
     return 'SingleEvent(eventID: $eventID, eventName: $eventName, eventLocation: $eventLocation, eventDate: $eventDate, groupID: $groupID, eventIcon: $eventIcon, eventDescription: $eventDescription, userIDs: $userIDs, interests: $interests)';
   }
-
-  @override
-  bool operator ==(dynamic other) {
-    return identical(this, other) ||
-        (other.runtimeType == runtimeType &&
-            other is _$SingleEventImpl &&
-            (identical(other.eventID, eventID) || other.eventID == eventID) &&
-            (identical(other.eventName, eventName) ||
-                other.eventName == eventName) &&
-            (identical(other.eventLocation, eventLocation) ||
-                other.eventLocation == eventLocation) &&
-            (identical(other.eventDate, eventDate) ||
-                other.eventDate == eventDate) &&
-            (identical(other.groupID, groupID) || other.groupID == groupID) &&
-            (identical(other.eventIcon, eventIcon) ||
-                other.eventIcon == eventIcon) &&
-            (identical(other.eventDescription, eventDescription) ||
-                other.eventDescription == eventDescription) &&
-            const DeepCollectionEquality().equals(other._userIDs, _userIDs) &&
-            const DeepCollectionEquality()
-                .equals(other._interests, _interests));
-  }
-
-  @JsonKey(ignore: true)
-  @override
-  int get hashCode => Object.hash(
-      runtimeType,
-      eventID,
-      eventName,
-      eventLocation,
-      eventDate,
-      groupID,
-      eventIcon,
-      eventDescription,
-      const DeepCollectionEquality().hash(_userIDs),
-      const DeepCollectionEquality().hash(_interests));
 
   @JsonKey(ignore: true)
   @override
@@ -305,18 +259,17 @@ class _$SingleEventImpl extends _SingleEvent {
   }
 }
 
-abstract class _SingleEvent extends SingleEvent {
-  const factory _SingleEvent(
+abstract class _SingleEvent implements SingleEvent {
+  factory _SingleEvent(
       {required final String eventID,
       required final String eventName,
       required final String eventLocation,
       required final DateTime eventDate,
       required final String groupID,
-      required final String eventIcon,
-      required final String eventDescription,
-      required final List<String> userIDs,
-      required final List<String> interests}) = _$SingleEventImpl;
-  const _SingleEvent._() : super._();
+      required String eventIcon,
+      required String eventDescription,
+      required List<String> userIDs,
+      required List<String> interests}) = _$SingleEventImpl;
 
   factory _SingleEvent.fromJson(Map<String, dynamic> json) =
       _$SingleEventImpl.fromJson;
@@ -333,12 +286,16 @@ abstract class _SingleEvent extends SingleEvent {
   String get groupID;
   @override
   String get eventIcon;
+  set eventIcon(String value);
   @override
   String get eventDescription;
+  set eventDescription(String value);
   @override
   List<String> get userIDs;
+  set userIDs(List<String> value);
   @override
   List<String> get interests;
+  set interests(List<String> value);
   @override
   @JsonKey(ignore: true)
   _$$SingleEventImplCopyWith<_$SingleEventImpl> get copyWith =>

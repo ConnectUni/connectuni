@@ -20,9 +20,9 @@ import 'package:freezed_annotation/freezed_annotation.dart';
 part 'chat.freezed.dart';
 part 'chat.g.dart';
 
-@Freezed()
+@unfreezed
 class Chat with _$Chat{
-  const factory Chat({
+  factory Chat({
     required String chatID,
     required String groupID,
     required List<String> userIDs,

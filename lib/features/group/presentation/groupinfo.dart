@@ -86,7 +86,7 @@ class _GroupInfoState extends ConsumerState<GroupInfo> {
             child: Column(
               children: [
                 ...groupData
-                    .getAllUsersInGroup()
+                    .userIDs.map((userId) => TempUsersDB.getUserByID(userId)).toList()
                     .map((user) => GroupMemberWidget(user: user)),
               ],
             ),
@@ -146,7 +146,7 @@ class _GroupInfoState extends ConsumerState<GroupInfo> {
                   TextButton(
                     onPressed: () {
                       //Remove the user from the group's database. Then Refresh the group's database.
-                      groupData.removeUserId(currentUser);
+                      groupData.userIDs.remove(currentUser);
                       Navigator.pushNamedAndRemoveUntil(
                           context, HomePage.routeName, (route) => false);
                       showDialog(
@@ -172,7 +172,7 @@ class _GroupInfoState extends ConsumerState<GroupInfo> {
               child: TextButton(
                 onPressed: () {
                   //Add the user from the group's database. Then Refresh the group's database.
-                  groupData.addUserId(currentUser);
+                  groupData.userIDs.add(currentUser);
                   //TODO: Add groupId from user.
                   ref.refresh(groupsDBProvider);
                 },

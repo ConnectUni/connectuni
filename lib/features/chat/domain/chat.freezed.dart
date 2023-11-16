@@ -21,9 +21,13 @@ Chat _$ChatFromJson(Map<String, dynamic> json) {
 /// @nodoc
 mixin _$Chat {
   String get chatID => throw _privateConstructorUsedError;
+  set chatID(String value) => throw _privateConstructorUsedError;
   String get groupID => throw _privateConstructorUsedError;
+  set groupID(String value) => throw _privateConstructorUsedError;
   List<String> get userIDs => throw _privateConstructorUsedError;
+  set userIDs(List<String> value) => throw _privateConstructorUsedError;
   List<String> get messageIDs => throw _privateConstructorUsedError;
+  set messageIDs(List<String> value) => throw _privateConstructorUsedError;
 
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
   @JsonKey(ignore: true)
@@ -120,11 +124,11 @@ class __$$ChatImplCopyWithImpl<$Res>
           : groupID // ignore: cast_nullable_to_non_nullable
               as String,
       userIDs: null == userIDs
-          ? _value._userIDs
+          ? _value.userIDs
           : userIDs // ignore: cast_nullable_to_non_nullable
               as List<String>,
       messageIDs: null == messageIDs
-          ? _value._messageIDs
+          ? _value.messageIDs
           : messageIDs // ignore: cast_nullable_to_non_nullable
               as List<String>,
     ));
@@ -134,62 +138,28 @@ class __$$ChatImplCopyWithImpl<$Res>
 /// @nodoc
 @JsonSerializable()
 class _$ChatImpl implements _Chat {
-  const _$ChatImpl(
+  _$ChatImpl(
       {required this.chatID,
       required this.groupID,
-      required final List<String> userIDs,
-      required final List<String> messageIDs})
-      : _userIDs = userIDs,
-        _messageIDs = messageIDs;
+      required this.userIDs,
+      required this.messageIDs});
 
   factory _$ChatImpl.fromJson(Map<String, dynamic> json) =>
       _$$ChatImplFromJson(json);
 
   @override
-  final String chatID;
+  String chatID;
   @override
-  final String groupID;
-  final List<String> _userIDs;
+  String groupID;
   @override
-  List<String> get userIDs {
-    if (_userIDs is EqualUnmodifiableListView) return _userIDs;
-    // ignore: implicit_dynamic_type
-    return EqualUnmodifiableListView(_userIDs);
-  }
-
-  final List<String> _messageIDs;
+  List<String> userIDs;
   @override
-  List<String> get messageIDs {
-    if (_messageIDs is EqualUnmodifiableListView) return _messageIDs;
-    // ignore: implicit_dynamic_type
-    return EqualUnmodifiableListView(_messageIDs);
-  }
+  List<String> messageIDs;
 
   @override
   String toString() {
     return 'Chat(chatID: $chatID, groupID: $groupID, userIDs: $userIDs, messageIDs: $messageIDs)';
   }
-
-  @override
-  bool operator ==(dynamic other) {
-    return identical(this, other) ||
-        (other.runtimeType == runtimeType &&
-            other is _$ChatImpl &&
-            (identical(other.chatID, chatID) || other.chatID == chatID) &&
-            (identical(other.groupID, groupID) || other.groupID == groupID) &&
-            const DeepCollectionEquality().equals(other._userIDs, _userIDs) &&
-            const DeepCollectionEquality()
-                .equals(other._messageIDs, _messageIDs));
-  }
-
-  @JsonKey(ignore: true)
-  @override
-  int get hashCode => Object.hash(
-      runtimeType,
-      chatID,
-      groupID,
-      const DeepCollectionEquality().hash(_userIDs),
-      const DeepCollectionEquality().hash(_messageIDs));
 
   @JsonKey(ignore: true)
   @override
@@ -206,22 +176,26 @@ class _$ChatImpl implements _Chat {
 }
 
 abstract class _Chat implements Chat {
-  const factory _Chat(
-      {required final String chatID,
-      required final String groupID,
-      required final List<String> userIDs,
-      required final List<String> messageIDs}) = _$ChatImpl;
+  factory _Chat(
+      {required String chatID,
+      required String groupID,
+      required List<String> userIDs,
+      required List<String> messageIDs}) = _$ChatImpl;
 
   factory _Chat.fromJson(Map<String, dynamic> json) = _$ChatImpl.fromJson;
 
   @override
   String get chatID;
+  set chatID(String value);
   @override
   String get groupID;
+  set groupID(String value);
   @override
   List<String> get userIDs;
+  set userIDs(List<String> value);
   @override
   List<String> get messageIDs;
+  set messageIDs(List<String> value);
   @override
   @JsonKey(ignore: true)
   _$$ChatImplCopyWith<_$ChatImpl> get copyWith =>
