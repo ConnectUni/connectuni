@@ -4,6 +4,7 @@ import 'package:connectuni/features/user/domain/user_list.dart';
 import '../../group/data/group_providers.dart';
 import '../../group/domain/group.dart';
 import '../../group/domain/group_list.dart';
+import '../../group/presentation/add_group.dart';
 import '../data/user_providers.dart';
 import 'edit_user.dart';
 import 'friend_list.dart';
@@ -206,6 +207,38 @@ class CurrentUserProfilePageState extends ConsumerState<CurrentUserProfilePage> 
                         textAlign: TextAlign.left,
                       ),
                       Column(children: [
+                        if(groupDB.getGroupsByUser(currentUser.uid).isEmpty)
+                          Padding(
+                            padding: const EdgeInsets.only(top: 30.0),
+                            child: Column(
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              children:[
+                                const Text(
+                                  "Oops! You aren't in any groups yet.",
+                                  style: TextStyle(
+                                    fontSize: 13.0,
+                                  ),
+                                  textAlign: TextAlign.center,
+                                ),
+                                TextButton(
+                                  onPressed: () {
+                                    Navigator.push(
+                                        context, MaterialPageRoute(builder: (context) {
+                                      return AddGroup();
+                                    }));
+                                  },
+                                  style: ButtonStyle(
+                                    backgroundColor:
+                                    MaterialStateProperty.all<Color>(Colors.blueAccent),
+                                    foregroundColor:
+                                    MaterialStateProperty.all<Color>(Colors.white),
+                                  ),
+                                  child: const Text('Add a Group'),
+                                )
+                              ]
+                            )
+                          ),
+                        if(groupDB.getGroupsByUser(currentUser.uid).isNotEmpty)
                         ...groupDB.getGroupsByUser(currentUser.uid).map(
                               (group) => Card(
                                 elevation: 8,

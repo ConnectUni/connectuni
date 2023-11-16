@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_form_builder/flutter_form_builder.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
+import '../../user/data/user_providers.dart';
+import '../../user/domain/user_list.dart';
 import '../data/group_providers.dart';
 import '../domain/group.dart';
 import '../domain/group_list.dart';
@@ -32,6 +34,8 @@ class AddGroup extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final GroupList groupsDB = ref.watch(groupsDBProvider);
+    final UserList usersDB = ref.watch(userDBProvider);
+    final String currUser = ref.watch(currentUserProvider);
     int id = groupsDB.groupLength() + 1;
     String getGroupID() {
       if (id < 10) {
@@ -77,6 +81,9 @@ class AddGroup extends ConsumerWidget {
         interests: interests,
         )
       );
+      //Add the group to the user's list of groups and vice versa.
+      usersDB.getUserByID(currUser).groupIDs.add(groupID);
+      groupsDB.getGroupById(groupID).userIDs.add(currUser);
       //Return to the previous page
       ref.refresh(groupsDBProvider);
       Navigator.pop(context);

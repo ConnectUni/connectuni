@@ -1,3 +1,4 @@
+import 'package:connectuni/features/group/presentation/search_groups_screen.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:connectuni/features/group/presentation/group_chat_widget.dart';
 import 'package:flutter/material.dart';
@@ -45,27 +46,46 @@ class _GroupsScreenState extends ConsumerState<GroupsScreen> {
           ),
         ],
       ),
-      body: ListView(
+      body:
+      ListView(
         children: [
-          //TODO: Implement functionality and make cards interactive rather than simply visual.
+          if(groupsDB.getGroupsByUser(userId).isEmpty)
+          const Center(
+            child: Padding(
+              padding: EdgeInsets.only(top: 20.0),
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children:[
+                  Text(
+                    'You are not in any groups yet.',
+                    style: TextStyle(
+                      fontSize: 20.0,
+                      fontWeight: FontWeight.bold,
+                    ),
+                    textAlign: TextAlign.center,
+                  ),
+                  Text(
+                    'Join or add a group to get started!',
+                    style: TextStyle(
+                      fontSize: 15.0,
+                    ),
+                    textAlign: TextAlign.center,
+                  ),
+                ]
+              )
+            ),
+          ),
+          if(groupsDB.getGroupsByUser(userId).isNotEmpty)
           ...groupsDB
               .getGroupsByUser(userId)
               .map((gName) => GroupChatWidget(id: gName.groupID)),
-          const Center(
-            child:
-            Padding(
-              padding: EdgeInsets.only(bottom: 10.0),
-              child: IconButton(
-                onPressed: null,
-                icon: Icon(
-                  Icons.add_circle_outline,
-                  color: Colors.grey,
-                  size: 40.0,
-                ),
-              ),
-            )
-          ),
         ],
+      ),
+      floatingActionButton: FloatingActionButton(
+        onPressed: () {
+          Navigator.pushNamed(context, '/add_group');
+        },
+        child: const Icon(Icons.add),
       ),
     );
   }

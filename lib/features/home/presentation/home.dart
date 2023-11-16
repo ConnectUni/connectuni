@@ -68,7 +68,6 @@ class _HomePageState extends State<HomePage> {
             backgroundColor: Colors.blue,
           ),
           BottomNavigationBarItem(
-            //TODO Replace with image of users profile picture
             label: 'Profile',
             icon: Icon(Icons.person_2_outlined),
             backgroundColor: Colors.blue,
