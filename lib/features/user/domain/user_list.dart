@@ -31,7 +31,7 @@ class UserList {
 
   /// Return single User object, search with their email.
   User? getUserByPotentialEmail(String? email) {
-    if(email == null) return null;
+    if (email == null) return null;
     return allUsers.firstWhereOrNull((user) => user.email == email);
   }
 
@@ -55,8 +55,8 @@ class UserList {
     allUsers.add(user);
   }
 
-  void updateUser ({
-  required String uid,
+  void updateUser({
+    required String uid,
     required String email,
     required String displayName,
     required String pfp,
@@ -100,7 +100,7 @@ final User friend1 = User(
   projectedGraduation: 'December 2025',
   status: 'School makes me wanna wake up every morning!',
   friends: [],
-  groupIDs: ['group-456'],
+  groupIDs: ['group-001'],
   eventIDs: ['event-111'],
   interests: ['Finance', 'Business'],
   password: 'password',
@@ -115,7 +115,7 @@ final User friend2 = User(
   projectedGraduation: 'May 2025',
   status: 'I never wanna leave school!',
   friends: [friend1],
-  groupIDs:['group-123'],
+  groupIDs: ['group-002'],
   eventIDs: ['event-222'],
   interests: [],
   password: 'changeme',
@@ -134,9 +134,10 @@ final List<User> mockUsers = [
     friends: [
       friend1,
     ],
-    groupIDs:[
-      'group-123',
-      'group-456',
+    groupIDs: [
+      'group-001',
+      'group-002',
+      'group-003',
     ],
     eventIDs: [
       'event-111',
@@ -157,8 +158,12 @@ final List<User> mockUsers = [
       friend1,
       friend2,
     ],
-    groupIDs:[
-      'group-123',
+    groupIDs: [
+      'group-001',
+      'group-002',
+      'group-003',
+      'group-004',
+      'group-005',
     ],
     eventIDs: [
       'event-111',
@@ -178,8 +183,12 @@ final List<User> mockUsers = [
     friends: [
       friend2,
     ],
-    groupIDs:[
-      'group-456',
+    groupIDs: [
+      'group-001',
+      'group-002',
+      'group-003',
+      'group-004',
+      'group-005',
     ],
     eventIDs: [
       'event-222',
@@ -199,9 +208,12 @@ final List<User> mockUsers = [
     friends: [
       friend1,
     ],
-    groupIDs:[
-      'group-789',
-      'group-456',
+    groupIDs: [
+      'group-001',
+      'group-002',
+      'group-003',
+      'group-004',
+      'group-005',
     ],
     eventIDs: [
       'event-111',
@@ -222,10 +234,12 @@ final List<User> mockUsers = [
       friend1,
       friend2,
     ],
-    groupIDs:[
-      'group-123',
-      'group-456',
-      'group-789',
+    groupIDs: [
+      'group-001',
+      'group-002',
+      'group-003',
+      'group-004',
+      'group-005',
     ],
     eventIDs: [
       'event-111',
@@ -248,9 +262,8 @@ final List<User> mockUsers = [
     friends: [
       friend1,
     ],
-    groupIDs:[
-      'group-123',
-      'group-456',
+    groupIDs: [
+      'group-002',
     ],
     eventIDs: [
       'event-111',
