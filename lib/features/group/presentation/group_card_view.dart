@@ -30,12 +30,31 @@ class GroupCardView extends ConsumerWidget {
                     child:
                         Text("${thisGrouping.semYear} | ${thisGrouping.owner}"),
                   )),
+              if(thisGrouping.userIDs.length > 1 || thisGrouping.userIDs.isEmpty)
               Padding(
                   padding: const EdgeInsets.only(left: 15.0, top: 2.0),
                   child: Align(
                     alignment: Alignment.centerLeft,
-                    child: Text("${thisGrouping.userIDs.length} people"),
+
+                    child:
+                    Text("${thisGrouping.userIDs.length} members"),
                   )),
+              if(thisGrouping.userIDs.length == 1)
+                Padding(
+                    padding: const EdgeInsets.only(left: 15.0, top: 2.0),
+                    child: Align(
+                      alignment: Alignment.centerLeft,
+
+                      child:
+                      Text("${thisGrouping.userIDs.length} member"),
+                    )),
+              if (thisGrouping.newMessages.length > 1 || thisGrouping.newMessages.isEmpty)
+              Padding(
+                  padding: const EdgeInsets.only(left: 15.0, top: 2.0),
+                  child: Align(
+                      alignment: Alignment.centerLeft,
+                      child: Text("${thisGrouping.newMessages.length} new messages"))),
+              if (thisGrouping.newMessages.length == 1)
               Padding(
                   padding: const EdgeInsets.only(left: 15.0, top: 2.0),
                   child: Align(

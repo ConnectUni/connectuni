@@ -198,7 +198,7 @@ class CurrentUserProfilePageState extends ConsumerState<CurrentUserProfilePage> 
                       //GroupCardView(name: "ICS 466"),
                       //GroupCardView(name: "ICS 312"),
                       const Text(
-                        "Your Courses:",
+                        "Your Groups:",
                         style: TextStyle(
                           fontSize: 20,
                           fontWeight: FontWeight.bold,
