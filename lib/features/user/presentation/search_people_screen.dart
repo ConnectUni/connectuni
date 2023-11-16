@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:multi_select_flutter/multi_select_flutter.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import '../../home/domain/interests.dart';
 import '../data/user_providers.dart';
 import 'user_card_widget.dart';
 import '../domain/user.dart';
@@ -19,9 +20,6 @@ class SearchPeopleScreen extends ConsumerStatefulWidget {
 
 class _SearchPeopleScreenState extends ConsumerState<SearchPeopleScreen> {
   // final controller = TextEditingController();
-  final _interests = interests
-      .map((interest) => MultiSelectItem(interest, interest))
-      .toList();
 
   final controller = TextEditingController();
   List<String> selectedFilters = [];
@@ -33,6 +31,11 @@ class _SearchPeopleScreenState extends ConsumerState<SearchPeopleScreen> {
     final bool isSearchbarFilled = ref.watch(isSearchFilledProvider);
     final List<User>? recentSearches = ref.watch(recentSearchesProvider);
     var users = [];
+    final List<String> interestsDB = ref.watch(interestsProvider);
+
+    final _interests = interestsDB
+        .map((interest) => MultiSelectItem(interest, interest))
+        .toList();
 
     return Scaffold(
       appBar: AppBar(

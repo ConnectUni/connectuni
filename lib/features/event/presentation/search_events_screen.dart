@@ -2,6 +2,7 @@ import 'package:connectuni/features/event/presentation/event_card_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:multi_select_flutter/multi_select_flutter.dart';
+import '../../home/domain/interests.dart';
 import '../data/event_providers.dart';
 import '../domain/event.dart';
 import '../../home/domain/global_variables.dart';
@@ -20,9 +21,6 @@ class SearchEventsScreen extends ConsumerStatefulWidget {
 
 class _SearchEventsScreenState extends ConsumerState<SearchEventsScreen> {
   final controller = TextEditingController();
-  final _interests = interests
-      .map((interest) => MultiSelectItem(interest, interest))
-      .toList();
 
   List<String> selectedFilters = [];
 
@@ -31,6 +29,11 @@ class _SearchEventsScreenState extends ConsumerState<SearchEventsScreen> {
     final List<SingleEvent>? filteredEventList = ref.watch(filteredEvents);
     final bool isSearchbarFilled = ref.watch(isSearchFilledProvider);
     final EventList eventsDB = ref.watch(eventsDBProvider);
+    final List<String> interestsDB = ref.watch(interestsProvider);
+
+    final _interests = interestsDB
+        .map((interest) => MultiSelectItem(interest, interest))
+        .toList();
 
     return Scaffold(
       appBar: AppBar(

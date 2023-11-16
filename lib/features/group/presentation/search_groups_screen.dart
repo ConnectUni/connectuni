@@ -3,11 +3,10 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:multi_select_flutter/multi_select_flutter.dart';
 
-import 'package:connectuni/features/home/domain/global_variables.dart';
+import '../../home/domain/interests.dart';
 import '../data/group_providers.dart';
 import '../domain/group_list.dart';
 import 'group_info_widget.dart';
-import 'add_group.dart';
 
 class SearchGroupsScreen extends ConsumerStatefulWidget {
   const SearchGroupsScreen({Key? key, required this.pageController})
@@ -22,9 +21,6 @@ class SearchGroupsScreen extends ConsumerStatefulWidget {
 
 class _SearchGroupsScreenState extends ConsumerState<SearchGroupsScreen> {
   final controller = TextEditingController();
-  final _interests = interests
-      .map((interest) => MultiSelectItem(interest, interest))
-      .toList();
 
   List<String> selectedFilters = [];
 
@@ -33,6 +29,12 @@ class _SearchGroupsScreenState extends ConsumerState<SearchGroupsScreen> {
     final List<Group>? filteredGroupList = ref.watch(filteredGroups);
     final GroupList groupsDB = ref.watch(groupsDBProvider);
     final bool isSearchbarFilled = ref.watch(isSearchFilledProvider);
+    final List<String> interestsDB = ref.watch(interestsProvider);
+
+    final _interests = interestsDB
+        .map((interest) => MultiSelectItem(interest, interest))
+        .toList();
+
 
     return Scaffold(
       appBar: AppBar(
