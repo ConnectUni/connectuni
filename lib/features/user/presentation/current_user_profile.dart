@@ -88,7 +88,7 @@ class CurrentUserProfilePageState extends ConsumerState<CurrentUserProfilePage> 
                   onPressed: () {
                     Navigator.push(
                         context, MaterialPageRoute(builder: (context) {
-                      return EditUser(id: currentUser.uid);
+                      return EditUser();
                     }));
                   },
                   style: ButtonStyle(

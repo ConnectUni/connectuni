@@ -21,7 +21,9 @@ import 'form-fields/status_field.dart';
 
 
 class AddUser extends ConsumerWidget {
-  AddUser({Key? key}) : super(key: key);
+  AddUser({
+    super.key,
+  });
 
   static const routeName = '/add_user';
   final _formKey = GlobalKey<FormBuilderState>();
