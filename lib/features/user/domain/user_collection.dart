@@ -10,6 +10,10 @@ class UserCollection {
     return _users.firstWhere((data) => data.uid == userID);
   }
 
+  List<User> getUsers(List<String> userIDs) {
+    return _users.where((data) => userIDs.contains(data.uid)).toList();
+  }
+
   int size() {
     return _users.length;
   }
@@ -29,7 +33,7 @@ class UserCollection {
     return result;
   }
 
-  List<String> getUserIDs() {
+  List<String> getAllUserIDs() {
     return _users.map((data) => data.uid).toList();
   }
 

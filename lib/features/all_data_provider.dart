@@ -20,7 +20,7 @@ class AllData {
     required this.events,
     required this.chats,
     required this.messages,
-    required this.currentUserID,
+    required this.currentUser,
   });
 
   final List<User> users;
@@ -28,7 +28,7 @@ class AllData {
   final List<SingleEvent> events;
   final List<Chat> chats;
   final List<Message> messages;
-  final String currentUserID;
+  final User currentUser;
 }
 
 @riverpod
@@ -38,13 +38,13 @@ Future<AllData> allData(AllDataRef ref) async {
   final events = ref.watch(eventsProvider.future);
   final chats = ref.watch(chatsProvider.future);
   final messages = ref.watch(messagesProvider.future);
-  final currentUserID = ref.watch(currentUserIDProvider);
+  final currentUser = ref.watch(currentUserProvider.future);
   return AllData(
     users: await users,
     groups: await groups,
     events: await events,
     chats: await chats,
     messages: await messages,
-    currentUserID: currentUserID,
+    currentUser: await currentUser,
   );
 }

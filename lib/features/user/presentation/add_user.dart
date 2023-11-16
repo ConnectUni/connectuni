@@ -38,17 +38,15 @@ class AddUser extends ConsumerWidget {
         data: (allData) =>
             _build(
                 context: context,
-                currentUserID: allData.currentUserID,
                 users: allData.users,
                 ref: ref
             ),
-        loading: () => const Center(child: CircularProgressIndicator()),
-        error: (error, stacktrace) => Text(error.toString()));
+        loading: () => const CULoading(),
+        error: (e, st) => CUError(e.toString(), st.toString()));
   }
 
   Widget _build ({
     required BuildContext context,
-    required String currentUserID,
     required List<User> users,
     required WidgetRef ref
   }) {
