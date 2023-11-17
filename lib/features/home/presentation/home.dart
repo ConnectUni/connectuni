@@ -1,9 +1,7 @@
 import 'package:connectuni/features/home/domain/global_variables.dart';
 import 'package:flutter/material.dart';
 
-/**
- * Landing/Home page that the User is introduced to when logging into their account.
- */
+/// Landing/Home page that the User is introduced to when logging into their account.
 
 class HomePage extends StatefulWidget {
   const HomePage({
