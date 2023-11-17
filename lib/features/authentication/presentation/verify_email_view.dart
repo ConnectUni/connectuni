@@ -1,3 +1,4 @@
+import 'package:connectuni/features/authentication/presentation/signin_view.dart';
 import 'package:firebase_ui_auth/firebase_ui_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -22,7 +23,7 @@ class VerifyEmailView extends StatelessWidget {
         }),
         AuthCancelledAction((context) {
           FirebaseUIAuth.signOut(context: context);
-          Navigator.pushReplacementNamed(context, HomePage.routeName);
+          Navigator.pushReplacementNamed(context, SignInView.routeName);
         }),
       ],
     );
