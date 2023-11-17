@@ -9,7 +9,7 @@ class SingleEvent with _$SingleEvent {
     required final String eventID,
     required final String eventName,
     required final String eventLocation,
-    required final DateTime eventDate,
+    required final String eventDate,
     required final String groupID,
     required String eventIcon,
     required String eventDescription,

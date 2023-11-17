@@ -23,7 +23,7 @@ mixin _$SingleEvent {
   String get eventID => throw _privateConstructorUsedError;
   String get eventName => throw _privateConstructorUsedError;
   String get eventLocation => throw _privateConstructorUsedError;
-  DateTime get eventDate => throw _privateConstructorUsedError;
+  String get eventDate => throw _privateConstructorUsedError;
   String get groupID => throw _privateConstructorUsedError;
   String get eventIcon => throw _privateConstructorUsedError;
   set eventIcon(String value) => throw _privateConstructorUsedError;
@@ -50,7 +50,7 @@ abstract class $SingleEventCopyWith<$Res> {
       {String eventID,
       String eventName,
       String eventLocation,
-      DateTime eventDate,
+      String eventDate,
       String groupID,
       String eventIcon,
       String eventDescription,
@@ -97,7 +97,7 @@ class _$SingleEventCopyWithImpl<$Res, $Val extends SingleEvent>
       eventDate: null == eventDate
           ? _value.eventDate
           : eventDate // ignore: cast_nullable_to_non_nullable
-              as DateTime,
+              as String,
       groupID: null == groupID
           ? _value.groupID
           : groupID // ignore: cast_nullable_to_non_nullable
@@ -134,7 +134,7 @@ abstract class _$$SingleEventImplCopyWith<$Res>
       {String eventID,
       String eventName,
       String eventLocation,
-      DateTime eventDate,
+      String eventDate,
       String groupID,
       String eventIcon,
       String eventDescription,
@@ -179,7 +179,7 @@ class __$$SingleEventImplCopyWithImpl<$Res>
       eventDate: null == eventDate
           ? _value.eventDate
           : eventDate // ignore: cast_nullable_to_non_nullable
-              as DateTime,
+              as String,
       groupID: null == groupID
           ? _value.groupID
           : groupID // ignore: cast_nullable_to_non_nullable
@@ -228,7 +228,7 @@ class _$SingleEventImpl implements _SingleEvent {
   @override
   final String eventLocation;
   @override
-  final DateTime eventDate;
+  final String eventDate;
   @override
   final String groupID;
   @override
@@ -264,7 +264,7 @@ abstract class _SingleEvent implements SingleEvent {
       {required final String eventID,
       required final String eventName,
       required final String eventLocation,
-      required final DateTime eventDate,
+      required final String eventDate,
       required final String groupID,
       required String eventIcon,
       required String eventDescription,
@@ -281,7 +281,7 @@ abstract class _SingleEvent implements SingleEvent {
   @override
   String get eventLocation;
   @override
-  DateTime get eventDate;
+  String get eventDate;
   @override
   String get groupID;
   @override

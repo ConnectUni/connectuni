@@ -51,6 +51,8 @@ class CreateEvent extends ConsumerWidget {
       String description = _descriptionFieldKey.currentState?.value;
       String groupID = _groupIDFieldKey.currentState?.value;
 
+      String eventDate = date.toString();
+
       // Create a new event
       eventDB.addEvent(
         SingleEvent(
@@ -59,7 +61,7 @@ class CreateEvent extends ConsumerWidget {
           eventIcon: icon,
           eventLocation: location,
           eventDescription: description,
-          eventDate: date,
+          eventDate: eventDate,
           groupID: groupID,
           userIDs: userIDs,
           interests: interests,

@@ -36,7 +36,7 @@ class _EventCalendarState extends ConsumerState<EventCalendar> {
     // Using ref.read() inside initState.
     final EventList eventsDB = ref.read(eventsDBProvider);
     _selectedEvents = ValueNotifier(
-        eventsDB.getAllEvents().where((event) => isSameDay(event.eventDate, _selectedDay!)).toList()
+        eventsDB.getAllEvents().where((event) => isSameDay(DateTime.tryParse(event.eventDate), _selectedDay!)).toList()
     );
   }
 
@@ -44,7 +44,7 @@ class _EventCalendarState extends ConsumerState<EventCalendar> {
     final EventList eventsDB = ref.watch(eventsDBProvider);  // Using ref.watch() if you expect the data to change and want the widget to rebuild.
     return eventsDB
         .getAllEvents()
-        .where((event) => isSameDay(event.eventDate, day))
+        .where((event) => isSameDay(DateTime.tryParse(event.eventDate), day))
         .toList();
   }
 

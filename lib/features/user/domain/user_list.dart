@@ -227,7 +227,7 @@ final List<User> mockUsers = [
     uid: 'user-008',
     email: 'kenjisan@hawaii.edu',
     displayName: 'Kenji Sanehira',
-    pfp: 'assets/images/Logo.png',
+    pfp: 'assets/images/Kenji.jpg',
     major: 'Computer Science',
     projectedGraduation: 'Spring 2024',
     status: 'This is an annoying test',
