@@ -8,7 +8,7 @@ import 'package:connectuni/features/group/presentation/groups_screen.dart';
 List<Widget> screenItems = [
   const GroupsScreen(),
   const SearchPageController(),
-  EventCalendar(),
+  const EventCalendar(),
   const CurrentUserProfilePage()
 ];
 

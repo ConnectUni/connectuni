@@ -34,7 +34,6 @@ class CurrentUserProfilePageState extends ConsumerState<CurrentUserProfilePage> 
             context: context,
             currentUser: allData.currentUser,
             groups: allData.groups,
-            ref: ref
           ),
       loading: () => const CULoading(),
       error: (e, st) => CUError(e.toString(), st.toString()));
@@ -44,7 +43,6 @@ class CurrentUserProfilePageState extends ConsumerState<CurrentUserProfilePage> 
     required BuildContext context,
     required User currentUser,
     required List<Group> groups,
-    required WidgetRef ref
   }) {
     GroupCollection groupCollection = GroupCollection(groups);
 

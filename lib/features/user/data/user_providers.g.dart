@@ -63,5 +63,21 @@ final currentUserProvider = AutoDisposeFutureProvider<User>.internal(
 );
 
 typedef CurrentUserRef = AutoDisposeFutureProviderRef<User>;
+String _$filteredUsersHash() => r'f204f0a6d7456019034a6db40771114e8c79fd8e';
+
+/// See also [FilteredUsers].
+@ProviderFor(FilteredUsers)
+final filteredUsersProvider =
+    AutoDisposeAsyncNotifierProvider<FilteredUsers, List<User>>.internal(
+  FilteredUsers.new,
+  name: r'filteredUsersProvider',
+  debugGetCreateSourceHash: const bool.fromEnvironment('dart.vm.product')
+      ? null
+      : _$filteredUsersHash,
+  dependencies: null,
+  allTransitiveDependencies: null,
+);
+
+typedef _$FilteredUsers = AutoDisposeAsyncNotifier<List<User>>;
 // ignore_for_file: type=lint
 // ignore_for_file: subtype_of_sealed_class, invalid_use_of_internal_member, invalid_use_of_visible_for_testing_member
