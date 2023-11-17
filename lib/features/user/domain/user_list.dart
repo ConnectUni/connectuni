@@ -44,7 +44,7 @@ class UserList {
   List<User> getUsers() {
     return allUsers;
   }
-  
+
   /// Add a user
   void addUser(User user) {
     allUsers.add(user);
