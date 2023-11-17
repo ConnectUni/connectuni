@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:multi_select_flutter/multi_select_flutter.dart';
 
-import '../../home/domain/interests.dart';
+import '../../interest/data/interests.dart';
 import '../data/group_providers.dart';
 import '../domain/group_list.dart';
 import 'group_info_widget.dart';

@@ -1,3 +1,4 @@
+import 'package:connectuni/features/interest/presentation/edit_interests.dart';
 import 'package:connectuni/features/user/domain/user.dart';
 import 'package:flutter/material.dart';
 import 'package:connectuni/features/user/domain/user_list.dart';
@@ -5,6 +6,7 @@ import '../../group/data/group_providers.dart';
 import '../../group/domain/group.dart';
 import '../../group/domain/group_list.dart';
 import '../../group/presentation/add_group.dart';
+import '../../interest/data/interests.dart';
 import '../data/user_providers.dart';
 import 'edit_user.dart';
 import 'friend_list.dart';
@@ -35,6 +37,7 @@ class CurrentUserProfilePageState extends ConsumerState<CurrentUserProfilePage> 
     final UserList userList = ref.watch(userDBProvider);
     final User currentUser = userList.getUserByID(ref.watch(currentUserProvider));
     final GroupList groupDB = ref.watch(groupsDBProvider);
+    final List<String> interestsDB = ref.watch(interestsProvider);
     return Scaffold(
         appBar: AppBar(
           title: const Text('My Profile'),
@@ -152,34 +155,22 @@ class CurrentUserProfilePageState extends ConsumerState<CurrentUserProfilePage> 
                     ),
                     // textAlign: TextAlign.left,
                   ),
-                  //TODO: Implement interests section here.
-                  Column(
-                    children: [
-                      //TODO: Implement functionality and make cards interactive rather than simply visual.
-                      ...currentUser.interests.map(
-                        (interest) => Padding(
-                          padding: const EdgeInsets.all(10.0),
-                          child: ListTile(
-                            title: Center(
-                              child: Text(interest,
-                                  style: const TextStyle(
-                                      fontWeight: FontWeight.bold)),
-                            ),
-                            textColor: Colors.white,
-                            tileColor: Colors.lightBlue,
-                          ),
-                        ),
+                  Padding(
+                    padding: const EdgeInsets.all(10.0),
+                    child: TextButton(
+                      onPressed: () {
+                        Navigator.push(
+                            context, MaterialPageRoute(builder: (context) {
+                          return EditInterest(id: currentUser.uid, type: "user");
+                        }));
+                      },
+                      style: ButtonStyle(
+                        backgroundColor:
+                        MaterialStateProperty.all<Color>(Colors.green),
+                        foregroundColor:
+                        MaterialStateProperty.all<Color>(Colors.white),
                       ),
-                    ],
-                  ),
-                  const Padding(
-                    padding: EdgeInsets.all(10.0),
-                    child: ListTile(
-                      title: Center(
-                          child: Text("Add an interest.",
-                              style: TextStyle(fontWeight: FontWeight.bold))),
-                      textColor: Colors.white,
-                      tileColor: Colors.black54,
+                      child: const Text('Edit Interests'),
                     ),
                   ),
                 ]), //Gallery
