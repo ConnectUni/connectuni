@@ -1,7 +1,5 @@
 import 'package:flutter/material.dart';
-import '../data/event_providers.dart';
 import '../domain/event.dart';
-import '../domain/event_list.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 class EventInfoScreen extends ConsumerWidget {

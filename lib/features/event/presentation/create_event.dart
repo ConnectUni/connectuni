@@ -11,11 +11,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import '../../group/domain/group.dart';
 import '../../group/domain/group_collection.dart';
 import '../../user/domain/user.dart';
-import '../data/event_providers.dart';
 import '../domain/event.dart';
-import '../domain/event_list.dart';
-import 'search_events_screen.dart';
-import '../../group/data/group_providers.dart';
 import 'form-fields/event_form_fields.dart';
 
 
