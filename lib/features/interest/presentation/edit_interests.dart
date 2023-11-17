@@ -5,6 +5,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import '../../event/data/event_providers.dart';
 import '../../event/domain/event_list.dart';
 import '../../group/data/group_providers.dart';
+import '../../group/domain/group.dart';
 import '../../group/domain/group_list.dart';
 import '../../group/presentation/form-fields/reset_button.dart';
 import '../../group/presentation/form-fields/submit_button.dart';
@@ -67,11 +68,26 @@ class EditInterest extends ConsumerWidget {
       } else if(type == "group") {
         //Update Group Interests
         //groupsDB.updateGroupInterests(id, interests);
+        Group editGroup = groupsDB.getGroupById(id);
+        groupsDB.updateGroup(
+          groupID: editGroup.groupID,
+          groupName: editGroup.groupName,
+          semYear: editGroup.semYear,
+          owner: editGroup.owner,
+          groupImage: editGroup.groupImage,
+          groupDescription: editGroup.groupDescription,
+          newMessages: editGroup.newMessages,
+          chatID: editGroup.chatID,
+          eventIDs: editGroup.eventIDs,
+          userIDs: editGroup.userIDs,
+          interests: interestsUpdate,
+        );
       } else if(type == "event") {
         //Update Event Interests
         //eventsDB.updateEventInterests(id, interests);
       }
       //Return to previous page
+      ref.refresh(groupsDBProvider);
       ref.refresh(userDBProvider);
       ref.refresh(interestsProvider);
       Navigator.pop(context);
