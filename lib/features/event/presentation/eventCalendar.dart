@@ -172,7 +172,7 @@ class _EventCalendarState extends ConsumerState<EventCalendar> {
                               context,
                               CupertinoPageRoute(
                                   builder: (context) => EventInfoScreen(
-                                      id: value[index].eventID)))
+                                      event: value[index])))
                         },
                         title: Text(
                             '${value[index].eventName} | ${value[index].eventLocation}'),

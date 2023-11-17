@@ -85,7 +85,7 @@ class CreateEvent extends ConsumerWidget {
           Navigator.pushReplacement(
             context,
             MaterialPageRoute(
-              builder: (context) => EventInfoScreen(id: newEvent.eventID),
+              builder: (context) => EventInfoScreen(event: newEvent),
             ),
           );
         }

@@ -1,19 +1,13 @@
 import 'package:flutter/material.dart';
-import '../data/event_providers.dart';
-import '../domain/event_list.dart';
 import '../domain/event.dart';
-import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-class EventCardView extends ConsumerWidget {
-  const EventCardView({Key? key, required this.id}) : super(key: key);
+class EventCardView extends StatelessWidget {
+  const EventCardView({Key? key, required this.event}) : super(key: key);
 
-  final String id;
+  final SingleEvent event;
 
   @override
-  Widget build(BuildContext context, WidgetRef ref) {
-    EventList eventsDB = ref.watch(eventsDBProvider);
-    SingleEvent thisEvent = eventsDB.getEventById(id);
-
+  Widget build(BuildContext context) {
     return Padding(
       padding: const EdgeInsets.all(3.5),
       child: Card(
@@ -22,7 +16,7 @@ class EventCardView extends ConsumerWidget {
           children: [
             ListTile(
                 title: Text(
-              thisEvent.eventName,
+              event.eventName,
               style: Theme.of(context).textTheme.titleLarge,
             )),
             Padding(
@@ -30,7 +24,7 @@ class EventCardView extends ConsumerWidget {
               child: Align(
                 alignment: Alignment.centerLeft,
                 child: Text(
-                  "${thisEvent.eventLocation} | ${thisEvent.eventDate}",
+                  "${event.eventLocation} | ${event.eventDate}",
                 ),
               ),
             ),
@@ -39,7 +33,7 @@ class EventCardView extends ConsumerWidget {
               child: Align(
                 alignment: Alignment.centerLeft,
                 child: Text(
-                  thisEvent.eventDescription,
+                  event.eventDescription,
                 ),
               ),
             ),
