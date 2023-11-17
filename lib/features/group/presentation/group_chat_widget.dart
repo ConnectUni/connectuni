@@ -11,12 +11,12 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 /// It is a clickable widget that takes the user to the group chat page.
 
 class GroupChatWidget extends ConsumerStatefulWidget {
-  String id;
-
-  GroupChatWidget({
+  const GroupChatWidget({
     super.key,
-    required this.id,
+    required this.group,
   });
+
+  final Group group;
 
   @override
   ConsumerState<GroupChatWidget> createState() => _GroupChatWidgetState();
@@ -25,18 +25,15 @@ class GroupChatWidget extends ConsumerStatefulWidget {
 class _GroupChatWidgetState extends ConsumerState<GroupChatWidget> {
   @override
   Widget build(BuildContext context) {
-    final GroupList groupsDB = ref.watch(groupsDBProvider);
-    Group groupData = groupsDB.getGroupById(widget.id);
-
     return GestureDetector(
       onTap: () {
         Navigator.push(
           context,
           CupertinoPageRoute(
-              builder: (context) => GroupChatScreen(id: groupData.groupID)),
+              builder: (context) => GroupChatScreen(id: widget.group.groupID)),
         );
       },
-      child: GroupCardView(id: groupData.groupID),
+      child: GroupCardView(group: widget.group),
     );
   }
 }
