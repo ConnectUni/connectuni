@@ -121,7 +121,7 @@ class OtherUserProfile extends ConsumerWidget {
                         textAlign: TextAlign.left,
                       ),
                       Column(children: [
-                        ...currentUser.interests.map((interest) => Padding(
+                        ...user.interests.map((interest) => Padding(
                               padding: const EdgeInsets.all(5.0),
                               child: ListTile(
                                 title: Center(
@@ -153,7 +153,7 @@ class OtherUserProfile extends ConsumerWidget {
                   crossAxisAlignment: CrossAxisAlignment.stretch,
                   children: [
                     const Text(
-                      "Their Courses:",
+                      "Their Groups:",
                       style: TextStyle(
                         fontSize: 20,
                         fontWeight: FontWeight.bold,

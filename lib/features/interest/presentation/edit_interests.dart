@@ -62,7 +62,6 @@ class EditInterest extends ConsumerWidget {
           eventIDs: editUser.eventIDs,
           interests: interestsUpdate,
           email: editUser.email,
-          ///REMOVE THIS BELOW AFTER WE REMOVE ALL PASSWORDS FROM USER DATA
           password: 'temp',
         );
       } else if(type == "group") {
