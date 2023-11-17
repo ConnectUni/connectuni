@@ -23,7 +23,6 @@ _$UserImpl _$$UserImplFromJson(Map<String, dynamic> json) => _$UserImpl(
           (json['eventIDs'] as List<dynamic>).map((e) => e as String).toList(),
       interests:
           (json['interests'] as List<dynamic>).map((e) => e as String).toList(),
-      password: json['password'] as String,
     );
 
 Map<String, dynamic> _$$UserImplToJson(_$UserImpl instance) =>
@@ -39,5 +38,4 @@ Map<String, dynamic> _$$UserImplToJson(_$UserImpl instance) =>
       'groupIDs': instance.groupIDs,
       'eventIDs': instance.eventIDs,
       'interests': instance.interests,
-      'password': instance.password,
     };

@@ -63,7 +63,6 @@ class EditInterest extends ConsumerWidget {
           eventIDs: editUser.eventIDs,
           interests: interestsUpdate,
           email: editUser.email,
-          password: 'temp',
         );
       } else if(type == "group") {
         //Update Group Interests

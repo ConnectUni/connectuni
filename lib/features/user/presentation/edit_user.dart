@@ -62,8 +62,6 @@ class EditUser extends ConsumerWidget {
               eventIDs: eventIDs,
               interests: interests,
               email: email,
-              ///REMOVE THIS BELOW AFTER WE REMOVE ALL PASSWORDS FROM USER DATA
-              password: 'temp',
       );
       //Return to previous page
       ref.refresh(userDBProvider);

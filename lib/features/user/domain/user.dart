@@ -19,7 +19,6 @@ class User with _$User {
     required List<String> groupIDs,
     required List<String> eventIDs,
     required List<String> interests,
-    required String password,
 }) = _User;
 
   factory User.fromJson(Map<String, dynamic> json) => _$UserFromJson(json);
