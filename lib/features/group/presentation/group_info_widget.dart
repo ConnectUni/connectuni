@@ -26,7 +26,7 @@ class _GroupInfoWidgetState extends State<GroupInfoWidget> {
         Navigator.push(
           context,
           CupertinoPageRoute(
-              builder: (context) => GroupInfo(id: widget.group.groupID)),
+              builder: (context) => GroupInfo(group: widget.group)),
         );
       },
       child: GroupCardView(group: widget.group),

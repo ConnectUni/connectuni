@@ -51,7 +51,7 @@ class ConnectUniApp extends ConsumerWidget {
               pageController: _pageController,
             ),
         '/createevent': (BuildContext context) => CreateEvent(),
-        '/groupinfo': (BuildContext context) => const GroupInfo(id: ''),
+        '/groupinfo': (BuildContext context) => const GroupInfo(group: null),
         '/eventinfo': (BuildContext context) => const EventInfoScreen(
               id: '',
             ),
