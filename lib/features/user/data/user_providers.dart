@@ -47,9 +47,8 @@ class FilteredUsers extends _$FilteredUsers {
     return users;
   }
 
-  void filterQuery(String input) {
+  void _updateResults() {
     state = const AsyncLoading();
-    query = input;
     if (query.isEmpty && filters.isEmpty) {
       results = recents;
     } else {
@@ -62,27 +61,19 @@ class FilteredUsers extends _$FilteredUsers {
     if (mounted) {
       state = AsyncData(results);
     }
+  }
+
+  void filterQuery(String input) {
+    query = input;
+    _updateResults();
   }
 
   void updateFilters(List<String> filters) {
-    state = const AsyncLoading();
     this.filters = filters;
-    if (query.isEmpty && filters.isEmpty) {
-      results = recents;
-    } else {
-      results = users.where((user) => user.displayName
-          .toLowerCase()
-          .contains(query.toLowerCase()) && user.interests
-          .any((interests) => filters.contains(interests)))
-          .toList();
-    }
-    if (mounted) {
-      state = AsyncData(results);
-    }
+    _updateResults();
   }
 
   void addRecent(User user) {
-    state = const AsyncLoading();
     if (recents.contains(user)) {
       recents.insert(0, user);
     } else {
@@ -91,24 +82,16 @@ class FilteredUsers extends _$FilteredUsers {
     if (recents.length > 5) {
       recents.removeLast();
     }
-    if (mounted) {
-      state = AsyncData(recents);
-    }
+    _updateResults();
   }
 
   void removeRecent(User user) {
-    state = const AsyncLoading();
     recents.remove(user);
-    if (mounted) {
-      state = AsyncData(recents);
-    }
+    _updateResults();
   }
 
   void clearRecents() {
-    state = const AsyncLoading();
     recents.clear();
-    if (mounted) {
-      state = AsyncData(recents);
-    }
+    _updateResults();
   }
 }

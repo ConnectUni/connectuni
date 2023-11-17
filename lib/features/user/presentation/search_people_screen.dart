@@ -35,9 +35,10 @@ class _SearchPeopleScreenState extends ConsumerState<SearchPeopleScreen> {
   Widget build(BuildContext context) {
     final AsyncValue<List<User>> asyncFilteredUsers = ref.watch(filteredUsersProvider);
     return asyncFilteredUsers.when(
-      data: (data) =>
+      data: (userList) =>
           _build(
             context: context,
+            list: userList,
             ref: ref,
           ),
       loading: () => const CULoading(),
@@ -46,9 +47,9 @@ class _SearchPeopleScreenState extends ConsumerState<SearchPeopleScreen> {
 
   Widget _build({
     required BuildContext context,
+    required List<User> list,
     required WidgetRef ref,
   }) {
-    final filteredUsers = ref.watch(filteredUsersProvider);
     bool isSearchbarFilled() {
       if (controller.text.isNotEmpty) {
         return true;
@@ -166,39 +167,33 @@ class _SearchPeopleScreenState extends ConsumerState<SearchPeopleScreen> {
     }
 
     /// This displays the search content.
-    List<Widget> showContent() {
-      if (isSearchbarFilled()) {
-        return [
-          SearchView(users: filteredUsers.value!)
-        ];
-      } else {
-        return [
-          Padding(
-            padding: const EdgeInsets.all(8.0),
-            child: Column(
-              children: [
-                Row(
-                    children: [
-                      const Text('Recent Searches'),
-                      const Spacer(),
-                      if (recentSearches.isNotEmpty) ...[
-                        InkWell(
-                          child: const Text('Clear Recents', style: TextStyle(color: Colors.blue)),
-                          onTap: () {
-                            ref.read(filteredUsersProvider.notifier).clearRecents();
-                          },
-                        ),
-                      ]
+    List<Widget> showContent = [
+      if (!isSearchbarFilled()) ...[
+        Padding(
+          padding: const EdgeInsets.all(8.0),
+          child: Column(
+            children: [
+              Row(
+                  children: [
+                    const Text('Recent Searches'),
+                    const Spacer(),
+                    if (recentSearches.isNotEmpty) ...[
+                      InkWell(
+                        child: const Text('Clear Recents', style: TextStyle(color: Colors.blue)),
+                        onTap: () {
+                          ref.read(filteredUsersProvider.notifier).clearRecents();
+                        },
+                      ),
                     ]
-                ),
-                const Divider(),
-              ],
-            ),
+                  ]
+              ),
+              const Divider(),
+            ],
           ),
-          SearchView(users: recentSearches)
-        ];
-      }
-    }
+        ),
+      ],
+      SearchView(users: list)
+    ];
 
     return Scaffold(
       appBar: buildAppBar(),
@@ -206,7 +201,7 @@ class _SearchPeopleScreenState extends ConsumerState<SearchPeopleScreen> {
         children: [
           buildFilterBar(),
           buildSearchBar(),
-          ...showContent(),
+          ...showContent,
         ],
       ),
     );
