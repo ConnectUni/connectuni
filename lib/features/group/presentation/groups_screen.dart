@@ -1,9 +1,12 @@
-import 'package:flutter/cupertino.dart';
+import 'package:connectuni/features/all_data_provider.dart';
+import 'package:connectuni/features/cu_loading.dart';
+import 'package:connectuni/features/group/domain/group_collection.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:connectuni/features/group/presentation/group_chat_widget.dart';
 import 'package:flutter/material.dart';
+import '../../cu_error.dart';
 import '../../user/data/user_providers.dart';
-import '../data/group_providers.dart';
+import '../domain/group.dart';
 import '../domain/group_list.dart';
 import '../../chat/presentation/chatpage.dart';
 import 'add_group.dart';
@@ -18,10 +21,26 @@ class GroupsScreen extends ConsumerStatefulWidget {
 class _GroupsScreenState extends ConsumerState<GroupsScreen> {
   @override
   Widget build(BuildContext context) {
-    final GroupList groupsDB = ref.watch(groupsDBProvider);
-    final String userId = ref.watch(currentUserProvider);
-    late PageController _pageController;
-    _pageController = PageController();
+    final AsyncValue<AllData> asyncValue = ref.watch(allDataProvider);
+    return asyncValue.when(
+      data: (allData) => _build(
+        context: context,
+        groups: allData.groups,
+        currentUserID: allData.currentUser.uid,
+        ref: ref,
+      ),
+      error: (e,st) => CUError(e.toString(), st.toString()),
+      loading: () => const CULoading());
+  }
+
+  Widget _build({
+    required BuildContext context,
+    required List<Group> groups,
+    required String currentUserID,
+    required WidgetRef ref
+  }) {
+    GroupCollection groupCollection = GroupCollection(groups);
+
     return Scaffold(
       appBar: AppBar(
         title: const Text('My Groups'),
@@ -43,6 +62,7 @@ class _GroupsScreenState extends ConsumerState<GroupsScreen> {
               semanticLabel: 'notifications',
             ),
             onPressed: () {
+              // TODO: implement notifications page? 11/17/2023
               print('Go to Notifications page');
             },
           ),
@@ -50,26 +70,24 @@ class _GroupsScreenState extends ConsumerState<GroupsScreen> {
       ),
       body: ListView(
         children: [
-          //TODO: Implement functionality and make cards interactive rather than simply visual.
-          ...groupsDB
-              .getGroupsByUser(userId)
-              .map((gName) => GroupChatWidget(id: gName.groupID)),
+          ...groupCollection
+              .getUsersGroups(currentUserID)
+              .map((group) => GroupChatWidget(group: group,)),
           Center(
               child: Padding(
-            padding: const EdgeInsets.only(bottom: 10.0),
-            child: IconButton(
-              onPressed: () {
-                Navigator.push(context, MaterialPageRoute(builder: (context) {
-                  return AddGroup();
-                }));
-              },
-              icon: const Icon(
-                Icons.add_circle_outline,
-                color: Colors.grey,
-                size: 40.0,
-              ),
-            ),
-          )),
+                padding: const EdgeInsets.only(bottom: 10.0),
+                child: IconButton(
+                  onPressed: () {
+                    Navigator.push(context, MaterialPageRoute(builder: (context) => AddGroup()));
+                    },
+                  icon: const Icon(
+                    Icons.add_circle_outline,
+                    color: Colors.grey,
+                    size: 40.0,
+                  ),
+                ),
+              )
+          ),
         ],
       ),
     );

@@ -17,6 +17,10 @@ class GroupCollection {
     return _groups.where((data) => groupIDs.contains(data.groupID)).toList();
   }
 
+  List<Group> getUsersGroups(String userID) {
+    return _groups.where((data) => data.userIDs.contains(userID)).toList();
+  }
+
   int size() {
     return _groups.length;
   }
