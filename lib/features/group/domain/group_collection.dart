@@ -44,6 +44,10 @@ class GroupCollection {
     return _groups.map((data) => data.groupID).toList();
   }
 
+  List<String> getAllGroupNames() {
+    return _groups.map((data) => data.groupName).toList();
+  }
+
   List<User> getUsersInGroups(UserCollection users, String groupID) {
     return users.getUsers(getUserIDsInGroup(groupID));
   }

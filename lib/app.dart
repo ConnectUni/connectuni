@@ -13,7 +13,7 @@ import 'features/home/presentation/home.dart';
 import 'features/chat/presentation/chatpage.dart';
 import 'features/group/presentation/groupinfo.dart';
 import 'features/settings/presentation/settings.dart';
-import 'features/event/presentation/createevent.dart';
+import 'features/event/presentation/create_event.dart';
 import 'features/user/presentation/add_user.dart';
 import 'features/user/presentation/current_user_profile.dart';
 import 'features/user/presentation/search_people_screen.dart';
