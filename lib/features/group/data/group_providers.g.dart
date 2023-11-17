@@ -35,5 +35,21 @@ final groupsProvider = AutoDisposeStreamProvider<List<Group>>.internal(
 );
 
 typedef GroupsRef = AutoDisposeStreamProviderRef<List<Group>>;
+String _$filteredGroupsHash() => r'c446b1b36dae59285bbaacbc6b0135f6e382f0d7';
+
+/// See also [FilteredGroups].
+@ProviderFor(FilteredGroups)
+final filteredGroupsProvider =
+    AutoDisposeAsyncNotifierProvider<FilteredGroups, List<Group>>.internal(
+  FilteredGroups.new,
+  name: r'filteredGroupsProvider',
+  debugGetCreateSourceHash: const bool.fromEnvironment('dart.vm.product')
+      ? null
+      : _$filteredGroupsHash,
+  dependencies: null,
+  allTransitiveDependencies: null,
+);
+
+typedef _$FilteredGroups = AutoDisposeAsyncNotifier<List<Group>>;
 // ignore_for_file: type=lint
 // ignore_for_file: subtype_of_sealed_class, invalid_use_of_internal_member, invalid_use_of_visible_for_testing_member
