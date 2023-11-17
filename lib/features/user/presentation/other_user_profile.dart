@@ -120,6 +120,18 @@ class OtherUserProfile extends ConsumerWidget {
                         ),
                         textAlign: TextAlign.left,
                       ),
+                      if(user.interests.isEmpty)
+                        const Padding(
+                          padding: EdgeInsets.all(10.0),
+                          child: ListTile(
+                            title: Center(
+                                child: Text("This User has no Interests.",
+                                    style: TextStyle(
+                                        fontWeight: FontWeight.bold))),
+                            textColor: Colors.white,
+                            tileColor: Colors.lightBlue,
+                          ),
+                        ),
                       Column(children: [
                         ...user.interests.map((interest) => Padding(
                               padding: const EdgeInsets.all(5.0),

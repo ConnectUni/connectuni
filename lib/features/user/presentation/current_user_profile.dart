@@ -138,7 +138,18 @@ class CurrentUserProfilePageState extends ConsumerState<CurrentUserProfilePage> 
                   ),
                   textAlign: TextAlign.left,
                 ),
-                //TODO: Implement interests section here.
+                if(currentUser.interests.isEmpty)
+                  const Padding(
+                    padding: EdgeInsets.all(10.0),
+                    child: ListTile(
+                      title: Center(
+                          child: Text("Looks like you don't have any interests!",
+                              style: TextStyle(
+                                  fontWeight: FontWeight.bold))),
+                      textColor: Colors.white,
+                      tileColor: Colors.lightBlue,
+                    ),
+                  ),
                 Column(children: [
                   //TODO: Implement functionality and make cards interactive rather than simply visual.
                   ...currentUser.interests.map(

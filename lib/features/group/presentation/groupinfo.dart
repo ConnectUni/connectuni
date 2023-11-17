@@ -126,6 +126,18 @@ class _GroupInfoState extends ConsumerState<GroupInfo> {
         ),
       ),
     ),
+    if(groupData.interests.isEmpty)
+      const Padding(
+        padding: EdgeInsets.all(10.0),
+        child: ListTile(
+          title: Center(
+            child: Text("This Group has no Interests.",
+                style: TextStyle(
+                    fontWeight: FontWeight.bold))),
+            textColor: Colors.white,
+            tileColor: Colors.lightBlue,
+          ),
+        ),
     Column(children: [
       ...groupData.interests.map(
         (interest) => Padding(
