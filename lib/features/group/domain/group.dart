@@ -11,7 +11,7 @@ class Group with _$Group {
     required final String groupID,
     required final String groupName,
     required final String semYear,
-    required final String owner, // Should this be the user who created this? From my understanding this holds the professors name, Should we make a new property for it?
+    required final String owner,
     required String groupImage,
     required String groupDescription,
     required List<Message> newMessages,
