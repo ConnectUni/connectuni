@@ -1,16 +1,18 @@
-import 'package:connectuni/features/user/presentation/other_user_profile.dart';
+import 'package:connectuni/features/user/data/user_providers.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:grouped_list/grouped_list.dart';
 import '../../group/data/group_providers.dart';
 import '../../group/domain/group.dart';
 import '../../group/domain/group_list.dart';
+import '../../message/data/message_providers.dart';
 import '../../message/domain/message.dart';
 import '../../message/domain/message_list.dart';
-import '../../user/data/user_providers.dart';
-import '../../user/domain/user.dart';
-import '../../user/domain/user_list.dart';
 import '../../group/presentation/groupinfo.dart';
+import '../data/chat_providers.dart';
+import '../domain/chat.dart';
+import '../domain/chat_list.dart';
 
 class GroupChatScreen extends ConsumerStatefulWidget {
   final String id;
@@ -25,19 +27,21 @@ class GroupChatScreen extends ConsumerStatefulWidget {
 }
 
 class _GroupChatScreenState extends ConsumerState<GroupChatScreen> {
+
+
   @override
   Widget build(BuildContext context) {
-    final UserList usersDB = ref.read(userDBProvider);
     final GroupList groupsDB = ref.watch(groupsDBProvider);
+    final ChatList chatsDB = ref.watch(chatDBProvider);
+    final MessageList messageDB = ref.watch(messagesDBProvider);
+    final String currentUserID = ref.watch(currentUserProvider);
     Group groupData = groupsDB.getGroupById(widget.id);
-    final MessageList messagesDB = ref.read(messagesDBProvider);
-    Iterable<User> groupMembers = usersDB.getGroupMembers(groupData.userIDs);
-
-    Iterable<Message> messageData = messagesDB.getGroupMessages(groupData.groupID);
-
-    String currentUID = 'user-001';
+    Chat chatData = chatsDB.getChatByGroupId(widget.id);
+    List<String> messagesAsString = chatData.messageIDs;
+    List<Message> thisMessages = messagesAsString.map((e) => messageDB.getMessageById(e)).toList();
 
     return Scaffold(
+      resizeToAvoidBottomInset: true,
       appBar: AppBar(
         title: Text("${groupData.groupName} | ${groupData.owner}"),
         actions: [
@@ -53,99 +57,77 @@ class _GroupChatScreenState extends ConsumerState<GroupChatScreen> {
           ),
         ],
       ),
-      body: Stack(children: <Widget>[
-        ListView.builder(
-          itemCount: messageData.length,
-          shrinkWrap: true,
-          padding: const EdgeInsets.only(top: 10, bottom: 10),
-          itemBuilder: (context, index) {
-            return Container(
-              padding: const EdgeInsets.only(
-                  left: 14, right: 14, top: 10, bottom: 10),
-              child: Column(
-                crossAxisAlignment:
-                    (messageData.elementAt(index).senderId == currentUID
-                        ? CrossAxisAlignment.end
-                        : CrossAxisAlignment.start),
-                children: [
-                  Container(
-                      decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(20),
-                        color:
-                            (messageData.elementAt(index).senderId == currentUID
-                                ? Colors.blue[200]
-                                : Colors.grey.shade200),
-                      ),
-                      padding: const EdgeInsets.all(16),
-                      child: Text(
-                        messageData.elementAt(index).messageContent,
-                        style: const TextStyle(fontSize: 15),
-                      )),
-                  Text(
-                    groupMembers
-                        .firstWhere((user) =>
-                            user.uid == messageData.elementAt(index).senderId)
-                        .displayName,
-                    style: const TextStyle(fontSize: 12),
-                  ),
-                  GestureDetector(
-                    onTap: () {
-                      Navigator.push(
-                        context,
-                        CupertinoPageRoute(
-                            builder: (context) => OtherUserProfile(user: groupMembers
-                                .firstWhere((user) =>
-                            user.uid == messageData.elementAt(index).senderId))
-                        ),
-                      );
-                    },
-                    child: CircleAvatar(
-                      backgroundImage: AssetImage(groupMembers
-                          .firstWhere((user) =>
-                              user.uid == messageData.elementAt(index).senderId)
-                          .pfp),
-                      maxRadius: 20,
-                    ),
-                  )
-                ],
-              ),
-            );
-          },
-        ),
-        Align(
-          alignment: Alignment.bottomLeft,
-          child: Container(
-            padding: const EdgeInsets.only(bottom: 10, top: 10),
-            height: 60,
-            width: double.infinity,
-            color: Colors.grey,
-            child: Row(children: <Widget>[
-              const SizedBox(width: 15),
-              Expanded(
-                child: TextField(
-                  decoration: InputDecoration(
-                    hintText: "Write message...",
-                    hintStyle: const TextStyle(color: Colors.black54),
-                    border: InputBorder.none,
-                    focusedBorder: OutlineInputBorder(
-                      borderRadius: BorderRadius.circular(25),
-                    ),
-                    enabledBorder: UnderlineInputBorder(
-                      borderRadius: BorderRadius.circular(25),
-                    ),
+      body: Column(
+        children: [
+          Expanded(child:
+            GroupedListView<Message, String>(
+              reverse: true,
+              order: GroupedListOrder.DESC,
+              padding: const EdgeInsets.all(8),
+              elements: thisMessages,
+              groupBy: (element) => element.groupId,
+              groupHeaderBuilder: (Message message) => const SizedBox(
+                height: 50,
+                child: Card(
+                  elevation: 8.0,
+                  child: Padding(
+                    padding: EdgeInsets.all(12.0),
+                    child: Text("Welcome to the chat!"),
                   ),
                 ),
               ),
-              const SizedBox(width: 15),
-              FloatingActionButton(
-                onPressed: () {},
-                elevation: 0,
-                child: const Icon(Icons.send, color: Colors.white, size: 18),
-              ),
-            ]),
+              itemBuilder: (context, Message message) => Align(
+                alignment: message.senderId == currentUserID
+                  ? Alignment.centerRight
+                    : Alignment.centerLeft
+                ,
+
+                child: Card(
+                  elevation: 8.0,
+                  child: Padding(
+                    padding: const EdgeInsets.all(12.0),
+                    child: Text(message.messageContent),
+                  ),
+                ),
+              )
+            ),
           ),
-        )
-      ]),
+          Container(
+            color: Colors.grey,
+            child: Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: TextField(
+              decoration: const InputDecoration(
+                border: InputBorder.none,
+                hintText: 'Type your message here...',
+              ),
+                onSubmitted: (text) {
+                int messageIdCounter = chatData.messageIDs.length + 1;
+                String thisMessageId;
+                  if (messageIdCounter < 10) {
+                    thisMessageId = "chat-00$messageIdCounter";
+                  } else if (messageIdCounter < 100) {
+                    thisMessageId = "chat-0$messageIdCounter";
+                  } else {
+                    thisMessageId = "chat-$messageIdCounter";
+                  }
+                  final currentMessage = Message(
+                    messageId: thisMessageId,
+                    senderId: currentUserID,
+                    groupId: widget.id,
+                    messageContent: text,
+                  );
+
+                  ref.read(messagesDBProvider).addMessage(currentMessage);
+                  ref.read(chatDBProvider).addMessageIdToGroupChat(widget.id, thisMessageId);
+                  ref.refresh(chatDBProvider);
+                  ref.refresh(messagesDBProvider);
+                },
+            ),
+            ),
+          ),
+        ]
+      ),
     );
   }
 }

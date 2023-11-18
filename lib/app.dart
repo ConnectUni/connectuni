@@ -12,7 +12,6 @@ import 'features/event/presentation/eventCalendar.dart';
 import 'features/group/presentation/add_group.dart';
 import 'features/settings/presentation/app_theme.dart';
 import 'features/home/presentation/home.dart';
-import 'features/chat/presentation/chatpage.dart';
 import 'features/group/presentation/groupinfo.dart';
 import 'features/settings/presentation/settings.dart';
 import 'features/event/presentation/createevent.dart';
@@ -58,7 +57,6 @@ class ConnectUniApp extends ConsumerWidget {
         '/eventinfo': (BuildContext context) => const EventInfoScreen(
               id: '',
             ),
-        '/conversations': (BuildContext context) => const ChatPage(),
         '/profile': (BuildContext context) => const CurrentUserProfilePage(),
         '/friendslist': (BuildContext context) => const FriendsList(),
         '/events_calendar': (BuildContext context) => const EventCalendar(),

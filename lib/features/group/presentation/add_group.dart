@@ -2,6 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter_form_builder/flutter_form_builder.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
+import '../../chat/data/chat_providers.dart';
+import '../../chat/domain/chat.dart';
+import '../../chat/domain/chat_list.dart';
 import '../../user/data/user_providers.dart';
 import '../../user/domain/user_list.dart';
 import '../data/group_providers.dart';
@@ -36,23 +39,25 @@ class AddGroup extends ConsumerWidget {
     final GroupList groupsDB = ref.watch(groupsDBProvider);
     final UserList usersDB = ref.watch(userDBProvider);
     final String currUser = ref.watch(currentUserProvider);
-    int id = groupsDB.groupLength() + 1;
+    final ChatList chatsDB = ref.watch(chatDBProvider);
+    int groupId = groupsDB.groupLength() + 1;
+    int chatId = chatsDB.chatLength() + 1;
     String getGroupID() {
-      if (id < 10) {
-        return "group-00$id";
-      } else if (id < 100) {
-        return "group-0$id";
+      if (groupId < 10) {
+        return "group-00$groupId";
+      } else if (groupId < 100) {
+        return "group-0$groupId";
       } else {
-        return "group-$id";
+        return "group-$groupId";
       }
     }
     String getChatID() {
-      if (id < 10) {
-        return "chat-00$id";
-      } else if (id < 100) {
-        return "chat-0$id";
+      if (chatId < 10) {
+        return "chat-00$chatId";
+      } else if (chatId < 100) {
+        return "chat-0$chatId";
       } else {
-        return "chat-$id";
+        return "chat-$chatId";
       }
     }
 
@@ -79,6 +84,14 @@ class AddGroup extends ConsumerWidget {
         eventIDs: eventIDs,
         userIDs: userIDs,
         interests: interests,
+        )
+      );
+      chatsDB.addChat(
+        Chat(
+          chatID: chatID,
+          groupID: groupID,
+          userIDs: userIDs,
+          messageIDs: [],
         )
       );
       //Add the group to the user's list of groups and vice versa.
