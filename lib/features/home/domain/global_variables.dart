@@ -12,13 +12,3 @@ List<Widget> screenItems = [
   const CurrentUserProfilePage()
 ];
 
-// This is a list of interests that can be called from anywhere in the app.
-List<String> interests = [
-  'Computer Science',
-  'Mathematics',
-  'Business',
-  'Art',
-  'Music',
-  'Graphic Design',
-  'Finance',
-];

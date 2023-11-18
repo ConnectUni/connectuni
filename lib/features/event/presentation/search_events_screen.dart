@@ -2,11 +2,11 @@ import 'package:connectuni/features/event/presentation/event_card_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:multi_select_flutter/multi_select_flutter.dart';
+import '../../all_data_provider.dart';
 import '../../cu_error.dart';
 import '../../cu_loading.dart';
 import '../data/event_providers.dart';
 import '../domain/event.dart';
-import '../../home/domain/global_variables.dart';
 
 class SearchEventsScreen extends ConsumerStatefulWidget {
   const SearchEventsScreen({Key? key, required this.pageController})
@@ -21,21 +21,18 @@ class SearchEventsScreen extends ConsumerStatefulWidget {
 
 class _SearchEventsScreenState extends ConsumerState<SearchEventsScreen> {
   final controller = TextEditingController();
-  final _interests = interests
-      .map((interest) => MultiSelectItem(interest, interest))
-      .toList();
 
   List<String> selectedFilters = [];
 
   @override
   Widget build(BuildContext context) {
-    final AsyncValue<List<SingleEvent>> asyncFilteredEvents = ref.watch(
-        filteredEventsProvider);
-    return asyncFilteredEvents.when(
-      data: (eventList) =>
+    final AsyncValue<AllData> asyncValue = ref.watch(allDataProvider);
+    return asyncValue.when(
+      data: (allData) =>
           _build(
             context: context,
-            events: eventList,
+            events: allData.events,
+            interests: allData.interests,
             ref: ref,
           ),
       error: (e, st) => CUError(e.toString(),  st.toString()),
@@ -46,8 +43,13 @@ class _SearchEventsScreenState extends ConsumerState<SearchEventsScreen> {
   Widget _build({
     required BuildContext context,
     required List<SingleEvent> events,
+    required List<String> interests,
     required WidgetRef ref
   }) {
+    final _interests = interests
+        .map((interest) => MultiSelectItem<String>(interest, interest))
+        .toList();
+
     bool isSearchbarFilled() {
       if (controller.text.isNotEmpty) {
         return true;

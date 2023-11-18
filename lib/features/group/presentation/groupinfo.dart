@@ -6,6 +6,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:connectuni/features/group/domain/group.dart';
 import '../../home/presentation/home.dart';
+import '../../interest/presentation/edit_interests.dart';
 import '../../user/data/user_providers.dart';
 import '../../user/domain/user.dart';
 import '../../user/domain/user_list.dart';
@@ -146,6 +147,7 @@ class _GroupInfoState extends ConsumerState<GroupInfo> {
         children: [
           ...listMembers,
           ...showGroupDesc,
+          // ADD INTERESTS HERE
           //Display a button to leave the group if the user is in the group.
           if (group.userIDs.contains(currentUser.uid))
             Padding(

@@ -71,7 +71,6 @@ class EditUser extends ConsumerWidget {
         interests: [],
         email: email,
         ///REMOVE THIS BELOW AFTER WE REMOVE ALL PASSWORDS FROM USER DATA
-        password: 'temp',
       );
       ref.read(editUserControllerProvider.notifier).updateUser(
         user: updatedUser,

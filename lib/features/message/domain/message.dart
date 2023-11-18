@@ -3,13 +3,13 @@ import 'package:freezed_annotation/freezed_annotation.dart';
 part 'message.freezed.dart';
 part 'message.g.dart';
 
-@unfreezed
+@Freezed()
 class Message with _$Message {
-  factory Message({
-    required final String messageId,
-    required final String senderId,
-    required final String groupId,
-    required final String messageContent,
+  const factory Message({
+    required String messageId,
+    required String senderId,
+    required String groupId,
+    required String messageContent,
 }) = _Message;
 
   factory Message.fromJson(Map<String, dynamic> json) => _$MessageFromJson(json);

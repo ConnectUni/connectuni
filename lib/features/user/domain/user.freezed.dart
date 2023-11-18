@@ -40,8 +40,6 @@ mixin _$User {
   set eventIDs(List<String> value) => throw _privateConstructorUsedError;
   List<String> get interests => throw _privateConstructorUsedError;
   set interests(List<String> value) => throw _privateConstructorUsedError;
-  String get password => throw _privateConstructorUsedError;
-  set password(String value) => throw _privateConstructorUsedError;
 
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
   @JsonKey(ignore: true)
@@ -64,8 +62,7 @@ abstract class $UserCopyWith<$Res> {
       List<User> friends,
       List<String> groupIDs,
       List<String> eventIDs,
-      List<String> interests,
-      String password});
+      List<String> interests});
 }
 
 /// @nodoc
@@ -92,7 +89,6 @@ class _$UserCopyWithImpl<$Res, $Val extends User>
     Object? groupIDs = null,
     Object? eventIDs = null,
     Object? interests = null,
-    Object? password = null,
   }) {
     return _then(_value.copyWith(
       uid: null == uid
@@ -139,10 +135,6 @@ class _$UserCopyWithImpl<$Res, $Val extends User>
           ? _value.interests
           : interests // ignore: cast_nullable_to_non_nullable
               as List<String>,
-      password: null == password
-          ? _value.password
-          : password // ignore: cast_nullable_to_non_nullable
-              as String,
     ) as $Val);
   }
 }
@@ -165,8 +157,7 @@ abstract class _$$UserImplCopyWith<$Res> implements $UserCopyWith<$Res> {
       List<User> friends,
       List<String> groupIDs,
       List<String> eventIDs,
-      List<String> interests,
-      String password});
+      List<String> interests});
 }
 
 /// @nodoc
@@ -190,7 +181,6 @@ class __$$UserImplCopyWithImpl<$Res>
     Object? groupIDs = null,
     Object? eventIDs = null,
     Object? interests = null,
-    Object? password = null,
   }) {
     return _then(_$UserImpl(
       uid: null == uid
@@ -237,10 +227,6 @@ class __$$UserImplCopyWithImpl<$Res>
           ? _value.interests
           : interests // ignore: cast_nullable_to_non_nullable
               as List<String>,
-      password: null == password
-          ? _value.password
-          : password // ignore: cast_nullable_to_non_nullable
-              as String,
     ));
   }
 }
@@ -259,8 +245,7 @@ class _$UserImpl implements _User {
       required this.friends,
       required this.groupIDs,
       required this.eventIDs,
-      required this.interests,
-      required this.password});
+      required this.interests});
 
   factory _$UserImpl.fromJson(Map<String, dynamic> json) =>
       _$$UserImplFromJson(json);
@@ -287,12 +272,10 @@ class _$UserImpl implements _User {
   List<String> eventIDs;
   @override
   List<String> interests;
-  @override
-  String password;
 
   @override
   String toString() {
-    return 'User(uid: $uid, email: $email, displayName: $displayName, pfp: $pfp, major: $major, projectedGraduation: $projectedGraduation, status: $status, friends: $friends, groupIDs: $groupIDs, eventIDs: $eventIDs, interests: $interests, password: $password)';
+    return 'User(uid: $uid, email: $email, displayName: $displayName, pfp: $pfp, major: $major, projectedGraduation: $projectedGraduation, status: $status, friends: $friends, groupIDs: $groupIDs, eventIDs: $eventIDs, interests: $interests)';
   }
 
   @JsonKey(ignore: true)
@@ -321,8 +304,7 @@ abstract class _User implements User {
       required List<User> friends,
       required List<String> groupIDs,
       required List<String> eventIDs,
-      required List<String> interests,
-      required String password}) = _$UserImpl;
+      required List<String> interests}) = _$UserImpl;
 
   factory _User.fromJson(Map<String, dynamic> json) = _$UserImpl.fromJson;
 
@@ -357,9 +339,6 @@ abstract class _User implements User {
   @override
   List<String> get interests;
   set interests(List<String> value);
-  @override
-  String get password;
-  set password(String value);
   @override
   @JsonKey(ignore: true)
   _$$UserImplCopyWith<_$UserImpl> get copyWith =>

@@ -24,12 +24,30 @@ class GroupCardView extends StatelessWidget {
                     child:
                         Text("${group.semYear} | ${group.owner}"),
                   )),
+              if(group.userIDs.length > 1 || group.userIDs.isEmpty)
               Padding(
                   padding: const EdgeInsets.only(left: 15.0, top: 2.0),
                   child: Align(
                     alignment: Alignment.centerLeft,
-                    child: Text("${group.userIDs.length} people"),
+                    child: Text("${group.userIDs.length} members"),
+
                   )),
+              if(group.userIDs.length == 1)
+                Padding(
+                    padding: const EdgeInsets.only(left: 15.0, top: 2.0),
+                    child: Align(
+                      alignment: Alignment.centerLeft,
+
+                      child:
+                      Text("${group.userIDs.length} member"),
+                    )),
+              if (group.newMessages.length > 1 || group.newMessages.isEmpty)
+              Padding(
+                  padding: const EdgeInsets.only(left: 15.0, top: 2.0),
+                  child: Align(
+                      alignment: Alignment.centerLeft,
+                      child: Text("${group.newMessages.length} new messages"))),
+              if (group.newMessages.length == 1)
               Padding(
                   padding: const EdgeInsets.only(left: 15.0, top: 2.0),
                   child: Align(

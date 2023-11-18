@@ -1,14 +1,14 @@
+import 'package:connectuni/features/all_data_provider.dart';
 import 'package:connectuni/features/cu_loading.dart';
 import 'package:connectuni/features/group/domain/group.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:multi_select_flutter/multi_select_flutter.dart';
 
-import 'package:connectuni/features/home/domain/global_variables.dart';
 import '../../cu_error.dart';
 import '../data/group_providers.dart';
-import 'group_info_widget.dart';
 import 'add_group.dart';
+import 'group_info_widget.dart';
 
 class SearchGroupsScreen extends ConsumerStatefulWidget {
   const SearchGroupsScreen({Key? key, required this.pageController})
@@ -23,21 +23,19 @@ class SearchGroupsScreen extends ConsumerStatefulWidget {
 
 class _SearchGroupsScreenState extends ConsumerState<SearchGroupsScreen> {
   final controller = TextEditingController();
-  final _interests = interests
-      .map((interest) => MultiSelectItem(interest, interest))
-      .toList();
 
   List<String> selectedFilters = [];
 
+  // ADD INTERESTS HERE
   @override
   Widget build(BuildContext context) {
-    final AsyncValue<List<Group>> asyncFilteredGroups = ref.watch(
-        filteredGroupsProvider);
-    return asyncFilteredGroups.when(
-      data: (groups) =>
+    final AsyncValue<AllData> asyncValue = ref.watch(allDataProvider);
+    return asyncValue.when(
+      data: (allData) =>
           _build(
             context: context,
-            groups: groups,
+            groups: allData.groups,
+            interests: allData.interests,
             ref: ref,
           ),
       error: (e, st) => CUError(e.toString(),  st.toString()),
@@ -47,8 +45,13 @@ class _SearchGroupsScreenState extends ConsumerState<SearchGroupsScreen> {
   Widget _build({
     required BuildContext context,
     required List<Group> groups,
+    required List<String> interests,
     required WidgetRef ref
   }) {
+    final _interests = interests
+        .map((interest) => MultiSelectItem<String>(interest, interest))
+        .toList();
+
     bool isSearchbarFilled() {
       if (controller.text.isNotEmpty) {
         return true;
@@ -207,6 +210,12 @@ class _SearchGroupsScreenState extends ConsumerState<SearchGroupsScreen> {
           showContent(),
           buildAddNewGroupButton(),
         ],
+      ),
+      floatingActionButton: FloatingActionButton(
+        onPressed: () {
+          Navigator.pushNamed(context, '/add_group');
+        },
+        child: const Icon(Icons.add),
       ),
     );
   }

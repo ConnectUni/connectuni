@@ -5,9 +5,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:connectuni/features/group/presentation/group_chat_widget.dart';
 import 'package:flutter/material.dart';
 import '../../cu_error.dart';
-import '../../user/data/user_providers.dart';
 import '../domain/group.dart';
-import '../domain/group_list.dart';
 import '../../chat/presentation/chatpage.dart';
 import 'add_group.dart';
 
@@ -68,7 +66,8 @@ class _GroupsScreenState extends ConsumerState<GroupsScreen> {
           ),
         ],
       ),
-      body: ListView(
+      body:
+      ListView(
         children: [
           ...groupCollection
               .getUsersGroups(currentUserID)
@@ -89,6 +88,12 @@ class _GroupsScreenState extends ConsumerState<GroupsScreen> {
               )
           ),
         ],
+      ),
+      floatingActionButton: FloatingActionButton(
+        onPressed: () {
+          Navigator.pushNamed(context, '/add_group');
+        },
+        child: const Icon(Icons.add),
       ),
     );
   }

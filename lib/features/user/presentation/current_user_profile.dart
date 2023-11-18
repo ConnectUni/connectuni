@@ -3,11 +3,10 @@ import 'package:connectuni/features/group/data/group_providers.dart';
 import 'package:connectuni/features/group/domain/group_collection.dart';
 import 'package:connectuni/features/user/domain/user.dart';
 import 'package:flutter/material.dart';
-import 'package:connectuni/features/user/domain/user_list.dart';
 import '../../all_data_provider.dart';
 import '../../cu_error.dart';
 import '../../group/domain/group.dart';
-import '../../group/domain/group_list.dart';
+import '../../group/presentation/add_group.dart';
 import '../data/user_providers.dart';
 import 'edit_user.dart';
 import 'friend_list.dart';
@@ -312,3 +311,4 @@ class CurrentUserProfilePageState extends ConsumerState<CurrentUserProfilePage> 
 
 
 }
+

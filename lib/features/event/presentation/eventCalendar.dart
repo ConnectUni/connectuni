@@ -16,6 +16,7 @@ import '../../group/data/group_providers.dart';
 import 'event_info_screen.dart';
 
 class EventCalendar extends ConsumerStatefulWidget {
+  static const routeName = '/events_calendar';
   const EventCalendar({super.key});
 
   @override
@@ -24,7 +25,6 @@ class EventCalendar extends ConsumerStatefulWidget {
 
 class _EventCalendarState extends ConsumerState<EventCalendar> {
   late final ValueNotifier<List<SingleEvent>> _selectedEvents;
-
   CalendarFormat _calendarFormat = CalendarFormat.month;
   RangeSelectionMode _rangeSelectionMode = RangeSelectionMode
       .toggledOff; // Can be toggled on/off by longpressing a date
@@ -47,7 +47,7 @@ class _EventCalendarState extends ConsumerState<EventCalendar> {
   void _initEvents({required List<SingleEvent> events}) {
     _selectedDay = _focusedDay;
     _selectedEvents = ValueNotifier(
-        events.where((event) => isSameDay(event.eventDate, _selectedDay!)).toList()
+        events.where((event) => isSameDay(DateTime.tryParse(event.eventDate), _selectedDay!)).toList()
     );
   }
 
@@ -76,7 +76,7 @@ class _EventCalendarState extends ConsumerState<EventCalendar> {
     List<SingleEvent> getEventsForDay(DateTime day) {
       return eventCollection
           .getAllEvents()
-          .where((event) => isSameDay(event.eventDate, day))
+          .where((event) => isSameDay(DateTime.tryParse(event.eventDate), day))
           .toList();
     }
 

@@ -1,0 +1,67 @@
+[
+  {
+    "groupID": "group-001",
+    "groupName": "ICS 466",
+    "semYear": "Fall 2023",
+    "owner": "Philip Johnson",
+    "groupImage": "group-001.png",
+    "groupDescription": "Lecture introducing design issues, programming languages, operating systems and mark-up languages for internet-enabled mobile devices, such as cell phones and PDAs. A-F or Audit. Pre: (311 or EE 367) and 314, or consent. (Fall only)",
+    "newMessages": [],
+    "chatID": "chat-001",
+    "eventIDs": ["event-001"],
+    "userIDs": ["user-001", "user-002", "user-003", "user-004", "user-005"],
+    "interests": ["Computer Science"]
+  },
+  {
+    "groupID": "group-002",
+    "groupName": "ICS 332",
+    "semYear": "Fall 2023",
+    "owner": "Henri Casanova",
+    "groupImage": "group-002.png",
+    "groupDescription": "Operating system concepts and structure, processes and threads, CPU scheduling, memory management, scheduling, file systems, inter-process communication, virtualization, popular operating systems. A-F only. Pre: (311 or EE 367) and 314.",
+    "newMessages": [],
+    "chatID": "chat-002",
+    "eventIDs": [],
+    "userIDs": ["user-001", "user-002", "user-003", "user-004", "user-005"],
+    "interests": ["Computer Science"]
+  },
+  {
+    "groupID": "group-003",
+    "groupName": "ICS 312",
+    "semYear": "Fall 2023",
+    "owner": "Kim Binsted",
+    "groupImage": "group-003.png",
+    "groupDescription": "Machine organization, machine instructions, addressing modes, assembler language, subroutine linkage, linking to higher-level languages, interface to operating systems, introduction to assemblers, loaders and compilers. Pre: 212 (or concurrent), (311 or EE 367), and 314, or consent.",
+    "newMessages": [],
+    "chatID": "chat-003",
+    "eventIDs": [],
+    "userIDs": ["user-001", "user-002", "user-003", "user-004", "user-005"],
+    "interests": ["Computer Science"]
+  },
+  {
+    "groupID": "group-004",
+    "groupName": "Math 307",
+    "semYear": "Fall 2023",
+    "owner": "Julian Hackmeister",
+    "groupImage": "group-004.png",
+    "groupDescription": "Introduction to linear algebra, application of eigenvalue techniques to the solution of differential equations. Students may receive credit for only one of 307 or 311. Pre: 242 or 252A, or consent.",
+    "newMessages": [],
+    "chatID": "chat-004",
+    "eventIDs": [],
+    "userIDs": ["user-001", "user-002", "user-003", "user-004", "user-005"],
+    "interests": ["Mathematics"]
+  },
+  {
+    "groupID": "group-005",
+    "groupName": "ICS 496",
+    "semYear": "Fall 2023",
+    "owner": "Anthony Peruma",
+    "groupImage": "group-005.png",
+    "groupDescription": "Project-based course where students work in teams on a software project. Knowledge acquired in the computer science curriculum will be applied to design and implement a software product with potential real-world applicability. Repeatable one time. CS majors only. Senior standing or higher. A-F only. Pre: (311 or EE 367) and 314.",
+    "newMessages": [],
+    "chatID": "chat-005",
+    "eventIDs": [],
+    "userIDs": ["user-001", "user-002", "user-003", "user-004", "user-005"],
+    "interests": ["Computer Science"]
+  }
+]

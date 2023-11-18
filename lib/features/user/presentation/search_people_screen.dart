@@ -4,6 +4,7 @@ import 'package:connectuni/features/cu_loading.dart';
 import 'package:flutter/material.dart';
 import 'package:multi_select_flutter/multi_select_flutter.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import '../../interest/data/interests.dart';
 import '../data/user_providers.dart';
 import 'user_card_widget.dart';
 import '../domain/user.dart';
