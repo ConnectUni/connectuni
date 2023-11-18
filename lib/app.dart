@@ -8,9 +8,10 @@ import 'package:flutter/material.dart';
 import 'features/authentication/presentation/forgot_password_view.dart';
 import 'features/authentication/presentation/signin_view.dart';
 import 'features/authentication/presentation/verify_email_view.dart';
+import 'features/event/presentation/eventCalendar.dart';
+import 'features/group/presentation/add_group.dart';
 import 'features/settings/presentation/app_theme.dart';
 import 'features/home/presentation/home.dart';
-import 'features/chat/presentation/chatpage.dart';
 import 'features/group/presentation/groupinfo.dart';
 import 'features/settings/presentation/settings.dart';
 import 'features/event/presentation/createevent.dart';
@@ -41,23 +42,24 @@ class ConnectUniApp extends ConsumerWidget {
         '/forgot-password': (BuildContext context) => const ForgotPasswordView(),
         '/home': (BuildContext context) => const HomePage(),
         '/settings': (BuildContext context) => const Settings(),
-        '/searchgroups': (BuildContext context) => SearchGroupsScreen(
+        '/search_groups': (BuildContext context) => SearchGroupsScreen(
               pageController: _pageController,
             ),
-        '/searchpeople': (BuildContext context) => SearchPeopleScreen(
+        '/search_people': (BuildContext context) => SearchPeopleScreen(
               pageController: _pageController,
             ),
         '/search_events': (BuildContext context) => SearchEventsScreen(
               pageController: _pageController,
             ),
+        '/add_group': (BuildContext context) => AddGroup(),
         '/createevent': (BuildContext context) => CreateEvent(),
         '/groupinfo': (BuildContext context) => const GroupInfo(id: ''),
         '/eventinfo': (BuildContext context) => const EventInfoScreen(
               id: '',
             ),
-        '/conversations': (BuildContext context) => const ChatPage(),
         '/profile': (BuildContext context) => const CurrentUserProfilePage(),
         '/friendslist': (BuildContext context) => const FriendsList(),
+        '/events_calendar': (BuildContext context) => const EventCalendar(),
       },
       theme: AppTheme.lightTheme,
       darkTheme: AppTheme.darkTheme,

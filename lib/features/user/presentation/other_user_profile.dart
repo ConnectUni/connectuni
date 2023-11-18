@@ -12,7 +12,7 @@ class OtherUserProfile extends ConsumerWidget {
 
   bool isFriend(User user, WidgetRef ref) {
     final UserList userList = ref.read(userDBProvider);
-    final User currentUser = userList.getUserByID(ref.read(currentUserProvider));
+    final User currentUser = userList.getUserByID(ref.watch(currentUserProvider));
     if (currentUser.friends.contains(user)) {
       return true;
     }
@@ -120,8 +120,20 @@ class OtherUserProfile extends ConsumerWidget {
                         ),
                         textAlign: TextAlign.left,
                       ),
+                      if(user.interests.isEmpty)
+                        const Padding(
+                          padding: EdgeInsets.all(10.0),
+                          child: ListTile(
+                            title: Center(
+                                child: Text("This User has no Interests.",
+                                    style: TextStyle(
+                                        fontWeight: FontWeight.bold))),
+                            textColor: Colors.white,
+                            tileColor: Colors.lightBlue,
+                          ),
+                        ),
                       Column(children: [
-                        ...currentUser.interests.map((interest) => Padding(
+                        ...user.interests.map((interest) => Padding(
                               padding: const EdgeInsets.all(5.0),
                               child: ListTile(
                                 title: Center(
@@ -153,7 +165,7 @@ class OtherUserProfile extends ConsumerWidget {
                   crossAxisAlignment: CrossAxisAlignment.stretch,
                   children: [
                     const Text(
-                      "Their Courses:",
+                      "Their Groups:",
                       style: TextStyle(
                         fontSize: 20,
                         fontWeight: FontWeight.bold,
@@ -188,7 +200,7 @@ class OtherUserProfile extends ConsumerWidget {
                                         child: Align(
                                           alignment: Alignment.centerLeft,
                                           child: Text(
-                                              "${group.semYear} | ${group.getOwner()}"),
+                                              "${group.semYear} | ${group.owner}"),
                                         )),
                                     Padding(
                                         padding: const EdgeInsets.only(
@@ -204,7 +216,7 @@ class OtherUserProfile extends ConsumerWidget {
                                         child: Align(
                                           alignment: Alignment.bottomRight,
                                           child: TextButton(
-                                            onPressed: () {group.addUserId(user.uid);},
+                                            onPressed: () {},
                                             style: ButtonStyle(
                                               backgroundColor:
                                                   MaterialStateProperty.all<

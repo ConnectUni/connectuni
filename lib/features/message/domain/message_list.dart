@@ -1,12 +1,11 @@
 import 'message.dart';
-import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 class MessageList {
   List<Message> allMessages;
 
   MessageList({required this.allMessages});
 
-  Message getMessage(String messageId) {
+  Message getMessageById(String messageId) {
     return allMessages.firstWhere((message) => message.messageId == messageId);
   }
 
@@ -17,101 +16,75 @@ class MessageList {
   List<Message> getMessages() {
     return allMessages;
   }
+  int length() {
+    return allMessages.length;
+  }
+  void addMessage(Message message) {
+    allMessages.add(message);
+  }
 }
 
 /// Provides access to and operations on all defined messages.
-final List<Message> mockMessages = [
-  Message(
+final List<Message> allMessages = [
+  const Message(
     messageId: 'message-001',
     senderId: 'user-001',
     groupId: 'group-001',
-    messageContent:
-        'guys i think we should have everyone review and approve our prs before merging to main',
+    messageContent: 'Hey guys!',
   ),
-  Message(
+  const Message(
     messageId: 'message-002',
-    senderId: 'user-002',
+    senderId: 'user-001',
     groupId: 'group-001',
-    messageContent: 'i agree, that way we all know whats going on in the code',
+    messageContent: 'What are your thoughts on 466 so far?',
   ),
-  Message(
+  const Message(
     messageId: 'message-003',
+    senderId: 'user-002',
+    groupId: 'group-001',
+    messageContent: 'Hey Albert! I think its cool.',
+  ),
+  const Message(
+    messageId: 'message-004',
     senderId: 'user-003',
     groupId: 'group-001',
-    messageContent: 'im down with that',
+    messageContent: 'Anyone have the answer for question 4?',
   ),
-  Message(
-    messageId: 'message-004',
-    senderId: 'user-004',
-    groupId: 'group-002',
-    messageContent: 'do you have any idea how to do assignemnt 3?',
-  ),
-  Message(
+  const Message(
     messageId: 'message-005',
-    senderId: 'user-005',
-    groupId: 'group-002',
-    messageContent: 'yeah what do you need help with?',
+    senderId: 'user-001',
+    groupId: 'group-001',
+    messageContent: 'Sorry bro I don\'t.',
   ),
-  Message(
+  const Message(
     messageId: 'message-006',
-    senderId: 'user-001',
+    senderId: 'user-004',
     groupId: 'group-002',
-    messageContent: 'i need help too, i have no idea what im doing',
+    messageContent: 'Yo anyone here?',
   ),
-  Message(
+  const Message(
     messageId: 'message-007',
-    senderId: 'user-002',
-    groupId: 'group-003',
-    messageContent: 'im having trouble understanding assembly can anyone help?',
+    senderId: 'user-005',
+    groupId: 'group-002',
+    messageContent: 'i dont want to be',
   ),
-  Message(
+  const Message(
     messageId: 'message-008',
-    senderId: 'user-003',
-    groupId: 'group-003',
-    messageContent: 'sure! do you want to meet up in the library?',
-  ),
-  Message(
-    messageId: 'message-009',
-    senderId: 'user-004',
-    groupId: 'group-003',
-    messageContent: 'can i come too?',
-  ),
-  Message(
-    messageId: 'message-010',
-    senderId: 'user-005',
-    groupId: 'group-004',
-    messageContent: 'guys i think i failed the exam today',
-  ),
-  Message(
-    messageId: 'message-011',
-    senderId: 'user-001',
-    groupId: 'group-004',
-    messageContent: 'its okay i think we all failed',
-  ),
-  Message(
-    messageId: 'message-012',
     senderId: 'user-002',
-    groupId: 'group-004',
-    messageContent: 'lets get a study group goin',
+    groupId: 'group-003',
+    messageContent: 'Hello new group!',
   ),
-  Message(
-    messageId: 'message-013',
+  const Message(
+    messageId: 'message-009',
     senderId: 'user-003',
     groupId: 'group-005',
-    messageContent: 'Man these techtalks are so boring',
+    messageContent: 'Test test 123',
   ),
-  Message(
-    messageId: 'message-014',
-    senderId: 'user-004',
+  const Message(
+    messageId: 'message-010',
+    senderId: 'user-001',
     groupId: 'group-005',
-    messageContent: 'its okay at least theres free food',
+    messageContent: 'I got that message!',
   ),
-  Message(
-    messageId: 'message-015',
-    senderId: 'user-005',
-    groupId: 'group-005',
-    messageContent: 'i think i find this stuff interesting',
-  ),
-];
 
-final messagesDBProvider = Provider<MessageList>((ref) { return MessageList(allMessages: mockMessages); });
+];

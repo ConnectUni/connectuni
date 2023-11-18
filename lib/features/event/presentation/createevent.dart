@@ -5,6 +5,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import '../data/event_providers.dart';
 import '../domain/event.dart';
 import '../domain/event_list.dart';
+import 'eventCalendar.dart';
 import 'search_events_screen.dart';
 import '../../group/data/group_providers.dart';
 import 'form-fields/event_form_fields.dart';
@@ -50,6 +51,8 @@ class CreateEvent extends ConsumerWidget {
       String description = _descriptionFieldKey.currentState?.value;
       String groupID = _groupIDFieldKey.currentState?.value;
 
+      String eventDate = date.toString();
+
       // Create a new event
       eventDB.addEvent(
         SingleEvent(
@@ -58,14 +61,14 @@ class CreateEvent extends ConsumerWidget {
           eventIcon: icon,
           eventLocation: location,
           eventDescription: description,
-          eventDate: date,
+          eventDate: eventDate,
           groupID: groupID,
           userIDs: userIDs,
           interests: interests,
         )
       );
       ref.refresh(eventsDBProvider);
-      Navigator.pushReplacementNamed(context, SearchEventsScreen.routeName);
+      Navigator.pushReplacementNamed(context, EventCalendar.routeName);
     }
 
     void onReset() {

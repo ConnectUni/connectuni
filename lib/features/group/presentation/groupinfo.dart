@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:connectuni/features/group/domain/group.dart';
 import '../../home/presentation/home.dart';
+import '../../interest/presentation/edit_interests.dart';
 import '../../user/data/user_providers.dart';
 import '../data/group_providers.dart';
 import '../domain/group_list.dart';
@@ -83,13 +84,13 @@ class _GroupInfoState extends ConsumerState<GroupInfo> {
           ),
           Padding(
             padding: const EdgeInsets.all(10),
-            child: Column(
+            child: SingleChildScrollView(child: Column(
               children: [
                 ...groupData
-                    .getAllUsersInGroup()
+                    .userIDs.map((userId) => TempUsersDB.getUserByID(userId)).toList()
                     .map((user) => GroupMemberWidget(user: user)),
               ],
-            ),
+            ),),
           ),
           const Divider(
             height: 7,
@@ -109,12 +110,70 @@ class _GroupInfoState extends ConsumerState<GroupInfo> {
             ),
           ),
           Container(
-            padding: EdgeInsets.only(top: 10, left: 20, right: 20, bottom: 20),
+            padding: const EdgeInsets.only(top: 10, left: 20, right: 20),
             child: Text(
               groupData.groupDescription,
               softWrap: true,
             ),
           ),
+    const Padding(
+      padding: EdgeInsets.only(top: 20, left: 20),
+      child: Text(
+      'Interests:',
+      style: TextStyle(
+        fontSize: 20,
+        fontWeight: FontWeight.bold,
+        ),
+      ),
+    ),
+    if(groupData.interests.isEmpty)
+      const Padding(
+        padding: EdgeInsets.all(10.0),
+        child: ListTile(
+          title: Center(
+            child: Text("This Group has no Interests.",
+                style: TextStyle(
+                    fontWeight: FontWeight.bold))),
+            textColor: Colors.white,
+            tileColor: Colors.lightBlue,
+          ),
+        ),
+    Column(children: [
+      ...groupData.interests.map(
+        (interest) => Padding(
+        padding: const EdgeInsets.all(10.0),
+        child: ListTile(
+        title: Center(
+          child: Text(interest,
+           style: const TextStyle(
+            fontWeight: FontWeight.bold))),
+             textColor: Colors.white,
+             tileColor: Colors.lightBlue,
+           ),
+      ),
+    // textAlign: TextAlign.left,
+    ),
+      if (groupData.userIDs.contains(currentUser))
+        Padding(
+          padding: const EdgeInsets.all(10.0),
+          child: TextButton(
+            onPressed: () {
+              Navigator.push(
+                  context, MaterialPageRoute(builder: (context) {
+                return EditInterest(id: groupData.groupID, type: "group");
+              }));
+            },
+            style: ButtonStyle(
+              backgroundColor:
+              MaterialStateProperty.all<Color>(Colors.green),
+              foregroundColor:
+              MaterialStateProperty.all<Color>(Colors.white),
+            ),
+            child: const Text('Edit Interests'),
+          ),
+        ),
+    ]
+    ),
           const Divider(
             height: 7,
             thickness: 2,
@@ -146,7 +205,7 @@ class _GroupInfoState extends ConsumerState<GroupInfo> {
                   TextButton(
                     onPressed: () {
                       //Remove the user from the group's database. Then Refresh the group's database.
-                      groupData.removeUserId(currentUser);
+                      groupData.userIDs.remove(currentUser);
                       Navigator.pushNamedAndRemoveUntil(
                           context, HomePage.routeName, (route) => false);
                       showDialog(
@@ -172,7 +231,7 @@ class _GroupInfoState extends ConsumerState<GroupInfo> {
               child: TextButton(
                 onPressed: () {
                   //Add the user from the group's database. Then Refresh the group's database.
-                  groupData.addUserId(currentUser);
+                  groupData.userIDs.add(currentUser);
                   //TODO: Add groupId from user.
                   ref.refresh(groupsDBProvider);
                 },

@@ -10,6 +10,7 @@ import '../../group/data/group_providers.dart';
 import 'event_info_screen.dart';
 
 class EventCalendar extends ConsumerStatefulWidget {
+  static const routeName = '/events_calendar';
   const EventCalendar({super.key});
 
   @override
@@ -18,7 +19,6 @@ class EventCalendar extends ConsumerStatefulWidget {
 
 class _EventCalendarState extends ConsumerState<EventCalendar> {
   late final ValueNotifier<List<SingleEvent>> _selectedEvents;
-
   CalendarFormat _calendarFormat = CalendarFormat.month;
   RangeSelectionMode _rangeSelectionMode = RangeSelectionMode
       .toggledOff; // Can be toggled on/off by longpressing a date
@@ -36,7 +36,7 @@ class _EventCalendarState extends ConsumerState<EventCalendar> {
     // Using ref.read() inside initState.
     final EventList eventsDB = ref.read(eventsDBProvider);
     _selectedEvents = ValueNotifier(
-        eventsDB.getAllEvents().where((event) => isSameDay(event.eventDate, _selectedDay!)).toList()
+        eventsDB.getAllEvents().where((event) => isSameDay(DateTime.tryParse(event.eventDate), _selectedDay!)).toList()
     );
   }
 
@@ -44,7 +44,7 @@ class _EventCalendarState extends ConsumerState<EventCalendar> {
     final EventList eventsDB = ref.watch(eventsDBProvider);  // Using ref.watch() if you expect the data to change and want the widget to rebuild.
     return eventsDB
         .getAllEvents()
-        .where((event) => isSameDay(event.eventDate, day))
+        .where((event) => isSameDay(DateTime.tryParse(event.eventDate), day))
         .toList();
   }
 
@@ -149,6 +149,33 @@ class _EventCalendarState extends ConsumerState<EventCalendar> {
             ),
             textAlign: TextAlign.left,
           ),
+          if(_selectedEvents.value.isEmpty)
+            Padding(
+                padding: const EdgeInsets.only(top: 30.0),
+                child: Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children:[
+                      const Text(
+                        "There are no events for this day.",
+                        style: TextStyle(
+                          fontSize: 13.0,
+                        ),
+                        textAlign: TextAlign.center,
+                      ),
+                      TextButton(
+                        onPressed: () {},
+                        style: ButtonStyle(
+                          backgroundColor:
+                          MaterialStateProperty.all<Color>(Colors.blueAccent),
+                          foregroundColor:
+                          MaterialStateProperty.all<Color>(Colors.white),
+                        ),
+                        child: const Text('Add an Event'),
+                      )
+                    ]
+                )
+            ),
+          if(_selectedEvents.value.isNotEmpty)
           Expanded(
             child: ValueListenableBuilder<List<SingleEvent>>(
               valueListenable: _selectedEvents,
@@ -165,7 +192,8 @@ class _EventCalendarState extends ConsumerState<EventCalendar> {
                         border: Border.all(),
                         borderRadius: BorderRadius.circular(12.0),
                       ),
-                      child: ListTile(
+                      child:
+                      ListTile(
                         //TODO: Implement onTap to send user to event page
                         onTap: () => {
                           Navigator.push(

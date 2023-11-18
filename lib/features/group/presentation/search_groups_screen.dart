@@ -3,10 +3,10 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:multi_select_flutter/multi_select_flutter.dart';
 
-import 'package:connectuni/features/home/domain/global_variables.dart';
+import '../../interest/data/interests.dart';
 import '../data/group_providers.dart';
+import '../domain/group_list.dart';
 import 'group_info_widget.dart';
-import 'add_group.dart';
 
 class SearchGroupsScreen extends ConsumerStatefulWidget {
   const SearchGroupsScreen({Key? key, required this.pageController})
@@ -21,16 +21,20 @@ class SearchGroupsScreen extends ConsumerStatefulWidget {
 
 class _SearchGroupsScreenState extends ConsumerState<SearchGroupsScreen> {
   final controller = TextEditingController();
-  final _interests = interests
-      .map((interest) => MultiSelectItem(interest, interest))
-      .toList();
 
   List<String> selectedFilters = [];
 
   @override
   Widget build(BuildContext context) {
     final List<Group>? filteredGroupList = ref.watch(filteredGroups);
+    final GroupList groupsDB = ref.watch(groupsDBProvider);
     final bool isSearchbarFilled = ref.watch(isSearchFilledProvider);
+    final List<String> interestsDB = ref.watch(interestsProvider);
+
+    final _interests = interestsDB
+        .map((interest) => MultiSelectItem(interest, interest))
+        .toList();
+
 
     return Scaffold(
       appBar: AppBar(
@@ -132,6 +136,30 @@ class _SearchGroupsScreenState extends ConsumerState<SearchGroupsScreen> {
               },
             ),
           ),
+          if(groupsDB.getAllGroups().isEmpty)
+            const Padding(
+                padding: EdgeInsets.only(top: 30.0),
+                child: Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children:[
+                      Text(
+                        "There are no groups yet!",
+                        style: TextStyle(
+                          fontSize: 15.0,
+                        ),
+                        textAlign: TextAlign.center,
+                      ),
+                      Text(
+                        "Consider making one!",
+                        style: TextStyle(
+                          fontSize: 15.0,
+                        ),
+                        textAlign: TextAlign.center,
+                      ),
+                    ]
+                )
+            ),
+          if(groupsDB.getAllGroups().isNotEmpty)
           Expanded(
               child: ListView.builder(
                 itemCount: filteredGroupList?.length,
@@ -140,34 +168,13 @@ class _SearchGroupsScreenState extends ConsumerState<SearchGroupsScreen> {
                 },
               )
           ),
-          Padding( // TODO: Fix overflow
-            padding: const EdgeInsets.all(8.0),
-            child:
-                Column(
-                  children: [
-                    const Text(
-                      "Can't find what you're looking for? Create a new group!"
-                    ),
-                    Padding(
-                      padding: const EdgeInsets.all(10.0),
-                      child: ListTile(
-                        title: const Center(
-                            child: Text("Add a Group.",
-                                style: TextStyle(fontWeight: FontWeight.bold))),
-                        textColor: Colors.white,
-                        tileColor: Colors.black54,
-                        onTap: () {
-                          Navigator.push(
-                              context, MaterialPageRoute(builder: (context) {
-                            return AddGroup();
-                          }));
-                        }
-                      ),
-                    ),
-                  ],
-                ),
-          ),
         ],
+      ),
+      floatingActionButton: FloatingActionButton(
+        onPressed: () {
+          Navigator.pushNamed(context, '/add_group');
+        },
+        child: const Icon(Icons.add),
       ),
     );
   }

@@ -45,11 +45,6 @@ class UserList {
     return allUsers;
   }
 
-  /// Return password - for validation use for now.
-  String? getPassword(String email) {
-    return getUserByEmail(email)?.getPassword();
-  }
-
   /// Add a user
   void addUser(User user) {
     allUsers.add(user);
@@ -67,7 +62,6 @@ class UserList {
     required List<String> groupIDs,
     required List<String> eventIDs,
     required List<String> interests,
-    required String password,
   }) {
     allUsers.removeWhere((user) => user.uid == uid);
     allUsers.add(
@@ -83,7 +77,6 @@ class UserList {
         groupIDs: groupIDs,
         eventIDs: eventIDs,
         interests: interests,
-        password: password,
       ),
     );
   }
@@ -103,7 +96,6 @@ final User friend1 = User(
   groupIDs: ['group-001'],
   eventIDs: ['event-111'],
   interests: ['Finance', 'Business'],
-  password: 'password',
 );
 
 final User friend2 = User(
@@ -118,7 +110,6 @@ final User friend2 = User(
   groupIDs: ['group-002'],
   eventIDs: ['event-222'],
   interests: [],
-  password: 'changeme',
 );
 
 /// The mock users DB
@@ -144,7 +135,6 @@ final List<User> mockUsers = [
       'event-222',
     ],
     interests: ['Mathematics', 'Computer Science'],
-    password: 'imthebest',
   ),
   User(
     uid: 'user-002',
@@ -170,7 +160,6 @@ final List<User> mockUsers = [
       'event-333',
     ],
     interests: ['Art', 'Graphic Design'],
-    password: 'noimthebest',
   ),
   User(
     uid: 'user-003',
@@ -195,7 +184,6 @@ final List<User> mockUsers = [
       'event-333',
     ],
     interests: ['Business', 'Computer Science'],
-    password: 'calebsmith',
   ),
   User(
     uid: 'user-004',
@@ -220,7 +208,6 @@ final List<User> mockUsers = [
       'event-222',
     ],
     interests: [],
-    password: 'dianajones1',
   ),
   User(
     uid: 'user-005',
@@ -247,7 +234,6 @@ final List<User> mockUsers = [
       'event-333',
     ],
     interests: ['Computer Science', 'Mathematics'],
-    password: 'brownisthebest',
   ),
   friend1,
   friend2,
@@ -255,7 +241,7 @@ final List<User> mockUsers = [
     uid: 'user-008',
     email: 'kenjisan@hawaii.edu',
     displayName: 'Kenji Sanehira',
-    pfp: 'assets/images/Logo.png',
+    pfp: 'assets/images/Kenji.jpg',
     major: 'Computer Science',
     projectedGraduation: 'Spring 2024',
     status: 'This is an annoying test',
@@ -270,7 +256,27 @@ final List<User> mockUsers = [
       'event-222',
     ],
     interests: ['Computer Science'],
-    password: 'test01',
+  ),
+  User(
+    uid: 'user-009',
+    email: 'sanehirakenji@gmail.com',
+    displayName: 'Riki Sanehira',
+    pfp: 'assets/images/diana.png',
+    major: 'Graphic Design',
+    projectedGraduation: 'Spring 2024',
+    status: 'I love art!',
+    friends: [
+      friend1,
+    ],
+    groupIDs: [
+      'group-001',
+      'group-002',
+      'group-003',
+      'group-004',
+      'group-005',
+    ],
+    eventIDs: [],
+    interests: [],
   ),
 ];
 
