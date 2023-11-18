@@ -257,6 +257,27 @@ final List<User> mockUsers = [
     ],
     interests: ['Computer Science'],
   ),
+  User(
+    uid: 'user-009',
+    email: 'sanehirakenji@gmail.com',
+    displayName: 'Riki Sanehira',
+    pfp: 'assets/images/diana.png',
+    major: 'Graphic Design',
+    projectedGraduation: 'Spring 2024',
+    status: 'I love art!',
+    friends: [
+      friend1,
+    ],
+    groupIDs: [
+      'group-001',
+      'group-002',
+      'group-003',
+      'group-004',
+      'group-005',
+    ],
+    eventIDs: [],
+    interests: [],
+  ),
 ];
 
 //TODO: REMOVE THIS LATER WHEN WE FIGURE OUT HOW TO WORK BETWEEN THESE TWO.

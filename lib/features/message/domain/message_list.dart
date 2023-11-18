@@ -17,7 +17,9 @@ class MessageList {
   List<Message> getMessages() {
     return allMessages;
   }
-
+  int length() {
+    return allMessages.length;
+  }
   void addMessage(Message message) {
     allMessages.add(message);
   }

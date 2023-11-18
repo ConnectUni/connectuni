@@ -102,14 +102,14 @@ class _GroupChatScreenState extends ConsumerState<GroupChatScreen> {
                 hintText: 'Type your message here...',
               ),
                 onSubmitted: (text) {
-                int messageIdCounter = chatData.messageIDs.length + 1;
+                int messageIdCounter = messageDB.length() + 1;
                 String thisMessageId;
                   if (messageIdCounter < 10) {
-                    thisMessageId = "chat-00$messageIdCounter";
+                    thisMessageId = "message-00$messageIdCounter";
                   } else if (messageIdCounter < 100) {
-                    thisMessageId = "chat-0$messageIdCounter";
+                    thisMessageId = "message-0$messageIdCounter";
                   } else {
-                    thisMessageId = "chat-$messageIdCounter";
+                    thisMessageId = "message-$messageIdCounter";
                   }
                   final currentMessage = Message(
                     messageId: thisMessageId,
