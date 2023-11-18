@@ -42,19 +42,19 @@ final List<Chat> mockChats = [
     chatID: "chat-001",
     groupID: "group-001",
     userIDs: [],
-    messageIDs: [],
+    messageIDs: ["message-001", "message-002", "message-003", "message-004", "message-005"],
   ),
   Chat(
     chatID: "chat-002",
     groupID: "group-002",
     userIDs: [],
-    messageIDs: [],
+    messageIDs: ["message-006", "message-007"],
   ),
   Chat(
     chatID: "chat-003",
     groupID: "group-003",
     userIDs: [],
-    messageIDs: [],
+    messageIDs: ["message-008"],
   ),
   Chat(
     chatID: "chat-004",
@@ -66,6 +66,6 @@ final List<Chat> mockChats = [
     chatID: "chat-005",
     groupID: "group-005",
     userIDs: [],
-    messageIDs: [],
+    messageIDs: ["message-009", "message-010"],
   ),
   ];

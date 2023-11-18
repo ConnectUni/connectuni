@@ -1,0 +1,59 @@
+[{
+  "messageId": "message-001",
+  "senderId": "user-001",
+  "groupId": "group-001",
+  "messageContent": "Hey Guys!"
+},
+  {
+    "messageId": "message-002",
+    "senderId": "user-001",
+    "groupId": "group-001",
+    "messageContent": "What are your thoughts on 466 so far?"
+  },
+  {
+    "messageId": "message-003",
+    "senderId": "user-001",
+    "groupId": "group-001",
+    "messageContent": "Hey Albert! I think its cool"
+  },
+  {
+    "messageId": "message-004",
+    "senderId": "user-003",
+    "groupId": "group-001",
+    "messageContent": "Anyone have the answer for question 4?"
+  },
+  {
+    "messageId": "message-005",
+    "senderId": "user-001",
+    "groupId": "group-001",
+    "messageContent": "Sorry bro I don't."
+  },
+  {
+    "messageId": "message-006",
+    "senderId": "user-004",
+    "groupId": "group-002",
+    "messageContent": "yoo anyone here?"
+  }, {
+  "messageId": "message-007",
+  "senderId": "user-005",
+  "groupId": "group-002",
+  "messageContent": "i dont want to be"
+},
+  {
+    "messageId": "message-008",
+    "senderId": "user-002",
+    "groupId": "group-003",
+    "messageContent": "Hellooo new group."
+  },
+  {
+    "messageId": "message-009",
+    "senderId": "user-003",
+    "groupId": "group-005",
+    "messageContent": "Test test 123"
+  },
+  {
+    "messageId": "message-010",
+    "senderId": "user-001",
+    "groupId": "group-005",
+    "messageContent": "I got that message!"
+  }]

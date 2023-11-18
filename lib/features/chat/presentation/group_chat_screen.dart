@@ -61,6 +61,9 @@ class _GroupChatScreenState extends ConsumerState<GroupChatScreen> {
       ),
       body: Column(
         children: [
+          if(thisMessages.isEmpty)
+          const Expanded(child: Center(child: Text("No messages yet. Send one!")))
+          else
           Expanded(child:
             GroupedListView<Message, String>(
               reverse: true,
