@@ -13,6 +13,7 @@ import '../../group/presentation/groupinfo.dart';
 import '../data/chat_providers.dart';
 import '../domain/chat.dart';
 import '../domain/chat_list.dart';
+import 'message_widget.dart';
 
 class GroupChatScreen extends ConsumerStatefulWidget {
   final String id;
@@ -66,29 +67,14 @@ class _GroupChatScreenState extends ConsumerState<GroupChatScreen> {
               padding: const EdgeInsets.all(8),
               elements: thisMessages,
               groupBy: (element) => element.groupId,
-              groupHeaderBuilder: (Message message) => const SizedBox(
-                height: 50,
-                child: Card(
-                  elevation: 8.0,
-                  child: Padding(
-                    padding: EdgeInsets.all(12.0),
-                    child: Text("Welcome to the chat!"),
-                  ),
-                ),
-              ),
+              groupHeaderBuilder: (Message message) => const SizedBox(),
               itemBuilder: (context, Message message) => Align(
                 alignment: message.senderId == currentUserID
                   ? Alignment.centerRight
                     : Alignment.centerLeft
                 ,
-
-                child: Card(
-                  elevation: 8.0,
-                  child: Padding(
-                    padding: const EdgeInsets.all(12.0),
-                    child: Text(message.messageContent),
-                  ),
-                ),
+                //TODO: Make this a MessageObject instead of whatever it is now
+                child: MessageWidget(message: message),
               )
             ),
           ),
@@ -96,6 +82,7 @@ class _GroupChatScreenState extends ConsumerState<GroupChatScreen> {
             color: Colors.grey,
             child: Padding(
               padding: const EdgeInsets.all(8.0),
+              //TODO: Change this to a better text field.
               child: TextField(
               decoration: const InputDecoration(
                 border: InputBorder.none,
