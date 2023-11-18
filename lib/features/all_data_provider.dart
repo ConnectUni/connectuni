@@ -1,5 +1,6 @@
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 
+import 'interest/data/interests.dart';
 import 'user/data/user_providers.dart';
 import 'user/domain/user.dart';
 import 'group/data/group_providers.dart';
@@ -20,6 +21,7 @@ class AllData {
     required this.events,
     required this.chats,
     required this.messages,
+    required this.interests,
     required this.currentUser,
   });
 
@@ -28,6 +30,7 @@ class AllData {
   final List<SingleEvent> events;
   final List<Chat> chats;
   final List<Message> messages;
+  final List<String> interests;
   final User currentUser;
 }
 
@@ -38,6 +41,7 @@ Future<AllData> allData(AllDataRef ref) async {
   final events = ref.watch(eventsProvider.future);
   final chats = ref.watch(chatsProvider.future);
   final messages = ref.watch(messagesProvider.future);
+  final interests = ref.watch(interestsProvider);
   final currentUser = ref.watch(currentUserProvider.future);
   return AllData(
     users: await users,
@@ -45,6 +49,7 @@ Future<AllData> allData(AllDataRef ref) async {
     events: await events,
     chats: await chats,
     messages: await messages,
+    interests: interests,
     currentUser: await currentUser,
   );
 }

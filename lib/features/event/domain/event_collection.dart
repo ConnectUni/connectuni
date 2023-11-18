@@ -55,7 +55,7 @@ class EventCollection {
     return getEvent(eventID).eventLocation;
   }
 
-  DateTime getEventDate(String eventID) {
+  String getEventDate(String eventID) {
     return getEvent(eventID).eventDate;
   }
 
