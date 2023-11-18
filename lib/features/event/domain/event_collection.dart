@@ -35,6 +35,10 @@ class EventCollection {
     return result;
   }
 
+  List<SingleEvent> getAllEvents() {
+    return _events;
+  }
+
   List<String> getAllEventIDs() {
     return _events.map((data) => data.eventID).toList();
   }
