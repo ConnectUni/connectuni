@@ -19,10 +19,10 @@ class MessageWidget extends ConsumerStatefulWidget {
   });
 
   @override
-  ConsumerState<MessageWidget> createState() => _GroupChatWidgetState();
+  ConsumerState<MessageWidget> createState() => _MessageWidgetState();
 }
 
-class _GroupChatWidgetState extends ConsumerState<MessageWidget> {
+class _MessageWidgetState extends ConsumerState<MessageWidget> {
 
   @override
   Widget build(BuildContext context) {

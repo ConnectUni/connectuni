@@ -13,6 +13,7 @@ import '../../group/presentation/groupinfo.dart';
 import '../data/chat_providers.dart';
 import '../domain/chat.dart';
 import '../domain/chat_list.dart';
+import 'message_input_widget.dart';
 import 'message_widget.dart';
 
 class GroupChatScreen extends ConsumerStatefulWidget {
@@ -73,7 +74,6 @@ class _GroupChatScreenState extends ConsumerState<GroupChatScreen> {
                   ? Alignment.centerRight
                     : Alignment.centerLeft
                 ,
-                //TODO: Make this a MessageObject instead of whatever it is now
                 child: MessageWidget(message: message),
               )
             ),
@@ -82,35 +82,7 @@ class _GroupChatScreenState extends ConsumerState<GroupChatScreen> {
             color: Colors.grey,
             child: Padding(
               padding: const EdgeInsets.all(8.0),
-              //TODO: Change this to a better text field.
-              child: TextField(
-              decoration: const InputDecoration(
-                border: InputBorder.none,
-                hintText: 'Type your message here...',
-              ),
-                onSubmitted: (text) {
-                int messageIdCounter = messageDB.length() + 1;
-                String thisMessageId;
-                  if (messageIdCounter < 10) {
-                    thisMessageId = "message-00$messageIdCounter";
-                  } else if (messageIdCounter < 100) {
-                    thisMessageId = "message-0$messageIdCounter";
-                  } else {
-                    thisMessageId = "message-$messageIdCounter";
-                  }
-                  final currentMessage = Message(
-                    messageId: thisMessageId,
-                    senderId: currentUserID,
-                    groupId: widget.id,
-                    messageContent: text,
-                  );
-
-                  ref.read(messagesDBProvider).addMessage(currentMessage);
-                  ref.read(chatDBProvider).addMessageIdToGroupChat(widget.id, thisMessageId);
-                  ref.refresh(chatDBProvider);
-                  ref.refresh(messagesDBProvider);
-                },
-            ),
+              child: MessageInputWidget(id: widget.id),
             ),
           ),
         ]
