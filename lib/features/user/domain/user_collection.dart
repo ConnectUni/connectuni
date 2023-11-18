@@ -41,6 +41,14 @@ class UserCollection {
     return _users.map((data) => data.email).toList();
   }
 
+  User? getUserByEmail(String email) {
+    if(getEmails().contains(email)) {
+      return _users.firstWhere((data) => data.email == email);
+    } else {
+      return null;
+    }
+  }
+
   List<String> getUsernames() {
     return _users.map((data) => data.displayName).toList();
   }
