@@ -1,3 +1,5 @@
+import '../../message/domain/message.dart';
+import '../../message/domain/message_collection.dart';
 import '../../user/domain/user.dart';
 import '../../user/domain/user_collection.dart';
 import 'chat.dart';
@@ -55,5 +57,8 @@ class ChatCollection {
     return getChat(chatID).messageIDs.toList();
   }
 
+  List<Message> getMessagesInChat(MessageCollection messages, String chatID) {
+    return messages.getMessages(getMessageIDsInChat(chatID));
+  }
 
 }

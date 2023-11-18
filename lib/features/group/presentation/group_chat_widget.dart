@@ -30,7 +30,7 @@ class _GroupChatWidgetState extends ConsumerState<GroupChatWidget> {
         Navigator.push(
           context,
           CupertinoPageRoute(
-              builder: (context) => GroupChatScreen(id: widget.group.groupID)),
+              builder: (context) => GroupChatScreen(group: widget.group)),
         );
       },
       child: GroupCardView(group: widget.group),

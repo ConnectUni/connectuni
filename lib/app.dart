@@ -52,9 +52,7 @@ class ConnectUniApp extends ConsumerWidget {
             ),
         '/createevent': (BuildContext context) => CreateEvent(),
         '/groupinfo': (BuildContext context) => const GroupInfo(group: null),
-        '/eventinfo': (BuildContext context) => const EventInfoScreen(
-              id: '',
-            ),
+        '/eventinfo': (BuildContext context) => const EventInfoScreen(event: null),
         '/conversations': (BuildContext context) => const ChatPage(),
         '/profile': (BuildContext context) => const CurrentUserProfilePage(),
         '/friendslist': (BuildContext context) => const FriendsList(),

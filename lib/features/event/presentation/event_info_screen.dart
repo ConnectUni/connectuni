@@ -5,7 +5,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 class EventInfoScreen extends ConsumerWidget {
   const EventInfoScreen({Key? key, required this.event}) : super(key: key);
 
-  final SingleEvent event;
+  final SingleEvent? event;
   static const String routeName = '/event_info';
 
   @override
@@ -22,13 +22,13 @@ class EventInfoScreen extends ConsumerWidget {
               flexibleSpace: FlexibleSpaceBar(
                 centerTitle: true,
                 collapseMode: CollapseMode.parallax,
-                title: Text(event.eventName,
+                title: Text(event!.eventName,
                     style: const TextStyle(
                       color: Colors.white,
                       fontSize: 16.0,
                     )),
                 background: Image.asset(
-                  event.eventIcon,
+                  event!.eventIcon,
                   fit: BoxFit.cover,
                 ),
               ),
@@ -41,7 +41,7 @@ class EventInfoScreen extends ConsumerWidget {
               child: Padding(
                 padding: const EdgeInsets.all(10),
                 child: Text(
-                  event.eventDescription,
+                  event!.eventDescription,
                   style: const TextStyle(
                     fontSize: 20,
                     fontWeight: FontWeight.bold,
@@ -53,7 +53,7 @@ class EventInfoScreen extends ConsumerWidget {
             Padding(
               padding: const EdgeInsets.all(10),
               child: Text(
-                'Location: ${event.eventLocation}',
+                'Location: ${event!.eventLocation}',
                 style: const TextStyle(
                   fontSize: 20,
                 ),
@@ -62,7 +62,7 @@ class EventInfoScreen extends ConsumerWidget {
             Padding(
               padding: const EdgeInsets.all(10),
               child: Text(
-                'Date: ${event.eventDate}',
+                'Date: ${event!.eventDate}',
                 style: const TextStyle(
                   fontSize: 20,
                 ),
@@ -71,7 +71,7 @@ class EventInfoScreen extends ConsumerWidget {
             Padding(
               padding: const EdgeInsets.all(10),
               child: Text(
-                'Members going: ${event.userIDs.length}',
+                'Members going: ${event!.userIDs.length}',
                 style: const TextStyle(
                   fontSize: 20,
                 ),
