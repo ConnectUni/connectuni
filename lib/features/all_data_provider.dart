@@ -22,7 +22,6 @@ class AllData {
     required this.filteredGroups,
     required this.events,
     required this.filteredEvents,
-    required this.selectedEvents,
     required this.chats,
     required this.messages,
     required this.interests,
@@ -35,7 +34,6 @@ class AllData {
   final List<Group> filteredGroups;
   final List<SingleEvent> events;
   final List<SingleEvent> filteredEvents;
-  final List<SingleEvent> selectedEvents;
   final List<Chat> chats;
   final List<Message> messages;
   final List<String> interests;
@@ -50,7 +48,6 @@ Future<AllData> allData(AllDataRef ref) async {
   final filteredGroups = ref.watch(filteredGroupsProvider.future);
   final events = ref.watch(eventsProvider.future);
   final filteredEvents = ref.watch(filteredEventsProvider.future);
-  final selectedEvents = ref.watch(selectedEventsProvider.future);
   final chats = ref.watch(chatsProvider.future);
   final messages = ref.watch(messagesProvider.future);
   final interests = ref.watch(interestsProvider);
@@ -62,7 +59,6 @@ Future<AllData> allData(AllDataRef ref) async {
     filteredGroups: await filteredGroups,
     events: await events,
     filteredEvents: await filteredEvents,
-    selectedEvents: await selectedEvents,
     chats: await chats,
     messages: await messages,
     interests: interests,

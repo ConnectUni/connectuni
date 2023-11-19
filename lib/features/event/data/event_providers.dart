@@ -67,15 +67,19 @@ class SelectedEvents extends _$SelectedEvents {
   DateTime? selectedDay;
 
   @override
-  FutureOr<List<SingleEvent>> build() async {
-    ref.onDispose(() => mounted = false);
-    events = await ref.watch(eventsProvider.future);
+  List<SingleEvent> build(List<SingleEvent> initialEvents) {
+    events = initialEvents;
     return events;
+  }
+
+  void populateEvents(List<SingleEvent> events) {
+    this.events = events;
+    _updateSelectedEvents();
   }
 
   void _updateSelectedEvents() {
     selectedDay ??= focusDay;
-    state = AsyncData(events.where((event) => isSameDay(DateTime.tryParse(event.eventDate), selectedDay!)).toList());
+    state = events.where((event) => isSameDay(DateTime.tryParse(event.eventDate), selectedDay!)).toList();
   }
 
   void onDaySelected(DateTime selectedDay, DateTime focusedDay) {

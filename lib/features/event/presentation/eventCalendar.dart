@@ -26,6 +26,12 @@ class _EventCalendarState extends ConsumerState<EventCalendar> {
   DateTime? _selectedDay;
 
   @override
+  void initState() {
+    super.initState();
+    _selectedDay = _focusedDay;
+  }
+
+  @override
   Widget build(BuildContext context) {
     final AsyncValue<AllData> asyncValue = ref.watch(allDataProvider);
     return asyncValue.when(
@@ -33,7 +39,6 @@ class _EventCalendarState extends ConsumerState<EventCalendar> {
             _build(
               context: context,
               events: allData.events,
-              selectedEvents: allData.selectedEvents,
               groups: allData.groups,
               ref: ref,
             ),
@@ -44,12 +49,21 @@ class _EventCalendarState extends ConsumerState<EventCalendar> {
   Widget _build({
     required BuildContext context,
     required List<SingleEvent> events,
-    required List<SingleEvent> selectedEvents,
     required List<Group> groups,
     required WidgetRef ref,
   }) {
-
+    final selectedEvents = ref.watch(selectedEventsProvider(events));
     final items = groups.map((group) => MultiSelectItem(group.groupID, group.groupName)).toList();
+
+    void onDaySelected(DateTime selectedDay, DateTime focusedDay) {
+      if(!isSameDay(_selectedDay, selectedDay)) {
+        setState(() {
+          _selectedDay = selectedDay;
+          _focusedDay = focusedDay;
+        });
+      }
+      ref.watch(selectedEventsProvider(events).notifier).onDaySelected(selectedDay, focusedDay);
+    }
 
     Widget buildFilterBar() => Padding(
       padding: const EdgeInsets.all(8.0),
@@ -89,16 +103,14 @@ class _EventCalendarState extends ConsumerState<EventCalendar> {
       selectedDayPredicate: (day) => isSameDay(_selectedDay, day),
       calendarFormat: _calendarFormat,
       eventLoader: (day) {
-        return events.where((event) => isSameDay(event.eventDate as DateTime, day)).toList();
+        return events.where((event) => isSameDay(DateTime.tryParse(event.eventDate), day)).toList();
       },
       startingDayOfWeek: StartingDayOfWeek.monday,
       calendarStyle: const CalendarStyle(
         // Use `CalendarStyle` to customize the UI
         outsideDaysVisible: false,
       ),
-      onDaySelected: (selectedDay, focusedDay) {
-        ref.read(selectedEventsProvider.notifier).onDaySelected(selectedDay, focusedDay);
-      },
+      onDaySelected: onDaySelected,
       onFormatChanged: (format) {
         if (_calendarFormat != format) {
           setState(() {
