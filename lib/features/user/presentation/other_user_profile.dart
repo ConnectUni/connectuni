@@ -177,7 +177,6 @@ class OtherUserProfile extends ConsumerWidget {
                               .map((group) =>
                               Card(
                                 elevation: 8,
-                                color: Colors.white,
                                 shape: RoundedRectangleBorder(
                                   borderRadius: BorderRadius.circular(15),
                                   side: BorderSide(
@@ -218,7 +217,7 @@ class OtherUserProfile extends ConsumerWidget {
                                             style: ButtonStyle(
                                               backgroundColor:
                                                   MaterialStateProperty.all<
-                                                      Color>(Colors.green),
+                                                      Color>(FlexColor.greenLightPrimary),
                                               foregroundColor:
                                                   MaterialStateProperty.all<
                                                       Color>(Colors.white),
