@@ -4,7 +4,6 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../../home/presentation/home.dart';
 import '../../user/data/user_providers.dart';
-import '../../user/domain/user.dart';
 import '../../user/presentation/add_user.dart';
 import 'decorations.dart';
 import 'forgot_password_view.dart';
@@ -34,7 +33,7 @@ class SignInView extends ConsumerWidget {
           } else if (usersDB.getUserByPotentialEmail(state.user!.email!) == null) {
             Navigator.pushReplacementNamed(context, AddUser.routeName);
           } else {
-            ref.read(currentUserProvider.state).state = usersDB.getUserByEmail(state.user!.email!)!.uid;
+            ref.read(currentUserProvider.notifier).state = usersDB.getUserByEmail(state.user!.email!)!.uid;
             Navigator.pushReplacementNamed(context, HomePage.routeName);
           }
         }),
@@ -44,17 +43,17 @@ class SignInView extends ConsumerWidget {
           } else if (usersDB.getUserByPotentialEmail(state.credential.user!.email!) == null) {
             Navigator.pushReplacementNamed(context, AddUser.routeName);
           } else {
-            ref.read(currentUserProvider.state).state = usersDB.getUserByEmail(state.credential.user!.email!)!.uid;
+            ref.read(currentUserProvider.notifier).state = usersDB.getUserByEmail(state.credential.user!.email!)!.uid;
             Navigator.pushReplacementNamed(context, HomePage.routeName);
           }
         }),
         AuthStateChangeAction<CredentialLinked>((context, state) {
           if (!state.user.emailVerified) {
             Navigator.pushNamed(context, VerifyEmailView.routeName);
-          } else if (usersDB.getUserByPotentialEmail(state.user!.email!) == null) {
+          } else if (usersDB.getUserByPotentialEmail(state.user.email!) == null) {
             Navigator.pushReplacementNamed(context, AddUser.routeName);
           } else {
-            ref.read(currentUserProvider.state).state = usersDB.getUserByEmail(state.user!.email!)!.uid;
+            ref.read(currentUserProvider.notifier).state = usersDB.getUserByEmail(state.user.email!)!.uid;
             Navigator.pushReplacementNamed(context, HomePage.routeName);
           }
         }),

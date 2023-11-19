@@ -1,19 +1,11 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-import '../../group/data/group_providers.dart';
-import '../../group/domain/group.dart';
-import '../../group/domain/group_list.dart';
 import '../../message/data/message_providers.dart';
 import '../../message/domain/message.dart';
 import '../../message/domain/message_list.dart';
 import '../../user/data/user_providers.dart';
-import '../../user/domain/user.dart';
-import '../../user/domain/user_list.dart';
 import '../data/chat_providers.dart';
-import '../domain/chat.dart';
-import '../domain/chat_list.dart';
 
 /// GroupChatWidget is a widget that displays the group chat.
 /// It is a clickable widget that takes the user to the group chat page.
@@ -34,16 +26,10 @@ class _MessageInputWidgetState extends ConsumerState<MessageInputWidget> {
 
   @override
   Widget build(BuildContext context) {
-    final GroupList groupsDB = ref.watch(groupsDBProvider);
-    final ChatList chatsDB = ref.watch(chatDBProvider);
     final MessageList messageDB = ref.watch(messagesDBProvider);
     final String currentUserID = ref.watch(currentUserProvider);
-    Group groupData = groupsDB.getGroupById(widget.id);
-    Chat chatData = chatsDB.getChatByGroupId(widget.id);
-    List<String> messagesAsString = chatData.messageIDs;
-    List<Message> thisMessages = messagesAsString.map((e) => messageDB.getMessageById(e)).toList();
     return Container(
-      margin: EdgeInsets.all(5.0),
+      margin: const EdgeInsets.all(5.0),
       height: 61,
       child: Row(
         children: [

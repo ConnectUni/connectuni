@@ -1,9 +1,9 @@
 import 'package:connectuni/features/interest/presentation/edit_interests.dart';
 import 'package:connectuni/features/user/domain/user.dart';
+import 'package:flex_color_scheme/flex_color_scheme.dart';
 import 'package:flutter/material.dart';
 import 'package:connectuni/features/user/domain/user_list.dart';
 import '../../group/data/group_providers.dart';
-import '../../group/domain/group.dart';
 import '../../group/domain/group_list.dart';
 import '../../group/presentation/add_group.dart';
 import '../../interest/data/interests.dart';
@@ -15,22 +15,13 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 ///  Profile Page that the User sees when they click the Navbar Profile icon.
 
 class CurrentUserProfilePage extends ConsumerStatefulWidget {
-  const CurrentUserProfilePage({Key? key});
+  const CurrentUserProfilePage({super.key});
 
   @override
   CurrentUserProfilePageState createState() => CurrentUserProfilePageState();
 }
 
 class CurrentUserProfilePageState extends ConsumerState<CurrentUserProfilePage> {
-  int _selectedIndex = 0;
-
-  void _onItemTapped(int index) {
-    if (index != _selectedIndex) {
-      setState(() {
-        _selectedIndex = index;
-      });
-    }
-  }
 
   @override
   Widget build(BuildContext context) {
@@ -107,7 +98,7 @@ class CurrentUserProfilePageState extends ConsumerState<CurrentUserProfilePage> 
                       },
                       style: ButtonStyle(
                         backgroundColor:
-                            MaterialStateProperty.all<Color>(Colors.green),
+                            MaterialStateProperty.all<Color>(FlexColor.deepBlueLightSecondary),
                         foregroundColor:
                             MaterialStateProperty.all<Color>(Colors.white),
                       ),
@@ -123,7 +114,6 @@ class CurrentUserProfilePageState extends ConsumerState<CurrentUserProfilePage> 
             thickness: 2,
             indent: 20,
             endIndent: 20,
-            color: Colors.black,
           ),
           Container(
             padding: const EdgeInsets.all(10.0),
@@ -147,7 +137,7 @@ class CurrentUserProfilePageState extends ConsumerState<CurrentUserProfilePage> 
                               style: TextStyle(
                                   fontWeight: FontWeight.bold))),
                       textColor: Colors.white,
-                      tileColor: Colors.lightBlue,
+                      tileColor: FlexColor.bigStoneDarkPrimary,
                     ),
                   ),
                 Column(children: [
@@ -161,7 +151,7 @@ class CurrentUserProfilePageState extends ConsumerState<CurrentUserProfilePage> 
                                 style: const TextStyle(
                                     fontWeight: FontWeight.bold))),
                         textColor: Colors.white,
-                        tileColor: Colors.lightBlue,
+                        tileColor: FlexColor.bigStoneDarkPrimary,
                       ),
                     ),
                     // textAlign: TextAlign.left,
@@ -177,7 +167,7 @@ class CurrentUserProfilePageState extends ConsumerState<CurrentUserProfilePage> 
                       },
                       style: ButtonStyle(
                         backgroundColor:
-                        MaterialStateProperty.all<Color>(Colors.green),
+                        MaterialStateProperty.all<Color>(FlexColor.deepBlueLightSecondary),
                         foregroundColor:
                         MaterialStateProperty.all<Color>(Colors.white),
                       ),
@@ -190,7 +180,6 @@ class CurrentUserProfilePageState extends ConsumerState<CurrentUserProfilePage> 
                   thickness: 2,
                   indent: 20,
                   endIndent: 20,
-                  color: Colors.black,
                 ),
                 Container(
                   padding: const EdgeInsets.only(top: 10, left: 5, right: 5),
@@ -231,7 +220,7 @@ class CurrentUserProfilePageState extends ConsumerState<CurrentUserProfilePage> 
                                   },
                                   style: ButtonStyle(
                                     backgroundColor:
-                                    MaterialStateProperty.all<Color>(Colors.blueAccent),
+                                    MaterialStateProperty.all<Color>(FlexColor.deepBlueLightSecondary),
                                     foregroundColor:
                                     MaterialStateProperty.all<Color>(Colors.white),
                                   ),

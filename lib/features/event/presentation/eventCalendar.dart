@@ -1,3 +1,4 @@
+import 'package:flex_color_scheme/flex_color_scheme.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -166,7 +167,7 @@ class _EventCalendarState extends ConsumerState<EventCalendar> {
                         onPressed: () {},
                         style: ButtonStyle(
                           backgroundColor:
-                          MaterialStateProperty.all<Color>(Colors.blueAccent),
+                          MaterialStateProperty.all<Color>(FlexColor.deepBlueLightSecondary),
                           foregroundColor:
                           MaterialStateProperty.all<Color>(Colors.white),
                         ),

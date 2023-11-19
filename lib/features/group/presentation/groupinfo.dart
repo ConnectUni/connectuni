@@ -1,4 +1,5 @@
 import 'package:connectuni/features/group/presentation/group_member_widget.dart';
+import 'package:flex_color_scheme/flex_color_scheme.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:connectuni/features/group/domain/group.dart';
@@ -97,7 +98,6 @@ class _GroupInfoState extends ConsumerState<GroupInfo> {
             thickness: 2,
             indent: 20,
             endIndent: 20,
-            color: Colors.black,
           ),
           const Padding(
             padding: EdgeInsets.only(top: 20, left: 20),
@@ -135,7 +135,7 @@ class _GroupInfoState extends ConsumerState<GroupInfo> {
                 style: TextStyle(
                     fontWeight: FontWeight.bold))),
             textColor: Colors.white,
-            tileColor: Colors.lightBlue,
+            tileColor: FlexColor.deepBlueLightSecondary,
           ),
         ),
     Column(children: [
@@ -148,7 +148,7 @@ class _GroupInfoState extends ConsumerState<GroupInfo> {
            style: const TextStyle(
             fontWeight: FontWeight.bold))),
              textColor: Colors.white,
-             tileColor: Colors.lightBlue,
+             tileColor: FlexColor.deepBlueLightTertiary,
            ),
       ),
     // textAlign: TextAlign.left,
@@ -165,7 +165,7 @@ class _GroupInfoState extends ConsumerState<GroupInfo> {
             },
             style: ButtonStyle(
               backgroundColor:
-              MaterialStateProperty.all<Color>(Colors.green),
+              MaterialStateProperty.all<Color>(FlexColor.deepBlueLightSecondary),
               foregroundColor:
               MaterialStateProperty.all<Color>(Colors.white),
             ),
@@ -179,7 +179,6 @@ class _GroupInfoState extends ConsumerState<GroupInfo> {
             thickness: 2,
             indent: 20,
             endIndent: 20,
-            color: Colors.black,
           ),
           //Display a button to leave the group if the user is in the group.
           if (groupData.userIDs.contains(currentUser))
@@ -196,7 +195,7 @@ class _GroupInfoState extends ConsumerState<GroupInfo> {
                     },
                     style: ButtonStyle(
                       backgroundColor: MaterialStateProperty.all<Color>(
-                          Colors.lightBlueAccent),
+                          FlexColor.greenLightPrimary),
                       foregroundColor:
                           MaterialStateProperty.all<Color>(Colors.white),
                     ),
@@ -216,7 +215,7 @@ class _GroupInfoState extends ConsumerState<GroupInfo> {
                     },
                     style: ButtonStyle(
                       backgroundColor:
-                          MaterialStateProperty.all<Color>(Colors.red),
+                          MaterialStateProperty.all<Color>(FlexColor.redLightPrimary),
                       foregroundColor:
                           MaterialStateProperty.all<Color>(Colors.white),
                     ),

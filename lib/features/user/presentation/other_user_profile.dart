@@ -21,9 +21,7 @@ class OtherUserProfile extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final uid = user.uid;
     final UserList usersDB = ref.read(userDBProvider);
-    User thisUser = usersDB.getUserByID(uid);
     final User currentUser = usersDB.getUserByID(ref.read(currentUserProvider));
     final GroupList groupsDB = ref.watch(groupsDBProvider);
     return Scaffold(

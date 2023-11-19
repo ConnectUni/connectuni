@@ -1,11 +1,9 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../../message/domain/message.dart';
 import '../../user/data/user_providers.dart';
 import '../../user/domain/user.dart';
-import '../../user/domain/user_list.dart';
 
 /// GroupChatWidget is a widget that displays the group chat.
 /// It is a clickable widget that takes the user to the group chat page.

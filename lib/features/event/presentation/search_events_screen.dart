@@ -5,7 +5,6 @@ import 'package:multi_select_flutter/multi_select_flutter.dart';
 import '../../interest/data/interests.dart';
 import '../data/event_providers.dart';
 import '../domain/event.dart';
-import '../../home/domain/global_variables.dart';
 import '../domain/event_list.dart';
 
 class SearchEventsScreen extends ConsumerStatefulWidget {

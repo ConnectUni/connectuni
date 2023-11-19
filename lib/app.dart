@@ -1,16 +1,17 @@
 import 'package:connectuni/features/event/presentation/event_info_screen.dart';
 import 'package:connectuni/features/event/presentation/search_events_screen.dart';
+import 'package:connectuni/features/settings/data/settings_db.dart';
 import 'package:connectuni/features/user/presentation/friend_list.dart';
 
 
 import 'package:flutter/material.dart';
+import 'package:flex_color_scheme/flex_color_scheme.dart';
 
 import 'features/authentication/presentation/forgot_password_view.dart';
 import 'features/authentication/presentation/signin_view.dart';
 import 'features/authentication/presentation/verify_email_view.dart';
 import 'features/event/presentation/eventCalendar.dart';
 import 'features/group/presentation/add_group.dart';
-import 'features/settings/presentation/app_theme.dart';
 import 'features/home/presentation/home.dart';
 import 'features/group/presentation/groupinfo.dart';
 import 'features/settings/presentation/settings.dart';
@@ -30,10 +31,29 @@ class ConnectUniApp extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final appThemeState = ref.watch(appThemeStateProvider);
     return MaterialApp(
       title: 'ConnectUni',
       initialRoute: '/signin',
+      theme: FlexThemeData.light(
+        scheme: FlexScheme.deepBlue,
+        appBarStyle: FlexAppBarStyle.primary,
+        background: FlexColor.deepBlueLightPrimaryContainer,
+        blendLevel: 15,
+        subThemesData: const FlexSubThemesData(
+          bottomNavigationBarMutedUnselectedLabel: false,
+          bottomNavigationBarMutedUnselectedIcon: false,
+        ),
+      ),
+      darkTheme: FlexThemeData.dark(
+          scheme: FlexScheme.deepBlue,
+          appBarBackground: FlexColor.deepBlueDarkPrimaryContainer,
+          background: FlexColor.deepBlueDarkPrimaryContainer,
+        subThemesData: const FlexSubThemesData(
+          bottomNavigationBarMutedUnselectedLabel: false,
+          bottomNavigationBarMutedUnselectedIcon: false,
+        ),
+      ),
+      themeMode: ref.watch(currentThemeModeProvider),
       routes: {
         // TODO: Insert routes
         '/signin': (BuildContext context) => const SignInView(),
@@ -61,9 +81,6 @@ class ConnectUniApp extends ConsumerWidget {
         '/friendslist': (BuildContext context) => const FriendsList(),
         '/events_calendar': (BuildContext context) => const EventCalendar(),
       },
-      theme: AppTheme.lightTheme,
-      darkTheme: AppTheme.darkTheme,
-      themeMode: appThemeState ? ThemeMode.dark : ThemeMode.light,
     );
   }
 }

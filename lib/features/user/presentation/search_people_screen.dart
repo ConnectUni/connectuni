@@ -5,7 +5,6 @@ import '../../interest/data/interests.dart';
 import '../data/user_providers.dart';
 import 'user_card_widget.dart';
 import '../domain/user.dart';
-import '../../home/domain/global_variables.dart';
 
 class SearchPeopleScreen extends ConsumerStatefulWidget {
   const SearchPeopleScreen({Key? key, required this.pageController})
@@ -30,7 +29,6 @@ class _SearchPeopleScreenState extends ConsumerState<SearchPeopleScreen> {
     final List<User>? filteredUserList = ref.watch(filteredUsers);
     final bool isSearchbarFilled = ref.watch(isSearchFilledProvider);
     final List<User>? recentSearches = ref.watch(recentSearchesProvider);
-    var users = [];
     final List<String> interestsDB = ref.watch(interestsProvider);
 
     final _interests = interestsDB
@@ -162,7 +160,7 @@ class _SearchPeopleScreenState extends ConsumerState<SearchPeopleScreen> {
                 ],
               ),
             ),
-            SearchView(users: recentSearches!)
+            SearchView(users: recentSearches)
           ]
         ],
       ),

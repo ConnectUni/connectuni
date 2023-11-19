@@ -62,7 +62,7 @@ class EditGroup extends ConsumerWidget {
 
     return Scaffold(
       appBar: AppBar(
-        title: Text('Edit Group'),
+        title: const Text('Edit Group'),
       ),
         body: ListView(
           padding: const EdgeInsets.symmetric(horizontal: 24.0),

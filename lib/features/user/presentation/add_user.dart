@@ -75,7 +75,7 @@ class AddUser extends ConsumerWidget {
       );
       //Return to previous page
       ref.refresh(userDBProvider);
-      ref.read(currentUserProvider.state).state = userID;
+      ref.read(currentUserProvider.notifier).state = userID;
       Navigator.pushReplacementNamed(context, HomePage.routeName);
     }
     void onReset() {
@@ -100,7 +100,7 @@ class AddUser extends ConsumerWidget {
                       child: Center(
                         child: Text(
                           "Looks like you're new here! Let's get you set up.",
-                          style: Theme.of(context).textTheme.headline5,
+                          style: Theme.of(context).textTheme.headlineSmall,
                         ),
                       )
                     ),
