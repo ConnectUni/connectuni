@@ -1,7 +1,10 @@
+import 'package:connectuni/features/all_data_provider.dart';
+import 'package:connectuni/features/cu_error.dart';
+import 'package:connectuni/features/cu_loading.dart';
+import 'package:connectuni/features/user/domain/user_collection.dart';
 import 'package:flutter/material.dart';
 import 'package:connectuni/features/user/domain/user.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import '../data/user_providers.dart';
 import '../domain/user_list.dart';
 import 'other_user_profile.dart';
 
@@ -13,37 +16,56 @@ class UserCardSearch extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    String name = user.displayName;
-    final UserList usersDB = ref.watch(userDBProvider);
-    User thisUser = usersDB.getUserByName(name);
+    final AsyncValue<AllData> asyncValue = ref.watch(allDataProvider);
+    return asyncValue.when(
+        data: (allData) =>
+            _build(
+              context: context,
+              users: allData.users,
+              ref: ref,
+            ),
+        loading: () => const CULoading(),
+        error: (e, st) => CUError(e.toString(), st.toString()));
+  }
+
+  Widget _build({
+    required BuildContext context,
+    required List<User> users,
+    required WidgetRef ref
+  }) {
+    UserCollection userCollection = UserCollection(users);
+    User thisUser = userCollection.getUser(user.uid);
+
     return Padding(
       padding: const EdgeInsets.all(3.5),
       child: Card(
-          elevation: 8,
-          child: Column(
-            children: [
-              ListTile(
-                leading: CircleAvatar(
-                  radius: 25,
-                  backgroundImage: AssetImage(user.pfp),
-                ),
-                title: Text(user.displayName,
-                    style: Theme.of(context).textTheme.titleLarge),
-                subtitle:
-                    Text("${thisUser.major}\n${thisUser.projectedGraduation}"),
-                trailing: IconButton(
-                  icon: const Icon(Icons.message),
-                  onPressed: () {
-                    // TODO Add functionality to message user
-                    Navigator.push(context,
-                        MaterialPageRoute(builder: (context) {
+        elevation: 8,
+        child: Column(
+          children: [
+            ListTile(
+              leading: CircleAvatar(
+                radius: 25,
+                backgroundImage: AssetImage(user.pfp),
+              ),
+              title: Text(user.displayName,
+                  style: Theme.of(context).textTheme.titleLarge),
+              subtitle:
+              Text("${thisUser.major}\n${thisUser.projectedGraduation}"),
+              trailing: IconButton(
+                icon: const Icon(Icons.message),
+                onPressed: () {
+                  // TODO Add functionality to message user
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(builder: (context) {
                       return OtherUserProfile(user: thisUser);
                     }));
-                  },
-                ),
+                }
               ),
-            ],
-          )),
+            ),
+          ],
+        ),
+      ),
     );
   }
 }

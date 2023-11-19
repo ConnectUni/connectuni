@@ -15,7 +15,7 @@ import 'features/group/presentation/add_group.dart';
 import 'features/home/presentation/home.dart';
 import 'features/group/presentation/groupinfo.dart';
 import 'features/settings/presentation/settings.dart';
-import 'features/event/presentation/createevent.dart';
+import 'features/event/presentation/create_event.dart';
 import 'features/user/presentation/add_user.dart';
 import 'features/user/presentation/current_user_profile.dart';
 import 'features/user/presentation/search_people_screen.dart';
@@ -57,7 +57,7 @@ class ConnectUniApp extends ConsumerWidget {
       routes: {
         // TODO: Insert routes
         '/signin': (BuildContext context) => const SignInView(),
-        '/add_user': (BuildContext context) => AddUser(),
+        '/add_user': (BuildContext context) => AddUser(email: ''),
         '/verify-email': (BuildContext context) => const VerifyEmailView(),
         '/forgot-password': (BuildContext context) => const ForgotPasswordView(),
         '/home': (BuildContext context) => const HomePage(),
@@ -73,10 +73,8 @@ class ConnectUniApp extends ConsumerWidget {
             ),
         '/add_group': (BuildContext context) => AddGroup(),
         '/createevent': (BuildContext context) => CreateEvent(),
-        '/groupinfo': (BuildContext context) => const GroupInfo(id: ''),
-        '/eventinfo': (BuildContext context) => const EventInfoScreen(
-              id: '',
-            ),
+        '/groupinfo': (BuildContext context) => const GroupInfo(group: null),
+        '/eventinfo': (BuildContext context) => const EventInfoScreen(event: null),
         '/profile': (BuildContext context) => const CurrentUserProfilePage(),
         '/friendslist': (BuildContext context) => const FriendsList(),
         '/events_calendar': (BuildContext context) => const EventCalendar(),

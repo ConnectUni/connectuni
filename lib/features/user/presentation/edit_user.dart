@@ -1,26 +1,26 @@
-
-import 'package:firebase_auth/firebase_auth.dart';
+import 'package:connectuni/features/all_data_provider.dart';
+import 'package:connectuni/features/user/presentation/edit_user_controller.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_form_builder/flutter_form_builder.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
+import '../../cu_error.dart';
+import '../../cu_loading.dart';
 import '../../group/presentation/form-fields/reset_button.dart';
 import '../../group/presentation/form-fields/submit_button.dart';
-import '../data/user_providers.dart';
-import '../domain/user.dart' as Uni;
-import '../domain/user_list.dart';
+import '../domain/user.dart';
 import 'form-fields/display_name_field.dart';
 import 'form-fields/grad_field.dart';
 import 'form-fields/major_field.dart';
 import 'form-fields/pfp_field.dart';
 import 'form-fields/status_field.dart';
 
-
-
 class EditUser extends ConsumerWidget {
-  final String id;
+  EditUser({
+    super.key,
+  });
+
   static const routeName = '/edit_user';
-  EditUser({Key? key, required this.id}) : super(key: key);
   final _formKey = GlobalKey<FormBuilderState>();
   final _displayNameFieldKey = GlobalKey<FormBuilderFieldState>();
   final _pfpFieldKey = GlobalKey<FormBuilderFieldState>();
@@ -28,79 +28,98 @@ class EditUser extends ConsumerWidget {
   final _gradFieldKey = GlobalKey<FormBuilderFieldState>();
   final _statusFieldKey = GlobalKey<FormBuilderFieldState>();
 
-  final List<Uni.User> friends = [];
-  final List<String> groupIDs = [];
-  final List<String> eventIDs = [];
-  final List<String> interests = [];
-
-  final FirebaseAuth auth = FirebaseAuth.instance;
-
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    String email = auth.currentUser!.email!;
-    final UserList usersDB = ref.watch(userDBProvider);
-    Uni.User editUser = usersDB.getUserByID(id);
+    final AsyncValue<AllData> asyncValue = ref.watch(allDataProvider);
+    return asyncValue.when(
+      data: (allData) =>
+          _build(
+            context: context,
+            currentUser: allData.currentUser,
+            ref: ref
+          ),
+      loading: () => const CULoading(),
+      error: (e, st) => CUError(e.toString(), st.toString())
+    );
+  }
+
+  Widget _build ({
+    required BuildContext context,
+    required User currentUser,
+    required WidgetRef ref
+  }) {
     void onSubmit() {
       bool isValid = _formKey.currentState?.saveAndValidate() ?? false;
       if (!isValid) return;
-      String userID = editUser.uid;
+      String userID = currentUser.uid;
       String displayName = _displayNameFieldKey.currentState?.value;
       String pfp = _pfpFieldKey.currentState?.value;
       String major = _majorFieldKey.currentState?.value;
       String projectedGraduation = _gradFieldKey.currentState?.value;
       String status = _statusFieldKey.currentState?.value;
-      usersDB.updateUser(
-              uid: userID,
-              displayName: displayName,
-              pfp: pfp,
-              major: major,
-              projectedGraduation: projectedGraduation,
-              status: status,
-              friends: friends,
-              groupIDs: groupIDs,
-              eventIDs: eventIDs,
-              interests: interests,
-              email: email,
+      String email = currentUser.email;
+      User updatedUser = User(
+        uid: userID,
+        displayName: displayName,
+        pfp: pfp,
+        major: major,
+        projectedGraduation: projectedGraduation,
+        status: status,
+        friends: [],
+        groupIDs: [],
+        eventIDs: [],
+        interests: [],
+        email: email,
+        ///REMOVE THIS BELOW AFTER WE REMOVE ALL PASSWORDS FROM USER DATA
       );
-      //Return to previous page
-      ref.refresh(userDBProvider);
-      Navigator.pop(context);
+      ref.read(editUserControllerProvider.notifier).updateUser(
+        user: updatedUser,
+        onSuccess: () {
+          Navigator.pop(context);
+        },
+      );
     }
     void onReset() {
       _formKey.currentState?.reset();
     }
 
+    Widget editUserForm() => ListView(
+        padding: const EdgeInsets.symmetric(horizontal:24.0),
+        children: [
+          Column(
+              children:[
+                FormBuilder(
+                    key: _formKey,
+                    child: Column(
+                        children: [
+                          DisplayNameField(fieldKey: _displayNameFieldKey, currName: currentUser.displayName,),
+                          PfpField(fieldKey: _pfpFieldKey, currpfp: currentUser.pfp),
+                          MajorField(fieldKey: _majorFieldKey, currMajor: currentUser.major,),
+                          GradField(fieldKey: _gradFieldKey, currGrad: currentUser.projectedGraduation),
+                          StatusField(fieldKey: _statusFieldKey, currStatus: currentUser.status,),
+                        ]
+                    )
+                ),
+                Row(
+                    children: [
+                      SubmitButton(onSubmit: onSubmit),
+                      ResetButton(onReset: onReset),
+                    ]
+                )
+              ]
+          )
+        ]
+    );
+
+    AsyncValue asyncUpdate = ref.watch(editUserControllerProvider);
+
     return Scaffold(
         appBar: AppBar(
           title: const Text("Edit your Profile"),
         ),
-        body: ListView(
-            padding: const EdgeInsets.symmetric(horizontal:24.0),
-            children: [
-              Column(
-                  children:[
-                    FormBuilder(
-                        key: _formKey,
-                        child: Column(
-                            children: [
-                              DisplayNameField(fieldKey: _displayNameFieldKey, currName: editUser.displayName,),
-                              PfpField(fieldKey: _pfpFieldKey, currpfp: editUser.pfp),
-                              MajorField(fieldKey: _majorFieldKey, currMajor: editUser.major,),
-                              GradField(fieldKey: _gradFieldKey, currGrad: editUser.projectedGraduation),
-                              StatusField(fieldKey: _statusFieldKey, currStatus: editUser.status,),
-                            ]
-                        )
-                    ),
-                    Row(
-                        children: [
-                          SubmitButton(onSubmit: onSubmit),
-                          ResetButton(onReset: onReset),
-                        ]
-                    )
-                  ]
-              )
-            ]
-        )
-    );
+        body: asyncUpdate.when(
+          data: (_) => editUserForm(),
+          error: (e, st) => CUError(e.toString(), st.toString()),
+          loading: () => const CULoading()));
   }
 }

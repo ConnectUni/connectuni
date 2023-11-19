@@ -1,9 +1,12 @@
+import 'package:connectuni/features/all_data_provider.dart';
+import 'package:connectuni/features/cu_loading.dart';
+import 'package:connectuni/features/group/domain/group_collection.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:connectuni/features/chat/presentation/group_chat_widget.dart';
 import 'package:flutter/material.dart';
-import '../../user/data/user_providers.dart';
-import '../data/group_providers.dart';
-import '../domain/group_list.dart';
+import '../../cu_error.dart';
+import '../domain/group.dart';
+import 'add_group.dart';
 
 class GroupsScreen extends ConsumerStatefulWidget {
   const GroupsScreen({Key? key}) : super(key: key);
@@ -15,10 +18,26 @@ class GroupsScreen extends ConsumerStatefulWidget {
 class _GroupsScreenState extends ConsumerState<GroupsScreen> {
   @override
   Widget build(BuildContext context) {
-    final GroupList groupsDB = ref.watch(groupsDBProvider);
-    final String userId = ref.watch(currentUserProvider);
-    late PageController _pageController;
-    _pageController = PageController();
+    final AsyncValue<AllData> asyncValue = ref.watch(allDataProvider);
+    return asyncValue.when(
+      data: (allData) => _build(
+        context: context,
+        groups: allData.groups,
+        currentUserID: allData.currentUser.uid,
+        ref: ref,
+      ),
+      error: (e,st) => CUError(e.toString(), st.toString()),
+      loading: () => const CULoading());
+  }
+
+  Widget _build({
+    required BuildContext context,
+    required List<Group> groups,
+    required String currentUserID,
+    required WidgetRef ref
+  }) {
+    GroupCollection groupCollection = GroupCollection(groups);
+
     return Scaffold(
       appBar: AppBar(
         title: const Text('My Groups'),
@@ -38,6 +57,7 @@ class _GroupsScreenState extends ConsumerState<GroupsScreen> {
               semanticLabel: 'notifications',
             ),
             onPressed: () {
+              // TODO: implement notifications page? 11/17/2023
               print('Go to Notifications page');
             },
           ),
@@ -46,36 +66,24 @@ class _GroupsScreenState extends ConsumerState<GroupsScreen> {
       body:
       ListView(
         children: [
-          if(groupsDB.getGroupsByUser(userId).isEmpty)
-          const Center(
-            child: Padding(
-              padding: EdgeInsets.only(top: 20.0),
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children:[
-                  Text(
-                    'You are not in any groups yet.',
-                    style: TextStyle(
-                      fontSize: 20.0,
-                      fontWeight: FontWeight.bold,
-                    ),
-                    textAlign: TextAlign.center,
+          ...groupCollection
+              .getUsersGroups(currentUserID)
+              .map((group) => GroupChatWidget(group: group,)),
+          Center(
+              child: Padding(
+                padding: const EdgeInsets.only(bottom: 10.0),
+                child: IconButton(
+                  onPressed: () {
+                    Navigator.push(context, MaterialPageRoute(builder: (context) => AddGroup()));
+                    },
+                  icon: const Icon(
+                    Icons.add_circle_outline,
+                    color: Colors.grey,
+                    size: 40.0,
                   ),
-                  Text(
-                    'Join or add a group to get started!',
-                    style: TextStyle(
-                      fontSize: 15.0,
-                    ),
-                    textAlign: TextAlign.center,
-                  ),
-                ]
+                ),
               )
-            ),
           ),
-          if(groupsDB.getGroupsByUser(userId).isNotEmpty)
-          ...groupsDB
-              .getGroupsByUser(userId)
-              .map((gName) => GroupChatWidget(id: gName.groupID)),
         ],
       ),
       floatingActionButton: FloatingActionButton(

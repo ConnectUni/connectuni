@@ -1,20 +1,15 @@
 import 'package:flutter/material.dart';
-import '../data/event_providers.dart';
 import '../domain/event.dart';
-import '../domain/event_list.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 class EventInfoScreen extends ConsumerWidget {
-  const EventInfoScreen({Key? key, required this.id}) : super(key: key);
+  const EventInfoScreen({Key? key, required this.event}) : super(key: key);
 
-  final String id;
+  final SingleEvent? event;
   static const String routeName = '/event_info';
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    EventList eventsDB = ref.watch(eventsDBProvider);
-    SingleEvent thisEvent = eventsDB.getEventById(id);
-
     return Scaffold(
       body: NestedScrollView(
         headerSliverBuilder: (BuildContext context, bool innerBoxIsScrolled) {
@@ -27,13 +22,13 @@ class EventInfoScreen extends ConsumerWidget {
               flexibleSpace: FlexibleSpaceBar(
                 centerTitle: true,
                 collapseMode: CollapseMode.parallax,
-                title: Text(thisEvent.eventName,
+                title: Text(event!.eventName,
                     style: const TextStyle(
                       color: Colors.white,
                       fontSize: 16.0,
                     )),
                 background: Image.asset(
-                  thisEvent.eventIcon,
+                  event!.eventIcon,
                   fit: BoxFit.cover,
                 ),
               ),
@@ -46,7 +41,7 @@ class EventInfoScreen extends ConsumerWidget {
               child: Padding(
                 padding: const EdgeInsets.all(10),
                 child: Text(
-                  thisEvent.eventDescription,
+                  event!.eventDescription,
                   style: const TextStyle(
                     fontSize: 20,
                     fontWeight: FontWeight.bold,
@@ -58,7 +53,7 @@ class EventInfoScreen extends ConsumerWidget {
             Padding(
               padding: const EdgeInsets.all(10),
               child: Text(
-                'Location: ${thisEvent.eventLocation}',
+                'Location: ${event!.eventLocation}',
                 style: const TextStyle(
                   fontSize: 20,
                 ),
@@ -67,7 +62,7 @@ class EventInfoScreen extends ConsumerWidget {
             Padding(
               padding: const EdgeInsets.all(10),
               child: Text(
-                'Date: ${thisEvent.eventDate}',
+                'Date: ${event!.eventDate}',
                 style: const TextStyle(
                   fontSize: 20,
                 ),
@@ -76,7 +71,7 @@ class EventInfoScreen extends ConsumerWidget {
             Padding(
               padding: const EdgeInsets.all(10),
               child: Text(
-                'Members going: ${thisEvent.userIDs.length}',
+                'Members going: ${event!.userIDs.length}',
                 style: const TextStyle(
                   fontSize: 20,
                 ),

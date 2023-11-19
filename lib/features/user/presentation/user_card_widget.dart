@@ -15,7 +15,7 @@ class UserCardWidget extends ConsumerWidget {
     return GestureDetector(
       onTap: () {
         onSearchPage
-            ? ref.read(recentSearchesProvider.notifier).add(user) : null;
+            ? ref.read(filteredUsersProvider.notifier).addRecent(user) : null;
         Navigator.push(
           context,
           CupertinoPageRoute(
