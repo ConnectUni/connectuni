@@ -30,13 +30,13 @@ class MessageCollection {
     String result = '';
     switch (size()) {
       case < 10:
-        result = 'user-00${size() + 1}';
+        result = 'message-00${size() + 1}';
         break;
       case < 100:
-        result = 'user-0${size() + 1}';
+        result = 'message-0${size() + 1}';
         break;
       default:
-        result = 'user-${size() + 1}';
+        result = 'message-${size() + 1}';
     }
     return result;
   }

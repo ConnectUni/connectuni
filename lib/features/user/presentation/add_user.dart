@@ -1,4 +1,3 @@
-import 'package:connectuni/features/all_data_provider.dart';
 import 'package:connectuni/features/cu_error.dart';
 import 'package:connectuni/features/cu_loading.dart';
 import 'package:connectuni/features/user/domain/user_collection.dart';
@@ -17,8 +16,6 @@ import 'form-fields/grad_field.dart';
 import 'form-fields/major_field.dart';
 import 'form-fields/pfp_field.dart';
 import 'form-fields/status_field.dart';
-
-
 
 class AddUser extends ConsumerWidget {
   AddUser({
