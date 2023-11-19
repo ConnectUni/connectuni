@@ -1,5 +1,6 @@
 import 'package:connectuni/features/settings/data/settings_db.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:flex_color_scheme/flex_color_scheme.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
@@ -43,7 +44,7 @@ class _SettingsState extends ConsumerState<Settings> {
                   style: TextStyle(fontWeight: FontWeight.bold)),
               trailing: Icon(Icons.notifications_active_outlined,),
               textColor: Colors.black,
-              tileColor: Colors.green,
+              tileColor: FlexColor.greenLightPrimary,
             ),
           ),
           ListTile(
@@ -63,7 +64,7 @@ class _SettingsState extends ConsumerState<Settings> {
                   child: Text("Change Password",
                       style: TextStyle(fontWeight: FontWeight.bold))),
               textColor: Colors.white,
-              tileColor: Colors.redAccent,
+              tileColor: FlexColor.redLightPrimary,
             ),
           ),
           SizedBox(
@@ -77,7 +78,7 @@ class _SettingsState extends ConsumerState<Settings> {
                 },
                 style: ButtonStyle(
                   backgroundColor:
-                      MaterialStateProperty.all<Color>(Colors.blue),
+                      MaterialStateProperty.all<Color>(FlexColor.deepBlueLightTertiary),
                   foregroundColor:
                       MaterialStateProperty.all<Color>(Colors.white),
                 ),

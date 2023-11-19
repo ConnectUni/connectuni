@@ -98,7 +98,7 @@ class CurrentUserProfilePageState extends ConsumerState<CurrentUserProfilePage> 
                       },
                       style: ButtonStyle(
                         backgroundColor:
-                            MaterialStateProperty.all<Color>(FlexColor.deepBlueLightSecondary),
+                            MaterialStateProperty.all<Color>(FlexColor.deepBlueLightTertiary),
                         foregroundColor:
                             MaterialStateProperty.all<Color>(Colors.white),
                       ),
@@ -167,7 +167,7 @@ class CurrentUserProfilePageState extends ConsumerState<CurrentUserProfilePage> 
                       },
                       style: ButtonStyle(
                         backgroundColor:
-                        MaterialStateProperty.all<Color>(FlexColor.deepBlueLightSecondary),
+                        MaterialStateProperty.all<Color>(FlexColor.deepBlueLightTertiary),
                         foregroundColor:
                         MaterialStateProperty.all<Color>(Colors.white),
                       ),
