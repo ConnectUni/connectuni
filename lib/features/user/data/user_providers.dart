@@ -48,14 +48,21 @@ class FilteredUsers extends _$FilteredUsers {
   }
 
   void _updateResults() {
-    state = const AsyncLoading();
     if (query.isEmpty && filters.isEmpty) {
       results = recents;
     } else {
-      results = users.where((user) => user.displayName
-          .toLowerCase()
-          .contains(query.toLowerCase()) && user.interests
-          .any((interests) => filters.contains(interests)))
+      results = users.where((user) {
+        if (filters.isNotEmpty) {
+          return user.displayName
+              .toLowerCase()
+              .contains(query.toLowerCase()) && user.interests
+              .any((interests) => filters.contains(interests));
+        } else {
+          return user.displayName
+              .toLowerCase()
+              .contains(query.toLowerCase());
+        }
+      })
           .toList();
     }
     if (mounted) {

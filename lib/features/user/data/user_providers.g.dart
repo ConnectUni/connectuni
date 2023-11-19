@@ -63,7 +63,7 @@ final currentUserProvider = AutoDisposeFutureProvider<User>.internal(
 );
 
 typedef CurrentUserRef = AutoDisposeFutureProviderRef<User>;
-String _$filteredUsersHash() => r'93819814f5cbdc07c0439a1eb5ff26fd7cf2b07b';
+String _$filteredUsersHash() => r'8e73e009f96661824edb9bac58946e2f33d35d6c';
 
 /// See also [FilteredUsers].
 @ProviderFor(FilteredUsers)
