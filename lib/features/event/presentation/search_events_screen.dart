@@ -31,7 +31,6 @@ class _SearchEventsScreenState extends ConsumerState<SearchEventsScreen> {
       data: (allData) =>
           _build(
             context: context,
-            events: allData.events,
             interests: allData.interests,
             ref: ref,
           ),
@@ -42,10 +41,11 @@ class _SearchEventsScreenState extends ConsumerState<SearchEventsScreen> {
 
   Widget _build({
     required BuildContext context,
-    required List<SingleEvent> events,
     required List<String> interests,
     required WidgetRef ref
   }) {
+    final AsyncValue<List<SingleEvent>> asyncFilteredEvents = ref.watch(filteredEventsProvider);
+
     final _interests = interests
         .map((interest) => MultiSelectItem<String>(interest, interest))
         .toList();
@@ -116,17 +116,17 @@ class _SearchEventsScreenState extends ConsumerState<SearchEventsScreen> {
         listType: MultiSelectListType.CHIP,
         onConfirm: (results) { // This updates the selected filters on confirm
           selectedFilters = List<String>.from(results);
-          ref.read(filteredEventsProvider.notifier).updateFilters(selectedFilters);
+          ref.watch(filteredEventsProvider.notifier).updateFilters(selectedFilters);
         },
         onSelectionChanged: (results) { // This updates the selected filters on selection change
           selectedFilters = List<String>.from(results);
-          ref.read(filteredEventsProvider.notifier).updateFilters(selectedFilters);
+          ref.watch(filteredEventsProvider.notifier).updateFilters(selectedFilters);
         },
         chipDisplay: MultiSelectChipDisplay(
           onTap: (item) { // This removes the selected filter on tap
             selectedFilters.remove(item);
             selectedFilters = List<String>.from(selectedFilters);
-            ref.read(filteredEventsProvider.notifier).updateFilters(selectedFilters);
+            ref.watch(filteredEventsProvider.notifier).updateFilters(selectedFilters);
             return selectedFilters;
           },
         ),
@@ -146,7 +146,7 @@ class _SearchEventsScreenState extends ConsumerState<SearchEventsScreen> {
                 icon: const Icon(Icons.clear),
                 onPressed: () {
                   controller.clear();
-                  ref.read(filteredEventsProvider.notifier).filterQuery('');
+                  ref.watch(filteredEventsProvider.notifier).filterQuery('');
                 }
             ) : null,
             border: OutlineInputBorder(
@@ -155,20 +155,26 @@ class _SearchEventsScreenState extends ConsumerState<SearchEventsScreen> {
             )
         ),
         onChanged: (value) { // This updates the page based on the search query
-          ref.read(filteredEventsProvider.notifier).filterQuery(value);
+          ref.watch(filteredEventsProvider.notifier).filterQuery(value);
           //showSearchedEvent(value);
         },
       ),
     );
 
     /// This displays the list of events.
-    Widget showContent() => Expanded(
+    Widget showContent(filteredEvents) => Expanded(
       child: ListView.builder(
-        itemCount: events.length,
+        itemCount: filteredEvents.length,
         itemBuilder: (context, index) {
-          return EventCardWidget(event: events[index]);
+          return EventCardWidget(event: filteredEvents[index]);
         },
       ),
+    );
+
+    Widget buildContent() => asyncFilteredEvents.when(
+      data: (filteredEvents) => showContent(filteredEvents),
+      error: (e, st) => CUError(e.toString(), st.toString()),
+      loading: () => const CULoading(),
     );
 
     return Scaffold(
@@ -177,7 +183,7 @@ class _SearchEventsScreenState extends ConsumerState<SearchEventsScreen> {
         children: [
           buildFilterBar(),
           buildSearchBar(),
-          showContent(),
+          buildContent(),
         ],
       ),
       floatingActionButton: FloatingActionButton(

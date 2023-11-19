@@ -35,7 +35,7 @@ final eventsProvider = AutoDisposeStreamProvider<List<SingleEvent>>.internal(
 );
 
 typedef EventsRef = AutoDisposeStreamProviderRef<List<SingleEvent>>;
-String _$filteredEventsHash() => r'd2b80299a717708a5bae0ceed16f3b4ca6531655';
+String _$filteredEventsHash() => r'93831098d6f336a7bf1e524373f751fa9b8dc95d';
 
 /// See also [FilteredEvents].
 @ProviderFor(FilteredEvents)

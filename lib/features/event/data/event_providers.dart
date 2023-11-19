@@ -33,15 +33,21 @@ class FilteredEvents extends _$FilteredEvents {
   }
 
   void _updateResults() {
-    state = const AsyncLoading();
     if (query.isEmpty && filters.isEmpty) {
       results = events;
     } else {
-      results = events.where((event) => event.eventName
-          .toLowerCase()
-          .contains(query.toLowerCase()) && event.interests
-          .any((interests) => filters.contains(interests)))
-          .toList();
+      results = events.where((event) {
+        if (filters.isNotEmpty) {
+          return event.eventName
+              .toLowerCase()
+              .contains(query.toLowerCase()) && event.interests
+              .any((interests) => filters.contains(interests));
+        } else {
+          return event.eventName
+              .toLowerCase()
+              .contains(query.toLowerCase());
+        }
+      }).toList();
     }
     if (mounted) {
       state = AsyncData(results);
