@@ -1,3 +1,4 @@
+import 'package:flex_color_scheme/flex_color_scheme.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
@@ -45,7 +46,7 @@ class _MessageWidgetState extends ConsumerState<MessageWidget> {
                     ),
                     Card(
                       elevation: 8.0,
-                      color: Colors.blue,
+                      color: FlexColor.bahamaBlueDarkPrimary,
                       child: Padding(
                       padding: const EdgeInsets.all(12.0),
                       child: Text(widget.message.messageContent, style: const TextStyle(color: Colors.white)),

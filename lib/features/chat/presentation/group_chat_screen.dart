@@ -1,4 +1,5 @@
 import 'package:connectuni/features/user/data/user_providers.dart';
+import 'package:flex_color_scheme/flex_color_scheme.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -82,7 +83,7 @@ class _GroupChatScreenState extends ConsumerState<GroupChatScreen> {
             ),
           ),
           Container(
-            color: Colors.grey,
+            color: FlexColor.deepBlueLightPrimaryContainer,
             child: Padding(
               padding: const EdgeInsets.all(8.0),
               child: MessageInputWidget(id: widget.id),
