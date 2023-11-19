@@ -1,3 +1,4 @@
+import 'package:flex_color_scheme/flex_color_scheme.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import '../../group/data/group_providers.dart';
@@ -103,7 +104,6 @@ class OtherUserProfile extends ConsumerWidget {
                   thickness: 2,
                   indent: 20,
                   endIndent: 20,
-                  color: Colors.black,
                 ),
                 Container(
                   padding: const EdgeInsets.all(10.0),
@@ -127,7 +127,7 @@ class OtherUserProfile extends ConsumerWidget {
                                     style: TextStyle(
                                         fontWeight: FontWeight.bold))),
                             textColor: Colors.white,
-                            tileColor: Colors.lightBlue,
+                            tileColor: FlexColor.deepBlueLightTertiary,
                           ),
                         ),
                       Column(children: [
@@ -143,7 +143,7 @@ class OtherUserProfile extends ConsumerWidget {
                                   ),
                                 ),
                                 textColor: Colors.white,
-                                tileColor: Colors.lightBlue,
+                                tileColor: FlexColor.deepBlueLightTertiary,
                               ),
                             )),
                       ]),

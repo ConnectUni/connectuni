@@ -79,7 +79,7 @@ class CreateEvent extends ConsumerWidget {
           title: const Text('Add Event'),
         ),
         body: ListView(
-          padding: const EdgeInsets.symmetric(horizontal: 24.0),
+          padding: const EdgeInsets.all(10.0),
           children: [
             Column(
               children: [

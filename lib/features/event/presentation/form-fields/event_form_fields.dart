@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_form_builder/flutter_form_builder.dart';
 import 'package:form_builder_validators/form_builder_validators.dart';
-
 import '../../../group/presentation/form-fields/field_padding.dart';
 
 
@@ -11,15 +10,17 @@ class EventNameField extends StatelessWidget{
 
   @override
   Widget build(BuildContext context) {
-    return FormBuilderTextField(
-      name: 'name',
-      key: fieldKey,
-      decoration: const InputDecoration(
-        labelText: 'Event Name',
-      ),
-      validator: FormBuilderValidators.compose([
-        FormBuilderValidators.required(),
-      ]),
+    return FieldPadding(
+        child: FormBuilderTextField(
+          name: 'name',
+          key: fieldKey,
+          decoration: const InputDecoration(
+            labelText: 'Event Name',
+          ),
+          validator: FormBuilderValidators.compose([
+            FormBuilderValidators.required(),
+          ]),
+        ),
     );
   }
 }
@@ -35,16 +36,18 @@ class EventDescriptionField extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     String desc = 'Description';
-    return FormBuilderTextField(
-      name: desc,
-      key: fieldKey,
-      initialValue: currDescription,
-      decoration: InputDecoration(
-        labelText: desc,
-      ),
-      validator: FormBuilderValidators.compose([
-        FormBuilderValidators.required(),
-      ]),
+    return FieldPadding(
+        child: FormBuilderTextField(
+          name: desc,
+          key: fieldKey,
+          initialValue: currDescription,
+          decoration: InputDecoration(
+            labelText: desc,
+          ),
+          validator: FormBuilderValidators.compose([
+            FormBuilderValidators.required(),
+          ]),
+        ),
     );
   }
 }
@@ -59,7 +62,8 @@ class EventIconField extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     String fieldName = 'Photo';
-      return FormBuilderTextField(
+    return FieldPadding(
+      child: FormBuilderTextField(
         name: fieldName,
         key: fieldKey,
         initialValue: currPhoto,
@@ -70,7 +74,8 @@ class EventIconField extends StatelessWidget {
         validator: FormBuilderValidators.compose([
           FormBuilderValidators.required(),
         ]),
-      );
+      ),
+    );
   }
 }
 
@@ -86,16 +91,18 @@ class EventLocationField extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     String fieldName = 'Location';
-    return FormBuilderTextField(
-      name: fieldName,
-      key: fieldKey,
-      initialValue: currLocation,
-      decoration: InputDecoration(
-        labelText: fieldName,
-      ),
-      validator: FormBuilderValidators.compose([
-        FormBuilderValidators.required(),
-      ]),
+    return FieldPadding (
+        child: FormBuilderTextField(
+          name: fieldName,
+          key: fieldKey,
+          initialValue: currLocation,
+          decoration: InputDecoration(
+            labelText: fieldName,
+          ),
+          validator: FormBuilderValidators.compose([
+            FormBuilderValidators.required(),
+          ]),
+        ),
     );
   }
 }
@@ -111,17 +118,19 @@ class EventDateField extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     String fieldName = 'Date';
-    return FormBuilderDateTimePicker(
-      name: fieldName,
-      key: fieldKey,
-      initialValue: currDate,
-      inputType: InputType.both,
-      decoration: InputDecoration(
-        labelText: fieldName,
+    return FieldPadding(
+      child: FormBuilderDateTimePicker(
+        name: fieldName,
+        key: fieldKey,
+        initialValue: currDate,
+        inputType: InputType.both,
+        decoration: InputDecoration(
+          labelText: fieldName,
+        ),
+        validator: FormBuilderValidators.compose([
+          FormBuilderValidators.required(),
+        ]),
       ),
-      validator: FormBuilderValidators.compose([
-        FormBuilderValidators.required(),
-      ]),
     );
   }
 }
