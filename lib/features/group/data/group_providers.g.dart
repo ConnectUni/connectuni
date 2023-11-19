@@ -35,7 +35,7 @@ final groupsProvider = AutoDisposeStreamProvider<List<Group>>.internal(
 );
 
 typedef GroupsRef = AutoDisposeStreamProviderRef<List<Group>>;
-String _$filteredGroupsHash() => r'c446b1b36dae59285bbaacbc6b0135f6e382f0d7';
+String _$filteredGroupsHash() => r'f999db60c842af5b5444e78f788057e859ed9453';
 
 /// See also [FilteredGroups].
 @ProviderFor(FilteredGroups)

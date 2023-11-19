@@ -32,15 +32,21 @@ class FilteredGroups extends _$FilteredGroups {
   }
 
   void _updateResults() {
-    state = const AsyncLoading();
     if (query.isEmpty && filters.isEmpty) {
       results = groups;
     } else {
-      results = groups.where((group) => group.groupName
-          .toLowerCase()
-          .contains(query.toLowerCase()) && group.interests
-          .any((interests) => filters.contains(interests)))
-          .toList();
+      results = groups.where((group) {
+        if (filters.isNotEmpty) {
+          return group.groupName
+              .toLowerCase()
+              .contains(query.toLowerCase()) && group.interests
+              .any((interests) => filters.contains(interests));
+        } else {
+          return group.groupName
+              .toLowerCase()
+              .contains(query.toLowerCase());
+        }
+      }).toList();
     }
     if (mounted) {
       state = AsyncData(results);

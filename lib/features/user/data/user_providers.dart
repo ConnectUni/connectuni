@@ -62,8 +62,7 @@ class FilteredUsers extends _$FilteredUsers {
               .toLowerCase()
               .contains(query.toLowerCase());
         }
-      })
-          .toList();
+      }).toList();
     }
     if (mounted) {
       state = AsyncData(results);

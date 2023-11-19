@@ -1,4 +1,3 @@
-import 'package:connectuni/features/all_data_provider.dart';
 import 'package:connectuni/features/cu_error.dart';
 import 'package:connectuni/features/cu_loading.dart';
 import 'package:flutter/material.dart';

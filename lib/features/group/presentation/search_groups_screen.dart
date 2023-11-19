@@ -34,7 +34,6 @@ class _SearchGroupsScreenState extends ConsumerState<SearchGroupsScreen> {
       data: (allData) =>
           _build(
             context: context,
-            groups: allData.groups,
             interests: allData.interests,
             ref: ref,
           ),
@@ -44,10 +43,11 @@ class _SearchGroupsScreenState extends ConsumerState<SearchGroupsScreen> {
 
   Widget _build({
     required BuildContext context,
-    required List<Group> groups,
     required List<String> interests,
     required WidgetRef ref
   }) {
+    final AsyncValue<List<Group>> asyncFilteredGroups = ref.watch(filteredGroupsProvider);
+
     final _interests = interests
         .map((interest) => MultiSelectItem<String>(interest, interest))
         .toList();
@@ -163,13 +163,19 @@ class _SearchGroupsScreenState extends ConsumerState<SearchGroupsScreen> {
     );
 
     /// This displays the content of the page.
-    Widget showContent() => Expanded(
+    Widget showContent(groups) => Expanded(
         child: ListView.builder(
           itemCount: groups.length,
           itemBuilder: (context, index) {
             return GroupInfoWidget(group: groups[index]);
           },
         )
+    );
+
+    Widget buildContent() => asyncFilteredGroups.when(
+      data: (groups) => showContent(groups),
+      error: (e, st) => CUError(e.toString(),  st.toString()),
+      loading: () => const CULoading(),
     );
 
     /// This displays the add new group button.
@@ -207,7 +213,7 @@ class _SearchGroupsScreenState extends ConsumerState<SearchGroupsScreen> {
         children: [
           buildFilterBar(),
           buildSearchBar(),
-          showContent(),
+          buildContent(),
           buildAddNewGroupButton(),
         ],
       ),
