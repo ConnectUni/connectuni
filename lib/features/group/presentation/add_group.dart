@@ -7,12 +7,13 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../../chat/domain/chat.dart';
 import '../../chat/domain/chat_collection.dart';
+import '../../chat/presentation/edit_chat_controller.dart';
 import '../../cu_error.dart';
 import '../../cu_loading.dart';
 import '../../home/presentation/home.dart';
 import '../../user/domain/user.dart';
+import '../../user/presentation/edit_user_controller.dart';
 import '../domain/group.dart';
-import '../../message/domain/message.dart';
 import 'form-fields/group_description_field.dart';
 import 'form-fields/group_image_field.dart';
 import 'form-fields/group_name_field.dart';
@@ -82,10 +83,31 @@ class AddGroup extends ConsumerWidget {
       );
       ref.read(editGroupControllerProvider.notifier).updateGroup(
         group: newGroup,
-        onSuccess: () {
-          Navigator.pushReplacementNamed(context, HomePage.routeName);
-        },
+        onSuccess: () {},
       );
+      Chat newChat = Chat(
+          chatID: chatID,
+          groupID: groupID,
+          userIDs: [currentUser.uid],
+          messageIDs: [],
+      );
+      ref.read(editChatControllerProvider.notifier).updateChat(
+        chat: newChat,
+        onSuccess: () {},
+      );
+      Group updatedGroup = groupCollection.getGroup(groupID);
+      updatedGroup.userIDs.add(currentUser.uid);
+      ref.read(editGroupControllerProvider.notifier).updateGroup(
+        group: updatedGroup,
+        onSuccess: () {},
+      );
+      currentUser.groupIDs.add(groupID);
+      ref.read(editUserControllerProvider.notifier).updateUser(
+        user: currentUser,
+        onSuccess: () {},
+      );
+      //Return to the previous page
+      Navigator.pop(context);
     }
 
     void onReset() {

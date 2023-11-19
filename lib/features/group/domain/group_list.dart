@@ -102,18 +102,7 @@ final List<Group> allGroups = [
     owner: 'Philip Johnson',
     groupImage: 'group-001.png',
     groupDescription: "This is a group for ICS 466.",
-    newMessages: [
-      Message(
-          messageId: 'message-001',
-          senderId: 'user-002',
-          groupId: 'group-001',
-          messageContent: 'wassap'),
-      Message(
-          messageId: 'message-002',
-          senderId: 'user-001',
-          groupId: 'group-001',
-          messageContent: 'not much')
-    ],
+    newMessages: [],
     chatID: 'chat-001',
     eventIDs: ['event-001'],
     userIDs: ['user-001', 'user-002', 'user-003', 'user-004', 'user-005'],
@@ -126,18 +115,7 @@ final List<Group> allGroups = [
     groupImage: 'group-002.png',
     owner: 'Henri Casanova',
     groupDescription: "This is a group for ICS 332.",
-    newMessages: [
-      Message(
-          messageId: 'message-003',
-          senderId: 'user-003',
-          groupId: 'group-002',
-          messageContent: 'how was the test?'),
-      Message(
-          messageId: 'message-004',
-          senderId: 'user-001',
-          groupId: 'group-002',
-          messageContent: 'bad')
-    ],
+    newMessages: [],
     chatID: 'chat-002',
     eventIDs: [],
     userIDs: ['user-001', 'user-002', 'user-003', 'user-004', 'user-005'],
@@ -150,18 +128,7 @@ final List<Group> allGroups = [
     groupImage: 'group-003.png',
     owner: 'Kim Binsted',
     groupDescription: "This is a group for ICS 312.",
-    newMessages: [
-      Message(
-          messageId: 'message-005',
-          senderId: 'user-003',
-          groupId: 'group-003',
-          messageContent: 'why is the sky blue btw?'),
-      Message(
-          messageId: 'message-006',
-          senderId: 'user-001',
-          groupId: 'group-003',
-          messageContent: 'thats a really good question')
-    ],
+    newMessages: [],
     chatID: 'chat-003',
     eventIDs: [],
     userIDs: ['user-001', 'user-002', 'user-003', 'user-004', 'user-005'],
@@ -174,18 +141,7 @@ final List<Group> allGroups = [
     groupImage: 'group-004.png',
     owner: 'Julian Hachmeister',
     groupDescription: "This is a group for Math 307.",
-    newMessages: [
-      Message(
-          messageId: 'message-007',
-          senderId: 'user-005',
-          groupId: 'group-004',
-          messageContent: 'i need help'),
-      Message(
-          messageId: 'message-008',
-          senderId: 'user-002',
-          groupId: 'group-004',
-          messageContent: 'me too')
-    ],
+    newMessages: [],
     chatID: 'chat-004',
     eventIDs: ['event-003', 'event-004'],
     userIDs: ['user-002', 'user-003', 'user-004', 'user-005'],
@@ -198,18 +154,7 @@ final List<Group> allGroups = [
     groupImage: 'group-005.png',
     owner: 'Anthony Peruma',
     groupDescription: "This is a group for ICS 496.",
-    newMessages: [
-      Message(
-          messageId: 'message-007',
-          senderId: 'user-005',
-          groupId: 'group-008',
-          messageContent: 'so when u add two ones you actually get three'),
-      Message(
-          messageId: 'message-008',
-          senderId: 'user-004',
-          groupId: 'group-008',
-          messageContent: 'idgi')
-    ],
+    newMessages: [],
     chatID: 'chat-005',
     eventIDs: ['event-005'],
     userIDs: ['user-002', 'user-003', 'user-004', 'user-005'],

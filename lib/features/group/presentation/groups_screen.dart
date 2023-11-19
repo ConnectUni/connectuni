@@ -2,11 +2,10 @@ import 'package:connectuni/features/all_data_provider.dart';
 import 'package:connectuni/features/cu_loading.dart';
 import 'package:connectuni/features/group/domain/group_collection.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:connectuni/features/group/presentation/group_chat_widget.dart';
+import 'package:connectuni/features/chat/presentation/group_chat_widget.dart';
 import 'package:flutter/material.dart';
 import '../../cu_error.dart';
 import '../domain/group.dart';
-import '../../chat/presentation/chatpage.dart';
 import 'add_group.dart';
 
 class GroupsScreen extends ConsumerStatefulWidget {
@@ -49,10 +48,8 @@ class _GroupsScreenState extends ConsumerState<GroupsScreen> {
               semanticLabel: 'messages',
             ),
             onPressed: () {
-              Navigator.push(context, MaterialPageRoute(builder: (context) {
-                return const ChatPage();
-              }));
-            },
+              //TODO: Go to Group Chats Page with Individuals
+              },
           ),
           IconButton(
             icon: const Icon(

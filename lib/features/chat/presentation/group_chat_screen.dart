@@ -12,7 +12,23 @@ import '../../group/domain/group.dart';
 import '../../message/domain/message.dart';
 import '../../message/domain/message_collection.dart';
 import '../../user/domain/user.dart';
+import 'package:connectuni/features/user/data/user_providers.dart';
+import 'package:flutter/cupertino.dart';
+import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:grouped_list/grouped_list.dart';
+import '../../group/data/group_providers.dart';
+import '../../group/domain/group.dart';
+import '../../group/domain/group_list.dart';
+import '../../message/data/message_providers.dart';
+import '../../message/domain/message.dart';
+import '../../message/domain/message_list.dart';
 import '../../group/presentation/groupinfo.dart';
+import '../data/chat_providers.dart';
+import '../domain/chat.dart';
+import '../domain/chat_list.dart';
+import 'message_input_widget.dart';
+import 'message_widget.dart';
 
 class GroupChatScreen extends ConsumerStatefulWidget {
   const GroupChatScreen({
@@ -27,6 +43,8 @@ class GroupChatScreen extends ConsumerStatefulWidget {
 }
 
 class _GroupChatScreenState extends ConsumerState<GroupChatScreen> {
+
+
   @override
   Widget build(BuildContext context) {
     final AsyncValue<AllData> asyncValue = ref.watch(allDataProvider);
@@ -58,10 +76,9 @@ class _GroupChatScreenState extends ConsumerState<GroupChatScreen> {
     ChatCollection chatCollection = ChatCollection(chats);
     MessageCollection messageCollection = MessageCollection(messages);
 
-    String currentUID = currentUser.uid;
     Chat currentChat = chatCollection.getChat(group.chatID);
-    List<Message> messageData = messageCollection.getMessages(currentChat.messageIDs);
-    List<User> groupMembers = chatCollection.getUsersInChats(userCollection, currentChat.chatID);
+
+    List<Message> thisMessages = chatCollection.getMessagesInChat(messageCollection, currentChat.chatID);
 
     /// This displays the appbar.
     AppBar buildAppBar() => AppBar(
@@ -81,105 +98,43 @@ class _GroupChatScreenState extends ConsumerState<GroupChatScreen> {
     );
 
     /// This displays the messages.
-    Widget showMessages() => ListView.builder(
-      itemCount: messageData.length,
-      shrinkWrap: true,
-      padding: const EdgeInsets.only(top: 10, bottom: 10),
-      itemBuilder: (context, index) {
-        return Container(
-          padding: const EdgeInsets.only(
-              left: 14, right: 14, top: 10, bottom: 10),
-          child: Column(
-            crossAxisAlignment:
-            (messageData.elementAt(index).senderId == currentUID
-                ? CrossAxisAlignment.end
-                : CrossAxisAlignment.start),
-            children: [
-              Container(
-                  decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(20),
-                    color:
-                    (messageData.elementAt(index).senderId == currentUID
-                        ? Colors.blue[200]
-                        : Colors.grey.shade200),
-                  ),
-                  padding: const EdgeInsets.all(16),
-                  child: Text(
-                    messageData.elementAt(index).messageContent,
-                    style: const TextStyle(fontSize: 15),
-                  )),
-              Text(
-                groupMembers
-                    .firstWhere((user) =>
-                user.uid == messageData.elementAt(index).senderId)
-                    .displayName,
-                style: const TextStyle(fontSize: 12),
-              ),
-              GestureDetector(
-                onTap: () {
-                  Navigator.push(
-                    context,
-                    CupertinoPageRoute(
-                        builder: (context) => OtherUserProfile(user: groupMembers
-                            .firstWhere((user) =>
-                        user.uid == messageData.elementAt(index).senderId))
-                    ),
-                  );
-                },
-                child: CircleAvatar(
-                  backgroundImage: AssetImage(groupMembers
-                      .firstWhere((user) =>
-                  user.uid == messageData.elementAt(index).senderId)
-                      .pfp),
-                  maxRadius: 20,
-                ),
-              )
-            ],
-          ),
-        );
-      },
-    );
-
-    /// This displays the input field.
-    Widget buildInputField() => Align(
-      alignment: Alignment.bottomLeft,
-      child: Container(
-        padding: const EdgeInsets.only(bottom: 10, top: 10),
-        height: 60,
-        width: double.infinity,
-        color: Colors.grey,
-        child: Row(children: <Widget>[
-          const SizedBox(width: 15),
-          Expanded(
-            child: TextField(
-              decoration: InputDecoration(
-                hintText: "Write message...",
-                hintStyle: const TextStyle(color: Colors.black54),
-                border: InputBorder.none,
-                focusedBorder: OutlineInputBorder(
-                  borderRadius: BorderRadius.circular(25),
-                ),
-                enabledBorder: UnderlineInputBorder(
-                  borderRadius: BorderRadius.circular(25),
-                ),
-              ),
+    Widget showMessages() => Column(
+        children: [
+          if(thisMessages.isEmpty)
+            const Expanded(child: Center(child: Text("No messages yet. Send one!")))
+          else
+            Expanded(child:
+            GroupedListView<Message, String>(
+                reverse: true,
+                order: GroupedListOrder.DESC,
+                padding: const EdgeInsets.all(8),
+                elements: thisMessages,
+                groupBy: (element) => element.groupId,
+                groupHeaderBuilder: (Message message) => const SizedBox(),
+                itemBuilder: (context, Message message) => Align(
+                  alignment: message.senderId == currentUserID
+                      ? Alignment.centerRight
+                      : Alignment.centerLeft
+                  ,
+                  child: MessageWidget(message: message),
+                )
+            ),
+            ),
+          Container(
+            color: Colors.grey,
+            child: Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: MessageInputWidget(chat: currentChat),
             ),
           ),
-          const SizedBox(width: 15),
-          FloatingActionButton(
-            onPressed: () {},
-            elevation: 0,
-            child: const Icon(Icons.send, color: Colors.white, size: 18),
-          ),
-        ]),
-      ),
+        ]
     );
 
     return Scaffold(
+      resizeToAvoidBottomInset: true,
       appBar: buildAppBar(),
       body: Stack(children: <Widget>[
         showMessages(),
-        buildInputField(),
       ]),
     );
   }
