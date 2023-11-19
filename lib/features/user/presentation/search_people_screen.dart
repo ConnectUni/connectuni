@@ -8,7 +8,6 @@ import '../../interest/data/interests.dart';
 import '../data/user_providers.dart';
 import 'user_card_widget.dart';
 import '../domain/user.dart';
-import '../../home/domain/global_variables.dart';
 
 class SearchPeopleScreen extends ConsumerStatefulWidget {
   const SearchPeopleScreen({

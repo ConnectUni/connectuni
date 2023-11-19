@@ -1,11 +1,11 @@
-import 'package:connectuni/features/cu_error.dart';
-import 'package:connectuni/features/cu_loading.dart';
 import 'package:connectuni/features/user/domain/user_collection.dart';
 import 'package:firebase_ui_auth/firebase_ui_auth.dart' hide ForgotPasswordView;
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-import '../../all_data_provider.dart';
+import '../../cu_error.dart';
+import '../../cu_loading.dart';
 import '../../home/presentation/home.dart';
 import '../../user/data/user_providers.dart';
 import '../../user/domain/user.dart';
@@ -22,24 +22,27 @@ class SignInView extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final AsyncValue<AllData> asyncValue = ref.watch(allDataProvider);
+    final AsyncValue<List<User>> asyncValue = ref.watch(usersProvider);
     return asyncValue.when(
-      data: (allData) => _build(
-          context: context,
-          users: allData.users,
-          currentUser: allData.currentUser,
-          ref: ref),
-      error: (e, st) => CUError(e.toString(), st.toString()),
-      loading: () => const CULoading());
+        data: (users) =>
+            _build(
+                context: context,
+                users: users,
+                ref: ref
+            ),
+        loading: () => const CULoading(),
+        error: (e, st) => CUError(e.toString(), st.toString()));
   }
 
-  Widget _build({
+  Widget _build ({
     required BuildContext context,
     required List<User> users,
-    required User currentUser,
     required WidgetRef ref
   }) {
     UserCollection userCollection = UserCollection(users);
+    bool userExists(String email) {
+      return userCollection.getUserByEmail(email) != null;
+    }
 
     return SignInScreen(
       actions: [
@@ -53,10 +56,11 @@ class SignInView extends ConsumerWidget {
         AuthStateChangeAction<SignedIn>((context, state) {
           if (!state.user!.emailVerified) {
             Navigator.pushNamed(context, VerifyEmailView.routeName);
-          } else if (userCollection.getUserByEmail(state.user!.email!) == null) {
-            Navigator.pushReplacementNamed(context, AddUser.routeName);
-          } else {
+          } else if (userExists(state.user!.email!)) {
             Navigator.pushReplacementNamed(context, HomePage.routeName);
+          } else {
+            Navigator.pushReplacement(context,
+                CupertinoPageRoute(builder: (context) => AddUser(email: state.user!.email!)));
           }
         }),
         AuthStateChangeAction<UserCreated>((context, state) {
@@ -69,8 +73,6 @@ class SignInView extends ConsumerWidget {
         AuthStateChangeAction<CredentialLinked>((context, state) {
           if (!state.user.emailVerified) {
             Navigator.pushNamed(context, VerifyEmailView.routeName);
-          } else if (userCollection.getUserByEmail(state.user!.email!) == null) {
-            Navigator.pushReplacementNamed(context, AddUser.routeName);
           } else {
             Navigator.pushReplacementNamed(context, HomePage.routeName);
           }

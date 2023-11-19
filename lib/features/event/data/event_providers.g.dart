@@ -51,5 +51,21 @@ final filteredEventsProvider = AutoDisposeAsyncNotifierProvider<FilteredEvents,
 );
 
 typedef _$FilteredEvents = AutoDisposeAsyncNotifier<List<SingleEvent>>;
+String _$selectedEventsHash() => r'8651588cbd01aca619885dce574a5463ab44e6b0';
+
+/// See also [SelectedEvents].
+@ProviderFor(SelectedEvents)
+final selectedEventsProvider = AutoDisposeAsyncNotifierProvider<SelectedEvents,
+    List<SingleEvent>>.internal(
+  SelectedEvents.new,
+  name: r'selectedEventsProvider',
+  debugGetCreateSourceHash: const bool.fromEnvironment('dart.vm.product')
+      ? null
+      : _$selectedEventsHash,
+  dependencies: null,
+  allTransitiveDependencies: null,
+);
+
+typedef _$SelectedEvents = AutoDisposeAsyncNotifier<List<SingleEvent>>;
 // ignore_for_file: type=lint
 // ignore_for_file: subtype_of_sealed_class, invalid_use_of_internal_member, invalid_use_of_visible_for_testing_member

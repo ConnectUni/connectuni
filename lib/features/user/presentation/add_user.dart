@@ -23,7 +23,9 @@ import 'form-fields/status_field.dart';
 class AddUser extends ConsumerWidget {
   AddUser({
     super.key,
+    required this.email,
   });
+  final String email;
 
   static const routeName = '/add_user';
   final _formKey = GlobalKey<FormBuilderState>();
@@ -35,12 +37,12 @@ class AddUser extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final AsyncValue<AllData> asyncValue = ref.watch(allDataProvider);
+    final AsyncValue<List<User>> asyncValue = ref.watch(usersProvider);
     return asyncValue.when(
-        data: (allData) =>
+        data: (users) =>
             _build(
                 context: context,
-                users: allData.users,
+                users: users,
                 ref: ref
             ),
         loading: () => const CULoading(),
@@ -74,7 +76,7 @@ class AddUser extends ConsumerWidget {
         groupIDs: [],
         eventIDs: [],
         interests: [],
-        email: '',
+        email: email,
         ///REMOVE THIS BELOW AFTER WE REMOVE ALL PASSWORDS FROM USER DATA
       );
       ref.read(editUserControllerProvider.notifier).updateUser(

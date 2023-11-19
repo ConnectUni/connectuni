@@ -38,7 +38,7 @@ class ConnectUniApp extends ConsumerWidget {
       routes: {
         // TODO: Insert routes
         '/signin': (BuildContext context) => const SignInView(),
-        '/add_user': (BuildContext context) => AddUser(),
+        '/add_user': (BuildContext context) => AddUser(email: ''),
         '/verify-email': (BuildContext context) => const VerifyEmailView(),
         '/forgot-password': (BuildContext context) => const ForgotPasswordView(),
         '/home': (BuildContext context) => const HomePage(),

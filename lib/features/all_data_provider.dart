@@ -17,8 +17,12 @@ part 'all_data_provider.g.dart';
 class AllData {
   AllData({
     required this.users,
+    required this.filteredUsers,
     required this.groups,
+    required this.filteredGroups,
     required this.events,
+    required this.filteredEvents,
+    required this.selectedEvents,
     required this.chats,
     required this.messages,
     required this.interests,
@@ -26,8 +30,12 @@ class AllData {
   });
 
   final List<User> users;
+  final List<User> filteredUsers;
   final List<Group> groups;
+  final List<Group> filteredGroups;
   final List<SingleEvent> events;
+  final List<SingleEvent> filteredEvents;
+  final List<SingleEvent> selectedEvents;
   final List<Chat> chats;
   final List<Message> messages;
   final List<String> interests;
@@ -37,16 +45,24 @@ class AllData {
 @riverpod
 Future<AllData> allData(AllDataRef ref) async {
   final users = ref.watch(usersProvider.future);
+  final filteredUsers = ref.watch(filteredUsersProvider.future);
   final groups = ref.watch(groupsProvider.future);
+  final filteredGroups = ref.watch(filteredGroupsProvider.future);
   final events = ref.watch(eventsProvider.future);
+  final filteredEvents = ref.watch(filteredEventsProvider.future);
+  final selectedEvents = ref.watch(selectedEventsProvider.future);
   final chats = ref.watch(chatsProvider.future);
   final messages = ref.watch(messagesProvider.future);
   final interests = ref.watch(interestsProvider);
   final currentUser = ref.watch(currentUserProvider.future);
   return AllData(
     users: await users,
+    filteredUsers: await filteredUsers,
     groups: await groups,
+    filteredGroups: await filteredGroups,
     events: await events,
+    filteredEvents: await filteredEvents,
+    selectedEvents: await selectedEvents,
     chats: await chats,
     messages: await messages,
     interests: interests,

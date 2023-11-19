@@ -10,6 +10,7 @@ import '../../interest/presentation/edit_interests.dart';
 import '../../user/data/user_providers.dart';
 import '../../user/domain/user.dart';
 import '../../user/domain/user_list.dart';
+import '../../user/presentation/edit_user_controller.dart';
 import 'edit_group.dart';
 
 /// Information page for a specific group that displays the group members as well as a description of the selected group.
@@ -205,7 +206,9 @@ class _GroupInfoState extends ConsumerState<GroupInfo> {
                   //Add the user from the group's database. Then Refresh the group's database.
                   group.userIDs.add(currentUser.uid);
                   //TODO: Add groupId from user.
+                  currentUser.groupIDs.add(group.groupID);
                   ref.read(editGroupControllerProvider.notifier).updateGroup(group: group, onSuccess: () {});
+                  ref.read(editUserControllerProvider.notifier).updateUser(user: currentUser, onSuccess: () {});
                 },
                 style: ButtonStyle(
                   backgroundColor:

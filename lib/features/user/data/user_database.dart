@@ -29,8 +29,8 @@ class UserDatabase {
       builder: (data, documentId) => User.fromJson(data!));
 
   Future<void> setUser(User user) =>
-      _service.setData(path: FirestorePath.user(user.uid), data: user.toJson());
+      _service.setData(path: FirestorePath.user(user.email), data: user.toJson());
 
   Future<void> deleteUser(User user) =>
-      _service.deleteData(path: FirestorePath.user(user.uid));
+      _service.deleteData(path: FirestorePath.user(user.email));
 }
