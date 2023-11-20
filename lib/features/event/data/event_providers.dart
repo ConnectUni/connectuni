@@ -1,38 +1,98 @@
-import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:riverpod_annotation/riverpod_annotation.dart';
+import 'package:table_calendar/table_calendar.dart';
+
 import '../domain/event.dart';
-import '../domain/event_list.dart';
+import 'event_database.dart';
 
-//TODO: USE BELOW
-final eventsDBProvider = Provider<EventList>((ref) { return EventList(allEvents); });
+part 'event_providers.g.dart';
 
-/*
- * These are the state providers that will be used to check the selected
- * interests and the search query.
- */
-final selectedFiltersProvider = StateProvider<List<String>?>((ref) => []);
-final searchQueryProvider = StateProvider<String?>((ref) => "");
+@riverpod
+EventDatabase eventDatabase(EventDatabaseRef ref) {
+  return EventDatabase(ref);
+}
 
-/*
- * This provider will be used to filter the events based on the selected
- * interests and the search query from the providers above.
- */
-final filteredEvents = Provider<List<SingleEvent>?>((ref) {
-  final filters = ref.watch(selectedFiltersProvider);
-  final events = ref.watch(eventsDBProvider).getAllEvents();
-  final query = ref.watch(searchQueryProvider);
-  final suggestions = events.where((event) {
-    if(filters!.isNotEmpty) {
-      return event.eventName.toLowerCase().contains(query!.toLowerCase()) && event.interests.any((interest) => filters.contains(interest));
+@riverpod
+Stream<List<SingleEvent>> events(EventsRef ref) {
+  final database = ref.watch(eventDatabaseProvider);
+  return database.watchEvents();
+}
+
+@riverpod
+class FilteredEvents extends _$FilteredEvents {
+  bool mounted = true;
+  List<SingleEvent> events = [];
+  List<SingleEvent> results = [];
+  List<String> filters = [];
+  String query = '';
+
+  @override
+  FutureOr<List<SingleEvent>> build() async {
+    ref.onDispose(() => mounted = false);
+    events = await ref.watch(eventsProvider.future);
+    return events;
+  }
+
+  void _updateResults() {
+    if (query.isEmpty && filters.isEmpty) {
+      results = events;
     } else {
-      return event.eventName.toLowerCase().contains(query!.toLowerCase());
+      results = events.where((event) {
+        if (filters.isNotEmpty) {
+          return event.eventName
+              .toLowerCase()
+              .contains(query.toLowerCase()) && event.interests
+              .any((interests) => filters.contains(interests));
+        } else {
+          return event.eventName
+              .toLowerCase()
+              .contains(query.toLowerCase());
+        }
+      }).toList();
     }
-  }).toList();
+    if (mounted) {
+      state = AsyncData(results);
+    }
+  }
 
-  return suggestions;
-});
+  void filterQuery(String input) {
+    query = input;
+    _updateResults();
+  }
 
-final isSearchFilledProvider = Provider<bool>((ref) {
-  final query = ref.watch(searchQueryProvider);
+  void updateFilters(List<String> filters) {
+    this.filters = filters;
+    _updateResults();
+  }
+}
 
-  return query!.isNotEmpty;
-});
+@riverpod
+class SelectedEvents extends _$SelectedEvents {
+  bool mounted = true;
+  List<SingleEvent> events = [];
+  DateTime focusDay = DateTime.now();
+  DateTime? selectedDay;
+
+  @override
+  List<SingleEvent> build(List<SingleEvent> initialEvents) {
+    events = initialEvents;
+    return events;
+  }
+
+  void populateEvents(List<SingleEvent> events) {
+    this.events = events;
+    _updateSelectedEvents();
+  }
+
+  void _updateSelectedEvents() {
+    selectedDay ??= focusDay;
+    state = events.where((event) => isSameDay(DateTime.tryParse(event.eventDate), selectedDay!)).toList();
+  }
+
+  void onDaySelected(DateTime selectedDay, DateTime focusedDay) {
+    if (!isSameDay(this.selectedDay, selectedDay)) {
+      this.selectedDay = selectedDay;
+      focusDay = focusedDay;
+      _updateSelectedEvents();
+    }
+  }
+}

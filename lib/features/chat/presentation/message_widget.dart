@@ -1,11 +1,12 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:connectuni/features/user/domain/user_collection.dart';
+import 'package:connectuni/features/all_data_provider.dart';
+import 'package:connectuni/features/cu_loading.dart';
+import 'package:connectuni/features/cu_error.dart';
 
 import '../../message/domain/message.dart';
-import '../../user/data/user_providers.dart';
 import '../../user/domain/user.dart';
-import '../../user/domain/user_list.dart';
 
 /// GroupChatWidget is a widget that displays the group chat.
 /// It is a clickable widget that takes the user to the group chat page.
@@ -26,10 +27,31 @@ class _MessageWidgetState extends ConsumerState<MessageWidget> {
 
   @override
   Widget build(BuildContext context) {
-    final String currentUserID = ref.watch(currentUserProvider);
-    final User textUser = ref.watch(userDBProvider).getUserByID(widget.message.senderId);
+    final AsyncValue<AllData> asyncValue = ref.watch(allDataProvider);
+    return asyncValue.when(
+        data: (allData) =>
+            _build(
+              context: context,
+              users: allData.users,
+              currentUser: allData.currentUser,
+              ref: ref,
+            ),
+        error: (e, st) => CUError(e.toString(), st.toString()),
+        loading: () => const CULoading());
+  }
+
+  Widget _build({
+    required BuildContext context,
+    required List<User> users,
+    required User currentUser,
+    required WidgetRef ref
+  }) {
+    UserCollection userCollection = UserCollection(users);
+    Message message = widget.message;
+
+    final User textUser = userCollection.getUser(message.senderId);
     // If message is not from the user.
-    if(widget.message.senderId != currentUserID) {
+    if(message.senderId != currentUser.uid) {
       return
         Column(
           children: [
@@ -50,7 +72,7 @@ class _MessageWidgetState extends ConsumerState<MessageWidget> {
                       color: Colors.blue,
                       child: Padding(
                       padding: const EdgeInsets.all(12.0),
-                      child: Text(widget.message.messageContent, style: const TextStyle(color: Colors.white)),
+                      child: Text(message.messageContent, style: const TextStyle(color: Colors.white)),
                       ),
               )]
             ),
@@ -65,7 +87,7 @@ class _MessageWidgetState extends ConsumerState<MessageWidget> {
               elevation: 8.0,
               child: Padding(
                 padding: const EdgeInsets.all(12.0),
-                child: Text(widget.message.messageContent),
+                child: Text(message.messageContent),
             ),
           ),
       );

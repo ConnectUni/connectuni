@@ -1,17 +1,26 @@
+import 'package:connectuni/features/all_data_provider.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_form_builder/flutter_form_builder.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
+import '../../cu_error.dart';
+import '../../cu_loading.dart';
 import '../../event/data/event_providers.dart';
+import '../../event/domain/event.dart';
+import '../../event/domain/event_collection.dart';
 import '../../event/domain/event_list.dart';
 import '../../group/data/group_providers.dart';
 import '../../group/domain/group.dart';
+import '../../group/domain/group_collection.dart';
 import '../../group/domain/group_list.dart';
+import '../../group/presentation/edit_group_controller.dart';
 import '../../group/presentation/form-fields/reset_button.dart';
 import '../../group/presentation/form-fields/submit_button.dart';
 import '../../user/data/user_providers.dart';
-import '../../user/domain/user.dart' as Uni;
+import '../../user/domain/user.dart';
+import '../../user/domain/user_collection.dart';
 import '../../user/domain/user_list.dart';
+import '../../user/presentation/edit_user_controller.dart';
 import '../data/interests.dart';
 import 'form-fields/interests_field.dart';
 
@@ -27,19 +36,39 @@ class EditInterest extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final UserList usersDB = ref.watch(userDBProvider);
-    final GroupList groupsDB = ref.watch(groupsDBProvider);
-    final EventList eventsDB = ref.watch(eventsDBProvider);
+    final AsyncValue<AllData> asyncValue = ref.watch(allDataProvider);
+    return asyncValue.when(
+      data: (allData) =>
+          _build(
+            context: context,
+            users: allData.users,
+            groups: allData.groups,
+            events: allData.events,
+            ref: ref
+          ),
+      error: (e, st) => CUError(e.toString(), st.toString()),
+      loading: () => const CULoading());
+  }
+  Widget _build ({
+    required BuildContext context,
+    required List<User> users,
+    required List<Group> groups,
+    required List<SingleEvent> events,
+    required WidgetRef ref
+  }) {
+    UserCollection userCollection = UserCollection(users);
+    GroupCollection groupCollection = GroupCollection(groups);
+    EventCollection eventCollection = EventCollection(events);
 
     if(type == "user") {
       //Get User Interests
-      thisInterests = usersDB.getUserByID(id).interests;
+      thisInterests = userCollection.getUser(id).interests;
     } else if(type == "group") {
       //Get Group Interests
-      thisInterests = groupsDB.getGroupById(id).interests;
+      thisInterests = groupCollection.getGroup(id).interests;
     } else if(type == "event") {
       //Get Event Interests
-      thisInterests = eventsDB.getEventById(id).interests;
+      thisInterests = eventCollection.getEvent(id).interests;
     }
 
     void onSubmit() {
@@ -49,9 +78,9 @@ class EditInterest extends ConsumerWidget {
 
       if(type == "user") {
         //Get User Data
-        Uni.User editUser = usersDB.getUserByID(id);
+        User editUser = userCollection.getUser(id);
         //Update User Interests
-        usersDB.updateUser(
+        User updatedUser = User(
           uid: editUser.uid,
           displayName: editUser.displayName,
           pfp: editUser.pfp,
@@ -64,11 +93,18 @@ class EditInterest extends ConsumerWidget {
           interests: interestsUpdate,
           email: editUser.email,
         );
+        ref.read(editUserControllerProvider.notifier).updateUser(
+            user: updatedUser,
+            onSuccess: () {
+              Navigator.pop(context);
+              print('User updated successfully');
+              },
+          );
       } else if(type == "group") {
         //Update Group Interests
         //groupsDB.updateGroupInterests(id, interests);
-        Group editGroup = groupsDB.getGroupById(id);
-        groupsDB.updateGroup(
+        Group editGroup = groupCollection.getGroup(id);
+        Group updatedGroup = Group(
           groupID: editGroup.groupID,
           groupName: editGroup.groupName,
           semYear: editGroup.semYear,
@@ -81,15 +117,19 @@ class EditInterest extends ConsumerWidget {
           userIDs: editGroup.userIDs,
           interests: interestsUpdate,
         );
+        ref.read(editGroupControllerProvider.notifier).updateGroup(
+          group: updatedGroup,
+          onSuccess: () {
+            print('Group updated successfully');
+            Navigator.pop(context);
+          },
+        );
       } else if(type == "event") {
         //Update Event Interests
         //eventsDB.updateEventInterests(id, interests);
       }
       //Return to previous page
-      ref.refresh(groupsDBProvider);
-      ref.refresh(userDBProvider);
       ref.refresh(interestsProvider);
-      Navigator.pop(context);
     }
     void onReset() {
       _formKey.currentState?.reset();

@@ -1,7 +1,11 @@
+import 'package:connectuni/features/user/domain/user_collection.dart';
 import 'package:firebase_ui_auth/firebase_ui_auth.dart' hide ForgotPasswordView;
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
+import '../../cu_error.dart';
+import '../../cu_loading.dart';
 import '../../home/presentation/home.dart';
 import '../../user/data/user_providers.dart';
 import '../../user/domain/user.dart';
@@ -18,7 +22,28 @@ class SignInView extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final usersDB = ref.watch(userDBProvider);
+    final AsyncValue<List<User>> asyncValue = ref.watch(usersProvider);
+    return asyncValue.when(
+        data: (users) =>
+            _build(
+                context: context,
+                users: users,
+                ref: ref
+            ),
+        loading: () => const CULoading(),
+        error: (e, st) => CUError(e.toString(), st.toString()));
+  }
+
+  Widget _build ({
+    required BuildContext context,
+    required List<User> users,
+    required WidgetRef ref
+  }) {
+    UserCollection userCollection = UserCollection(users);
+    bool userExists(String email) {
+      return userCollection.getUserByEmail(email) != null;
+    }
+
     return SignInScreen(
       actions: [
         ForgotPasswordAction((context, email) {
@@ -31,30 +56,24 @@ class SignInView extends ConsumerWidget {
         AuthStateChangeAction<SignedIn>((context, state) {
           if (!state.user!.emailVerified) {
             Navigator.pushNamed(context, VerifyEmailView.routeName);
-          } else if (usersDB.getUserByPotentialEmail(state.user!.email!) == null) {
-            Navigator.pushReplacementNamed(context, AddUser.routeName);
-          } else {
-            ref.read(currentUserProvider.state).state = usersDB.getUserByEmail(state.user!.email!)!.uid;
+          } else if (userExists(state.user!.email!)) {
             Navigator.pushReplacementNamed(context, HomePage.routeName);
+          } else {
+            Navigator.pushReplacement(context,
+                CupertinoPageRoute(builder: (context) => AddUser(email: state.user!.email!)));
           }
         }),
         AuthStateChangeAction<UserCreated>((context, state) {
           if (!state.credential.user!.emailVerified) {
             Navigator.pushNamed(context, VerifyEmailView.routeName);
-          } else if (usersDB.getUserByPotentialEmail(state.credential.user!.email!) == null) {
-            Navigator.pushReplacementNamed(context, AddUser.routeName);
           } else {
-            ref.read(currentUserProvider.state).state = usersDB.getUserByEmail(state.credential.user!.email!)!.uid;
-            Navigator.pushReplacementNamed(context, HomePage.routeName);
+            Navigator.pushReplacementNamed(context, AddUser.routeName);
           }
         }),
         AuthStateChangeAction<CredentialLinked>((context, state) {
           if (!state.user.emailVerified) {
             Navigator.pushNamed(context, VerifyEmailView.routeName);
-          } else if (usersDB.getUserByPotentialEmail(state.user!.email!) == null) {
-            Navigator.pushReplacementNamed(context, AddUser.routeName);
           } else {
-            ref.read(currentUserProvider.state).state = usersDB.getUserByEmail(state.user!.email!)!.uid;
             Navigator.pushReplacementNamed(context, HomePage.routeName);
           }
         }),

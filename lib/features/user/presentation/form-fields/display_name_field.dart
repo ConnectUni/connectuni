@@ -24,6 +24,9 @@ class DisplayNameField extends StatelessWidget {
           labelText: fieldName,
           hintText: 'Example: "Ron Johnson"',
         ),
+        validator: FormBuilderValidators.compose([
+          FormBuilderValidators.required(),
+        ]),
       ),
     );
   }

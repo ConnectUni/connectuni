@@ -1,74 +1,103 @@
-import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:firebase_auth/firebase_auth.dart' hide User;
+import 'package:riverpod_annotation/riverpod_annotation.dart';
+
+import '../../../repositories/firestore/firestore_providers.dart';
 import '../domain/user.dart';
-import '../domain/user_list.dart';
+import 'user_database.dart';
 
-final userDBProvider = Provider<UserList>((ref) { return UserList(mockUsers); });
-final currentUserProvider = StateProvider<String>((ref) => 'user-000');
-/*
- * These are the state providers that will be used to check the selected
- * interests and the search query.
- */
-final selectedFiltersProvider = StateProvider<List<String>?>((ref) => []);
-final searchQueryProvider = StateProvider<String?>((ref) => "");
+part 'user_providers.g.dart';
 
-/*
- * This provider will be used to find the users that are not friends with the
- * current user
- */
-final notUsersFriendsProvider = Provider<List<User>?>((ref) {
-  final usersDB = ref.watch(userDBProvider);
-  final User currentUser = usersDB.getUserByID(ref.read(currentUserProvider));
-  final notFriends = usersDB
-      .getUsers()
-      .where((user) => !currentUser.friends.contains(user))
-      .toList();
-
-  return notFriends;
-});
-
-/*
- * This provider will be used to filter the users based on the selected
- * interests and the search query from the providers above.
- */
-final filteredUsers = Provider<List<User>?>((ref) {
-  final filters = ref.watch(selectedFiltersProvider);
-  final users = ref.watch(notUsersFriendsProvider);
-  final query = ref.watch(searchQueryProvider);
-  final suggestions = users?.where((user) {
-    if(filters!.isNotEmpty) {
-      return user.displayName.toLowerCase().contains(query!.toLowerCase()) && user.interests.any((interest) => filters.contains(interest));
-    } else {
-      return user.displayName.toLowerCase().contains(query!.toLowerCase());
-    }
-  }).toList();
-
-  return suggestions;
-});
-
-class RecentSearchesNotifier extends StateNotifier<List<User>?> {
-  RecentSearchesNotifier() : super([]);
-
-  void add(User user) {
-    if (state!.contains(user)) {
-      state!.remove(user);
-    }
-    state!.insert(0, user);
-    if (state!.length > 5) {
-      state!.removeLast();
-    }
-  }
-
-  void clear() {
-    state = [];
-  }
+@riverpod
+UserDatabase userDatabase(UserDatabaseRef ref) {
+  return UserDatabase(ref);
 }
 
-final recentSearchesProvider = StateNotifierProvider<RecentSearchesNotifier, List<User>?>((ref) {
-  return RecentSearchesNotifier();
-});
+@riverpod
+Stream<List<User>> users(UsersRef ref) {
+  final database = ref.watch(userDatabaseProvider);
+  return database.watchUsers();
+}
 
-final isSearchFilledProvider = Provider<bool>((ref) {
-  final query = ref.watch(searchQueryProvider);
+@riverpod
+String currentUserID(CurrentUserIDRef ref) {
+  final FirebaseAuth instance = ref.watch(firebaseAuthProvider);
+  return instance.currentUser!.email!;
+}
 
-  return query!.isNotEmpty;
-});
+@riverpod
+Future<User> currentUser(CurrentUserRef ref) async {
+  final String currentUserId = ref.watch(currentUserIDProvider);
+  final database = ref.watch(userDatabaseProvider);
+  return await database.fetchUser(currentUserId);
+}
+
+@riverpod
+class FilteredUsers extends _$FilteredUsers {
+  bool mounted = true;
+  List<User> users = [];
+  List<User> recents = [];
+  List<User> results = [];
+  List<String> filters = [];
+  String query = '';
+
+  @override
+  FutureOr<List<User>> build() async {
+    ref.onDispose(() => mounted = false);
+    users = await ref.watch(usersProvider.future);
+    return users;
+  }
+
+  void _updateResults() {
+    if (query.isEmpty && filters.isEmpty) {
+      results = recents;
+    } else {
+      results = users.where((user) {
+        if (filters.isNotEmpty) {
+          return user.displayName
+              .toLowerCase()
+              .contains(query.toLowerCase()) && user.interests
+              .any((interests) => filters.contains(interests));
+        } else {
+          return user.displayName
+              .toLowerCase()
+              .contains(query.toLowerCase());
+        }
+      }).toList();
+    }
+    if (mounted) {
+      state = AsyncData(results);
+    }
+  }
+
+  void filterQuery(String input) {
+    query = input;
+    _updateResults();
+  }
+
+  void updateFilters(List<String> filters) {
+    this.filters = filters;
+    _updateResults();
+  }
+
+  void addRecent(User user) {
+    if (recents.contains(user)) {
+      recents.insert(0, user);
+    } else {
+      recents.add(user);
+    }
+    if (recents.length > 5) {
+      recents.removeLast();
+    }
+    _updateResults();
+  }
+
+  void removeRecent(User user) {
+    recents.remove(user);
+    _updateResults();
+  }
+
+  void clearRecents() {
+    recents.clear();
+    _updateResults();
+  }
+}

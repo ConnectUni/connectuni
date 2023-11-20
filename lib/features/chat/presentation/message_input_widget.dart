@@ -1,29 +1,26 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:connectuni/features/user/domain/user.dart';
+import 'package:connectuni/features/message/domain/message_collection.dart';
+import 'package:connectuni/features/message/presentation/edit_message_controller.dart';
+import 'package:connectuni/features/chat/domain/chat.dart';
+import 'package:connectuni/features/chat/domain/chat_collection.dart';
+import 'package:connectuni/features/chat/presentation/edit_chat_controller.dart';
+import 'package:connectuni/features/all_data_provider.dart';
+import 'package:connectuni/features/cu_loading.dart';
+import 'package:connectuni/features/cu_error.dart';
 
-import '../../group/data/group_providers.dart';
-import '../../group/domain/group.dart';
-import '../../group/domain/group_list.dart';
-import '../../message/data/message_providers.dart';
 import '../../message/domain/message.dart';
-import '../../message/domain/message_list.dart';
-import '../../user/data/user_providers.dart';
-import '../../user/domain/user.dart';
-import '../../user/domain/user_list.dart';
-import '../data/chat_providers.dart';
-import '../domain/chat.dart';
-import '../domain/chat_list.dart';
 
 /// GroupChatWidget is a widget that displays the group chat.
 /// It is a clickable widget that takes the user to the group chat page.
 
 class MessageInputWidget extends ConsumerStatefulWidget {
-  String id;
+  Chat chat;
 
   MessageInputWidget({
     super.key,
-    required this.id,
+    required this.chat,
   });
 
   @override
@@ -34,16 +31,28 @@ class _MessageInputWidgetState extends ConsumerState<MessageInputWidget> {
 
   @override
   Widget build(BuildContext context) {
-    final GroupList groupsDB = ref.watch(groupsDBProvider);
-    final ChatList chatsDB = ref.watch(chatDBProvider);
-    final MessageList messageDB = ref.watch(messagesDBProvider);
-    final String currentUserID = ref.watch(currentUserProvider);
-    Group groupData = groupsDB.getGroupById(widget.id);
-    Chat chatData = chatsDB.getChatByGroupId(widget.id);
-    List<String> messagesAsString = chatData.messageIDs;
-    List<Message> thisMessages = messagesAsString.map((e) => messageDB.getMessageById(e)).toList();
+    final AsyncValue<AllData> asyncValue = ref.watch(allDataProvider);
+    return asyncValue.when(
+      data: (allData) => _build(
+        context: context,
+        messages: allData.messages,
+        currentUser: allData.currentUser,
+        ref: ref,
+      ),
+      error: (e, st) => CUError(e.toString(), st.toString()),
+      loading: () => const CULoading());
+  }
+  Widget _build({
+    required BuildContext context,
+    required List<Message> messages,
+    required User currentUser,
+    required WidgetRef ref
+  }) {
+    MessageCollection messageCollection = MessageCollection(messages);
+    Chat currentChat = widget.chat;
+
     return Container(
-      margin: EdgeInsets.all(5.0),
+      margin: const EdgeInsets.all(5.0),
       height: 61,
       child: Row(
         children: [
@@ -68,29 +77,25 @@ class _MessageInputWidgetState extends ConsumerState<MessageInputWidget> {
                           hintStyle: TextStyle( color:     Colors.blueAccent),
                           border: InputBorder.none),
                       onSubmitted: (text) {
-                        int messageIdCounter = messageDB.length() + 1;
-                        String thisMessageId;
-                        if (messageIdCounter < 10) {
-                          thisMessageId = "message-00$messageIdCounter";
-                        } else if (messageIdCounter < 100) {
-                          thisMessageId = "message-0$messageIdCounter";
-                        } else {
-                          thisMessageId = "message-$messageIdCounter";
-                        }
+                        String thisMessageID = messageCollection.getNewID();
                         if (text == "") {
                           return;
                         }
                         final currentMessage = Message(
-                          messageId: thisMessageId,
-                          senderId: currentUserID,
-                          groupId: widget.id,
+                          messageId: thisMessageID,
+                          senderId: currentUser.uid,
+                          groupId: currentChat.groupID,
                           messageContent: text,
                         );
-
-                        ref.read(messagesDBProvider).addMessage(currentMessage);
-                        ref.read(chatDBProvider).addMessageIdToGroupChat(widget.id, thisMessageId);
-                        ref.refresh(chatDBProvider);
-                        ref.refresh(messagesDBProvider);
+                        ref.read(editMessageControllerProvider.notifier).updateMessage(
+                          message: currentMessage,
+                          onSuccess: () {}
+                        );
+                        currentChat.messageIDs.add(thisMessageID);
+                        ref.read(editChatControllerProvider.notifier).updateChat(
+                          chat: currentChat,
+                          onSuccess: () {}
+                        );
                       },
                     ),),
                   ),

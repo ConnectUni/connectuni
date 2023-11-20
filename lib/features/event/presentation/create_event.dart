@@ -1,13 +1,17 @@
+import 'package:connectuni/features/all_data_provider.dart';
+import 'package:connectuni/features/cu_error.dart';
+import 'package:connectuni/features/cu_loading.dart';
+import 'package:connectuni/features/event/domain/event_collection.dart';
+import 'package:connectuni/features/event/presentation/edit_event_controller.dart';
+import 'package:connectuni/features/event/presentation/event_info_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_form_builder/flutter_form_builder.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-import '../data/event_providers.dart';
+import '../../group/domain/group.dart';
+import '../../group/domain/group_collection.dart';
+import '../../user/domain/user.dart';
 import '../domain/event.dart';
-import '../domain/event_list.dart';
-import 'eventCalendar.dart';
-import 'search_events_screen.dart';
-import '../../group/data/group_providers.dart';
 import 'form-fields/event_form_fields.dart';
 
 
@@ -15,7 +19,7 @@ import 'form-fields/event_form_fields.dart';
 class CreateEvent extends ConsumerWidget {
   CreateEvent({Key? key}) : super(key: key);
 
-  static const routeName = '/createevent';
+  static const routeName = '/create_event';
   final _formKey = GlobalKey<FormBuilderState>();
   final _eventNameFieldKey = GlobalKey<FormBuilderFieldState>();
   final _locationFieldKey = GlobalKey<FormBuilderFieldState>();
@@ -24,26 +28,34 @@ class CreateEvent extends ConsumerWidget {
   final _descriptionFieldKey = GlobalKey<FormBuilderFieldState>();
   final _groupIDFieldKey = GlobalKey<FormBuilderFieldState>();
 
-  final List<String> userIDs = [];
-  final List<String> interests = [];
-
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final EventList eventDB = ref.watch(eventsDBProvider);
+    final AsyncValue<AllData> asyncValue = ref.watch(allDataProvider);
+    return asyncValue.when(
+      data: (allData) =>
+          _build(
+            context: context,
+            events: allData.events,
+            groups: allData.groups,
+            currentUser: allData.currentUser,
+            ref: ref,
+          ),
+      error: (e, st) => CUError(e.toString(), st.toString()),
+      loading: () => const CULoading());
+  }
+
+  Widget _build({
+    required BuildContext context,
+    required List<SingleEvent> events,
+    required List<Group> groups,
+    required User currentUser,
+    required WidgetRef ref}) {
+    EventCollection eventCollection = EventCollection(events);
+    GroupCollection groupCollection = GroupCollection(groups);
 
     void onSubmit() {
       bool isValid = _formKey.currentState?.saveAndValidate() ?? false;
       if (!isValid) return;
-      int id = eventDB.allEvents.length + 1;
-      String getEventID() {
-        if (id < 10) {
-          return "group-00$id";
-        } else if (id < 100) {
-          return "group-0$id";
-        } else {
-          return "group-$id";
-        }
-      }
       String name = _eventNameFieldKey.currentState?.value;
       String location = _locationFieldKey.currentState?.value;
       DateTime date = _dateFieldKey.currentState?.value;
@@ -54,21 +66,28 @@ class CreateEvent extends ConsumerWidget {
       String eventDate = date.toString();
 
       // Create a new event
-      eventDB.addEvent(
-        SingleEvent(
-          eventID: getEventID(),
-          eventName: name,
-          eventIcon: icon,
-          eventLocation: location,
-          eventDescription: description,
-          eventDate: eventDate,
-          groupID: groupID,
-          userIDs: userIDs,
-          interests: interests,
-        )
+      SingleEvent newEvent = SingleEvent(
+        eventID: eventCollection.getNewID(),
+        eventName: name,
+        eventIcon: icon,
+        eventLocation: location,
+        eventDescription: description,
+        eventDate: eventDate,
+        groupID: groupID,
+        userIDs: [],
+        interests: [],
       );
-      ref.refresh(eventsDBProvider);
-      Navigator.pushReplacementNamed(context, EventCalendar.routeName);
+      ref.read(editEventControllerProvider.notifier).updateEvent(
+        event: newEvent,
+        onSuccess: () {
+          Navigator.pushReplacement(
+            context,
+            MaterialPageRoute(
+              builder: (context) => EventInfoScreen(event: newEvent),
+            ),
+          );
+        }
+      );
     }
 
     void onReset() {
@@ -93,7 +112,7 @@ class CreateEvent extends ConsumerWidget {
                       EventDateField(fieldKey: _dateFieldKey),
                       EventIconField(fieldKey: _iconFieldKey),
                       EventDescriptionField(fieldKey: _descriptionFieldKey),
-                      GroupIDField(fieldKey: _groupIDFieldKey, groupNames: ref.watch(groupsDBProvider).getGroupNames()),
+                      GroupIDField(fieldKey: _groupIDFieldKey, groupNames: groupCollection.getAllGroupNames()),
                     ],
                   ),
                 ),

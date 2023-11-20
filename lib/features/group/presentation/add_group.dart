@@ -1,16 +1,19 @@
+import 'package:connectuni/features/all_data_provider.dart';
+import 'package:connectuni/features/group/domain/group_collection.dart';
+import 'package:connectuni/features/group/presentation/edit_group_controller.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_form_builder/flutter_form_builder.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-import '../../chat/data/chat_providers.dart';
 import '../../chat/domain/chat.dart';
-import '../../chat/domain/chat_list.dart';
-import '../../user/data/user_providers.dart';
-import '../../user/domain/user_list.dart';
-import '../data/group_providers.dart';
+import '../../chat/domain/chat_collection.dart';
+import '../../chat/presentation/edit_chat_controller.dart';
+import '../../cu_error.dart';
+import '../../cu_loading.dart';
+import '../../home/presentation/home.dart';
+import '../../user/domain/user.dart';
+import '../../user/presentation/edit_user_controller.dart';
 import '../domain/group.dart';
-import '../domain/group_list.dart';
-import '../../message/domain/message.dart';
 import 'form-fields/group_description_field.dart';
 import 'form-fields/group_image_field.dart';
 import 'form-fields/group_name_field.dart';
@@ -29,96 +32,96 @@ class AddGroup extends ConsumerWidget {
   final _groupImageFieldKey = GlobalKey<FormBuilderFieldState>();
   final _groupDescriptionFieldKey = GlobalKey<FormBuilderFieldState>();
 
-  final List<Message> newMessages = [];
-  final List<String> eventIDs = [];
-  final List<String> userIDs = [];
-  final List<String> interests = [];
-
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final GroupList groupsDB = ref.watch(groupsDBProvider);
-    final UserList usersDB = ref.watch(userDBProvider);
-    final String currUser = ref.watch(currentUserProvider);
-    final ChatList chatsDB = ref.watch(chatDBProvider);
-    int groupId = groupsDB.groupLength() + 1;
-    int chatId = chatsDB.chatLength() + 1;
-    String getGroupID() {
-      if (groupId < 10) {
-        return "group-00$groupId";
-      } else if (groupId < 100) {
-        return "group-0$groupId";
-      } else {
-        return "group-$groupId";
-      }
-    }
-    String getChatID() {
-      if (chatId < 10) {
-        return "chat-00$chatId";
-      } else if (chatId < 100) {
-        return "chat-0$chatId";
-      } else {
-        return "chat-$chatId";
-      }
-    }
+    final AsyncValue<AllData> asyncValue = ref.watch(allDataProvider);
+    return asyncValue.when(
+        data: (allData) =>
+            _build(
+                context: context,
+                groups: allData.groups,
+                chats: allData.chats,
+                currentUser: allData.currentUser,
+                ref: ref
+            ),
+        loading: () => const CULoading(),
+        error: (e, st) => CUError(e.toString(), st.toString()));
+  }
+
+  Widget _build ({
+    required BuildContext context,
+    required List<Group> groups,
+    required List<Chat> chats,
+    required User currentUser,
+    required WidgetRef ref,
+  }) {
+    GroupCollection groupCollection = GroupCollection(groups);
+    ChatCollection chatCollection = ChatCollection(chats);
 
     void onSubmit() {
       bool isValid = _formKey.currentState?.saveAndValidate() ?? false;
       if (!isValid) return;
-      String groupID = getGroupID();
+      String groupID = groupCollection.getNewID();
       String groupName = _groupNameFieldKey.currentState?.value;
       String semYear = _semYearFieldKey.currentState?.value;
-      String owner = _ownerFieldKey.currentState?.value;
+      String owner = _ownerFieldKey.currentState?.value; // Should owner be current user? Since user created this group no?
       String groupImage = _groupImageFieldKey.currentState?.value ?? '';
       String groupDescription = _groupDescriptionFieldKey.currentState?.value ?? '';
-      String chatID = getChatID();
-      groupsDB.addGroup(
-        Group(
+      String chatID = chatCollection.getNewID();
+      Group newGroup = Group(
         groupID: groupID,
         groupName: groupName,
         semYear: semYear,
         owner: owner,
         groupImage: groupImage,
         groupDescription: groupDescription,
-        newMessages: newMessages,
+        newMessages: [],
         chatID: chatID,
-        eventIDs: eventIDs,
-        userIDs: userIDs,
-        interests: interests,
-        )
+        eventIDs: [],
+        userIDs: [currentUser.uid],
+        interests: [],
       );
-      chatsDB.addChat(
-        Chat(
+      ref.read(editGroupControllerProvider.notifier).updateGroup(
+        group: newGroup,
+        onSuccess: () {},
+      );
+      Chat newChat = Chat(
           chatID: chatID,
           groupID: groupID,
-          userIDs: userIDs,
+          userIDs: [currentUser.uid],
           messageIDs: [],
-        )
       );
-      //Add the group to the user's list of groups and vice versa.
-      usersDB.getUserByID(currUser).groupIDs.add(groupID);
-      groupsDB.getGroupById(groupID).userIDs.add(currUser);
+      ref.read(editChatControllerProvider.notifier).updateChat(
+        chat: newChat,
+        onSuccess: () {},
+      );
+      Group updatedGroup = groupCollection.getGroup(groupID);
+      updatedGroup.userIDs.add(currentUser.uid);
+      ref.read(editGroupControllerProvider.notifier).updateGroup(
+        group: updatedGroup,
+        onSuccess: () {},
+      );
+      currentUser.groupIDs.add(groupID);
+      ref.read(editUserControllerProvider.notifier).updateUser(
+        user: currentUser,
+        onSuccess: () {},
+      );
       //Return to the previous page
-      ref.refresh(groupsDBProvider);
       Navigator.pop(context);
-
     }
 
     void onReset() {
       _formKey.currentState?.reset();
     }
 
-    return Scaffold(
-      appBar: AppBar(
-        title: const Text('Add Group'),
-      ),
-      body: ListView(
-        padding: const EdgeInsets.symmetric(horizontal: 24.0),
-        children: [
-          Column(
-            children: [
-              FormBuilder(
-                key: _formKey,
-                child: Column(
+    Widget addGroupForm() => ListView(
+      padding: const EdgeInsets.symmetric(horizontal: 24.0),
+      children: [
+        Column(
+          children: [
+            FormBuilder(
+              key: _formKey,
+              child: Column(
                   children: [
                     GroupNameField(fieldKey: _groupNameFieldKey),
                     SemYearField(fieldKey: _semYearFieldKey),
@@ -126,18 +129,28 @@ class AddGroup extends ConsumerWidget {
                     GroupImageField(fieldKey: _groupImageFieldKey),
                     GroupDescriptionField(fieldKey: _groupDescriptionFieldKey),
                   ]
-                ),
               ),
-              Row(
+            ),
+            Row(
                 children: [
                   SubmitButton(onSubmit: onSubmit),
                   ResetButton(onReset: onReset),
                 ]
-              )
-            ],
-          ),
-        ],
-      )
+            )
+          ],
+        ),
+      ],
     );
+
+    AsyncValue asyncUpdate = ref.watch(editGroupControllerProvider);
+
+    return Scaffold(
+      appBar: AppBar(
+        title: const Text('Add Group'),
+      ),
+      body: asyncUpdate.when(
+        data: (_) => addGroupForm(),
+        error: (e, st) => CUError(e.toString(), st.toString()),
+        loading: () => const CULoading()));
   }
 }
