@@ -1,3 +1,4 @@
+import 'package:connectuni/features/all_data_provider.dart';
 import 'package:connectuni/features/cu_error.dart';
 import 'package:connectuni/features/cu_loading.dart';
 import 'package:connectuni/features/group/presentation/edit_group_controller.dart';
@@ -9,8 +10,10 @@ import '../../home/presentation/home.dart';
 import '../../interest/presentation/edit_interests.dart';
 import '../../user/data/user_providers.dart';
 import '../../user/domain/user.dart';
+import '../../user/domain/user_collection.dart';
 import '../../user/domain/user_list.dart';
 import '../../user/presentation/edit_user_controller.dart';
+import '../domain/group_collection.dart';
 import 'edit_group.dart';
 
 /// Information page for a specific group that displays the group members as well as a description of the selected group.
@@ -30,12 +33,13 @@ class GroupInfo extends ConsumerStatefulWidget {
 class _GroupInfoState extends ConsumerState<GroupInfo> {
   @override
   Widget build(BuildContext context) {
-    final AsyncValue<User> asyncValue = ref.watch(currentUserProvider);
+    final AsyncValue<AllData> asyncValue = ref.watch(allDataProvider);
     return asyncValue.when(
-        data: (user) => _build(
+        data: (allData) => _build(
           context: context,
+          users: allData.users,
           group: widget.group!,
-          currentUser: user,
+          currentUser: allData.currentUser,
           ref: ref,
         ),
         error: (e,st) => CUError(e.toString(), st.toString()),
@@ -44,10 +48,12 @@ class _GroupInfoState extends ConsumerState<GroupInfo> {
 
   Widget _build({
     required BuildContext context,
+    required List<User> users,
     required Group group,
     required User currentUser,
     required WidgetRef ref
   }) {
+    UserCollection userCollection = UserCollection(users);
 
     Widget buildPopupDialog(BuildContext context) {
       return AlertDialog(
@@ -86,8 +92,9 @@ class _GroupInfoState extends ConsumerState<GroupInfo> {
         padding: const EdgeInsets.all(10),
         child: Column(
           children: [
-            ...group
-                .userIDs.map((userId) => TempUsersDB.getUserByID(userId)).toList()
+            ...userCollection
+                .getUsers(group.userIDs)
+                .toList()
                 .map((user) => GroupMemberWidget(user: user)),
           ],
         ),
