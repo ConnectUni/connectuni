@@ -49,7 +49,11 @@ class FilteredUsers extends _$FilteredUsers {
 
   void _updateResults() {
     if (query.isEmpty && filters.isEmpty) {
-      results = recents;
+      if(recents.isEmpty) {
+        results = users;
+      } else {
+        results = recents;
+      }
     } else {
       results = users.where((user) {
         if (filters.isNotEmpty) {
@@ -81,9 +85,10 @@ class FilteredUsers extends _$FilteredUsers {
 
   void addRecent(User user) {
     if (recents.contains(user)) {
+      recents.remove(user);
       recents.insert(0, user);
     } else {
-      recents.add(user);
+      recents.insert(0, user);
     }
     if (recents.length > 5) {
       recents.removeLast();

@@ -49,6 +49,7 @@ class _SearchPeopleScreenState extends ConsumerState<SearchPeopleScreen> {
     required List<User> list,
     required WidgetRef ref,
   }) {
+    final isRecentsEmpty = ref.watch(filteredUsersProvider.notifier).recents.isEmpty;
     bool isSearchbarFilled() {
       if (controller.text.isNotEmpty) {
         return true;
@@ -167,7 +168,7 @@ class _SearchPeopleScreenState extends ConsumerState<SearchPeopleScreen> {
 
     /// This displays the search content.
     List<Widget> showContent = [
-      if (!isSearchbarFilled()) ...[
+      if (!isSearchbarFilled() && !isRecentsEmpty) ...[
         Padding(
           padding: const EdgeInsets.all(8.0),
           child: Column(
@@ -176,7 +177,7 @@ class _SearchPeopleScreenState extends ConsumerState<SearchPeopleScreen> {
                   children: [
                     const Text('Recent Searches'),
                     const Spacer(),
-                    if (recentSearches.isNotEmpty) ...[
+                    if (!isRecentsEmpty) ...[
                       InkWell(
                         child: const Text('Clear Recents', style: TextStyle(color: Colors.blue)),
                         onTap: () {

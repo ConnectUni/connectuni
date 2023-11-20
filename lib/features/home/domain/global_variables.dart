@@ -1,4 +1,4 @@
-import 'package:connectuni/features/event/presentation/eventCalendar.dart';
+import 'package:connectuni/features/event/presentation/event_calendar.dart';
 import 'package:connectuni/features/user/presentation/current_user_profile.dart';
 import 'package:flutter/material.dart';
 import 'package:connectuni/features/home/presentation/search_page_controller.dart';

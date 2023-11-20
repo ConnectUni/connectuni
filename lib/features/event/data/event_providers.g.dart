@@ -51,170 +51,38 @@ final filteredEventsProvider = AutoDisposeAsyncNotifierProvider<FilteredEvents,
 );
 
 typedef _$FilteredEvents = AutoDisposeAsyncNotifier<List<SingleEvent>>;
-String _$selectedEventsHash() => r'5c5e2a79a1e37ca18f13ec69ada527aec09c5700';
+String _$filteredSelectedEventsHash() =>
+    r'0aa4598fc1cb0eb8b6f7e63b57e12c5cea5e77d4';
 
-/// Copied from Dart SDK
-class _SystemHash {
-  _SystemHash._();
+/// See also [FilteredSelectedEvents].
+@ProviderFor(FilteredSelectedEvents)
+final filteredSelectedEventsProvider = AutoDisposeAsyncNotifierProvider<
+    FilteredSelectedEvents, List<SingleEvent>>.internal(
+  FilteredSelectedEvents.new,
+  name: r'filteredSelectedEventsProvider',
+  debugGetCreateSourceHash: const bool.fromEnvironment('dart.vm.product')
+      ? null
+      : _$filteredSelectedEventsHash,
+  dependencies: null,
+  allTransitiveDependencies: null,
+);
 
-  static int combine(int hash, int value) {
-    // ignore: parameter_assignments
-    hash = 0x1fffffff & (hash + value);
-    // ignore: parameter_assignments
-    hash = 0x1fffffff & (hash + ((0x0007ffff & hash) << 10));
-    return hash ^ (hash >> 6);
-  }
-
-  static int finish(int hash) {
-    // ignore: parameter_assignments
-    hash = 0x1fffffff & (hash + ((0x03ffffff & hash) << 3));
-    // ignore: parameter_assignments
-    hash = hash ^ (hash >> 11);
-    return 0x1fffffff & (hash + ((0x00003fff & hash) << 15));
-  }
-}
-
-abstract class _$SelectedEvents
-    extends BuildlessAutoDisposeNotifier<List<SingleEvent>> {
-  late final List<SingleEvent> initialEvents;
-
-  List<SingleEvent> build(
-    List<SingleEvent> initialEvents,
-  );
-}
+typedef _$FilteredSelectedEvents = AutoDisposeAsyncNotifier<List<SingleEvent>>;
+String _$selectedEventsHash() => r'90f7ec1a5966354d28a13ed9cf79495a2001c733';
 
 /// See also [SelectedEvents].
 @ProviderFor(SelectedEvents)
-const selectedEventsProvider = SelectedEventsFamily();
+final selectedEventsProvider = AutoDisposeAsyncNotifierProvider<SelectedEvents,
+    List<SingleEvent>>.internal(
+  SelectedEvents.new,
+  name: r'selectedEventsProvider',
+  debugGetCreateSourceHash: const bool.fromEnvironment('dart.vm.product')
+      ? null
+      : _$selectedEventsHash,
+  dependencies: null,
+  allTransitiveDependencies: null,
+);
 
-/// See also [SelectedEvents].
-class SelectedEventsFamily extends Family<List<SingleEvent>> {
-  /// See also [SelectedEvents].
-  const SelectedEventsFamily();
-
-  /// See also [SelectedEvents].
-  SelectedEventsProvider call(
-    List<SingleEvent> initialEvents,
-  ) {
-    return SelectedEventsProvider(
-      initialEvents,
-    );
-  }
-
-  @override
-  SelectedEventsProvider getProviderOverride(
-    covariant SelectedEventsProvider provider,
-  ) {
-    return call(
-      provider.initialEvents,
-    );
-  }
-
-  static const Iterable<ProviderOrFamily>? _dependencies = null;
-
-  @override
-  Iterable<ProviderOrFamily>? get dependencies => _dependencies;
-
-  static const Iterable<ProviderOrFamily>? _allTransitiveDependencies = null;
-
-  @override
-  Iterable<ProviderOrFamily>? get allTransitiveDependencies =>
-      _allTransitiveDependencies;
-
-  @override
-  String? get name => r'selectedEventsProvider';
-}
-
-/// See also [SelectedEvents].
-class SelectedEventsProvider
-    extends AutoDisposeNotifierProviderImpl<SelectedEvents, List<SingleEvent>> {
-  /// See also [SelectedEvents].
-  SelectedEventsProvider(
-    List<SingleEvent> initialEvents,
-  ) : this._internal(
-          () => SelectedEvents()..initialEvents = initialEvents,
-          from: selectedEventsProvider,
-          name: r'selectedEventsProvider',
-          debugGetCreateSourceHash:
-              const bool.fromEnvironment('dart.vm.product')
-                  ? null
-                  : _$selectedEventsHash,
-          dependencies: SelectedEventsFamily._dependencies,
-          allTransitiveDependencies:
-              SelectedEventsFamily._allTransitiveDependencies,
-          initialEvents: initialEvents,
-        );
-
-  SelectedEventsProvider._internal(
-    super._createNotifier, {
-    required super.name,
-    required super.dependencies,
-    required super.allTransitiveDependencies,
-    required super.debugGetCreateSourceHash,
-    required super.from,
-    required this.initialEvents,
-  }) : super.internal();
-
-  final List<SingleEvent> initialEvents;
-
-  @override
-  List<SingleEvent> runNotifierBuild(
-    covariant SelectedEvents notifier,
-  ) {
-    return notifier.build(
-      initialEvents,
-    );
-  }
-
-  @override
-  Override overrideWith(SelectedEvents Function() create) {
-    return ProviderOverride(
-      origin: this,
-      override: SelectedEventsProvider._internal(
-        () => create()..initialEvents = initialEvents,
-        from: from,
-        name: null,
-        dependencies: null,
-        allTransitiveDependencies: null,
-        debugGetCreateSourceHash: null,
-        initialEvents: initialEvents,
-      ),
-    );
-  }
-
-  @override
-  AutoDisposeNotifierProviderElement<SelectedEvents, List<SingleEvent>>
-      createElement() {
-    return _SelectedEventsProviderElement(this);
-  }
-
-  @override
-  bool operator ==(Object other) {
-    return other is SelectedEventsProvider &&
-        other.initialEvents == initialEvents;
-  }
-
-  @override
-  int get hashCode {
-    var hash = _SystemHash.combine(0, runtimeType.hashCode);
-    hash = _SystemHash.combine(hash, initialEvents.hashCode);
-
-    return _SystemHash.finish(hash);
-  }
-}
-
-mixin SelectedEventsRef on AutoDisposeNotifierProviderRef<List<SingleEvent>> {
-  /// The parameter `initialEvents` of this provider.
-  List<SingleEvent> get initialEvents;
-}
-
-class _SelectedEventsProviderElement extends AutoDisposeNotifierProviderElement<
-    SelectedEvents, List<SingleEvent>> with SelectedEventsRef {
-  _SelectedEventsProviderElement(super.provider);
-
-  @override
-  List<SingleEvent> get initialEvents =>
-      (origin as SelectedEventsProvider).initialEvents;
-}
+typedef _$SelectedEvents = AutoDisposeAsyncNotifier<List<SingleEvent>>;
 // ignore_for_file: type=lint
 // ignore_for_file: subtype_of_sealed_class, invalid_use_of_internal_member, invalid_use_of_visible_for_testing_member

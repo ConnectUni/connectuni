@@ -1,3 +1,4 @@
+import 'package:riverpod/src/framework.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 import 'package:table_calendar/table_calendar.dart';
 
@@ -66,26 +67,56 @@ class FilteredEvents extends _$FilteredEvents {
 }
 
 @riverpod
+class FilteredSelectedEvents extends _$FilteredSelectedEvents {
+  bool mounted = true;
+  List<SingleEvent> events = [];
+  List<SingleEvent> results = [];
+  List<String> filters = [];
+
+  @override
+  FutureOr<List<SingleEvent>> build() async {
+    ref.onDispose(() => mounted = false);
+    events = await ref.watch(eventsProvider.future);
+    return events;
+  }
+
+  void _updateResults() {
+    if (filters.isEmpty) {
+      results = events;
+    } else {
+      results = events.where((event) => filters.contains(event.groupID)).toList();
+    }
+    if (mounted) {
+      state = AsyncData(results);
+    }
+  }
+
+  void updateFilters(List<String> filters) {
+    this.filters = filters;
+    _updateResults();
+  }
+}
+
+@riverpod
 class SelectedEvents extends _$SelectedEvents {
   bool mounted = true;
   List<SingleEvent> events = [];
+  List<SingleEvent> results = [];
   DateTime focusDay = DateTime.now();
   DateTime? selectedDay;
 
   @override
-  List<SingleEvent> build(List<SingleEvent> initialEvents) {
-    events = initialEvents;
-    return events;
-  }
-
-  void populateEvents(List<SingleEvent> events) {
-    this.events = events;
+  Future<List<SingleEvent>> build() async {
+    ref.onDispose(() => mounted = false);
+    events = await ref.watch(filteredSelectedEventsProvider.future);
     _updateSelectedEvents();
+    return results;
   }
 
   void _updateSelectedEvents() {
     selectedDay ??= focusDay;
-    state = events.where((event) => isSameDay(DateTime.tryParse(event.eventDate), selectedDay!)).toList();
+    results = events.where((event) => isSameDay(DateTime.tryParse(event.eventDate), selectedDay!)).toList();
+    state = AsyncData(results);
   }
 
   void onDaySelected(DateTime selectedDay, DateTime focusedDay) {
