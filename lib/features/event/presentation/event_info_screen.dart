@@ -81,9 +81,6 @@ class EventInfoScreen extends ConsumerWidget {
               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
               children: [
                 GestureDetector(
-                  onTap: () {
-                    print('Add event to user');
-                  },
                   child: Container(
                     padding: const EdgeInsets.all(15),
                     decoration: BoxDecoration(

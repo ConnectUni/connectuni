@@ -24,6 +24,9 @@ class MajorField extends StatelessWidget {
           labelText: fieldName,
           hintText: 'Example: "Liberal Arts"',
         ),
+        validator: FormBuilderValidators.compose([
+          FormBuilderValidators.required(),
+        ]),
       ),
     );
   }

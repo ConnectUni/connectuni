@@ -1,5 +1,4 @@
 import 'user.dart';
-import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:collection/collection.dart';
 
 /// The UserList object.

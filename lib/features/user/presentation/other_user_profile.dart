@@ -1,3 +1,4 @@
+import 'package:flex_color_scheme/flex_color_scheme.dart';
 import 'package:connectuni/features/cu_error.dart';
 import 'package:connectuni/features/group/domain/group.dart';
 import 'package:connectuni/features/group/domain/group_collection.dart';
@@ -101,7 +102,6 @@ class OtherUserProfile extends ConsumerWidget {
         thickness: 2,
         indent: 20,
         endIndent: 20,
-        color: Colors.black,
       )
     ];
 
@@ -120,6 +120,18 @@ class OtherUserProfile extends ConsumerWidget {
                 ),
                 textAlign: TextAlign.left,
               ),
+              if(user.interests.isEmpty)
+                const Padding(
+                  padding: EdgeInsets.all(10.0),
+                  child: ListTile(
+                    title: Center(
+                        child: Text("This User has no Interests.",
+                            style: TextStyle(
+                                fontWeight: FontWeight.bold))),
+                    textColor: Colors.white,
+                    tileColor: Colors.lightBlue,
+                  ),
+                ),
               Column(children: [
                 ...user.interests.map((interest) => Padding(
                   padding: const EdgeInsets.all(5.0),
@@ -133,7 +145,7 @@ class OtherUserProfile extends ConsumerWidget {
                       ),
                     ),
                     textColor: Colors.white,
-                    tileColor: Colors.lightBlue,
+                    tileColor: FlexColor.deepBlueLightTertiary,
                   ),
                 )),
               ]),
@@ -211,7 +223,7 @@ class OtherUserProfile extends ConsumerWidget {
                                 style: ButtonStyle(
                                   backgroundColor:
                                   MaterialStateProperty.all<
-                                      Color>(Colors.green),
+                                      Color>(FlexColor.greenLightPrimary),
                                   foregroundColor:
                                   MaterialStateProperty.all<
                                       Color>(Colors.white),

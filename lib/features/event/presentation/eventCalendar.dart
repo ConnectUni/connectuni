@@ -1,3 +1,4 @@
+import 'package:flex_color_scheme/flex_color_scheme.dart';
 import 'package:connectuni/features/all_data_provider.dart';
 import 'package:connectuni/features/cu_error.dart';
 import 'package:connectuni/features/cu_loading.dart';
@@ -133,6 +134,32 @@ class _EventCalendarState extends ConsumerState<EventCalendar> {
         ),
         textAlign: TextAlign.left,
       ),
+      if(selectedEvents.isEmpty)
+        Padding(
+            padding: const EdgeInsets.only(top: 30.0),
+            child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children:[
+                  const Text(
+                    "There are no events for this day.",
+                    style: TextStyle(
+                      fontSize: 13.0,
+                    ),
+                    textAlign: TextAlign.center,
+                  ),
+                  TextButton(
+                    onPressed: () {},
+                    style: ButtonStyle(
+                      backgroundColor:
+                      MaterialStateProperty.all<Color>(FlexColor.deepBlueLightSecondary),
+                      foregroundColor:
+                      MaterialStateProperty.all<Color>(Colors.white),
+                    ),
+                    child: const Text('Add an Event'),
+                  )
+                ]
+            )
+        ),
       Expanded(
         child: ListView.builder(
           itemCount: selectedEvents.length,

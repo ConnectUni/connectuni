@@ -1,6 +1,6 @@
-import 'package:connectuni/features/settings/presentation/app_theme.dart';
+import 'package:connectuni/features/settings/data/settings_db.dart';
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:flutter/cupertino.dart';
+import 'package:flex_color_scheme/flex_color_scheme.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
@@ -14,23 +14,21 @@ class Settings extends ConsumerStatefulWidget {
     super.key,
   });
 
+  @override
   ConsumerState<Settings> createState() => _SettingsState();
 }
 
-class _SettingsState extends ConsumerState<Settings> {
-  int _selectedIndex = 0;
+void updateThemeMode(ThemeMode? newThemeMode, WidgetRef ref) {
+  if (newThemeMode == null) return;
+  if (newThemeMode == ref.read(currentThemeModeProvider)) return;
+  ref.read(currentThemeModeProvider.notifier).setThemeMode(newThemeMode);
+}
 
-  void _onItemTapped(int index) {
-    if (index != _selectedIndex) {
-      setState(() {
-        _selectedIndex = index;
-      });
-    }
-  }
+class _SettingsState extends ConsumerState<Settings> {
 
   @override
   Widget build(BuildContext context) {
-    final appThemeState = ref.watch(appThemeStateProvider);
+    ref.watch(currentThemeModeProvider);
     return Scaffold(
       appBar: AppBar(
         title: const Text('Settings & Privacy'),
@@ -41,20 +39,21 @@ class _SettingsState extends ConsumerState<Settings> {
           const Padding(
             padding: EdgeInsets.all(10.0),
             child: ListTile(
-              leading: Icon(Icons.arrow_downward, color: Colors.black),
+              leading: Icon(Icons.arrow_downward),
               title: Text("Settings",
                   style: TextStyle(fontWeight: FontWeight.bold)),
-              trailing: Icon(Icons.notifications_active_outlined,
-                  color: Colors.black),
+              trailing: Icon(Icons.notifications_active_outlined,),
               textColor: Colors.black,
-              tileColor: Colors.green,
+              tileColor: FlexColor.greenLightPrimary,
             ),
           ),
           ListTile(
             leading: Switch(
-              value: appThemeState,
-              activeColor: Colors.black26,
-              onChanged: (value) => ref.read(appThemeStateProvider.state).state = value,
+              value: ref.watch(currentThemeModeProvider) == ThemeMode.dark,
+              onChanged: (value) {
+                updateThemeMode(
+                    value ? ThemeMode.dark : ThemeMode.light, ref);
+              },
             ),
             title: const Text("Dark Mode"),
           ),
@@ -65,7 +64,7 @@ class _SettingsState extends ConsumerState<Settings> {
                   child: Text("Change Password",
                       style: TextStyle(fontWeight: FontWeight.bold))),
               textColor: Colors.white,
-              tileColor: Colors.redAccent,
+              tileColor: FlexColor.redLightPrimary,
             ),
           ),
           SizedBox(
@@ -79,7 +78,7 @@ class _SettingsState extends ConsumerState<Settings> {
                 },
                 style: ButtonStyle(
                   backgroundColor:
-                      MaterialStateProperty.all<Color>(Colors.blue),
+                      MaterialStateProperty.all<Color>(FlexColor.deepBlueLightTertiary),
                   foregroundColor:
                       MaterialStateProperty.all<Color>(Colors.white),
                 ),

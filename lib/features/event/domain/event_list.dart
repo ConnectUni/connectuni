@@ -1,5 +1,4 @@
 import 'event.dart';
-import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 /// The EventList object.
 class EventList {

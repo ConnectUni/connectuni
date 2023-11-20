@@ -3,6 +3,7 @@ import 'package:connectuni/features/cu_error.dart';
 import 'package:connectuni/features/cu_loading.dart';
 import 'package:connectuni/features/group/presentation/edit_group_controller.dart';
 import 'package:connectuni/features/group/presentation/group_member_widget.dart';
+import 'package:flex_color_scheme/flex_color_scheme.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:connectuni/features/group/domain/group.dart';
@@ -104,7 +105,6 @@ class _GroupInfoState extends ConsumerState<GroupInfo> {
         thickness: 2,
         indent: 20,
         endIndent: 20,
-        color: Colors.black,
       )
     ];
 
@@ -132,6 +132,70 @@ class _GroupInfoState extends ConsumerState<GroupInfo> {
         indent: 20,
         endIndent: 20,
         color: Colors.black,
+      ),
+      const Padding(
+        padding: EdgeInsets.only(top: 20, left: 20),
+        child: Text(
+          'Interests:',
+          style: TextStyle(
+            fontSize: 20,
+            fontWeight: FontWeight.bold,
+          ),
+        ),
+      ),
+      if(group.interests.isEmpty)
+        const Padding(
+          padding: EdgeInsets.all(10.0),
+          child: ListTile(
+            title: Center(
+                child: Text("This Group has no Interests.",
+                    style: TextStyle(
+                        fontWeight: FontWeight.bold))),
+            textColor: Colors.white,
+            tileColor: FlexColor.deepBlueLightSecondary,
+          ),
+        ),
+      Column(children: [
+        ...group.interests.map(
+              (interest) => Padding(
+            padding: const EdgeInsets.all(10.0),
+            child: ListTile(
+              title: Center(
+                  child: Text(interest,
+                      style: const TextStyle(
+                          fontWeight: FontWeight.bold))),
+              textColor: Colors.white,
+              tileColor: FlexColor.deepBlueLightTertiary,
+            ),
+          ),
+          // textAlign: TextAlign.left,
+        ),
+        if (group.userIDs.contains(currentUser))
+          Padding(
+            padding: const EdgeInsets.all(10.0),
+            child: TextButton(
+              onPressed: () {
+                Navigator.push(
+                    context, MaterialPageRoute(builder: (context) {
+                  return EditInterest(id: group.groupID, type: "group");
+                }));
+              },
+              style: ButtonStyle(
+                backgroundColor:
+                MaterialStateProperty.all<Color>(FlexColor.deepBlueLightSecondary),
+                foregroundColor:
+                MaterialStateProperty.all<Color>(Colors.white),
+              ),
+              child: const Text('Edit Interests'),
+            ),
+          ),
+      ]
+      ),
+      const Divider(
+        height: 7,
+        thickness: 2,
+        indent: 20,
+        endIndent: 20,
       ),
     ];
 
@@ -171,7 +235,7 @@ class _GroupInfoState extends ConsumerState<GroupInfo> {
                     },
                     style: ButtonStyle(
                       backgroundColor: MaterialStateProperty.all<Color>(
-                          Colors.lightBlueAccent),
+                          FlexColor.greenLightPrimary),
                       foregroundColor:
                           MaterialStateProperty.all<Color>(Colors.white),
                     ),
@@ -196,7 +260,7 @@ class _GroupInfoState extends ConsumerState<GroupInfo> {
                     },
                     style: ButtonStyle(
                       backgroundColor:
-                          MaterialStateProperty.all<Color>(Colors.red),
+                          MaterialStateProperty.all<Color>(FlexColor.redLightPrimary),
                       foregroundColor:
                           MaterialStateProperty.all<Color>(Colors.white),
                     ),

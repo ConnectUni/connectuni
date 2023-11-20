@@ -24,6 +24,9 @@ class PfpField extends StatelessWidget {
           labelText: fieldName,
           hintText: 'Example: "dogpic.jpg"',
         ),
+        validator: FormBuilderValidators.compose([
+          FormBuilderValidators.required(),
+        ]),
       ),
     );
   }

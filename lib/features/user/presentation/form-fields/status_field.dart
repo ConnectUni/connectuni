@@ -24,6 +24,9 @@ class StatusField extends StatelessWidget {
           labelText: fieldName,
           hintText: 'Example: "Doing good today!"',
         ),
+        validator: FormBuilderValidators.compose([
+          FormBuilderValidators.required(),
+        ]),
       ),
     );
   }

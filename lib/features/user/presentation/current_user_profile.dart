@@ -2,6 +2,7 @@ import 'package:connectuni/features/cu_loading.dart';
 import 'package:connectuni/features/group/data/group_providers.dart';
 import 'package:connectuni/features/group/domain/group_collection.dart';
 import 'package:connectuni/features/user/domain/user.dart';
+import 'package:flex_color_scheme/flex_color_scheme.dart';
 import 'package:flutter/material.dart';
 import '../../all_data_provider.dart';
 import '../../cu_error.dart';
@@ -90,7 +91,7 @@ class CurrentUserProfilePageState extends ConsumerState<CurrentUserProfilePage> 
                   },
                   style: ButtonStyle(
                     backgroundColor:
-                    MaterialStateProperty.all<Color>(Colors.green),
+                    MaterialStateProperty.all<Color>(FlexColor.deepBlueLightTertiary),
                     foregroundColor:
                     MaterialStateProperty.all<Color>(Colors.white),
                   ),
@@ -113,8 +114,18 @@ class CurrentUserProfilePageState extends ConsumerState<CurrentUserProfilePage> 
         ),
         textAlign: TextAlign.left,
       ),
-      //TODO: Implement interests section here.
-      Column(children: [
+      if(currentUser.interests.isEmpty)
+        const Padding(
+          padding: EdgeInsets.all(10.0),
+          child: ListTile(
+            title: Center(
+                child: Text("Looks like you don't have any interests!",
+                    style: TextStyle(
+                        fontWeight: FontWeight.bold))),
+            textColor: Colors.white,
+            tileColor: FlexColor.bigStoneDarkPrimary,
+          ),
+        ),      Column(children: [
         //TODO: Implement functionality and make cards interactive rather than simply visual.
         ...currentUser.interests.map(
               (interest) => Padding(
@@ -125,7 +136,7 @@ class CurrentUserProfilePageState extends ConsumerState<CurrentUserProfilePage> 
                       style: const TextStyle(
                           fontWeight: FontWeight.bold))),
               textColor: Colors.white,
-              tileColor: Colors.lightBlue,
+              tileColor: FlexColor.bigStoneDarkPrimary,
             ),
           ),
           // textAlign: TextAlign.left,
@@ -144,7 +155,7 @@ class CurrentUserProfilePageState extends ConsumerState<CurrentUserProfilePage> 
                             fontWeight: FontWeight.bold)),
                   ),
                   textColor: Colors.white,
-                  tileColor: Colors.lightBlue,
+                  tileColor: FlexColor.bigStoneDarkPrimary,
                 ),
               ),
             ),
@@ -166,7 +177,6 @@ class CurrentUserProfilePageState extends ConsumerState<CurrentUserProfilePage> 
         thickness: 2,
         indent: 20,
         endIndent: 20,
-        color: Colors.black,
       )
     ];
 
@@ -292,7 +302,6 @@ class CurrentUserProfilePageState extends ConsumerState<CurrentUserProfilePage> 
               thickness: 2,
               indent: 20,
               endIndent: 20,
-              color: Colors.black,
             ),
             Container(
               padding: const EdgeInsets.all(10.0),
@@ -308,7 +317,4 @@ class CurrentUserProfilePageState extends ConsumerState<CurrentUserProfilePage> 
         )
     );
   }
-
-
 }
-

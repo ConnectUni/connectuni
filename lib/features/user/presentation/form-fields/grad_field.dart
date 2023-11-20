@@ -24,6 +24,9 @@ class GradField extends StatelessWidget {
           labelText: fieldName,
           hintText: 'Example: "Spring 2025"',
         ),
+        validator: FormBuilderValidators.compose([
+          FormBuilderValidators.required(),
+        ]),
       ),
     );
   }

@@ -4,12 +4,10 @@ import 'package:connectuni/features/user/domain/user.dart';
 import 'package:connectuni/features/message/domain/message_collection.dart';
 import 'package:connectuni/features/message/presentation/edit_message_controller.dart';
 import 'package:connectuni/features/chat/domain/chat.dart';
-import 'package:connectuni/features/chat/domain/chat_collection.dart';
 import 'package:connectuni/features/chat/presentation/edit_chat_controller.dart';
 import 'package:connectuni/features/all_data_provider.dart';
 import 'package:connectuni/features/cu_loading.dart';
 import 'package:connectuni/features/cu_error.dart';
-
 import '../../message/domain/message.dart';
 
 /// GroupChatWidget is a widget that displays the group chat.

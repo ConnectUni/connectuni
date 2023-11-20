@@ -3,7 +3,6 @@
 
 import 'package:connectuni/features/message/domain/message.dart';
 import 'group.dart';
-import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 /// The GroupList object.
 class GroupList {

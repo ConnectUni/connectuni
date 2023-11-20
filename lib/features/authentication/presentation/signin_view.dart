@@ -6,9 +6,9 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../../cu_error.dart';
 import '../../cu_loading.dart';
+import '../../user/domain/user.dart';
 import '../../home/presentation/home.dart';
 import '../../user/data/user_providers.dart';
-import '../../user/domain/user.dart';
 import '../../user/presentation/add_user.dart';
 import 'decorations.dart';
 import 'forgot_password_view.dart';
