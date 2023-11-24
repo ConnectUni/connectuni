@@ -30,6 +30,8 @@ class EditUserController extends _$EditUserController {
     }
     if (!state.hasError) {
       onSuccess();
+    } else {
+      print(state.error);
     }
   }
 

@@ -7,18 +7,22 @@ part 'user.g.dart';
 
 @unfreezed
 class User with _$User {
+
   factory User({
     required final String uid,
     required final String email,
     required String displayName,
-    required String pfp,
+    @Default('') String pfp,
     required String major,
     required String projectedGraduation,
-    required String status,
-    required List<User> friends,
-    required List<String> groupIDs,
-    required List<String> eventIDs,
-    required List<String> interests,
+    @Default('') String status,
+    @Default([]) List<String> notificationIDs,
+    @Default([]) List<String> friends,
+    @Default([]) List<String> sentFriendRequests,
+    @Default([]) List<String> receivedFriendRequests,
+    @Default([]) List<String> groupIDs,
+    @Default([]) List<String> eventIDs,
+    @Default([]) List<String> interests,
 }) = _User;
 
   factory User.fromJson(Map<String, dynamic> json) => _$UserFromJson(json);

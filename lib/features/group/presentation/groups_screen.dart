@@ -1,6 +1,7 @@
 import 'package:connectuni/features/all_data_provider.dart';
 import 'package:connectuni/features/cu_loading.dart';
 import 'package:connectuni/features/group/domain/group_collection.dart';
+import 'package:connectuni/features/notification/presentation/notification_view.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:connectuni/features/chat/presentation/group_chat_widget.dart';
 import 'package:flutter/material.dart';
@@ -57,8 +58,7 @@ class _GroupsScreenState extends ConsumerState<GroupsScreen> {
               semanticLabel: 'notifications',
             ),
             onPressed: () {
-              // TODO: implement notifications page? 11/17/2023
-              print('Go to Notifications page');
+              Navigator.push(context, MaterialPageRoute(builder: (context) => const NotificationView()));
             },
           ),
         ],

@@ -53,8 +53,8 @@ class UserCollection {
     return _users.map((data) => data.displayName).toList();
   }
 
-  List<User> getFriends(String userID) {
-    return getUser(userID).friends.toList();
+  List<User> getFriends(User user) {
+    return getUsers(user.friends);
   }
 
   List<String> getUsersGroupIDs(String userID) {

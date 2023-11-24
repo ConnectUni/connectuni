@@ -14,4 +14,7 @@ class FirestorePath {
 
   static String message(String messageId) => 'messages/$messageId';
   static String messages() => 'messages';
+
+  static String notification(String notificationId) => 'notifications/$notificationId';
+  static String notifications() => 'notifications';
 }
