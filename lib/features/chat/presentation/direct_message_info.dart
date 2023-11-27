@@ -28,7 +28,6 @@ class DirectMessageInfo extends ConsumerWidget {
           _build(
             context: context,
             chat: chat,
-            currentUser: allData.currentUser,
             otherUser: otherUser,
             messages: allData.messages,
             ref: ref
@@ -41,7 +40,6 @@ class DirectMessageInfo extends ConsumerWidget {
   Widget _build({
     required BuildContext context,
     required Chat chat,
-    required User currentUser,
     required User otherUser,
     required List<Message> messages,
     required WidgetRef ref
