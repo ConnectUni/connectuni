@@ -76,6 +76,7 @@ class NotificationWidget extends ConsumerWidget {
                   requestingUser.sentFriendRequests.remove(currentUser.uid);
                   currentUser.friends.add(requestingUser.uid);
                   requestingUser.friends.add(currentUser.uid);
+                  currentUser.notificationIDs.remove(notification.notificationID);
                   updateFriends(requestingUser);
                   Navigator.pushReplacement(
                     context,
@@ -88,6 +89,7 @@ class NotificationWidget extends ConsumerWidget {
                 onPressed: () {
                   currentUser.receivedFriendRequests.remove(requestingUser.uid);
                   requestingUser.sentFriendRequests.remove(currentUser.uid);
+                  currentUser.notificationIDs.remove(notification.notificationID);
                   updateFriends(requestingUser);
                 }
             )

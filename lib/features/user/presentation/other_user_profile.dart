@@ -1,3 +1,4 @@
+import 'package:connectuni/features/chat/presentation/direct_message_screen.dart';
 import 'package:connectuni/features/notification/domain/notification.dart';
 import 'package:connectuni/features/notification/domain/notification_collection.dart';
 import 'package:connectuni/features/notification/presentation/edit_notification_controller.dart';
@@ -338,7 +339,7 @@ class OtherUserProfile extends ConsumerWidget {
                 semanticLabel: 'message',
               ),
               onPressed: () {
-                // TODO Add functionality to message user
+                Navigator.push(context, MaterialPageRoute(builder: (context) => DirectMessageScreen(otherUser: user)));
               },
             ),
           ],

@@ -1,4 +1,5 @@
 import 'package:connectuni/features/all_data_provider.dart';
+import 'package:connectuni/features/chat/presentation/direct_message_screen.dart';
 import 'package:connectuni/features/cu_error.dart';
 import 'package:connectuni/features/cu_loading.dart';
 import 'package:connectuni/features/user/domain/user_collection.dart';
@@ -22,7 +23,8 @@ class UserCardWidget extends ConsumerWidget {
         data: (allData) =>
             _build(
               context: context,
-              users: allData.users,
+              thisUser: user,
+              currentUser: allData.currentUser,
               ref: ref,
             ),
         loading: () => const CULoading(),
@@ -31,13 +33,32 @@ class UserCardWidget extends ConsumerWidget {
 
   Widget _build({
     required BuildContext context,
-    required List<User> users,
+    required User thisUser,
+    required User currentUser,
     required WidgetRef ref
   }) {
-    UserCollection userCollection = UserCollection(users);
-    User thisUser = userCollection.getUser(user.uid);
 
-    return Padding(
+    Widget buildErrorWidget() => Padding(
+      padding: const EdgeInsets.all(3.5),
+      child: Card(
+        elevation: 8,
+        child: Column(
+          children: [
+            ListTile(
+              leading: CircleAvatar(
+                radius: 25,
+                backgroundImage: AssetImage(thisUser.pfp),
+              ),
+              title: Text('REMOVE ME FROM THE LIST YOU ARE READING FROM',
+                style: Theme.of(context).textTheme.titleLarge,
+              ),
+            )
+          ],
+        ),
+      ),
+    );
+
+    Widget buildWidget() => Padding(
       padding: const EdgeInsets.all(3.5),
       child: Card(
         elevation: 8,
@@ -46,32 +67,34 @@ class UserCardWidget extends ConsumerWidget {
             ListTile(
               onTap: () {
                 onSearchPage
-                    ? ref.read(filteredUsersProvider.notifier).addRecent(user) : null;
+                    ? ref.read(filteredUsersProvider.notifier).addRecent(thisUser) : null;
                 Navigator.push(
                     context,
                     CupertinoPageRoute(
-                        builder: (context) => OtherUserProfile(user: user,)
+                        builder: (context) => OtherUserProfile(user: thisUser,)
                     )
                 );
               },
               leading: CircleAvatar(
                 radius: 25,
-                backgroundImage: AssetImage(user.pfp),
+                backgroundImage: AssetImage(thisUser.pfp),
               ),
-              title: Text(user.displayName,
+              title: Text(thisUser.displayName,
                   style: Theme.of(context).textTheme.titleLarge),
               subtitle:
               Text("${thisUser.major}\n${thisUser.projectedGraduation}"),
               trailing: IconButton(
-                icon: const Icon(Icons.message),
-                onPressed: () {
-                  print('message user');
-                }
+                  icon: const Icon(Icons.message),
+                  onPressed: () {
+                    Navigator.push(context, CupertinoPageRoute(builder: (context) => DirectMessageScreen(otherUser: thisUser)));
+                  }
               ),
             ),
           ],
         ),
       ),
     );
+
+    return currentUser.uid == thisUser.uid ? buildErrorWidget() : buildWidget();
   }
 }

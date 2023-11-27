@@ -29,10 +29,10 @@ class MessageCollection {
   String getNewID() {
     String result = '';
     switch (size()) {
-      case < 10:
+      case < 9:
         result = 'message-00${size() + 1}';
         break;
-      case < 100:
+      case < 99:
         result = 'message-0${size() + 1}';
         break;
       default:

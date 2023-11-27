@@ -26,10 +26,10 @@ class NotificationCollection {
   String getNewID() {
     String result = '';
     switch (size()) {
-      case < 10:
+      case < 9:
         result = 'notification-00${size() + 1}';
         break;
-      case < 100:
+      case < 99:
         result = 'notification-0${size() + 1}';
         break;
       default:

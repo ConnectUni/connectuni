@@ -22,7 +22,7 @@ Message _$MessageFromJson(Map<String, dynamic> json) {
 mixin _$Message {
   String get messageId => throw _privateConstructorUsedError;
   String get senderId => throw _privateConstructorUsedError;
-  String get groupId => throw _privateConstructorUsedError;
+  String? get groupId => throw _privateConstructorUsedError;
   String get messageContent => throw _privateConstructorUsedError;
 
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
@@ -38,7 +38,7 @@ abstract class $MessageCopyWith<$Res> {
   $Res call(
       {String messageId,
       String senderId,
-      String groupId,
+      String? groupId,
       String messageContent});
 }
 
@@ -57,7 +57,7 @@ class _$MessageCopyWithImpl<$Res, $Val extends Message>
   $Res call({
     Object? messageId = null,
     Object? senderId = null,
-    Object? groupId = null,
+    Object? groupId = freezed,
     Object? messageContent = null,
   }) {
     return _then(_value.copyWith(
@@ -69,10 +69,10 @@ class _$MessageCopyWithImpl<$Res, $Val extends Message>
           ? _value.senderId
           : senderId // ignore: cast_nullable_to_non_nullable
               as String,
-      groupId: null == groupId
+      groupId: freezed == groupId
           ? _value.groupId
           : groupId // ignore: cast_nullable_to_non_nullable
-              as String,
+              as String?,
       messageContent: null == messageContent
           ? _value.messageContent
           : messageContent // ignore: cast_nullable_to_non_nullable
@@ -91,7 +91,7 @@ abstract class _$$MessageImplCopyWith<$Res> implements $MessageCopyWith<$Res> {
   $Res call(
       {String messageId,
       String senderId,
-      String groupId,
+      String? groupId,
       String messageContent});
 }
 
@@ -108,7 +108,7 @@ class __$$MessageImplCopyWithImpl<$Res>
   $Res call({
     Object? messageId = null,
     Object? senderId = null,
-    Object? groupId = null,
+    Object? groupId = freezed,
     Object? messageContent = null,
   }) {
     return _then(_$MessageImpl(
@@ -120,10 +120,10 @@ class __$$MessageImplCopyWithImpl<$Res>
           ? _value.senderId
           : senderId // ignore: cast_nullable_to_non_nullable
               as String,
-      groupId: null == groupId
+      groupId: freezed == groupId
           ? _value.groupId
           : groupId // ignore: cast_nullable_to_non_nullable
-              as String,
+              as String?,
       messageContent: null == messageContent
           ? _value.messageContent
           : messageContent // ignore: cast_nullable_to_non_nullable
@@ -138,7 +138,7 @@ class _$MessageImpl implements _Message {
   const _$MessageImpl(
       {required this.messageId,
       required this.senderId,
-      required this.groupId,
+      this.groupId,
       required this.messageContent});
 
   factory _$MessageImpl.fromJson(Map<String, dynamic> json) =>
@@ -149,7 +149,7 @@ class _$MessageImpl implements _Message {
   @override
   final String senderId;
   @override
-  final String groupId;
+  final String? groupId;
   @override
   final String messageContent;
 
@@ -195,7 +195,7 @@ abstract class _Message implements Message {
   const factory _Message(
       {required final String messageId,
       required final String senderId,
-      required final String groupId,
+      final String? groupId,
       required final String messageContent}) = _$MessageImpl;
 
   factory _Message.fromJson(Map<String, dynamic> json) = _$MessageImpl.fromJson;
@@ -205,7 +205,7 @@ abstract class _Message implements Message {
   @override
   String get senderId;
   @override
-  String get groupId;
+  String? get groupId;
   @override
   String get messageContent;
   @override

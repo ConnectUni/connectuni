@@ -8,7 +8,7 @@ part 'chat.g.dart';
 class Chat with _$Chat{
   factory Chat({
     required final String chatID,
-    required final String groupID,
+    final String? groupID,
     required List<String> userIDs,
     required List<String> messageIDs,
 }) = _Chat;

@@ -1,4 +1,5 @@
 import 'package:connectuni/features/all_data_provider.dart';
+import 'package:connectuni/features/chat/presentation/direct_messages.dart';
 import 'package:connectuni/features/cu_loading.dart';
 import 'package:connectuni/features/group/domain/group_collection.dart';
 import 'package:connectuni/features/notification/presentation/notification_view.dart';
@@ -49,8 +50,8 @@ class _GroupsScreenState extends ConsumerState<GroupsScreen> {
               semanticLabel: 'messages',
             ),
             onPressed: () {
-              //TODO: Go to Group Chats Page with Individuals
-              },
+              Navigator.push(context, MaterialPageRoute(builder: (context) => const DirectMessages()));
+            },
           ),
           IconButton(
             icon: const Icon(
@@ -68,7 +69,7 @@ class _GroupsScreenState extends ConsumerState<GroupsScreen> {
         children: [
           ...groupCollection
               .getUsersGroups(currentUserID)
-              .map((group) => GroupChatWidget(group: group,)),
+              .map((group) => GroupChatWidget(group: group)),
           Center(
               child: Padding(
                 padding: const EdgeInsets.only(bottom: 10.0),
