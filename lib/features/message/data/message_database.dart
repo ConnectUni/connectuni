@@ -38,4 +38,7 @@ class MessageDatabase {
 
   Future<void> setMessageError(Message message) =>
       Future.delayed(const Duration(milliseconds: 2000), () => throw Error());
+
+  Future<void> deleteMessage(Message message) => _service.deleteData(
+      path: FirestorePath.message(message.messageId));
 }

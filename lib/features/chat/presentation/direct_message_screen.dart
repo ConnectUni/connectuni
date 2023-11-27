@@ -1,6 +1,7 @@
 import 'package:connectuni/features/all_data_provider.dart';
 import 'package:connectuni/features/chat/domain/chat.dart';
 import 'package:connectuni/features/chat/domain/chat_collection.dart';
+import 'package:connectuni/features/chat/presentation/direct_message_info.dart';
 import 'package:connectuni/features/chat/presentation/edit_chat_controller.dart';
 import 'package:connectuni/features/chat/presentation/message_input_widget.dart';
 import 'package:connectuni/features/chat/presentation/message_widget.dart';
@@ -9,7 +10,6 @@ import 'package:connectuni/features/cu_loading.dart';
 import 'package:connectuni/features/message/domain/message.dart';
 import 'package:connectuni/features/message/domain/message_collection.dart';
 import 'package:connectuni/features/user/domain/user.dart';
-import 'package:connectuni/features/user/domain/user_collection.dart';
 import 'package:flex_color_scheme/flex_color_scheme.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -55,7 +55,7 @@ class _DirectMessageScreenState extends ConsumerState<DirectMessageScreen> {
     required List<Chat> chats,
     required List<Message> messages,
     required WidgetRef ref,
-    Chat? chat, //TODO fix chats
+    Chat? chat,
   }) {
     MessageCollection messageCollection = MessageCollection(messages);
     ChatCollection chatCollection = ChatCollection(chats);
@@ -83,8 +83,7 @@ class _DirectMessageScreenState extends ConsumerState<DirectMessageScreen> {
       actions: [
         IconButton(
           onPressed: () {
-            // Go to page that displays the information between this user and the other user.
-            // Also could include setting of the chat too
+            Navigator.push(context, MaterialPageRoute(builder: (context) => DirectMessageInfo(chat: chat!, otherUser: otherUser)));
           },
           icon: const Icon(Icons.info),
         )

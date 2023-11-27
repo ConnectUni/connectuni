@@ -1,10 +1,16 @@
 import 'package:connectuni/features/chat/domain/chat.dart';
 import 'package:connectuni/features/chat/presentation/direct_message_screen.dart';
+import 'package:connectuni/features/cu_error.dart';
+import 'package:connectuni/features/cu_loading.dart';
+import 'package:connectuni/features/message/data/message_providers.dart';
+import 'package:connectuni/features/message/domain/message_collection.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 
+import '../../message/domain/message.dart';
 import '../../user/domain/user.dart';
 
-class DirectMessageWidget extends StatelessWidget {
+class DirectMessageWidget extends ConsumerWidget {
   const DirectMessageWidget({
     super.key,
     required this.chat,
@@ -14,7 +20,32 @@ class DirectMessageWidget extends StatelessWidget {
   final User otherUser;
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
+    final AsyncValue asyncValue = ref.watch(messagesProvider);
+    return asyncValue.when(
+        data: (messages) =>
+            _build(
+                context: context,
+                messages: messages,
+                otherUser: otherUser,
+                chat: chat
+            ),
+        error: (e, st) => CUError(e.toString(), st.toString()),
+        loading: () => const CULoading());
+  }
+
+  Widget _build({
+    required BuildContext context,
+    required List<Message> messages,
+    required User otherUser,
+    required Chat chat
+  }) {
+    MessageCollection messageCollection = MessageCollection(messages);
+    String lastMessage = 'No messages yet';
+    if (chat.messageIDs.isNotEmpty) {
+      lastMessage = messageCollection.getContentFrom(chat.messageIDs.last);
+    }
+
     return ListTile(
       onTap: () {
         Navigator.push(context, MaterialPageRoute(builder: (context) => DirectMessageScreen(chat: chat, otherUser: otherUser)));
@@ -23,7 +54,13 @@ class DirectMessageWidget extends StatelessWidget {
       leading: CircleAvatar(
         backgroundImage: AssetImage(otherUser.pfp),
       ),
-      subtitle: Text(chat.messageIDs.isNotEmpty ? chat.messageIDs.last : 'No messages yet'),
+      subtitle: Text(
+        lastMessage,
+        overflow: TextOverflow.ellipsis,
+      ),
     );
   }
 }
+/*
+
+ */

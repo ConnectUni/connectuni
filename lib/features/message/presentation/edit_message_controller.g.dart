@@ -7,7 +7,7 @@ part of 'edit_message_controller.dart';
 // **************************************************************************
 
 String _$editMessageControllerHash() =>
-    r'0e1688fac354bb7025b70bbbd4b6a220519d93bb';
+    r'f7202af195805b8cb3d2e7fa09a82a334befd7c9';
 
 /// See also [EditMessageController].
 @ProviderFor(EditMessageController)

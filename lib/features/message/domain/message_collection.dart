@@ -22,6 +22,10 @@ class MessageCollection {
     return getMessage(messageID).senderId;
   }
 
+  String getContentFrom(String messageID) {
+    return getMessage(messageID).messageContent;
+  }
+
   int size() {
     return _messages.length;
   }
