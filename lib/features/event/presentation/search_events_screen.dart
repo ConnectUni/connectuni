@@ -162,7 +162,7 @@ class _SearchEventsScreenState extends ConsumerState<SearchEventsScreen> {
     );
 
     /// This displays the list of events.
-    Widget showContent(filteredEvents) => Expanded(
+    Widget showContent(List<SingleEvent> filteredEvents) => Expanded(
       child: ListView.builder(
         itemCount: filteredEvents.length,
         itemBuilder: (context, index) {
