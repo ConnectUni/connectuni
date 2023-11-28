@@ -53,10 +53,7 @@ class _SearchGroupsScreenState extends ConsumerState<SearchGroupsScreen> {
         .toList();
 
     bool isSearchbarFilled() {
-      if (controller.text.isNotEmpty) {
-        return true;
-      }
-      return false;
+      return controller.text.isNotEmpty;
     }
 
     /// This displays the appbar.

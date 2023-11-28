@@ -32,5 +32,20 @@ class EditChatController extends _$EditChatController {
       onSuccess();
     }
   }
+
+  Future<void> deleteChat({
+    required Chat chat,
+    required VoidCallback onSuccess,
+  }) async {
+    ChatDatabase chatDatabase = ref.watch(chatDatabaseProvider);
+    final newState =
+        await AsyncValue.guard(() => chatDatabase.deleteChat(chat));
+    if (mounted) {
+      state = newState;
+    }
+    if (!state.hasError) {
+      onSuccess();
+    }
+  }
 }
 

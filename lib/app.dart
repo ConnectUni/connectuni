@@ -10,7 +10,7 @@ import 'package:flex_color_scheme/flex_color_scheme.dart';
 import 'features/authentication/presentation/forgot_password_view.dart';
 import 'features/authentication/presentation/signin_view.dart';
 import 'features/authentication/presentation/verify_email_view.dart';
-import 'features/event/presentation/eventCalendar.dart';
+import 'features/event/presentation/event_calendar.dart';
 import 'features/group/presentation/add_group.dart';
 import 'features/home/presentation/home.dart';
 import 'features/group/presentation/groupinfo.dart';

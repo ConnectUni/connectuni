@@ -7,7 +7,7 @@ part of 'edit_chat_controller.dart';
 // **************************************************************************
 
 String _$editChatControllerHash() =>
-    r'08b721b7d4109e3fd94c20e5e3bc9860ed147b73';
+    r'2b2b3a806947ffc09dd98569a77222e4527cdef0';
 
 /// See also [EditChatController].
 @ProviderFor(EditChatController)

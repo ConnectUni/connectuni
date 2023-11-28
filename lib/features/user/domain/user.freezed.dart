@@ -32,8 +32,16 @@ mixin _$User {
   set projectedGraduation(String value) => throw _privateConstructorUsedError;
   String get status => throw _privateConstructorUsedError;
   set status(String value) => throw _privateConstructorUsedError;
-  List<User> get friends => throw _privateConstructorUsedError;
-  set friends(List<User> value) => throw _privateConstructorUsedError;
+  List<String> get notificationIDs => throw _privateConstructorUsedError;
+  set notificationIDs(List<String> value) => throw _privateConstructorUsedError;
+  List<String> get friends => throw _privateConstructorUsedError;
+  set friends(List<String> value) => throw _privateConstructorUsedError;
+  List<String> get sentFriendRequests => throw _privateConstructorUsedError;
+  set sentFriendRequests(List<String> value) =>
+      throw _privateConstructorUsedError;
+  List<String> get receivedFriendRequests => throw _privateConstructorUsedError;
+  set receivedFriendRequests(List<String> value) =>
+      throw _privateConstructorUsedError;
   List<String> get groupIDs => throw _privateConstructorUsedError;
   set groupIDs(List<String> value) => throw _privateConstructorUsedError;
   List<String> get eventIDs => throw _privateConstructorUsedError;
@@ -59,7 +67,10 @@ abstract class $UserCopyWith<$Res> {
       String major,
       String projectedGraduation,
       String status,
-      List<User> friends,
+      List<String> notificationIDs,
+      List<String> friends,
+      List<String> sentFriendRequests,
+      List<String> receivedFriendRequests,
       List<String> groupIDs,
       List<String> eventIDs,
       List<String> interests});
@@ -85,7 +96,10 @@ class _$UserCopyWithImpl<$Res, $Val extends User>
     Object? major = null,
     Object? projectedGraduation = null,
     Object? status = null,
+    Object? notificationIDs = null,
     Object? friends = null,
+    Object? sentFriendRequests = null,
+    Object? receivedFriendRequests = null,
     Object? groupIDs = null,
     Object? eventIDs = null,
     Object? interests = null,
@@ -119,10 +133,22 @@ class _$UserCopyWithImpl<$Res, $Val extends User>
           ? _value.status
           : status // ignore: cast_nullable_to_non_nullable
               as String,
+      notificationIDs: null == notificationIDs
+          ? _value.notificationIDs
+          : notificationIDs // ignore: cast_nullable_to_non_nullable
+              as List<String>,
       friends: null == friends
           ? _value.friends
           : friends // ignore: cast_nullable_to_non_nullable
-              as List<User>,
+              as List<String>,
+      sentFriendRequests: null == sentFriendRequests
+          ? _value.sentFriendRequests
+          : sentFriendRequests // ignore: cast_nullable_to_non_nullable
+              as List<String>,
+      receivedFriendRequests: null == receivedFriendRequests
+          ? _value.receivedFriendRequests
+          : receivedFriendRequests // ignore: cast_nullable_to_non_nullable
+              as List<String>,
       groupIDs: null == groupIDs
           ? _value.groupIDs
           : groupIDs // ignore: cast_nullable_to_non_nullable
@@ -154,7 +180,10 @@ abstract class _$$UserImplCopyWith<$Res> implements $UserCopyWith<$Res> {
       String major,
       String projectedGraduation,
       String status,
-      List<User> friends,
+      List<String> notificationIDs,
+      List<String> friends,
+      List<String> sentFriendRequests,
+      List<String> receivedFriendRequests,
       List<String> groupIDs,
       List<String> eventIDs,
       List<String> interests});
@@ -177,7 +206,10 @@ class __$$UserImplCopyWithImpl<$Res>
     Object? major = null,
     Object? projectedGraduation = null,
     Object? status = null,
+    Object? notificationIDs = null,
     Object? friends = null,
+    Object? sentFriendRequests = null,
+    Object? receivedFriendRequests = null,
     Object? groupIDs = null,
     Object? eventIDs = null,
     Object? interests = null,
@@ -211,10 +243,22 @@ class __$$UserImplCopyWithImpl<$Res>
           ? _value.status
           : status // ignore: cast_nullable_to_non_nullable
               as String,
+      notificationIDs: null == notificationIDs
+          ? _value.notificationIDs
+          : notificationIDs // ignore: cast_nullable_to_non_nullable
+              as List<String>,
       friends: null == friends
           ? _value.friends
           : friends // ignore: cast_nullable_to_non_nullable
-              as List<User>,
+              as List<String>,
+      sentFriendRequests: null == sentFriendRequests
+          ? _value.sentFriendRequests
+          : sentFriendRequests // ignore: cast_nullable_to_non_nullable
+              as List<String>,
+      receivedFriendRequests: null == receivedFriendRequests
+          ? _value.receivedFriendRequests
+          : receivedFriendRequests // ignore: cast_nullable_to_non_nullable
+              as List<String>,
       groupIDs: null == groupIDs
           ? _value.groupIDs
           : groupIDs // ignore: cast_nullable_to_non_nullable
@@ -238,14 +282,17 @@ class _$UserImpl implements _User {
       {required this.uid,
       required this.email,
       required this.displayName,
-      required this.pfp,
+      this.pfp = '',
       required this.major,
       required this.projectedGraduation,
-      required this.status,
-      required this.friends,
-      required this.groupIDs,
-      required this.eventIDs,
-      required this.interests});
+      this.status = '',
+      this.notificationIDs = const [],
+      this.friends = const [],
+      this.sentFriendRequests = const [],
+      this.receivedFriendRequests = const [],
+      this.groupIDs = const [],
+      this.eventIDs = const [],
+      this.interests = const []});
 
   factory _$UserImpl.fromJson(Map<String, dynamic> json) =>
       _$$UserImplFromJson(json);
@@ -257,25 +304,40 @@ class _$UserImpl implements _User {
   @override
   String displayName;
   @override
+  @JsonKey()
   String pfp;
   @override
   String major;
   @override
   String projectedGraduation;
   @override
+  @JsonKey()
   String status;
   @override
-  List<User> friends;
+  @JsonKey()
+  List<String> notificationIDs;
   @override
+  @JsonKey()
+  List<String> friends;
+  @override
+  @JsonKey()
+  List<String> sentFriendRequests;
+  @override
+  @JsonKey()
+  List<String> receivedFriendRequests;
+  @override
+  @JsonKey()
   List<String> groupIDs;
   @override
+  @JsonKey()
   List<String> eventIDs;
   @override
+  @JsonKey()
   List<String> interests;
 
   @override
   String toString() {
-    return 'User(uid: $uid, email: $email, displayName: $displayName, pfp: $pfp, major: $major, projectedGraduation: $projectedGraduation, status: $status, friends: $friends, groupIDs: $groupIDs, eventIDs: $eventIDs, interests: $interests)';
+    return 'User(uid: $uid, email: $email, displayName: $displayName, pfp: $pfp, major: $major, projectedGraduation: $projectedGraduation, status: $status, notificationIDs: $notificationIDs, friends: $friends, sentFriendRequests: $sentFriendRequests, receivedFriendRequests: $receivedFriendRequests, groupIDs: $groupIDs, eventIDs: $eventIDs, interests: $interests)';
   }
 
   @JsonKey(ignore: true)
@@ -297,14 +359,17 @@ abstract class _User implements User {
       {required final String uid,
       required final String email,
       required String displayName,
-      required String pfp,
+      String pfp,
       required String major,
       required String projectedGraduation,
-      required String status,
-      required List<User> friends,
-      required List<String> groupIDs,
-      required List<String> eventIDs,
-      required List<String> interests}) = _$UserImpl;
+      String status,
+      List<String> notificationIDs,
+      List<String> friends,
+      List<String> sentFriendRequests,
+      List<String> receivedFriendRequests,
+      List<String> groupIDs,
+      List<String> eventIDs,
+      List<String> interests}) = _$UserImpl;
 
   factory _User.fromJson(Map<String, dynamic> json) = _$UserImpl.fromJson;
 
@@ -328,8 +393,17 @@ abstract class _User implements User {
   String get status;
   set status(String value);
   @override
-  List<User> get friends;
-  set friends(List<User> value);
+  List<String> get notificationIDs;
+  set notificationIDs(List<String> value);
+  @override
+  List<String> get friends;
+  set friends(List<String> value);
+  @override
+  List<String> get sentFriendRequests;
+  set sentFriendRequests(List<String> value);
+  @override
+  List<String> get receivedFriendRequests;
+  set receivedFriendRequests(List<String> value);
   @override
   List<String> get groupIDs;
   set groupIDs(List<String> value);

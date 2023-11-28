@@ -7,7 +7,7 @@ import 'group_chat_screen.dart';
 /// GroupChatWidget is a widget that displays the group chat.
 /// It is a clickable widget that takes the user to the group chat page.
 
-class GroupChatWidget extends ConsumerStatefulWidget {
+class GroupChatWidget extends StatefulWidget {
   const GroupChatWidget({
     super.key,
     required this.group,
@@ -16,10 +16,10 @@ class GroupChatWidget extends ConsumerStatefulWidget {
   final Group group;
 
   @override
-  ConsumerState<GroupChatWidget> createState() => _GroupChatWidgetState();
+  State<GroupChatWidget> createState() => _GroupChatWidgetState();
 }
 
-class _GroupChatWidgetState extends ConsumerState<GroupChatWidget> {
+class _GroupChatWidgetState extends State<GroupChatWidget> {
   @override
   Widget build(BuildContext context) {
     return GestureDetector(

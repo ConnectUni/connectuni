@@ -9,12 +9,9 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:connectuni/features/group/domain/group.dart';
 import '../../home/presentation/home.dart';
 import '../../interest/presentation/edit_interests.dart';
-import '../../user/data/user_providers.dart';
 import '../../user/domain/user.dart';
 import '../../user/domain/user_collection.dart';
-import '../../user/domain/user_list.dart';
 import '../../user/presentation/edit_user_controller.dart';
-import '../domain/group_collection.dart';
 import 'edit_group.dart';
 
 /// Information page for a specific group that displays the group members as well as a description of the selected group.

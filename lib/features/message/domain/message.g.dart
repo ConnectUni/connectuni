@@ -10,7 +10,7 @@ _$MessageImpl _$$MessageImplFromJson(Map<String, dynamic> json) =>
     _$MessageImpl(
       messageId: json['messageId'] as String,
       senderId: json['senderId'] as String,
-      groupId: json['groupId'] as String,
+      groupId: json['groupId'] as String?,
       messageContent: json['messageContent'] as String,
     );
 

@@ -2,8 +2,6 @@ import 'package:connectuni/features/all_data_provider.dart';
 import 'package:connectuni/features/chat/domain/chat.dart';
 import 'package:connectuni/features/chat/domain/chat_collection.dart';
 import 'package:connectuni/features/cu_loading.dart';
-import 'package:connectuni/features/user/domain/user_collection.dart';
-import 'package:connectuni/features/user/presentation/other_user_profile.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -12,22 +10,9 @@ import '../../group/domain/group.dart';
 import '../../message/domain/message.dart';
 import '../../message/domain/message_collection.dart';
 import '../../user/domain/user.dart';
-import 'package:connectuni/features/user/data/user_providers.dart';
 import 'package:flex_color_scheme/flex_color_scheme.dart';
-import 'package:flutter/cupertino.dart';
-import 'package:flutter/material.dart';
-import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:grouped_list/grouped_list.dart';
-import '../../group/data/group_providers.dart';
-import '../../group/domain/group.dart';
-import '../../group/domain/group_list.dart';
-import '../../message/data/message_providers.dart';
-import '../../message/domain/message.dart';
-import '../../message/domain/message_list.dart';
 import '../../group/presentation/groupinfo.dart';
-import '../data/chat_providers.dart';
-import '../domain/chat.dart';
-import '../domain/chat_list.dart';
 import 'message_input_widget.dart';
 import 'message_widget.dart';
 
@@ -53,7 +38,6 @@ class _GroupChatScreenState extends ConsumerState<GroupChatScreen> {
       data: (allData) =>
           _build(
             context: context,
-            users: allData.users,
             group: widget.group,
             chats: allData.chats,
             messages: allData.messages,
@@ -66,14 +50,12 @@ class _GroupChatScreenState extends ConsumerState<GroupChatScreen> {
 
   Widget _build({
     required BuildContext context,
-    required List<User> users,
     required Group group,
     required List<Chat> chats,
     required List<Message> messages,
     required User currentUser,
     required WidgetRef ref
   }) {
-    UserCollection userCollection = UserCollection(users);
     ChatCollection chatCollection = ChatCollection(chats);
     MessageCollection messageCollection = MessageCollection(messages);
 
@@ -98,6 +80,8 @@ class _GroupChatScreenState extends ConsumerState<GroupChatScreen> {
       ],
     );
 
+    // TODO: Decide what to do with how to list messages, and also decide to add timeStamp to messages
+
     /// This displays the messages.
     Widget showMessages() => Column(
         children: [
@@ -110,15 +94,9 @@ class _GroupChatScreenState extends ConsumerState<GroupChatScreen> {
                 order: GroupedListOrder.DESC,
                 padding: const EdgeInsets.all(8),
                 elements: thisMessages,
-                groupBy: (element) => element.groupId,
+                groupBy: (message) => message.groupId!,
                 groupHeaderBuilder: (Message message) => const SizedBox(),
-                itemBuilder: (context, Message message) => Align(
-                  alignment: message.senderId == currentUserID
-                      ? Alignment.centerRight
-                      : Alignment.centerLeft
-                  ,
-                  child: MessageWidget(message: message),
-                )
+                itemBuilder: (context, Message message) => MessageWidget(message: message)
             ),
             ),
           Container(

@@ -1,4 +1,5 @@
 import 'package:connectuni/features/all_data_provider.dart';
+import 'package:connectuni/features/user/domain/user_collection.dart';
 import 'package:connectuni/features/user/presentation/user_card_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -19,6 +20,7 @@ class _FriendsListState extends ConsumerState<FriendsList> {
     return asyncValue.when(
         data: (allData) => _build(
             context: context,
+            users: allData.users,
             currentUser: allData.currentUser,
             ref: ref),
         loading: () => const Center(child: CircularProgressIndicator()),
@@ -28,8 +30,10 @@ class _FriendsListState extends ConsumerState<FriendsList> {
 
   Widget _build({
     required BuildContext context,
+    required List<User> users,
     required User currentUser,
     required WidgetRef ref}) {
+    UserCollection userCollection = UserCollection(users);
 
     return Scaffold(
       appBar: AppBar(title: const Text('Friends List'), actions: <Widget>[
@@ -69,7 +73,7 @@ class _FriendsListState extends ConsumerState<FriendsList> {
                 });
               }),
             ),
-            ...currentUser.friends.map((user) => UserCardWidget(user: user)),
+            ...userCollection.getFriends(currentUser).map((user) => UserCardWidget(user: user)),
           ],
         ),
       ),

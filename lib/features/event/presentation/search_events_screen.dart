@@ -51,10 +51,7 @@ class _SearchEventsScreenState extends ConsumerState<SearchEventsScreen> {
         .toList();
 
     bool isSearchbarFilled() {
-      if (controller.text.isNotEmpty) {
-        return true;
-      }
-      return false;
+      return controller.text.isNotEmpty;
     }
 
     /// This displays the appbar.
@@ -156,13 +153,12 @@ class _SearchEventsScreenState extends ConsumerState<SearchEventsScreen> {
         ),
         onChanged: (value) { // This updates the page based on the search query
           ref.watch(filteredEventsProvider.notifier).filterQuery(value);
-          //showSearchedEvent(value);
         },
       ),
     );
 
     /// This displays the list of events.
-    Widget showContent(filteredEvents) => Expanded(
+    Widget showContent(List<SingleEvent> filteredEvents) => Expanded(
       child: ListView.builder(
         itemCount: filteredEvents.length,
         itemBuilder: (context, index) {
