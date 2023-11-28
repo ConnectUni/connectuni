@@ -13,6 +13,7 @@ import 'package:connectuni/features/settings/data/settings_db.dart';
 import 'package:connectuni/features/user/domain/user_collection.dart';
 import 'package:connectuni/features/user/presentation/edit_user_controller.dart';
 import 'package:firebase_auth/firebase_auth.dart' hide User;
+import 'package:firebase_ui_auth/firebase_ui_auth.dart';
 import 'package:flex_color_scheme/flex_color_scheme.dart';
 import 'package:flutter/material.dart' hide Notification;
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -136,6 +137,7 @@ class _SettingsState extends ConsumerState<Settings> {
         ref.read(editNotificationControllerProvider.notifier).deleteNotification(notification: notification, onSuccess: () {});
       }
       ref.read(editUserControllerProvider.notifier).deleteUser(user: currentUser, onSuccess: () {});
+      FirebaseAuth.instance.currentUser?.delete();
     }
 
     return Scaffold(
