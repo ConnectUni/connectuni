@@ -4,9 +4,9 @@ import 'package:form_builder_validators/form_builder_validators.dart';
 
 import 'field_padding.dart';
 
-/// A text field to support defining new or revised garden names.
-class OwnerField extends StatelessWidget {
-  const OwnerField({super.key, required this.fieldKey, this.currOwner});
+/// A text field to support defining new or revised group names.
+class ProfessorField extends StatelessWidget {
+  const ProfessorField({super.key, required this.fieldKey, this.currOwner});
 
   final String? currOwner;
   final GlobalKey<FormBuilderFieldState<FormBuilderField<dynamic>, dynamic>>
@@ -14,7 +14,7 @@ class OwnerField extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    String fieldName = 'Owner';
+    String fieldName = 'Professor';
     return FieldPadding(
       child: FormBuilderTextField(
         name: fieldName,

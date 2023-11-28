@@ -22,6 +22,10 @@ class ChatCollection {
     return _chats.firstWhere((chat) => chat.userIDs.contains(currentUserID) && chat.userIDs.contains(otherUserID) && chat.userIDs.length == 2);
   }
 
+  Chat getChatByGroupID(String groupID) {
+    return _chats.firstWhere((chat) => chat.groupID == groupID);
+  }
+
   List<Chat> getChats(List<String> chatIDs) {
     return _chats.where((data) => chatIDs.contains(data.chatID)).toList();
   }
@@ -32,21 +36,30 @@ class ChatCollection {
 
   String getNewID() {
     String result = '';
-    switch (size()) {
-      case < 9:
-        result = 'chat-00${size() + 1}';
-        break;
-      case < 99:
-        result = 'chat-0${size() + 1}';
-        break;
-      default:
-        result = 'chat-${size() + 1}';
-    }
+    int newIDNum = size();
+
+    do {
+      if (newIDNum < 9) {
+        result = 'chat-00${newIDNum + 1}';
+      } else if (newIDNum < 99) {
+        result = 'chat-0${newIDNum + 1}';
+      } else {
+        result = 'chat-${newIDNum + 1}';
+      }
+
+      newIDNum++;
+    } while (getAllChatIDs().contains(result));
+
     return result;
   }
 
+
   List<String> getAllChatIDs() {
     return _chats.map((data) => data.chatID).toList();
+  }
+
+  List<Chat> getUsersChats(String userID) {
+    return _chats.where((chat) => chat.userIDs.contains(userID)).toList();
   }
 
   String getGroupID(String chatID) {

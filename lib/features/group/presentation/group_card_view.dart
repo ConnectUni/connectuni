@@ -22,7 +22,7 @@ class GroupCardView extends StatelessWidget {
                   child: Align(
                     alignment: Alignment.centerLeft,
                     child:
-                        Text("${group.semYear} | ${group.owner}"),
+                        Text("${group.semYear} | ${group.professor}"),
                   )),
               if(group.userIDs.length > 1 || group.userIDs.isEmpty)
               Padding(

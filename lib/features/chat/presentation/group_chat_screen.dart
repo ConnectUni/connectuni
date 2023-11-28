@@ -65,7 +65,7 @@ class _GroupChatScreenState extends ConsumerState<GroupChatScreen> {
 
     /// This displays the appbar.
     AppBar buildAppBar() => AppBar(
-      title: Text("${group.groupName} | ${group.owner}"),
+      title: Text("${group.groupName} | ${group.professor}"),
       actions: [
         IconButton(
           icon: const Icon(Icons.info),

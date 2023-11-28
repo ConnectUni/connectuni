@@ -17,7 +17,7 @@ import '../domain/group.dart';
 import 'form-fields/group_description_field.dart';
 import 'form-fields/group_image_field.dart';
 import 'form-fields/group_name_field.dart';
-import 'form-fields/owner_field.dart';
+import 'form-fields/professor_field.dart';
 import 'form-fields/reset_button.dart';
 import 'form-fields/semyear_field.dart';
 import 'form-fields/submit_button.dart';
@@ -28,7 +28,7 @@ class AddGroup extends ConsumerWidget {
   final _formKey = GlobalKey<FormBuilderState>();
   final _groupNameFieldKey = GlobalKey<FormBuilderFieldState>();
   final _semYearFieldKey = GlobalKey<FormBuilderFieldState>();
-  final _ownerFieldKey = GlobalKey<FormBuilderFieldState>();
+  final _professorFieldKey = GlobalKey<FormBuilderFieldState>();
   final _groupImageFieldKey = GlobalKey<FormBuilderFieldState>();
   final _groupDescriptionFieldKey = GlobalKey<FormBuilderFieldState>();
 
@@ -64,7 +64,7 @@ class AddGroup extends ConsumerWidget {
       String groupID = groupCollection.getNewID();
       String groupName = _groupNameFieldKey.currentState?.value;
       String semYear = _semYearFieldKey.currentState?.value;
-      String owner = _ownerFieldKey.currentState?.value; // Should owner be current user? Since user created this group no?
+      String professor = _professorFieldKey.currentState?.value; // Should owner be current user? Since user created this group no?
       String groupImage = _groupImageFieldKey.currentState?.value ?? '';
       String groupDescription = _groupDescriptionFieldKey.currentState?.value ?? '';
       String chatID = chatCollection.getNewID();
@@ -72,7 +72,8 @@ class AddGroup extends ConsumerWidget {
         groupID: groupID,
         groupName: groupName,
         semYear: semYear,
-        owner: owner,
+        professor: professor,
+        owner: currentUser.uid,
         groupImage: groupImage,
         groupDescription: groupDescription,
         newMessages: [],
@@ -125,7 +126,7 @@ class AddGroup extends ConsumerWidget {
                   children: [
                     GroupNameField(fieldKey: _groupNameFieldKey),
                     SemYearField(fieldKey: _semYearFieldKey),
-                    OwnerField(fieldKey: _ownerFieldKey),
+                    ProfessorField(fieldKey: _professorFieldKey),
                     GroupImageField(fieldKey: _groupImageFieldKey),
                     GroupDescriptionField(fieldKey: _groupDescriptionFieldKey),
                   ]

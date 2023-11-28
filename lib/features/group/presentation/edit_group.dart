@@ -6,11 +6,12 @@ import 'package:connectuni/features/group/presentation/edit_group_controller.dar
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_form_builder/flutter_form_builder.dart';
+import '../../user/domain/user.dart';
 import '../domain/group.dart';
 import 'form-fields/group_description_field.dart';
 import 'form-fields/group_image_field.dart';
 import 'form-fields/group_name_field.dart';
-import 'form-fields/owner_field.dart';
+import 'form-fields/professor_field.dart';
 import 'form-fields/reset_button.dart';
 import 'form-fields/semyear_field.dart';
 import 'form-fields/submit_button.dart';
@@ -22,7 +23,7 @@ class EditGroup extends ConsumerWidget {
   final _formKey = GlobalKey<FormBuilderState>();
   final _groupNameFieldKey = GlobalKey<FormBuilderFieldState>();
   final _semYearFieldKey = GlobalKey<FormBuilderFieldState>();
-  final _ownerFieldKey = GlobalKey<FormBuilderFieldState>();
+  final _professorFieldKey = GlobalKey<FormBuilderFieldState>();
   final _groupImageFieldKey = GlobalKey<FormBuilderFieldState>();
   final _groupDescriptionFieldKey = GlobalKey<FormBuilderFieldState>();
 
@@ -35,6 +36,7 @@ class EditGroup extends ConsumerWidget {
             _build(
                 context: context,
                 groups: allData.groups,
+                currentUser: allData.currentUser,
                 ref: ref
             ),
         loading: () => const Center(child: CircularProgressIndicator()),
@@ -44,6 +46,7 @@ class EditGroup extends ConsumerWidget {
   Widget _build ({
     required BuildContext context,
     required List<Group> groups,
+    required User currentUser,
     required WidgetRef ref
   }) {
     GroupCollection groupCollection = GroupCollection(groups);
@@ -55,14 +58,15 @@ class EditGroup extends ConsumerWidget {
       String groupID = id;
       String groupName = _groupNameFieldKey.currentState?.value;
       String semYear = _semYearFieldKey.currentState?.value;
-      String owner = _ownerFieldKey.currentState?.value;
+      String professor = _professorFieldKey.currentState?.value;
       String groupImage = _groupImageFieldKey.currentState?.value ?? '';
       String groupDescription = _groupDescriptionFieldKey.currentState?.value ?? '';
       Group editedGroup = Group(
             groupID: groupID,
             groupName: groupName,
             semYear: semYear,
-            owner: owner,
+            professor: professor,
+            owner: currentUser.uid,
             groupImage: groupImage,
             groupDescription: groupDescription,
             newMessages: uneditedGroup.newMessages,
@@ -94,7 +98,7 @@ class EditGroup extends ConsumerWidget {
                   children: [
                     GroupNameField(fieldKey: _groupNameFieldKey, currName: uneditedGroup.groupName),
                     SemYearField(fieldKey: _semYearFieldKey, currSemYear: uneditedGroup.semYear),
-                    OwnerField(fieldKey: _ownerFieldKey, currOwner: uneditedGroup.owner),
+                    ProfessorField(fieldKey: _professorFieldKey, currOwner: uneditedGroup.owner),
                     GroupImageField(fieldKey: _groupImageFieldKey, currImage: uneditedGroup.groupImage),
                     GroupDescriptionField(fieldKey: _groupDescriptionFieldKey, currDesc: uneditedGroup.groupDescription),
                   ]
