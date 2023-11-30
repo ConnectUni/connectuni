@@ -1,3 +1,4 @@
+import 'package:connectuni/features/user/presentation/other_user_profile.dart';
 import 'package:flex_color_scheme/flex_color_scheme.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -50,9 +51,10 @@ class _MessageWidgetState extends ConsumerState<MessageWidget> {
     UserCollection userCollection = UserCollection(users);
     Message message = widget.message;
 
-    final User textUser = userCollection.getUser(message.senderId);
+
     // If message is not from the user.
     if(message.senderId != currentUser.uid) {
+      final User textUser = userCollection.getUser(message.senderId);
       return
         Column(
           children: [
@@ -64,9 +66,17 @@ class _MessageWidgetState extends ConsumerState<MessageWidget> {
               alignment: Alignment.centerLeft,
               child:Row(
                   children:[
-                    CircleAvatar(
-                       radius: 11,
-                       backgroundImage: AssetImage(textUser.pfp),
+                    GestureDetector(
+                      onTap: () {
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(builder: (context) => OtherUserProfile(user: textUser)),
+                        );
+                      },
+                      child: CircleAvatar(
+                         radius: 15,
+                         backgroundImage: AssetImage(textUser.pfp),
+                      ),
                     ),
                     Card(
                       elevation: 8.0,

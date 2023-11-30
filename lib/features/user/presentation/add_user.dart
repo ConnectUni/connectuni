@@ -70,11 +70,12 @@ class AddUser extends ConsumerWidget {
         projectedGraduation: projectedGraduation,
         status: status,
         friends: [],
+        sentFriendRequests: [],
+        receivedFriendRequests: [],
         groupIDs: [],
         eventIDs: [],
         interests: [],
         email: email,
-        ///REMOVE THIS BELOW AFTER WE REMOVE ALL PASSWORDS FROM USER DATA
       );
       ref.read(editUserControllerProvider.notifier).updateUser(
           user: user,

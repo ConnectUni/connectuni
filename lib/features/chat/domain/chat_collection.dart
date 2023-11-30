@@ -14,6 +14,14 @@ class ChatCollection {
     return _chats.firstWhere((data) => data.chatID == chatID);
   }
 
+  bool directMessageExists(String currentUserID, String otherUserID) {
+    return _chats.any((chat) => chat.userIDs.contains(currentUserID) && chat.userIDs.contains(otherUserID) && chat.userIDs.length == 2);
+  }
+
+  Chat getDirectMessageChat(String currentUserID, String otherUserID) {
+    return _chats.firstWhere((chat) => chat.userIDs.contains(currentUserID) && chat.userIDs.contains(otherUserID) && chat.userIDs.length == 2);
+  }
+
   List<Chat> getChats(List<String> chatIDs) {
     return _chats.where((data) => chatIDs.contains(data.chatID)).toList();
   }
@@ -25,10 +33,10 @@ class ChatCollection {
   String getNewID() {
     String result = '';
     switch (size()) {
-      case < 10:
+      case < 9:
         result = 'chat-00${size() + 1}';
         break;
-      case < 100:
+      case < 99:
         result = 'chat-0${size() + 1}';
         break;
       default:
@@ -42,7 +50,7 @@ class ChatCollection {
   }
 
   String getGroupID(String chatID) {
-    return getChat(chatID).groupID;
+    return getChat(chatID).groupID!;
   }
 
   List<User> getUsersInChats(UserCollection users, String chatID) {

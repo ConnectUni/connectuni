@@ -1,4 +1,5 @@
 import 'package:firebase_auth/firebase_auth.dart' hide User;
+import 'package:flutter/cupertino.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 
 import '../../../repositories/firestore/firestore_providers.dart';
@@ -34,6 +35,7 @@ Future<User> currentUser(CurrentUserRef ref) async {
 @riverpod
 class FilteredUsers extends _$FilteredUsers {
   bool mounted = true;
+  User? currentUser;
   List<User> users = [];
   List<User> recents = [];
   List<User> results = [];
@@ -44,6 +46,8 @@ class FilteredUsers extends _$FilteredUsers {
   FutureOr<List<User>> build() async {
     ref.onDispose(() => mounted = false);
     users = await ref.watch(usersProvider.future);
+    currentUser = await ref.watch(currentUserProvider.future);
+    users.removeWhere((user) => user.uid == currentUser!.uid);
     return users;
   }
 

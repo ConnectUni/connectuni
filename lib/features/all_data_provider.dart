@@ -1,6 +1,8 @@
+import 'package:connectuni/features/notification/data/notification_providers.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 
 import 'interest/data/interests.dart';
+import 'notification/domain/notification.dart';
 import 'user/data/user_providers.dart';
 import 'user/domain/user.dart';
 import 'group/data/group_providers.dart';
@@ -21,6 +23,7 @@ class AllData {
     required this.events,
     required this.chats,
     required this.messages,
+    required this.notifications,
     required this.interests,
     required this.currentUser,
   });
@@ -30,6 +33,7 @@ class AllData {
   final List<SingleEvent> events;
   final List<Chat> chats;
   final List<Message> messages;
+  final List<Notification> notifications;
   final List<String> interests;
   final User currentUser;
 }
@@ -41,6 +45,7 @@ Future<AllData> allData(AllDataRef ref) async {
   final events = ref.watch(eventsProvider.future);
   final chats = ref.watch(chatsProvider.future);
   final messages = ref.watch(messagesProvider.future);
+  final notifications = ref.watch(notificationsProvider.future);
   final interests = ref.watch(interestsProvider);
   final currentUser = ref.watch(currentUserProvider.future);
   return AllData(
@@ -49,6 +54,7 @@ Future<AllData> allData(AllDataRef ref) async {
     events: await events,
     chats: await chats,
     messages: await messages,
+    notifications: await notifications,
     interests: interests,
     currentUser: await currentUser,
   );

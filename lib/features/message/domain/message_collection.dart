@@ -22,6 +22,10 @@ class MessageCollection {
     return getMessage(messageID).senderId;
   }
 
+  String getContentFrom(String messageID) {
+    return getMessage(messageID).messageContent;
+  }
+
   int size() {
     return _messages.length;
   }
@@ -29,10 +33,10 @@ class MessageCollection {
   String getNewID() {
     String result = '';
     switch (size()) {
-      case < 10:
+      case < 9:
         result = 'message-00${size() + 1}';
         break;
-      case < 100:
+      case < 99:
         result = 'message-0${size() + 1}';
         break;
       default:

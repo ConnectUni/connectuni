@@ -21,7 +21,7 @@ Chat _$ChatFromJson(Map<String, dynamic> json) {
 /// @nodoc
 mixin _$Chat {
   String get chatID => throw _privateConstructorUsedError;
-  String get groupID => throw _privateConstructorUsedError;
+  String? get groupID => throw _privateConstructorUsedError;
   List<String> get userIDs => throw _privateConstructorUsedError;
   set userIDs(List<String> value) => throw _privateConstructorUsedError;
   List<String> get messageIDs => throw _privateConstructorUsedError;
@@ -39,7 +39,7 @@ abstract class $ChatCopyWith<$Res> {
   @useResult
   $Res call(
       {String chatID,
-      String groupID,
+      String? groupID,
       List<String> userIDs,
       List<String> messageIDs});
 }
@@ -58,7 +58,7 @@ class _$ChatCopyWithImpl<$Res, $Val extends Chat>
   @override
   $Res call({
     Object? chatID = null,
-    Object? groupID = null,
+    Object? groupID = freezed,
     Object? userIDs = null,
     Object? messageIDs = null,
   }) {
@@ -67,10 +67,10 @@ class _$ChatCopyWithImpl<$Res, $Val extends Chat>
           ? _value.chatID
           : chatID // ignore: cast_nullable_to_non_nullable
               as String,
-      groupID: null == groupID
+      groupID: freezed == groupID
           ? _value.groupID
           : groupID // ignore: cast_nullable_to_non_nullable
-              as String,
+              as String?,
       userIDs: null == userIDs
           ? _value.userIDs
           : userIDs // ignore: cast_nullable_to_non_nullable
@@ -92,7 +92,7 @@ abstract class _$$ChatImplCopyWith<$Res> implements $ChatCopyWith<$Res> {
   @useResult
   $Res call(
       {String chatID,
-      String groupID,
+      String? groupID,
       List<String> userIDs,
       List<String> messageIDs});
 }
@@ -108,7 +108,7 @@ class __$$ChatImplCopyWithImpl<$Res>
   @override
   $Res call({
     Object? chatID = null,
-    Object? groupID = null,
+    Object? groupID = freezed,
     Object? userIDs = null,
     Object? messageIDs = null,
   }) {
@@ -117,10 +117,10 @@ class __$$ChatImplCopyWithImpl<$Res>
           ? _value.chatID
           : chatID // ignore: cast_nullable_to_non_nullable
               as String,
-      groupID: null == groupID
+      groupID: freezed == groupID
           ? _value.groupID
           : groupID // ignore: cast_nullable_to_non_nullable
-              as String,
+              as String?,
       userIDs: null == userIDs
           ? _value.userIDs
           : userIDs // ignore: cast_nullable_to_non_nullable
@@ -138,7 +138,7 @@ class __$$ChatImplCopyWithImpl<$Res>
 class _$ChatImpl implements _Chat {
   _$ChatImpl(
       {required this.chatID,
-      required this.groupID,
+      this.groupID,
       required this.userIDs,
       required this.messageIDs});
 
@@ -148,7 +148,7 @@ class _$ChatImpl implements _Chat {
   @override
   final String chatID;
   @override
-  final String groupID;
+  final String? groupID;
   @override
   List<String> userIDs;
   @override
@@ -176,7 +176,7 @@ class _$ChatImpl implements _Chat {
 abstract class _Chat implements Chat {
   factory _Chat(
       {required final String chatID,
-      required final String groupID,
+      final String? groupID,
       required List<String> userIDs,
       required List<String> messageIDs}) = _$ChatImpl;
 
@@ -185,7 +185,7 @@ abstract class _Chat implements Chat {
   @override
   String get chatID;
   @override
-  String get groupID;
+  String? get groupID;
   @override
   List<String> get userIDs;
   set userIDs(List<String> value);

@@ -1,8 +1,13 @@
+import 'package:connectuni/features/chat/presentation/direct_message_screen.dart';
+import 'package:connectuni/features/notification/domain/notification.dart';
+import 'package:connectuni/features/notification/domain/notification_collection.dart';
+import 'package:connectuni/features/notification/presentation/edit_notification_controller.dart';
+import 'package:connectuni/features/user/presentation/edit_user_controller.dart';
 import 'package:flex_color_scheme/flex_color_scheme.dart';
 import 'package:connectuni/features/cu_error.dart';
 import 'package:connectuni/features/group/domain/group.dart';
 import 'package:connectuni/features/group/domain/group_collection.dart';
-import 'package:flutter/material.dart';
+import 'package:flutter/material.dart' hide Notification;
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import '../../all_data_provider.dart';
 import '../../cu_loading.dart';
@@ -21,6 +26,8 @@ class OtherUserProfile extends ConsumerWidget {
             context: context,
             currentUser: allData.currentUser,
             groups: allData.groups,
+            notifications: allData.notifications,
+            ref: ref,
           ),
       loading: () => const CULoading(),
       error: (e, st) => CUError(e.toString(), st.toString()));
@@ -30,35 +37,114 @@ class OtherUserProfile extends ConsumerWidget {
     required BuildContext context,
     required User currentUser,
     required List<Group> groups,
+    required List<Notification> notifications,
+    required WidgetRef ref,
   }) {
     GroupCollection groupCollection = GroupCollection(groups);
+    NotificationCollection notificationCollection = NotificationCollection(notifications);
+
 
     bool isFriend() {
-      if (currentUser.friends.contains(user)) {
-        return true;
-      }
-      return false;
+      return currentUser.friends.contains(user.uid);
     }
 
-    Widget isFriendIcon() => isFriend()
-        ? IconButton(
-            onPressed: () {
-              currentUser.friends.remove(user);
-            },
-            icon: const Icon(
-              Icons.person_remove,
-              semanticLabel: 'remove friend',
-            ),
-          )
-        : IconButton(
-            onPressed: () {
-              currentUser.friends.remove(user);
-            },
-            icon: const Icon(
-              Icons.person_add,
-              semanticLabel: 'add friend',
-            )
-          );
+    bool requestPending() {
+      return user.receivedFriendRequests.contains(currentUser.uid);
+    }
+
+    void updateUsers(User user1, User user2) {
+      ref.read(editUserControllerProvider.notifier).updateUser(
+        user: user1,
+        onSuccess: () {},
+      );
+      ref.read(editUserControllerProvider.notifier).updateUser(
+        user: user2,
+        onSuccess: () {},
+      );
+    }
+
+    void sendFriendReq(User sendingUser, User receivingUser) {
+      Notification newNotif = Notification(
+        notificationID: notificationCollection.getNewID(),
+        timestamp: DateTime.now(),
+        receiverID: receivingUser.uid,
+        title: '${sendingUser.displayName} sent you a friend request!',
+        type: 'friend-request',
+        senderID: sendingUser.uid,
+      );
+      ref.read(editNotificationControllerProvider.notifier).updateNotification(
+        notification: newNotif,
+        onSuccess: () {},
+      );
+      receivingUser.notificationIDs.add(newNotif.notificationID);
+      updateUsers(sendingUser, receivingUser);
+    }
+
+    void removeFriendReq(User sendingUser, User receivingUser) {
+      Notification notif = notificationCollection.getNotificationToFrom(receivingUser.uid, sendingUser.uid);
+      receivingUser.notificationIDs.remove(notif.notificationID);
+      ref.read(editNotificationControllerProvider.notifier).deleteNotification(
+        notification: notif,
+        onSuccess: () {
+          Navigator.pop(context);
+        },
+      );
+      updateUsers(sendingUser, receivingUser);
+    }
+
+    /// This displays add/remove friends button
+    Widget isFriendIcon() {
+      if (isFriend()) {
+        return FilledButton(
+           onPressed: () {
+             Navigator.pop(context);
+             currentUser.friends.remove(user.uid);
+             user.friends.remove(currentUser.uid);
+             updateUsers(currentUser, user);
+           },
+           child: const Text('Remove Connection :('),
+        );
+      } else if (requestPending()) {
+        return FilledButton(
+          onPressed: () {
+            showDialog(
+              context: context,
+              builder: (BuildContext context) {
+                return AlertDialog(
+                  title: const Text('Remove friend request? :('),
+                  actions: [
+                    TextButton(
+                      child: const Text('Yes'),
+                      onPressed: () {
+                        currentUser.sentFriendRequests.remove(user.uid);
+                        user.receivedFriendRequests.remove(currentUser.uid);
+                        removeFriendReq(currentUser, user);
+                      },
+                    ),
+                    TextButton(
+                      child: const Text('No'),
+                      onPressed: () {
+                        Navigator.pop(context);
+                      },
+                    )
+                  ],
+                );
+              },
+            );
+          },
+          child: const Text('Pending Request'),
+        );
+      } else {
+        return FilledButton(
+          onPressed: () {
+            currentUser.sentFriendRequests.add(user.uid);
+            user.receivedFriendRequests.add(currentUser.uid);
+            sendFriendReq(currentUser, user);
+          },
+          child: const Text('Connect with me!'),
+        );
+      }
+    }
 
     /// This displays the user's information.
     List<Widget> displayInfo = [
@@ -97,6 +183,7 @@ class OtherUserProfile extends ConsumerWidget {
           fontSize: 15.0,
         ),
       ),
+      isFriendIcon(),
       const Divider(
         height:7,
         thickness: 2,
@@ -243,33 +330,37 @@ class OtherUserProfile extends ConsumerWidget {
     );
 
     return Scaffold(
-      appBar: AppBar(
-        title: Text(user.displayName),
-        actions: [
-          IconButton(
-            icon: const Icon(
-              Icons.message,
-              semanticLabel: 'message',
+        appBar: AppBar(
+          title: Text(user.displayName),
+          actions: [
+            IconButton(
+              icon: const Icon(
+                Icons.message,
+                semanticLabel: 'message',
+              ),
+              onPressed: () {
+                Navigator.push(context, MaterialPageRoute(builder: (context) => DirectMessageScreen(otherUser: user)));
+              },
             ),
-            onPressed: () {
-              // TODO Add functionality to message user
-            },
-          ),
-          isFriendIcon(),
-        ],
-      ),
-      body: ListView(
-        padding: const EdgeInsets.all(20.0),
-        children: [
-          Column(
+          ],
+        ),
+        body: ListView(
+          padding: const EdgeInsets.all(20.0),
+          children: [
+            Column(
               children: [
                 ...displayInfo,
                 ...displayInterests,
                 displayGroups()
-            ]
-          ),
-        ],
-      )
+              ],
+            ),
+          ],
+        ),
     );
   }
 }
+/*
+
+
+
+ */

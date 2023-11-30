@@ -51,10 +51,7 @@ class _SearchPeopleScreenState extends ConsumerState<SearchPeopleScreen> {
   }) {
     final isRecentsEmpty = ref.watch(filteredUsersProvider.notifier).recents.isEmpty;
     bool isSearchbarFilled() {
-      if (controller.text.isNotEmpty) {
-        return true;
-      }
-      return false;
+      return controller.text.isNotEmpty;
     }
 
     /// This displays the appbar.

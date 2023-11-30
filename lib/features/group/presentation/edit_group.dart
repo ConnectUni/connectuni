@@ -7,7 +7,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_form_builder/flutter_form_builder.dart';
 import '../domain/group.dart';
-import '../domain/group_list.dart';
 import 'form-fields/group_description_field.dart';
 import 'form-fields/group_image_field.dart';
 import 'form-fields/group_name_field.dart';

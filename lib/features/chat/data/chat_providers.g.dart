@@ -34,5 +34,35 @@ final chatsProvider = AutoDisposeStreamProvider<List<Chat>>.internal(
 );
 
 typedef ChatsRef = AutoDisposeStreamProviderRef<List<Chat>>;
+String _$directMessagesHash() => r'41ba8ba575c7b02b3c5a1a69c007f34cc05b8578';
+
+/// See also [directMessages].
+@ProviderFor(directMessages)
+final directMessagesProvider = AutoDisposeFutureProvider<List<Chat>>.internal(
+  directMessages,
+  name: r'directMessagesProvider',
+  debugGetCreateSourceHash: const bool.fromEnvironment('dart.vm.product')
+      ? null
+      : _$directMessagesHash,
+  dependencies: null,
+  allTransitiveDependencies: null,
+);
+
+typedef DirectMessagesRef = AutoDisposeFutureProviderRef<List<Chat>>;
+String _$queriedChatsHash() => r'e462fe691d55e2828978639e3dea83ed4e47e524';
+
+/// See also [QueriedChats].
+@ProviderFor(QueriedChats)
+final queriedChatsProvider =
+    AutoDisposeAsyncNotifierProvider<QueriedChats, List<Chat>>.internal(
+  QueriedChats.new,
+  name: r'queriedChatsProvider',
+  debugGetCreateSourceHash:
+      const bool.fromEnvironment('dart.vm.product') ? null : _$queriedChatsHash,
+  dependencies: null,
+  allTransitiveDependencies: null,
+);
+
+typedef _$QueriedChats = AutoDisposeAsyncNotifier<List<Chat>>;
 // ignore_for_file: type=lint
 // ignore_for_file: subtype_of_sealed_class, invalid_use_of_internal_member, invalid_use_of_visible_for_testing_member

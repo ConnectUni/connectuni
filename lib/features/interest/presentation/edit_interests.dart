@@ -5,21 +5,15 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../../cu_error.dart';
 import '../../cu_loading.dart';
-import '../../event/data/event_providers.dart';
 import '../../event/domain/event.dart';
 import '../../event/domain/event_collection.dart';
-import '../../event/domain/event_list.dart';
-import '../../group/data/group_providers.dart';
 import '../../group/domain/group.dart';
 import '../../group/domain/group_collection.dart';
-import '../../group/domain/group_list.dart';
 import '../../group/presentation/edit_group_controller.dart';
 import '../../group/presentation/form-fields/reset_button.dart';
 import '../../group/presentation/form-fields/submit_button.dart';
-import '../../user/data/user_providers.dart';
 import '../../user/domain/user.dart';
 import '../../user/domain/user_collection.dart';
-import '../../user/domain/user_list.dart';
 import '../../user/presentation/edit_user_controller.dart';
 import '../data/interests.dart';
 import 'form-fields/interests_field.dart';
@@ -88,6 +82,8 @@ class EditInterest extends ConsumerWidget {
           projectedGraduation: editUser.projectedGraduation,
           status: editUser.status,
           friends: editUser.friends,
+          sentFriendRequests: editUser.sentFriendRequests,
+          receivedFriendRequests: editUser.receivedFriendRequests,
           groupIDs: editUser.groupIDs,
           eventIDs: editUser.eventIDs,
           interests: interestsUpdate,

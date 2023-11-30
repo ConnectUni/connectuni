@@ -32,4 +32,18 @@ class EditMessageController extends _$EditMessageController {
       onSuccess();
     }
   }
+
+  Future<void> deleteMessage({
+    required Message message,
+    required VoidCallback onSuccess,
+  }) async {
+    MessageDatabase messageDatabase = ref.watch(messageDatabaseProvider);
+    final newState = await AsyncValue.guard(() => messageDatabase.deleteMessage(message));
+    if (mounted) {
+      state = newState;
+    }
+    if (!state.hasError) {
+      onSuccess();
+    }
+  }
 }

@@ -8,7 +8,7 @@ part of 'chat.dart';
 
 _$ChatImpl _$$ChatImplFromJson(Map<String, dynamic> json) => _$ChatImpl(
       chatID: json['chatID'] as String,
-      groupID: json['groupID'] as String,
+      groupID: json['groupID'] as String?,
       userIDs:
           (json['userIDs'] as List<dynamic>).map((e) => e as String).toList(),
       messageIDs: (json['messageIDs'] as List<dynamic>)
