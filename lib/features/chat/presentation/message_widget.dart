@@ -51,9 +51,10 @@ class _MessageWidgetState extends ConsumerState<MessageWidget> {
     UserCollection userCollection = UserCollection(users);
     Message message = widget.message;
 
-    final User textUser = userCollection.getUser(message.senderId);
+
     // If message is not from the user.
     if(message.senderId != currentUser.uid) {
+      final User textUser = userCollection.getUser(message.senderId);
       return
         Column(
           children: [
