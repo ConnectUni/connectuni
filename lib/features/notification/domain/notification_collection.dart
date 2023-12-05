@@ -19,22 +19,30 @@ class NotificationCollection {
     return _notifications.where((notification) => notification.receiverID == user.uid).toList();
   }
 
+  List<String> getAllNotificationIDs() {
+    return _notifications.map((notification) => notification.notificationID).toList();
+  }
+
   int size() {
     return _notifications.length;
   }
 
   String getNewID() {
     String result = '';
-    switch (size()) {
-      case < 9:
-        result = 'notification-00${size() + 1}';
-        break;
-      case < 99:
-        result = 'notification-0${size() + 1}';
-        break;
-      default:
-        result = 'notification-${size() + 1}';
-    }
+    int newIDNum = size();
+
+    do {
+      if (newIDNum < 9) {
+        result = 'notification-00${newIDNum + 1}';
+      } else if (newIDNum < 99) {
+        result = 'notification-0${newIDNum + 1}';
+      } else {
+        result = 'notification-${newIDNum + 1}';
+      }
+
+      newIDNum++;
+    } while (getAllNotificationIDs().contains(result));
+
     return result;
   }
 }

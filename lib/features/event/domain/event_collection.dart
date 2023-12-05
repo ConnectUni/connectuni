@@ -22,21 +22,29 @@ class EventCollection {
 
   String getNewID() {
     String result = '';
-    switch (size()) {
-      case < 9:
-        result = 'event-00${size() + 1}';
-        break;
-      case < 99:
-        result = 'event-0${size() + 1}';
-        break;
-      default:
-        result = 'event-${size() + 1}';
-    }
+    int newIDNum = size();
+
+    do {
+      if (newIDNum < 9) {
+        result = 'event-00${newIDNum + 1}';
+      } else if (newIDNum < 99) {
+        result = 'event-0${newIDNum + 1}';
+      } else {
+        result = 'event-${newIDNum + 1}';
+      }
+
+      newIDNum++;
+    } while (getAllEventIDs().contains(result));
+
     return result;
   }
 
   List<SingleEvent> getAllEvents() {
     return _events;
+  }
+
+  List<SingleEvent> getUsersEvents(String userID) {
+    return _events.where((event) => event.userIDs.contains(userID)).toList();
   }
 
   List<String> getAllEventIDs() {

@@ -20,16 +20,20 @@ class UserCollection {
 
   String getNewID() {
     String result = '';
-    switch (size()) {
-      case < 9:
-        result = 'user-00${size() + 1}';
-        break;
-      case < 99:
-        result = 'user-0${size() + 1}';
-        break;
-      default:
-        result = 'user-${size() + 1}';
-    }
+    int newIDNum = size();
+
+    do {
+      if (newIDNum < 9) {
+        result = 'user-00${newIDNum + 1}';
+      } else if (newIDNum < 99) {
+        result = 'user-0${newIDNum + 1}';
+      } else {
+        result = 'user-${newIDNum + 1}';
+      }
+
+      newIDNum++;
+    } while (getAllUserIDs().contains(result));
+
     return result;
   }
 
@@ -55,6 +59,17 @@ class UserCollection {
 
   List<User> getFriends(User user) {
     return getUsers(user.friends);
+  }
+
+  List<User> getAssociatedUser(User user) {
+    return _users.where((thisUser) {
+      if (thisUser.friends.contains(user.uid)
+          || thisUser.sentFriendRequests.contains(user.uid)
+          || thisUser.receivedFriendRequests.contains(user.uid)) {
+        return true;
+      }
+      return false;
+    }).toList();
   }
 
   List<String> getUsersGroupIDs(String userID) {

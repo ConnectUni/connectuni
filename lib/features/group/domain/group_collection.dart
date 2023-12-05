@@ -27,16 +27,20 @@ class GroupCollection {
 
   String getNewID() {
     String result = '';
-    switch (size()) {
-      case < 9:
-        result = 'group-00${size() + 1}';
-        break;
-      case < 99:
-        result = 'group-0${size() + 1}';
-        break;
-      default:
-        result = 'group-${size() + 1}';
-    }
+    int newIDNum = size();
+
+    do {
+      if (newIDNum < 9) {
+        result = 'group-00${newIDNum + 1}';
+      } else if (newIDNum < 99) {
+        result = 'group-0${newIDNum + 1}';
+      } else {
+        result = 'group-${newIDNum + 1}';
+      }
+
+      newIDNum++;
+    } while (getAllGroupIDs().contains(result));
+
     return result;
   }
 
