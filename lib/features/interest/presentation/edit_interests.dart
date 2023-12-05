@@ -104,6 +104,7 @@ class EditInterest extends ConsumerWidget {
           groupID: editGroup.groupID,
           groupName: editGroup.groupName,
           semYear: editGroup.semYear,
+          professor: editGroup.professor,
           owner: editGroup.owner,
           groupImage: editGroup.groupImage,
           groupDescription: editGroup.groupDescription,

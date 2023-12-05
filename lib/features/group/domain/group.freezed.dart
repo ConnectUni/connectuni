@@ -23,7 +23,9 @@ mixin _$Group {
   String get groupID => throw _privateConstructorUsedError;
   String get groupName => throw _privateConstructorUsedError;
   String get semYear => throw _privateConstructorUsedError;
+  String get professor => throw _privateConstructorUsedError;
   String get owner => throw _privateConstructorUsedError;
+  set owner(String value) => throw _privateConstructorUsedError;
   String get groupImage => throw _privateConstructorUsedError;
   set groupImage(String value) => throw _privateConstructorUsedError;
   String get groupDescription => throw _privateConstructorUsedError;
@@ -53,6 +55,7 @@ abstract class $GroupCopyWith<$Res> {
       {String groupID,
       String groupName,
       String semYear,
+      String professor,
       String owner,
       String groupImage,
       String groupDescription,
@@ -79,6 +82,7 @@ class _$GroupCopyWithImpl<$Res, $Val extends Group>
     Object? groupID = null,
     Object? groupName = null,
     Object? semYear = null,
+    Object? professor = null,
     Object? owner = null,
     Object? groupImage = null,
     Object? groupDescription = null,
@@ -100,6 +104,10 @@ class _$GroupCopyWithImpl<$Res, $Val extends Group>
       semYear: null == semYear
           ? _value.semYear
           : semYear // ignore: cast_nullable_to_non_nullable
+              as String,
+      professor: null == professor
+          ? _value.professor
+          : professor // ignore: cast_nullable_to_non_nullable
               as String,
       owner: null == owner
           ? _value.owner
@@ -148,6 +156,7 @@ abstract class _$$GroupImplCopyWith<$Res> implements $GroupCopyWith<$Res> {
       {String groupID,
       String groupName,
       String semYear,
+      String professor,
       String owner,
       String groupImage,
       String groupDescription,
@@ -172,6 +181,7 @@ class __$$GroupImplCopyWithImpl<$Res>
     Object? groupID = null,
     Object? groupName = null,
     Object? semYear = null,
+    Object? professor = null,
     Object? owner = null,
     Object? groupImage = null,
     Object? groupDescription = null,
@@ -193,6 +203,10 @@ class __$$GroupImplCopyWithImpl<$Res>
       semYear: null == semYear
           ? _value.semYear
           : semYear // ignore: cast_nullable_to_non_nullable
+              as String,
+      professor: null == professor
+          ? _value.professor
+          : professor // ignore: cast_nullable_to_non_nullable
               as String,
       owner: null == owner
           ? _value.owner
@@ -237,6 +251,7 @@ class _$GroupImpl implements _Group {
       {required this.groupID,
       required this.groupName,
       required this.semYear,
+      required this.professor,
       required this.owner,
       required this.groupImage,
       required this.groupDescription,
@@ -256,7 +271,9 @@ class _$GroupImpl implements _Group {
   @override
   final String semYear;
   @override
-  final String owner;
+  final String professor;
+  @override
+  String owner;
   @override
   String groupImage;
   @override
@@ -274,7 +291,7 @@ class _$GroupImpl implements _Group {
 
   @override
   String toString() {
-    return 'Group(groupID: $groupID, groupName: $groupName, semYear: $semYear, owner: $owner, groupImage: $groupImage, groupDescription: $groupDescription, newMessages: $newMessages, chatID: $chatID, eventIDs: $eventIDs, userIDs: $userIDs, interests: $interests)';
+    return 'Group(groupID: $groupID, groupName: $groupName, semYear: $semYear, professor: $professor, owner: $owner, groupImage: $groupImage, groupDescription: $groupDescription, newMessages: $newMessages, chatID: $chatID, eventIDs: $eventIDs, userIDs: $userIDs, interests: $interests)';
   }
 
   @JsonKey(ignore: true)
@@ -296,7 +313,8 @@ abstract class _Group implements Group {
       {required final String groupID,
       required final String groupName,
       required final String semYear,
-      required final String owner,
+      required final String professor,
+      required String owner,
       required String groupImage,
       required String groupDescription,
       required List<Message> newMessages,
@@ -314,7 +332,10 @@ abstract class _Group implements Group {
   @override
   String get semYear;
   @override
+  String get professor;
+  @override
   String get owner;
+  set owner(String value);
   @override
   String get groupImage;
   set groupImage(String value);

@@ -199,7 +199,7 @@ class _GroupInfoState extends ConsumerState<GroupInfo> {
     return Scaffold(
       appBar: AppBar(
         leading: const BackButton(),
-        title: Text('${group.groupName} | ${group.owner}'),
+        title: Text('${group.groupName} | ${group.professor}'),
         actions: <Widget>[
           IconButton(
             icon: const Icon(

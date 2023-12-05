@@ -222,7 +222,7 @@ class CurrentUserProfilePageState extends ConsumerState<CurrentUserProfilePage> 
                         child: Align(
                           alignment: Alignment.centerLeft,
                           child: Text(
-                              "${group.semYear} | ${group.owner}"),
+                              "${group.semYear} | ${group.professor}"),
                         )),
                     Padding(
                         padding: const EdgeInsets.only(
