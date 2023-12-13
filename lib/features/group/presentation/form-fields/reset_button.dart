@@ -11,12 +11,12 @@ class ResetButton extends StatelessWidget {
   Widget build(BuildContext context) {
     return Expanded(
       child: FieldPadding(
-        child: OutlinedButton(
+        child: FilledButton(
+          style: Theme.of(context).filledButtonTheme.style,
           onPressed: onReset,
-          child: Text('Reset',
-              style: TextStyle(color: Theme.of(context).colorScheme.secondary)),
-        ),
+          child: Text('Reset'),
       ),
-    );
+    ),
+  );
   }
 }

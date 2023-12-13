@@ -42,15 +42,15 @@ class ConnectUniApp extends ConsumerWidget {
         subThemesData: const FlexSubThemesData(
           bottomNavigationBarMutedUnselectedLabel: false,
           bottomNavigationBarMutedUnselectedIcon: false,
+          inputDecoratorBorderType: FlexInputBorderType.outline
         ),
       ),
       darkTheme: FlexThemeData.dark(
-          scheme: FlexScheme.deepBlue,
+          colors: FlexColor.schemes[FlexScheme.deepBlue]!.light.defaultError.toDark(0, false),
           appBarBackground: FlexColor.deepBlueDarkPrimaryContainer,
           background: FlexColor.deepBlueDarkPrimaryContainer,
         subThemesData: const FlexSubThemesData(
-          bottomNavigationBarMutedUnselectedLabel: false,
-          bottomNavigationBarMutedUnselectedIcon: false,
+          inputDecoratorBorderType: FlexInputBorderType.outline
         ),
       ),
       themeMode: ref.watch(currentThemeModeProvider),

@@ -70,26 +70,11 @@ class _GroupsScreenState extends ConsumerState<GroupsScreen> {
           ...groupCollection
               .getUsersGroups(currentUserID)
               .map((group) => GroupChatWidget(group: group)),
-          Center(
-              child: Padding(
-                padding: const EdgeInsets.only(bottom: 10.0),
-                child: IconButton(
-                  onPressed: () {
-                    Navigator.push(context, MaterialPageRoute(builder: (context) => AddGroup()));
-                    },
-                  icon: const Icon(
-                    Icons.add_circle_outline,
-                    color: Colors.grey,
-                    size: 40.0,
-                  ),
-                ),
-              )
-          ),
         ],
       ),
       floatingActionButton: FloatingActionButton(
         onPressed: () {
-          Navigator.pushNamed(context, '/add_group');
+          Navigator.push(context, MaterialPageRoute(builder: (context) => AddGroup()));
         },
         child: const Icon(Icons.add),
       ),
