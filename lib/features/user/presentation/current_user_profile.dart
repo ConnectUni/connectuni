@@ -111,7 +111,8 @@ class CurrentUserProfilePageState
                       },
                       style: ButtonStyle(
                         backgroundColor: MaterialStateProperty.all<Color>(
-                            FlexColor.deepBlueLightTertiary),
+                          Theme.of(context).buttonTheme.colorScheme!.tertiary,
+                        ),
                         foregroundColor:
                             MaterialStateProperty.all<Color>(Colors.white),
                       ),
@@ -179,14 +180,14 @@ class CurrentUserProfilePageState
             ),
           ],
         ),
-        const Padding(
+        Padding(
           padding: EdgeInsets.all(10.0),
           child: ListTile(
-            title: Center(
+            title: const Center(
                 child: Text("Add an interest.",
                     style: TextStyle(fontWeight: FontWeight.bold))),
             textColor: Colors.white,
-            tileColor: Colors.black54,
+            tileColor: Theme.of(context).colorScheme.secondary,
           ),
         ),
       ]), //Gallery
@@ -219,7 +220,7 @@ class CurrentUserProfilePageState
                 ...groupCollection.getGroups(currentUser.groupIDs).map(
                       (group) => Card(
                         elevation: 8,
-                        color: Colors.white,
+                        color: Theme.of(context).cardColor,
                         shape: RoundedRectangleBorder(
                           borderRadius: BorderRadius.circular(15),
                           side: BorderSide(
@@ -271,7 +272,8 @@ class CurrentUserProfilePageState
                                     style: ButtonStyle(
                                       backgroundColor:
                                           MaterialStateProperty.all<Color>(
-                                              Colors.redAccent),
+                                            Theme.of(context).buttonTheme.colorScheme!.error,
+                                          ),
                                       foregroundColor:
                                           MaterialStateProperty.all<Color>(
                                               Colors.white),

@@ -1,6 +1,7 @@
 import 'package:connectuni/features/all_data_provider.dart';
 import 'package:connectuni/features/cu_loading.dart';
 import 'package:connectuni/features/group/domain/group.dart';
+import 'package:flex_color_scheme/flex_color_scheme.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:multi_select_flutter/multi_select_flutter.dart';
@@ -189,9 +190,12 @@ class _SearchGroupsScreenState extends ConsumerState<SearchGroupsScreen> {
             child: ListTile(
                 title: const Center(
                     child: Text("Add a Group.",
-                        style: TextStyle(fontWeight: FontWeight.bold))),
-                textColor: Colors.white,
-                tileColor: Colors.black54,
+                        style: TextStyle(
+                            fontWeight: FontWeight.bold,
+                            color: FlexColor.lightBackground,
+                        ),
+                    )),
+                tileColor: Theme.of(context).colorScheme.surfaceTint,
                 onTap: () {
                   Navigator.push(
                       context, MaterialPageRoute(builder: (context) {
@@ -213,12 +217,6 @@ class _SearchGroupsScreenState extends ConsumerState<SearchGroupsScreen> {
           buildContent(),
           buildAddNewGroupButton(),
         ],
-      ),
-      floatingActionButton: FloatingActionButton(
-        onPressed: () {
-          Navigator.pushNamed(context, '/add_group');
-        },
-        child: const Icon(Icons.add),
       ),
     );
   }

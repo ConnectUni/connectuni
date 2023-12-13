@@ -5,15 +5,16 @@ import '../../../group/presentation/form-fields/field_padding.dart';
 
 
 class EventNameField extends StatelessWidget{
-  const EventNameField({Key? key, required this.fieldKey}) : super(key: key);
+  const EventNameField({Key? key, required this.fieldKey, this.name}) : super(key: key);
   final GlobalKey<FormBuilderFieldState> fieldKey;
-
+  final String? name;
   @override
   Widget build(BuildContext context) {
     return FieldPadding(
         child: FormBuilderTextField(
           name: 'name',
           key: fieldKey,
+          initialValue: name,
           decoration: const InputDecoration(
             labelText: 'Event Name',
           ),

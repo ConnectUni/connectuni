@@ -11,6 +11,7 @@ class GroupCardView extends StatelessWidget {
     return Padding(
       padding: const EdgeInsets.all(3.5),
       child: Card(
+        color: Theme.of(context).cardColor,
           elevation: 8,
           child: Column(
             children: [

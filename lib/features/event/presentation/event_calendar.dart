@@ -11,6 +11,7 @@ import '../../group/domain/group.dart';
 import '../data/event_providers.dart';
 import '../domain/event.dart';
 import 'package:multi_select_flutter/multi_select_flutter.dart';
+import 'create_event.dart';
 import 'event_info_screen.dart';
 
 class EventCalendar extends ConsumerStatefulWidget {
@@ -165,7 +166,12 @@ class _EventCalendarState extends ConsumerState<EventCalendar> {
                         textAlign: TextAlign.center,
                       ),
                       TextButton(
-                        onPressed: () {},
+                        onPressed: () {
+                          Navigator.push(
+                              context, MaterialPageRoute(builder: (context) {
+                            return CreateEvent();
+                          }));
+                        },
                         style: ButtonStyle(
                           backgroundColor:
                           MaterialStateProperty.all<Color>(FlexColor.deepBlueLightSecondary),

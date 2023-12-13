@@ -7,6 +7,7 @@ import '../../cu_error.dart';
 import '../../cu_loading.dart';
 import '../data/event_providers.dart';
 import '../domain/event.dart';
+import 'create_event.dart';
 
 class SearchEventsScreen extends ConsumerStatefulWidget {
   const SearchEventsScreen({Key? key, required this.pageController})
@@ -184,7 +185,10 @@ class _SearchEventsScreenState extends ConsumerState<SearchEventsScreen> {
       ),
       floatingActionButton: FloatingActionButton(
         onPressed: () {
-          Navigator.pushNamed(context, '/create_event');
+          Navigator.push(
+              context, MaterialPageRoute(builder: (context) {
+            return CreateEvent();
+          }));
         },
         child: const Icon(Icons.add),
       ),

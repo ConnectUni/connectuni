@@ -48,6 +48,9 @@ class _HomePageState extends State<HomePage> {
         children: screenItems,
       ),
       bottomNavigationBar: BottomNavigationBar(
+        selectedIconTheme: Theme.of(context).bottomNavigationBarTheme.unselectedIconTheme,
+        unselectedIconTheme: Theme.of(context).bottomNavigationBarTheme.unselectedIconTheme,
+        selectedItemColor: Theme.of(context).bottomNavigationBarTheme.unselectedItemColor,
         type: BottomNavigationBarType.shifting,
         items: const <BottomNavigationBarItem>[
           BottomNavigationBarItem(

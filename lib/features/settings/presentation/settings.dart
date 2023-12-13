@@ -147,15 +147,14 @@ class _SettingsState extends ConsumerState<Settings> {
       body: ListView(
         children: [
           //TODO: Implement functionality and make cards interactive rather than simply visual.
-          const Padding(
-            padding: EdgeInsets.all(10.0),
+          Padding(
+            padding: const EdgeInsets.all(10.0),
             child: ListTile(
-              leading: Icon(Icons.arrow_downward),
-              title: Text("Settings",
+              leading: const Icon(Icons.arrow_downward),
+              title: const Text("Settings",
                   style: TextStyle(fontWeight: FontWeight.bold)),
-              trailing: Icon(Icons.notifications_active_outlined,),
-              textColor: Colors.black,
-              tileColor: FlexColor.greenLightPrimary,
+              trailing: const Icon(Icons.notifications_active_outlined,),
+              tileColor: Theme.of(context).colorScheme.tertiary,
             ),
           ),
           ListTile(
@@ -168,14 +167,13 @@ class _SettingsState extends ConsumerState<Settings> {
             ),
             title: const Text("Dark Mode"),
           ),
-          const Padding(
-            padding: EdgeInsets.all(10.0),
+          Padding(
+            padding: const EdgeInsets.all(10.0),
             child: ListTile(
-              title: Center(
+              title: const Center(
                   child: Text("Change Password",
                       style: TextStyle(fontWeight: FontWeight.bold))),
-              textColor: Colors.white,
-              tileColor: FlexColor.redLightPrimary,
+              tileColor: Theme.of(context).colorScheme.error,
             ),
           ),
           Padding(
@@ -186,13 +184,13 @@ class _SettingsState extends ConsumerState<Settings> {
                   context: context,
                   builder: (BuildContext context) {
                     return AlertDialog(
-                      title: const Text('You are deleting your account. Are you sure?'),
+                      title: Text('You are deleting your account. Are you sure?'),
                       actions: [
                         TextButton(
                           onPressed: () {
                             Navigator.pop(context);
                           },
-                          child: const Text('Cancel'),
+                          child: Text('Cancel'),
                         ),
                         TextButton(
                           onPressed: () {
@@ -200,7 +198,7 @@ class _SettingsState extends ConsumerState<Settings> {
                             Navigator.pushNamedAndRemoveUntil(context, SignInView.routeName, (route) => false);
                             deleteCurrentUser();
                           },
-                          child: const Text('Delete'),
+                          child: Text('Delete'),
                         ),
                       ],
                     );
@@ -209,11 +207,9 @@ class _SettingsState extends ConsumerState<Settings> {
               },
               style: ButtonStyle(
                 backgroundColor:
-                    MaterialStateProperty.all<Color>(FlexColor.redLightPrimary),
-                foregroundColor:
-                    MaterialStateProperty.all<Color>(Colors.white),
+                    MaterialStateProperty.all<Color>(Theme.of(context).colorScheme.error),
               ),
-              child: const Text('Delete Account'),
+              child: Text('Delete Account'),
             ),
           ),
           SizedBox(
@@ -227,11 +223,14 @@ class _SettingsState extends ConsumerState<Settings> {
                 },
                 style: ButtonStyle(
                   backgroundColor:
-                      MaterialStateProperty.all<Color>(FlexColor.deepBlueLightTertiary),
-                  foregroundColor:
-                      MaterialStateProperty.all<Color>(Colors.white),
+                      MaterialStateProperty.all<Color>(Theme.of(context).colorScheme.tertiary),
                 ),
-                child: const Text('Log Out'),
+                child: Text('Log Out',
+                    style: TextStyle(
+                      fontWeight: FontWeight.bold,
+                      color: Theme.of(context).colorScheme.onPrimary,
+                    )
+                ),
               ),
             ),
           ),
